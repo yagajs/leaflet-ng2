@@ -1,0 +1,60 @@
+{
+  "name": "@yaga/leaflet-ng2",
+  "version": "1.0.0",
+  "description": "Angular2 module for Leaflet",
+  "main": "index.js",
+  "scripts": {
+    "init": "npm install && node_modules/.bin/typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts",
+    "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
+    "reinit": "npm run clean; npm run init",
+    "transpile": "node_modules/.bin/tsc",
+    "lint": "node_modules/.bin/tslint ts/**",
+    "npm-lint": "node_modules/.bin/ts-npm-lint --fix-typings && node_modules/.bin/ts-npm-lint",
+    "test": "npm run lint && npm run transpile && node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- test/*.js",
+    "dist": "npm test && npm run npm-lint",
+    "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yagajs/leaflet-ng2.git"
+  },
+  "keywords": [
+    "spatial",
+    "geo",
+    "leaflet",
+    "angular",
+    "directive",
+    "component",
+    "angular2",
+    "webmapping"
+  ],
+  "author": [
+    "Arne Schubert <a.schubert@yagajs.org>",
+    "Stephan Herritsch <s.herritsch@yagajs.org>",
+    "Markus Strauss <m.strauss@yagajs.org>"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yagajs/leaflet-ng2/issues"
+  },
+  "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.2",
+    "jsdom": "^9.8.3",
+    "jsdom-global": "^2.1.0",
+    "mocha": "^3.1.2",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.0-rc.2",
+    "ts-npm-lint": "^0.1.0",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.7",
+    "typings": "^1.5.0",
+    "zone.js": "^0.6.26"
+  },
+  "dependencies": {
+    "@angular/core": "^2.1.2",
+    "leaflet": "^1.0.1"
+  }
+}
