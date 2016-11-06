@@ -124,7 +124,9 @@ Animation Options
 
 
 ----
+
 *The following text should be proofed again...*
+
 ----
 
 
