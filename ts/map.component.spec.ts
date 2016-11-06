@@ -2,7 +2,7 @@
 
 import { MapComponent } from './map.component';
 
-describe('Marker Directive', () => {
+describe('Map Component', () => {
     describe('[(lat)]', () => {});
     describe('[(lng)]', () => {});
     describe('[(zoom)]', () => {});
