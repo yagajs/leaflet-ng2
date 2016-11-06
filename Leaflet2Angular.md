@@ -8,6 +8,8 @@ Outputs of a directive or component...*
 
 ## Map
 
+Component name in Angular2: `yaga-map`.
+
 **Children**
 
 * ng-content(Layer(s...), Control(s...), Sensor(s...))
@@ -158,6 +160,8 @@ For all Layers
 
 #### Tile-Layer
 
+Directive name in Angular2: `yaga-tile-layer`.
+
 * ng-content(Tooltip, Popup)
 
 * `[(url)]: string` 
@@ -184,7 +188,9 @@ For all Layers
 
 #### WMS
 
-siehe TileLayer
+Directive name in Angular2: `yaga-wms-layer`.
+
+look at TileLayer
 
 * `[layers]: string[]`
 * `[styles]: string[]`
@@ -195,6 +201,8 @@ siehe TileLayer
 * `[uppercase]: boolean`
 
 #### ImageOverlay
+
+Directive name in Angular2: `yaga-image-overlay`.
 
 * ??? ng-content(Tooltip, Popup)
 
@@ -209,6 +217,8 @@ siehe TileLayer
 
 #### GeoJSON
 
+Directive name in Angular2: `yaga-geojson-layer`.
+
 * `[data]: FeatureCollection`
 * `[defaultStyle]: Style`
 * `[styler]: (defaultStyle: Style) => Style`
@@ -218,6 +228,8 @@ siehe TileLayer
 
 #### Polyline
 
+Directive name in Angular2: `yaga-polyline`.
+
 * ng-content(Tooltip, Popup)
 
 * `[(style)]: Style`
@@ -226,9 +238,15 @@ siehe TileLayer
 * `[(popupOpened)]: boolean`
 
 #### Polygon
-siehe Polyline
+
+Directive name in Angular2: `yaga-polygon`.
+
+look at Polyline
+
 
 #### Rectangle
+
+Directive name in Angular2: `yaga-rectangle`.
 
 * ng-content(Tooltip, Popup)
 
@@ -240,6 +258,8 @@ siehe Polyline
 
 #### Circle
 
+Directive name in Angular2: `yaga-circle`.
+
 * ng-content(Tooltip, Popup)
 
 * `[(lat)]: number` 
@@ -249,6 +269,8 @@ siehe Polyline
 * `[(popupOpened)]: boolean`
 
 #### CircleMarker
+
+Directive name in Angular2: `yaga-circle-marker`.
 
 * ng-content(Tooltip, Popup)
 
@@ -265,6 +287,8 @@ siehe Polyline
 ### UI
 
 #### Marker
+
+Directive name in Angular2: `yaga-marker`.
 
 * ng-content (Icon(s...), Tooltip, Popup)
 
@@ -294,10 +318,14 @@ Events:
 
 #### Popup
 
+Directive name in Angular2: `yaga-popup`.
+
 * ng-content(HTML)
 * `[(opened)]: boolean` // keine Information in der Klasse selbst!
 
 #### Tooltip
+
+Directive name in Angular2: `yaga-tooltip`.
 
 * ng-content(HTML)
 * `[(opened)]: boolean`
@@ -305,6 +333,8 @@ Events:
 ### Structure
 
 #### LayerGroup
+
+Directive name in Angular2: `yaga-layer-group`.
 
 * ng-content(Layer(s...))
 
@@ -315,6 +345,9 @@ For all controls
 * `[position]: string`
 
 ### Zoom
+
+Directive name in Angular2: `yaga-zoom-control`.
+
 * `[zoomInText]: string`
 * `[zoomInTitle]: string`
 * `[zoomOutText]: string`
@@ -322,11 +355,15 @@ For all controls
 
 ### Attribution
 
+Directive name in Angular2: `yaga-attribution-control`.
+
 * `[prefix]: string = 'Yaga'`
 
 ### Layers???
 
 ### Scale
+
+Directive name in Angular2: `yaga-scale-control`.
 
 * `[maxWith]: number`
 * `[metric]: boolean`
@@ -336,6 +373,8 @@ For all controls
 ## Basic Types
 
 ### Icon
+
+Directive name in Angular2: `yaga-icon`.
 
 * `[iconUrl]: string`
 * `[iconSize]: number[]`
@@ -347,6 +386,8 @@ For all controls
 
 ### DivIcon
 
+Directive name in Angular2: `yaga-div-icon`.
+
 * ng-content
 * `[bgPos]: number[]`
 
@@ -354,7 +395,13 @@ For all controls
 ## Sensor
 ### GPS
 
+Directive name in Angular2: `yaga-gps-sensor`.
+
 * `(lat): number`
 * `(lng): number`
 * `(accuracy): number`
 * `(position): GPSPosition`
+
+### Compass
+
+Directive name in Angular2: `yaga-compass-sensor`.
