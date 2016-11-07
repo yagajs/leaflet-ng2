@@ -12,10 +12,7 @@ import { Component,
 } from '@angular/core';
 import {
     Map,
-    ZoomPanOptions,
     LatLng,
-    LatLngExpression,
-    LatLngLiteral,
     LatLngBoundsExpression,
     LatLngBounds,
     LatLngBoundsLiteral
@@ -38,14 +35,13 @@ export class MapComponent extends Map implements AfterViewInit {
 
     // @ContentChildren(TileLayerDirective) public tileLayerDirectives: QueryList<TileLayerDirective>;
 
-    @Output() protected zoomChange: EventEmitter<number> = new EventEmitter();
-    @Output() protected latChange: EventEmitter<number> = new EventEmitter();
-    @Output() protected lngChange: EventEmitter<number> = new EventEmitter();
-    @Output() protected minZoomChange: EventEmitter<number> = new EventEmitter();
-    @Output() protected maxZoomChange: EventEmitter<number> = new EventEmitter();
-    @Output() protected maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
+    @Output() public zoomChange: EventEmitter<number> = new EventEmitter();
+    @Output() public latChange: EventEmitter<number> = new EventEmitter();
+    @Output() public lngChange: EventEmitter<number> = new EventEmitter();
+    @Output() public minZoomChange: EventEmitter<number> = new EventEmitter();
+    @Output() public maxZoomChange: EventEmitter<number> = new EventEmitter();
+    @Output() public maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
 
-    private setViewTimeout: number;
     private moveendTimeout: number;
 
     constructor(
@@ -72,7 +68,6 @@ export class MapComponent extends Map implements AfterViewInit {
 
     }
     ngAfterViewInit(): void {
-        console.log('after view init is called', (<any>window).g = this);
         this.domRoot.appendChild(this.mapDomRoot);
 
         this.invalidateSize(false);
@@ -91,59 +86,8 @@ export class MapComponent extends Map implements AfterViewInit {
      return super.setZoom(zoom, options)
      }*/
 
-    setView(center: LatLngExpression, zoom: number, options?: ZoomPanOptions): this {
-        var gotAChange: boolean = false,
-            zoomChange: boolean = false,
-            latChange: boolean = false,
-            lngChange: boolean = false;
-        if (!LatLng.prototype.isPrototypeOf(center)) {
-            if (Array.prototype.isPrototypeOf(center)) {
-                center = new LatLng((<any>center)[0], (<any>center)[1]);
-            } else if ((<LatLngLiteral>center).lat && (<LatLngLiteral>center).lng) {
-                center = new LatLng((<LatLngLiteral>center).lat, (<LatLngLiteral>center).lng);
-            }
-        }
-
-        if ((<any>this)._loaded) {
-            if (this.zoom !== zoom) {
-                zoomChange = true;
-                gotAChange = true;
-            }
-            if (this.lat !== (<LatLngLiteral>center).lat) {
-                latChange = true;
-                gotAChange = true;
-            }
-            if (this.lng !== (<LatLngLiteral>center).lng) {
-                lngChange = true;
-                gotAChange = true;
-            }
-        } else { // initial setView
-            gotAChange = true;
-        }
-
-        // Workaround against shagging zoom and map pan
-
-        if (this.setViewTimeout) {
-            clearTimeout(this.setViewTimeout);
-        }
-        this.setViewTimeout = setTimeout(() => {
-            this.setViewTimeout = undefined;
-            if (zoomChange) {
-                this.zoomChange.emit(zoom);
-            }
-            if (latChange) {
-                this.latChange.emit((<LatLngLiteral>center).lat);
-            }
-            if (lngChange) {
-                this.lngChange.emit((<LatLngLiteral>center).lng);
-            }
-        }, ANIMATION_DELAY);
-
-        if (!gotAChange) {
-            return;
-        }
-        return super.setView((<LatLngExpression>center), zoom, options);
-    }
+    // already handled with moveend
+    // setView(center: LatLngExpression, zoom: number, options?: ZoomPanOptions): this {
 
     @Input() set zoom(val: number) {
         this.setZoom(val);
