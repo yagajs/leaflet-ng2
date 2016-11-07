@@ -1,1 +1,1 @@
-export * from 'yaga.module';
+export * from './yaga.module';
