@@ -1,7 +1,25 @@
 /// <reference path="../typings/index.d.ts" />
 
-import { Component, AfterViewInit, ElementRef, Inject, Input, Output, EventEmitter, ContentChildren, QueryList } from '@angular/core';
-import { Map, ZoomPanOptions, LatLng, LatLngExpression, LatLngLiteral } from 'leaflet';
+import { Component,
+    AfterViewInit,
+    ElementRef,
+    Inject,
+    Input,
+    Output,
+    EventEmitter,
+    // ContentChildren,
+    // QueryList
+} from '@angular/core';
+import {
+    Map,
+    ZoomPanOptions,
+    LatLng,
+    LatLngExpression,
+    LatLngLiteral,
+    LatLngBoundsExpression,
+    LatLngBounds,
+    LatLngBoundsLiteral
+} from 'leaflet';
 
 // import { TileLayerDirective } from './tile-layer.directive';
 
@@ -23,6 +41,9 @@ export class MapComponent extends Map implements AfterViewInit {
     @Output() protected zoomChange: EventEmitter<number> = new EventEmitter();
     @Output() protected latChange: EventEmitter<number> = new EventEmitter();
     @Output() protected lngChange: EventEmitter<number> = new EventEmitter();
+    @Output() protected minZoomChange: EventEmitter<number> = new EventEmitter();
+    @Output() protected maxZoomChange: EventEmitter<number> = new EventEmitter();
+    @Output() protected maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
 
     private setViewTimeout: number;
     private moveendTimeout: number;
@@ -96,7 +117,7 @@ export class MapComponent extends Map implements AfterViewInit {
                 lngChange = true;
                 gotAChange = true;
             }
-        } else {
+        } else { // initial setView
             gotAChange = true;
         }
 
@@ -117,8 +138,6 @@ export class MapComponent extends Map implements AfterViewInit {
                 this.lngChange.emit((<LatLngLiteral>center).lng);
             }
         }, ANIMATION_DELAY);
-
-
 
         if (!gotAChange) {
             return;
@@ -147,5 +166,42 @@ export class MapComponent extends Map implements AfterViewInit {
     }
     get lng(): number {
         return this.getCenter().lng;
+    }
+
+    setMinZoom(val: number): this {
+        this.minZoomChange.emit(val);
+        return super.setMinZoom(val);
+    }
+
+    @Input() set minZoom(val: number) {
+        this.setMinZoom(val);
+    }
+    get minZoom(): number {
+        return this.getMinZoom();
+    }
+
+    setMaxZoom(val: number): this {
+        this.maxZoomChange.emit(val);
+        return super.setMaxZoom(val);
+    }
+
+    @Input() set maxZoom(val: number) {
+        this.setMaxZoom(val);
+    }
+    get maxZoom(): number {
+        return this.getMaxZoom();
+    }
+
+    setMaxBounds(bounds: LatLngBoundsExpression): this {
+        super.setMaxBounds((<LatLngBoundsLiteral>bounds));
+        this.maxBoundsChange.emit(this.maxBounds);
+        return this;
+    }
+
+    @Input() set maxBounds(val: LatLngBounds) {
+        this.setMaxBounds(val);
+    }
+    get maxBounds(): LatLngBounds {
+        return (<any>this).options.maxBounds;
     }
 }

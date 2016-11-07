@@ -5,4 +5,5 @@ if (typeof window === 'undefined') {
 
 require('reflect-metadata');
 
+require('../lib/map.component.spec');
 // require('../lib/.directive.spec');
