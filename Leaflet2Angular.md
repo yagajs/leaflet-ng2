@@ -219,12 +219,11 @@ Directive name in Angular2: `yaga-image-overlay`.
 
 Directive name in Angular2: `yaga-geojson-layer`.
 
-* `[data]: FeatureCollection`
+* `[(data)]: FeatureCollection`
 * `[defaultStyle]: Style`
 * `[styler]: (defaultStyle: Style) => Style`
 * `[defaultIcon]: Icon`
 * `[iconizer]: (defaultIcon: Icon) => Icon`
-* `[data]: FeatureCollection`
 
 #### Polyline
 
