@@ -59,9 +59,6 @@ declare namespace L {
         constructor(coords: [number, number, number]);
         constructor(coords: LatLngLiteral);
         constructor(coords: {lat: number, lng: number, alt: number});
-
-
-
         equals(otherLatLng: LatLng, maxMargin?: number): boolean;
         equals(otherLatLng: LatLngLiteral, maxMargin?: number): boolean;
         equals(otherLatLng: LatLngTuple, maxMargin?: number): boolean;
@@ -97,6 +94,10 @@ declare namespace L {
     export function latLng(coords: {lat: number, lng: number, alt: number}): LatLng;
 
     export class LatLngBounds {
+        constructor(southWest: LatLng, northEast: LatLng);
+        constructor(southWest: LatLngLiteral, northEast: LatLngLiteral);
+        constructor(southWest: LatLngTuple, northEast: LatLngTuple);
+        constructor(latlngs: LatLngBoundsLiteral);
         extend(latlng: LatLng): this;
         extend(latlng: LatLngLiteral): this;
         extend(latlng: LatLngTuple): this;
@@ -142,6 +143,9 @@ declare namespace L {
     export type PointTuple = [number, number];
 
     export class Point {
+        constructor(x: number, y: number, round?: boolean);
+        constructor(coords: PointTuple);
+        constructor(coords: {x: number, y: number});
         clone(): Point;
         add(otherPoint: Point): Point; // investigate if this mutates or returns a new instance
         add(otherPoint: PointTuple): Point;
@@ -176,6 +180,10 @@ declare namespace L {
     export type BoundsLiteral = Array<PointTuple>;
 
     export class Bounds {
+        constructor(topLeft: Point, bottomRight: Point);
+        constructor(topLeft: PointTuple, bottomRight: PointTuple);
+        constructor(points: Array<Point>);
+        constructor(points: BoundsLiteral);
         extend(point: Point): this;
         extend(point: PointTuple): this;
         getCenter(round?: boolean): Point;
@@ -427,6 +435,7 @@ declare namespace L {
     }
 
     export class GridLayer extends Layer {
+        constructor(options?: GridLayerOptions);
         bringToFront(): this;
         bringToBack(): this;
         getAttribution(): string;
@@ -472,6 +481,7 @@ declare namespace L {
     }
 
     export class WMS extends TileLayer {
+        constructor(baseUrl: string, options: WMSOptions);
         setParams(params: Object, noRedraw?: boolean): this;
     }
 
@@ -488,6 +498,7 @@ declare namespace L {
     }
 
     export class ImageOverlay extends Layer {
+        constructor(imageUrl: string, bounds: LatLngBoundsExpression, options?: ImageOverlayOptions);
         setOpacity(opacity: number): this;
         bringToFront(): this;
         bringToBack(): this;
@@ -548,6 +559,12 @@ declare namespace L {
     }
 
     export class Polyline extends InternalPolyline {
+        constructor(latlngs: Array<LatLng>, options?: PolylineOptions);
+        constructor(latlngs: Array<LatLngLiteral>, options?: PolylineOptions);
+        constructor(latlngs: Array<LatLngTuple>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLng>>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.LineString | GeoJSON.MultiLineString;
     }
 
@@ -564,6 +581,12 @@ declare namespace L {
     export function polyline(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions): Polyline;
 
     export class Polygon extends InternalPolyline {
+        constructor(latlngs: Array<LatLng>, options?: PolylineOptions);
+        constructor(latlngs: Array<LatLngLiteral>, options?: PolylineOptions);
+        constructor(latlngs: Array<LatLngTuple>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLng>>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
+        constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Polygon | GeoJSON.MultiPolygon;
     }
 
@@ -580,6 +603,8 @@ declare namespace L {
     export function polygon(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions): Polygon;
 
     export class Rectangle extends Polygon {
+        constructor(latLngBounds: LatLngBounds, options?: PolylineOptions);
+        constructor(latLngBounds: LatLngBoundsLiteral, options?: PolylineOptions);
         setBounds(latLngBounds: LatLngBounds): this;
         setBounds(latLngBounds: LatLngBoundsLiteral): this;
     }
@@ -593,6 +618,9 @@ declare namespace L {
     }
 
     export class CircleMarker extends Path {
+        constructor(latlng: LatLng, options?: CircleMarkerOptions);
+        constructor(latlng: LatLngLiteral, options?: CircleMarkerOptions);
+        constructor(latlng: LatLngLiteral, options?: CircleMarkerOptions);
         toGeoJSON(): GeoJSON.Point;
         setLatLng(latLng: LatLng): this;
         setLatLng(latLng: LatLngLiteral): this;
@@ -613,6 +641,12 @@ declare namespace L {
     }
 
     export class Circle extends CircleMarker {
+        constructor(latlng: LatLng, options?: CircleOptions);
+        constructor(latlng: LatLngLiteral, options?: CircleOptions);
+        constructor(latlng: LatLngTuple, options?: CircleOptions);
+        constructor(latlng: LatLng, radius: number, options?: CircleOptions);
+        constructor(latlng: LatLngLiteral, radius: number, options?: CircleOptions);
+        constructor(latlng: LatLngTuple, radius: number, options?: CircleOptions);
         setRadius(radius: number): this;
         getRadius(): number;
         getBounds(): LatLngBounds;
@@ -658,6 +692,7 @@ declare namespace L {
      * added/removed on the map as well. Extends Layer.
      */
     export class LayerGroup extends Layer {
+        constructor(layers: Array<Layer>);
         /**
          * Returns a GeoJSON representation of the layer group (as a GeoJSON GeometryCollection).
          */
@@ -731,6 +766,7 @@ declare namespace L {
      * members of the group) and a shared bindPopup method.
      */
     export class FeatureGroup extends LayerGroup {
+        constructor(layers?: Array<Layer>);
         /**
          * Sets the given path options to each layer of the group that has a setStyle method.
          */
@@ -827,6 +863,7 @@ declare namespace L {
      * Allows you to parse GeoJSON data and display it on the map. Extends FeatureGroup.
      */
     export class GeoJSON extends FeatureGroup {
+        constructor(geojson?: GeoJSON.GeoJsonObject, options?: GeoJSONOptions);
         /**
          * Adds a GeoJSON object to the layer.
          */
@@ -1050,6 +1087,7 @@ declare namespace L {
     type Content = string | HTMLElement;
 
     export class Popup extends Layer {
+        constructor(options?: PopupOptions, source?: Layer);
         getLatLng(): LatLng;
         setLatLng(latlng: LatLngExpression): this;
         getContent(): Content;
@@ -1078,7 +1116,9 @@ declare namespace L {
         opacity?: number;
     }
 
-    export class Tooltip extends Layer {}
+    export class Tooltip extends Layer {
+        constructor(options?: TooltipOptions, source?: Layer);
+    }
 
     export function tooltip(options?: TooltipOptions, source?: Layer): Tooltip;
 
@@ -1350,6 +1390,7 @@ declare namespace L {
     }
 
     export class Icon extends Layer {
+        constructor(options: IconOptions);
         createIcon(oldIcon?: HTMLElement): HTMLElement;
         createShadow(oldIcon?: HTMLElement): HTMLElement;
     }
@@ -1369,7 +1410,9 @@ declare namespace L {
         className?: string;
     }
 
-    export class DivIcon extends Icon {}
+    export class DivIcon extends Icon {
+        constructor(options: DivIconOptions);
+    }
 
     export function divIcon(options: DivIconOptions): DivIcon;
 
@@ -1386,6 +1429,9 @@ declare namespace L {
     }
 
     export class Marker extends Layer {
+        constructor(latlng: LatLng, options?: MarkerOptions);
+        constructor(latlng: LatLngLiteral, options?: MarkerOptions);
+        constructor(latlng: LatLngTuple, options?: MarkerOptions);
         getLatLng(): LatLng;
         setLatLng(latlng: LatLng): this;
         setLatLng(latlng: LatLngLiteral): this;
