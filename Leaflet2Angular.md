@@ -64,14 +64,14 @@ Keyboard Navigation Options
 * `[keyboardPanDelta]: number`
 
 Mousewheel options
-* `[scrollWheelZoom]: boolean`
+* `[scrollWheelZoom]: boolean|string`
 * `[wheelDebounceTime]: number`
 * `[wheelPxPerZoomLevel]: number`
 
 Touch interaction options
 * `[tap]: boolean`
 * `[tapTolerance]: number`
-* `[touchZoom]: Boolea`
+* `[touchZoom]: boolean`
 * `[bounceAtZoomLimits]: boolean`
 
 **Events**
@@ -84,7 +84,7 @@ Layer events
 * `(layerremove): LayerEvent`
 
 Map state change events
-* `(zoomlevelschang): Event`
+* `(zoomlevelschange): Event`
 * `(resize): ResizeEvent`
 * `(unload): Event`
 * `(viewreset): Event`
@@ -114,7 +114,7 @@ Interaction events
 * `(mouseover): MouseEvent`
 * `(mouseout): MouseEvent`
 * `(mousemove): MouseEvent`
-* `(contextmen): MouseEvent`
+* `(contextmenu): MouseEvent`
 * `(keypress): KeyboardEvent`
 * `(preclick): MouseEvent`
 
