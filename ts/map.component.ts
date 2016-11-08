@@ -15,7 +15,16 @@ import {
     LatLng,
     LatLngBoundsExpression,
     LatLngBounds,
-    LatLngBoundsLiteral
+    LatLngBoundsLiteral,
+    LayersControlEvent,
+    LayerEvent,
+    Event,
+    ResizeEvent,
+    PopupEvent,
+    TooltipEvent,
+    MouseEvent,
+    KeyboardEvent,
+    ZoomAnimEvent
 } from 'leaflet';
 
 // import { TileLayerDirective } from './tile-layer.directive';
@@ -42,6 +51,39 @@ export class MapComponent extends Map implements AfterViewInit {
     @Output() public maxZoomChange: EventEmitter<number> = new EventEmitter();
     @Output() public maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
 
+    @Output('baselayerchange') public baselayerchangeEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output('overlayadd') public overlayaddEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output('overlayremove') public overlayremoveEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output('layeradd') public layeraddEvent: EventEmitter<LayerEvent> = new EventEmitter();
+    @Output('layerremove') public layerremoveEvent: EventEmitter<LayerEvent> = new EventEmitter();
+    @Output('zoomlevelschange') public zoomlevelschangeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('resize') public resizeEvent: EventEmitter<ResizeEvent> = new EventEmitter();
+    @Output('unload') public unloadEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('viewreset') public viewresetEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('zoomstart') public zoomstartEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('movestart') public movestartEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('zoom') public zoomEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('move') public moveEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('zoomend') public zoomendEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('moveend') public moveendEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output('autopanstart') public autopanstartEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('dblclick') public dblclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseup') public mouseupEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mousemove') public mousemoveEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('keypress') public keypressEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
+    @Output('preclick') public preclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
+
     private moveendTimeout: number;
 
     constructor(
@@ -64,6 +106,103 @@ export class MapComponent extends Map implements AfterViewInit {
                 this.lngChange.emit(this.lng);
                 this.zoomChange.emit(this.zoom);
             }, ANIMATION_DELAY);
+        });
+
+        this.on('baselayerchange', (event: LayersControlEvent) => {
+            this.baselayerchangeEvent.emit(event);
+        });
+        this.on('overlayadd', (event: LayersControlEvent) => {
+            this.overlayaddEvent.emit(event);
+        });
+        this.on('overlayremove', (event: LayersControlEvent) => {
+            this.overlayremoveEvent.emit(event);
+        });
+        this.on('layeradd', (event: LayerEvent) => {
+            this.layeraddEvent.emit(event);
+        });
+        this.on('layerremove', (event: LayerEvent) => {
+            this.layerremoveEvent.emit(event);
+        });
+        this.on('zoomlevelschange', (event: Event) => {
+            this.zoomlevelschangeEvent.emit(event);
+        });
+        this.on('resize', (event: ResizeEvent) => {
+            this.resizeEvent.emit(event);
+        });
+        this.on('unload', (event: Event) => {
+            this.unloadEvent.emit(event);
+        });
+        this.on('viewreset', (event: Event) => {
+            this.viewresetEvent.emit(event);
+        });
+        this.on('load', (event: Event) => {
+            this.loadEvent.emit(event);
+        });
+        this.on('zoomstart', (event: Event) => {
+            this.zoomstartEvent.emit(event);
+        });
+        this.on('movestart', (event: Event) => {
+            this.movestartEvent.emit(event);
+        });
+        this.on('zoom', (event: Event) => {
+            this.zoomEvent.emit(event);
+        });
+        this.on('move', (event: Event) => {
+            this.moveEvent.emit(event);
+        });
+        this.on('zoomend', (event: Event) => {
+            this.zoomendEvent.emit(event);
+        });
+        this.on('moveend', (event: Event) => {
+            this.moveendEvent.emit(event);
+        });
+        this.on('popupopen', (event: PopupEvent) => {
+            this.popupopenEvent.emit(event);
+        });
+        this.on('popupclose', (event: PopupEvent) => {
+            this.popupcloseEvent.emit(event);
+        });
+        this.on('autopanstart', (event: Event) => {
+            this.autopanstartEvent.emit(event);
+        });
+        this.on('tooltipopen', (event: TooltipEvent) => {
+            this.tooltipopenEvent.emit(event);
+        });
+        this.on('tooltipclose', (event: TooltipEvent) => {
+            this.tooltipcloseEvent.emit(event);
+        });
+        this.on('click', (event: MouseEvent) => {
+            this.clickEvent.emit(event);
+        });
+        this.on('dblclick', (event: MouseEvent) => {
+            this.dblclickEvent.emit(event);
+        });
+        this.on('mousedown', (event: MouseEvent) => {
+            this.mousedownEvent.emit(event);
+        });
+        this.on('mouseup', (event: MouseEvent) => {
+            this.mouseupEvent.emit(event);
+        });
+        this.on('mouseover', (event: MouseEvent) => {
+            this.mouseoverEvent.emit(event);
+        });
+        this.on('mouseout', (event: MouseEvent) => {
+            this.mouseoutEvent.emit(event);
+        });
+        this.on('mousemove', (event: MouseEvent) => {
+            this.mousemoveEvent.emit(event);
+        });
+        this.on('contextmenu', (event: MouseEvent) => {
+            this.contextmenuEvent.emit(event);
+        });
+        this.on('keypress', (event: KeyboardEvent) => {
+            this.keypressEvent.emit(event);
+        });
+        this.on('preclick', (event: MouseEvent) => {
+            this.preclickEvent.emit(event);
+        });
+        this.on('zoomanim', (event: ZoomAnimEvent) => {
+            this.zoomanimEvent.emit(event);
         });
 
     }
