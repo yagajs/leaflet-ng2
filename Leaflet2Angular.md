@@ -135,8 +135,9 @@ Animation Options
 ## Layers
 
 For all Layers
-
-* `[(opacity)]: string`
+* `[(display)]: boolean`
+* `[(opacity)]: number`
+* `[(zIndex)]: number`
 
 * `[interactive]: boolean`
 * `[attribution]: string`
@@ -147,14 +148,14 @@ For all Layers
 * `(mouseover): MouseEvent`
 * `(mouseout): MouseEvent`
 * `(contextmenu): MouseEvent`
-* `(popupopen): PopupEvent`
-* `(popupclose): PopupEvent`
-* `(tooltipopen): TooltipEvent`
-* `(tooltipclose): TooltipEvent`
+* `(popupopen): PopupEvent` *is this really called?*
+* `(popupclose): PopupEvent` *is this really called?*
+* `(tooltipopen): TooltipEvent` *is this really called?*
+* `(tooltipclose): TooltipEvent` *is this really called?*
 * `(addLayer): Layer??? | Event???`
 * `(removeLayer): Layer??? | Event???`
 
-* `[display]: boolean` //maybe as: `[(display)]`
+
 
 ### Raster
 
@@ -207,6 +208,7 @@ Directive name in Angular2: `yaga-image-overlay`.
 * ??? ng-content(Tooltip, Popup)
 
 * `[(url)]: string`
+* `[crossOrigin]: boolean`
 * `[alt]: string`
 * `[largeLat]: number`
 * `[largeLng]: number`
@@ -399,8 +401,17 @@ Directive name in Angular2: `yaga-gps-sensor`.
 * `(lat): number`
 * `(lng): number`
 * `(accuracy): number`
+* `(altitude): number | null`
+* `(heading): number | null`
+* `(speed): number | null`
 * `(position): GPSPosition`
+* `(timestamp): number`
 
 ### Compass
 
 Directive name in Angular2: `yaga-compass-sensor`.
+
+* `(magneticHeading): number`
+* `(trueHeading): number`
+* `(headingAccuracy): number`
+* `(timestamp): number`
