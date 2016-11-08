@@ -40,7 +40,7 @@ Map State Options
 * `[zoom]: number`
 * `[minZoom]: number`
 * `[maxZoom]: number`
-* `[layers]: Laye`
+* `[layers]: Layer[]`
 * `[maxBounds]: LatLngBounds`
 * `[renderer]: Renderer`
 
