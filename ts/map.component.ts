@@ -24,7 +24,8 @@ import {
     TooltipEvent,
     MouseEvent,
     KeyboardEvent,
-    ZoomAnimEvent
+    ZoomAnimEvent,
+    MapOptions
 } from 'leaflet';
 
 // import { TileLayerDirective } from './tile-layer.directive';
@@ -285,6 +286,225 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setMaxBounds(val);
     }
     get maxBounds(): LatLngBounds {
-        return (<any>this).options.maxBounds;
+        return (<LatLngBounds>(<MapOptions>(<any>this).options).maxBounds);
+    }
+
+    // One-way Input
+    @Input() set closePopupOnClick(val: boolean) {
+        (<MapOptions>(<any>this).options).closePopupOnClick = val;
+    }
+    get closePopupOnClick(): boolean {
+        return (<MapOptions>(<any>this).options).closePopupOnClick;
+    }
+
+    @Input() set zoomSnap(val: number) {
+        (<MapOptions>(<any>this).options).zoomSnap = val;
+    }
+    get zoomSnap(): number {
+        return (<MapOptions>(<any>this).options).zoomSnap;
+    }
+    @Input() set zoomDelta(val: number) {
+        (<MapOptions>(<any>this).options).zoomDelta = val;
+    }
+    get zoomDelta(): number {
+        return (<MapOptions>(<any>this).options).zoomDelta;
+    }
+
+    @Input() set trackResize(val: boolean) {
+        (<MapOptions>(<any>this).options).trackResize = val;
+    }
+    get trackResize(): boolean {
+        return (<MapOptions>(<any>this).options).trackResize;
+    }
+
+    // maybe 2way!?!
+    @Input() set boxZoomEnabled(val: boolean) {
+        if (val) {
+            this.boxZoom.enable();
+            return;
+        }
+        this.boxZoom.disable();
+    }
+    get boxZoomEnabled(): boolean {
+        return this.boxZoom.enabled();
+    }
+
+    // maybe 2way!?!
+    @Input() set doubleClickZoomEnabled(val: boolean) {
+        if (val) {
+            this.doubleClickZoom.enable();
+            return;
+        }
+        this.doubleClickZoom.disable();
+    }
+    get doubleClickZoomEnabled(): boolean {
+        return this.doubleClickZoom.enabled();
+    }
+
+    // maybe 2way!?!
+    @Input() set draggingEnabled(val: boolean) {
+        if (val) {
+            this.dragging.enable();
+            return;
+        }
+        this.dragging.disable();
+    }
+    get draggingEnabled(): boolean {
+        return this.dragging.enabled();
+    }
+
+    @Input() set fadeAnimation(val: boolean) {
+        (<MapOptions>(<any>this).options).fadeAnimation = val;
+    }
+    get fadeAnimation(): boolean {
+        return (<MapOptions>(<any>this).options).fadeAnimation;
+    }
+
+    @Input() set markerZoomAnimation(val: boolean) {
+        (<MapOptions>(<any>this).options).markerZoomAnimation = val;
+    }
+    get markerZoomAnimation(): boolean {
+        return (<MapOptions>(<any>this).options).markerZoomAnimation;
+    }
+
+    @Input() set transform3DLimit(val: number) {
+        (<MapOptions>(<any>this).options).transform3DLimit = val;
+    }
+    get transform3DLimit(): number {
+        return (<MapOptions>(<any>this).options).transform3DLimit;
+    }
+
+    @Input() set zoomAnimation(val: boolean) {
+        (<MapOptions>(<any>this).options).zoomAnimation = val;
+    }
+    get zoomAnimation(): boolean {
+        return (<MapOptions>(<any>this).options).zoomAnimation;
+    }
+
+    @Input() set zoomAnimationThreshold(val: number) {
+        (<MapOptions>(<any>this).options).zoomAnimationThreshold = val;
+    }
+    get zoomAnimationThreshold(): number {
+        return (<MapOptions>(<any>this).options).zoomAnimationThreshold;
+    }
+
+    @Input() set inertia(val: boolean) {
+        (<MapOptions>(<any>this).options).inertia = val;
+    }
+    get inertia(): boolean {
+        return (<MapOptions>(<any>this).options).inertia;
+    }
+
+    @Input() set inertiaDeceleration(val: number) {
+        (<MapOptions>(<any>this).options).inertiaDeceleration = val;
+    }
+    get inertiaDeceleration(): number {
+        return (<MapOptions>(<any>this).options).inertiaDeceleration;
+    }
+
+    @Input() set inertiaMaxSpeed(val: number) {
+        (<MapOptions>(<any>this).options).inertiaMaxSpeed = val;
+    }
+    get inertiaMaxSpeed(): number {
+        return (<MapOptions>(<any>this).options).inertiaMaxSpeed;
+    }
+
+    @Input() set easeLinearity(val: number) {
+        (<MapOptions>(<any>this).options).easeLinearity = val;
+    }
+    get easeLinearity(): number {
+        return (<MapOptions>(<any>this).options).easeLinearity;
+    }
+
+    @Input() set worldCopyJump(val: boolean) {
+        (<MapOptions>(<any>this).options).worldCopyJump = val;
+    }
+    get worldCopyJump(): boolean {
+        return (<MapOptions>(<any>this).options).worldCopyJump;
+    }
+
+    @Input() set maxBoundsViscosity(val: number) {
+        (<MapOptions>(<any>this).options).maxBoundsViscosity = val;
+    }
+    get maxBoundsViscosity(): number {
+        return (<MapOptions>(<any>this).options).maxBoundsViscosity;
+    }
+
+    // maybe 2way!?!
+    @Input() set keyboardEnabled(val: boolean) {
+        if (val) {
+            this.keyboard.enable();
+            return;
+        }
+        this.keyboard.disable();
+    }
+    get keyboardEnabled(): boolean {
+        return this.keyboard.enabled();
+    }
+
+    @Input() set keyboardPanDelta(val: number) {
+        (<MapOptions>(<any>this).options).keyboardPanDelta = val;
+    }
+    get keyboardPanDelta(): number {
+        return (<MapOptions>(<any>this).options).keyboardPanDelta;
+    }
+
+    // maybe 2way!?!
+    @Input() set scrollWheelZoomEnabled(val: boolean) {
+        if (val) {
+            this.scrollWheelZoom.enable();
+            return;
+        }
+        this.scrollWheelZoom.disable();
+    }
+    get scrollWheelZoomEnabled(): boolean {
+        return this.scrollWheelZoom.enabled();
+    }
+
+    @Input() set wheelDebounceTime(val: number) {
+        (<MapOptions>(<any>this).options).wheelDebounceTime = val;
+    }
+    get wheelDebounceTime(): number {
+        return (<MapOptions>(<any>this).options).wheelDebounceTime;
+    }
+
+    @Input() set wheelPxPerZoomLevel(val: number) {
+        (<MapOptions>(<any>this).options).wheelPxPerZoomLevel = val;
+    }
+    get wheelPxPerZoomLevel(): number {
+        return (<MapOptions>(<any>this).options).wheelPxPerZoomLevel;
+    }
+
+
+    @Input() set tapEnabled(val: boolean) {
+        (<MapOptions>(<any>this).options).tap = val;
+    }
+    get tapEnabled(): boolean {
+        return (<MapOptions>(<any>this).options).tap;
+    }
+
+    @Input() set tapTolerance(val: number) {
+        (<MapOptions>(<any>this).options).tapTolerance = val;
+    }
+    get tapTolerance(): number {
+        return (<MapOptions>(<any>this).options).tapTolerance;
+    }
+
+    @Input() set bounceAtZoomLimits(val: boolean) {
+        (<MapOptions>(<any>this).options).bounceAtZoomLimits = val;
+    }
+    get bounceAtZoomLimits(): boolean {
+        return (<MapOptions>(<any>this).options).bounceAtZoomLimits;
+    }
+    // maybe 2way!?!
+    @Input() set touchZoomEnabled(val: boolean) {
+        if (val) {
+            this.touchZoom.enable();
+            return;
+        }
+        this.touchZoom.disable();
+    }
+    get touchZoomEnabled(): boolean {
+        return this.touchZoom.enabled();
     }
 }
