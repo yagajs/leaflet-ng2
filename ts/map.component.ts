@@ -7,8 +7,8 @@ import { Component,
     Input,
     Output,
     EventEmitter,
-    // ContentChildren,
-    // QueryList
+    ContentChildren,
+    QueryList
 } from '@angular/core';
 import {
     Map,
@@ -28,7 +28,7 @@ import {
     MapOptions
 } from 'leaflet';
 
-// import { TileLayerDirective } from './tile-layer.directive';
+import { TileLayerDirective } from './tile-layer.directive';
 
 const ANIMATION_DELAY: number = 300; // delay to wait for UI Changes...
 
@@ -42,6 +42,8 @@ export class MapComponent extends Map implements AfterViewInit {
 
     protected domRoot: HTMLElement;
     protected mapDomRoot: HTMLElement;
+
+    @ContentChildren(TileLayerDirective) private tileLayerDirectives: QueryList<TileLayerDirective>;
 
     // @ContentChildren(TileLayerDirective) public tileLayerDirectives: QueryList<TileLayerDirective>;
 
@@ -212,10 +214,21 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.invalidateSize(false);
 
-        // this.tileLayerDirectives.forEach((tileLayerDirective: TileLayerDirective) => {
-        //     this.addLayer(tileLayerDirective);
-        // });
-        // this.tileLayerDirectives.changes.subscribe((...args) => {console.log('tile layer change', args);});
+        this.tileLayerDirectives.forEach((tileLayerDirective: TileLayerDirective) => {
+            this.addLayer(tileLayerDirective);
+        });
+        this.tileLayerDirectives.changes.subscribe((tileLayerDirectives: QueryList<TileLayerDirective>) => {
+            const oldLayers: TileLayerDirective[] = (<any>this)._layers,
+                keys: string[] = Object.keys(oldLayers);
+
+            for (let i = 0; i < keys.length; i += 1) {
+                this.removeLayer(oldLayers[keys[i]]);
+            }
+
+            tileLayerDirectives.forEach((tileLayerDirective: TileLayerDirective) => {
+                this.addLayer(tileLayerDirective);
+            });
+        });
     }
 
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {
