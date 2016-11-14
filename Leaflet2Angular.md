@@ -124,68 +124,89 @@ Animation Options
 * `attributionControl` over `yaga-attribution-control`
 * `zoomControl` over `yaga-zoom-control`
 
-
-----
-
-*The following text should be proofed again...*
-
-----
-
-
 ## Layers
 
+### Abstract Classes
+
+#### Layer Base
 For all Layers
 * `[(display)]: boolean`
 * `[(opacity)]: number`
 * `[(zIndex)]: number`
+* `[(minZoom)]: number`
+* `[(maxZoom)]: number`
 
 * `[interactive]: boolean`
 * `[attribution]: string`
+* `[pane]: string` 
 
+Layer Events
+* `(add): Event`
+* `(remove): Event`
+
+Popup events
+* `(popupopen): PopupEvent`
+* `(popupclose): PopupEvent`
+
+Tooltip events
+* `(tooltipopen): TooltipEvent`
+* `(tooltipclose): TooltipEvent`
+
+Mouse Events
 * `(click): MouseEvent`
 * `(dbclick): MouseEvent`
 * `(mousedown): MouseEvent`
 * `(mouseover): MouseEvent`
 * `(mouseout): MouseEvent`
 * `(contextmenu): MouseEvent`
-* `(popupopen): PopupEvent` *is this really called?*
-* `(popupclose): PopupEvent` *is this really called?*
-* `(tooltipopen): TooltipEvent` *is this really called?*
-* `(tooltipclose): TooltipEvent` *is this really called?*
-* `(addLayer): Layer??? | Event???`
-* `(removeLayer): Layer??? | Event???`
+
+#### GridLayer
+
+**Extends Layer**
+
+* `[tileSize] Number: Point`
+* `[updateWhenIdle]: boolean`
+* `[updateWhenZooming]: boolean`
+* `[updateInterval]: number`
+* `[bounds]: LatLngBounds`
+* `[noWrap]: boolean`
+* `[className]: string`
+* `[keepBuffer]: number`
 
 
+Event
+* `(loading): Event`
+* `(tileunload): TileEvent`
+* `(tileloadstart): TileEvent`
+* `(tileerror): TileErrorEvent`
+* `(tileload): TileEvent`
+* `(load): Event`
 
 ### Raster
 
 #### Tile-Layer
+
+**Extends GridLayer**
 
 Directive name in Angular2: `yaga-tile-layer`.
 
 * ng-content(Tooltip, Popup)
 
 * `[(url)]: string` 
-* `[(zIndex)]: number`
-* `[minZoom]: number`, oder: `[(minZoom)]: number`
-* `[maxZoom]: number`, oder: `[(maxZoom)]: number`
-* `[maxNativeZoom]: number`  ""
-* `[subdomains]: string[]`  ""
-* `[errorTileUrl]: string`  ""
+* `[maxNativeZoom]: number`
+* `[subdomains]: string[]` 
+* `[errorTileUrl]: string`
+* `[zoomOffset]: number`
 * `[tms]: boolean`
 * `[zoomReverse]: boolean`
 * `[detectRetina]: boolean`
 * `[crossOrigin]: boolean`
 
-* `(loading): Event` 
-* `(tileunload): TileEvent` 
-* `(tileloadstart): TileEvent` 
-* `(tileerror): TileErrorEvent` 
-* `(tileload): TileEvent` 
-* `(load): Event`  
-* `(popupopen): Event`  
-* `(popupclose): Event` 
+----
 
+*The following text should be proofed again...*
+
+----
 
 #### WMS
 
