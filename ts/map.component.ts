@@ -30,23 +30,13 @@ import {
 
 import { TileLayerDirective } from './tile-layer.directive';
 
-const ANIMATION_DELAY: number = 300; // delay to wait for UI Changes...
+const ANIMATION_DELAY: number = 50; // delay to wait for UI Changes...
 
 @Component({
     selector: 'yaga-map',
     template: `<span style="display: none"><ng-content></ng-content></span>`
 })
 export class MapComponent extends Map implements AfterViewInit {
-
-    // zoom: number;
-
-    protected domRoot: HTMLElement;
-    protected mapDomRoot: HTMLElement;
-
-    @ContentChildren(TileLayerDirective) private tileLayerDirectives: QueryList<TileLayerDirective>;
-
-    // @ContentChildren(TileLayerDirective) public tileLayerDirectives: QueryList<TileLayerDirective>;
-
     @Output() public zoomChange: EventEmitter<number> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
@@ -87,12 +77,28 @@ export class MapComponent extends Map implements AfterViewInit {
     @Output('preclick') public preclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
-    private moveendTimeout: number;
+    protected domRoot: HTMLElement;
+    protected mapDomRoot: HTMLElement;
+
+    private moveTimeout: number;
+    private isZooming: boolean = false;
+    @ContentChildren(TileLayerDirective) private tileLayerDirectives: QueryList<TileLayerDirective>;
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
     ) {
         super(document.createElement('div'), { attributionControl: false, zoomControl: false});
+
+        const moveFn: Function = () => {
+            if (this.isZooming) {
+                this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
+                return;
+            }
+            this.latChange.emit(this.lat);
+            this.lngChange.emit(this.lng);
+            this.zoomChange.emit(this.zoom);
+            this.moveTimeout = undefined;
+        };
 
         this.setView([0, 0], 0);
 
@@ -100,15 +106,21 @@ export class MapComponent extends Map implements AfterViewInit {
         this.mapDomRoot = (<any>this)._container;
         this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
 
-        this.on('moveend', () => {
-            if (this.moveendTimeout) {
-                clearTimeout(this.moveendTimeout);
+        this.on('move', () => {
+            if (this.moveTimeout) {
+                clearTimeout(this.moveTimeout);
             }
-            this.moveendTimeout = setTimeout(() => {
-                this.latChange.emit(this.lat);
-                this.lngChange.emit(this.lng);
-                this.zoomChange.emit(this.zoom);
-            }, ANIMATION_DELAY);
+            this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
+        });
+        this.on('zoomstart', () => {
+            this.isZooming = true;
+        });
+        this.on('zoomend', () => {
+            this.isZooming = false;
+            if (this.moveTimeout) {
+                clearTimeout(this.moveTimeout);
+            }
+            this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
         });
 
         this.on('baselayerchange', (event: LayersControlEvent) => {
@@ -221,7 +233,7 @@ export class MapComponent extends Map implements AfterViewInit {
             const oldLayers: TileLayerDirective[] = (<any>this)._layers,
                 keys: string[] = Object.keys(oldLayers);
 
-            for (let i = 0; i < keys.length; i += 1) {
+            for (let i: number = 0; i < keys.length; i += 1) {
                 this.removeLayer(oldLayers[keys[i]]);
             }
 
