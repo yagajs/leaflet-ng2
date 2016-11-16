@@ -230,7 +230,7 @@ export class MapComponent extends Map implements AfterViewInit {
             const oldLayers: TileLayerDirective[] = (<any>this)._layers,
                 keys: string[] = Object.keys(oldLayers);
 
-            for (let i = 0; i < keys.length; i += 1) {
+            for (let i: number = 0; i < keys.length; i += 1) {
                 this.removeLayer(oldLayers[keys[i]]);
             }
 
