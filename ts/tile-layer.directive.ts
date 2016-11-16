@@ -1,16 +1,27 @@
 import { Directive, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { TileLayer } from 'leaflet';
+import { TileLayer, TileLayerOptions, Map } from 'leaflet';
 
 @Directive({
     selector: 'yaga-tile-layer'
 })
 export class TileLayerDirective extends TileLayer implements AfterViewInit  {
     @Output() protected urlChange: EventEmitter<string> = new EventEmitter();
+    @Output() protected displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() protected opacityChange: EventEmitter<number> = new EventEmitter();
 
     constructor() {
         // Transparent 1px image:
         super('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
+
+        this.on('remove', () => {
+            this.displayChange.emit(false);
+        });
+        this.on('add', () => {
+            setTimeout(() => {
+                this.display = true;
+                this.displayChange.emit(true);
+            }, 0);
+        });
     }
 
     ngAfterViewInit(): void {
@@ -48,6 +59,62 @@ export class TileLayerDirective extends TileLayer implements AfterViewInit  {
     }
 
     get opacity(): number {
-        return (<any>this).options.opacity;
+        return (<TileLayerOptions>(<any>this).options).opacity;
+    }
+
+    @Input() set display(val: boolean) {
+        var isDisplayed: boolean = this.display;
+        if (isDisplayed === val) {
+            return;
+        }
+
+        var pane: HTMLElement,
+            container: HTMLElement,
+            map: Map,
+            events: any, // Dictionary of functions
+            eventKeys: string[];
+        try {
+            pane = this.getPane();
+            container = this.getContainer();
+            map = (<any>this)._map;
+            events = this.getEvents();
+            eventKeys = Object.keys(events);
+
+        } catch (err) {
+            return;
+        }
+
+        if (val) {
+            // show layer
+            pane.appendChild(container);
+            for (let i: number = 0; i < eventKeys.length; i += 1) {
+                map.on(eventKeys[i], events[eventKeys[i]], this);
+            }
+            this.redraw();
+        } else {
+            // hide layer
+            pane.removeChild(container);
+            for (let i: number = 0; i < eventKeys.length; i += 1) {
+                map.off(eventKeys[i], events[eventKeys[i]], this);
+            }
+        }
+    }
+
+    get display(): boolean {
+        var pane: HTMLElement,
+            container: HTMLElement;
+        try {
+            pane = this.getPane();
+            container = this.getContainer();
+        } catch (err) {
+            return false;
+        }
+
+        for (let i: number = 0; i < pane.children.length; i += 1) {
+            if (pane.children[i] === container) {
+                return true;
+            }
+        }
+        return false;
     }
 }
