@@ -37,14 +37,6 @@ const ANIMATION_DELAY: number = 50; // delay to wait for UI Changes...
     template: `<span style="display: none"><ng-content></ng-content></span>`
 })
 export class MapComponent extends Map implements AfterViewInit {
-
-    // zoom: number;
-
-    protected domRoot: HTMLElement;
-    protected mapDomRoot: HTMLElement;
-
-    // @ContentChildren(TileLayerDirective) public tileLayerDirectives: QueryList<TileLayerDirective>;
-
     @Output() public zoomChange: EventEmitter<number> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
@@ -84,6 +76,9 @@ export class MapComponent extends Map implements AfterViewInit {
     @Output('keypress') public keypressEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
     @Output('preclick') public preclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
+
+    protected domRoot: HTMLElement;
+    protected mapDomRoot: HTMLElement;
 
     private moveTimeout: number;
     private isZooming: boolean = false;
