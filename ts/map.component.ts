@@ -117,6 +117,9 @@ export class MapComponent extends Map implements AfterViewInit {
         });
         this.on('zoomend', () => {
             this.isZooming = false;
+            if (this.moveTimeout) {
+                clearTimeout(this.moveTimeout);
+            }
             this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
         });
 

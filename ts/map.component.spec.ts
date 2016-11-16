@@ -78,7 +78,7 @@ describe('Map Component', () => {
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
             var alreadyFired: boolean = false;
 
-            map.latChange.subscribe(() => {
+            map.lngChange.subscribe(() => {
                 if (alreadyFired) {
                     return done(new Error('Already fired event'));
                 }
@@ -134,7 +134,7 @@ describe('Map Component', () => {
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
             var alreadyFired: boolean = false;
 
-            map.latChange.subscribe(() => {
+            map.zoomChange.subscribe(() => {
                 if (alreadyFired) {
                     return done(new Error('Already fired event'));
                 }
