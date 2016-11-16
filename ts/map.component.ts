@@ -43,10 +43,6 @@ export class MapComponent extends Map implements AfterViewInit {
     protected domRoot: HTMLElement;
     protected mapDomRoot: HTMLElement;
 
-    @ContentChildren(TileLayerDirective) private tileLayerDirectives: QueryList<TileLayerDirective>;
-
-    // @ContentChildren(TileLayerDirective) public tileLayerDirectives: QueryList<TileLayerDirective>;
-
     @Output() public zoomChange: EventEmitter<number> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
@@ -89,6 +85,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
     private moveTimeout: number;
     private isZooming: boolean = false;
+    @ContentChildren(TileLayerDirective) private tileLayerDirectives: QueryList<TileLayerDirective>;
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
