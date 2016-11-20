@@ -1,15 +1,18 @@
-import { Directive, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, Inject, forwardRef, OnDestroy } from '@angular/core';
 import { TileLayer, TileLayerOptions, Map } from 'leaflet';
+import { MapComponent } from './map.component';
 
 @Directive({
     selector: 'yaga-tile-layer'
 })
-export class TileLayerDirective extends TileLayer implements AfterViewInit  {
-    @Output() protected urlChange: EventEmitter<string> = new EventEmitter();
-    @Output() protected displayChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() protected opacityChange: EventEmitter<number> = new EventEmitter();
+export class TileLayerDirective extends TileLayer implements OnDestroy  {
+    @Output() public urlChange: EventEmitter<string> = new EventEmitter();
+    @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
+    @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
 
-    constructor() {
+    constructor(
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+    ) {
         // Transparent 1px image:
         super('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
 
@@ -22,10 +25,13 @@ export class TileLayerDirective extends TileLayer implements AfterViewInit  {
                 this.displayChange.emit(true);
             }, 0);
         });
+
+        this.addTo(mapComponent);
     }
 
-    ngAfterViewInit(): void {
-        console.log('todo: get ContentChildren');
+    ngOnDestroy(): void {
+        console.log('Destroy');
+        this.removeFrom((<any>this)._map);
     }
 
     setUrl(url: string, noRedraw?: boolean): this {
