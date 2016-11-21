@@ -9,6 +9,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
+    @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
@@ -20,10 +21,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             this.displayChange.emit(false);
         });
         this.on('add', () => {
-            setTimeout(() => {
-                this.display = true;
-                this.displayChange.emit(true);
-            }, 0);
+            this.displayChange.emit(true);
         });
 
         this.addTo(mapComponent);
@@ -36,7 +34,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
 
     setUrl(url: string, noRedraw?: boolean): this {
         if (this.url === url) {
-            console.log('same url');
             return;
         }
         this.urlChange.emit(url);
@@ -87,6 +84,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             eventKeys = Object.keys(events);
 
         } catch (err) {
+            /* istanbul ignore next */
             return;
         }
 
@@ -113,14 +111,30 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             pane = this.getPane();
             container = this.getContainer();
         } catch (err) {
+            /* istanbul ignore next */
             return false;
         }
 
         for (let i: number = 0; i < pane.children.length; i += 1) {
+            /* istanbul ignore else */
             if (pane.children[i] === container) {
                 return true;
             }
         }
         return false;
+    }
+
+    setZIndex(val: number): this {
+        super.setZIndex(val);
+        this.zIndexChange.emit(val);
+        return this;
+    }
+
+    @Input() set zIndex(val: number) {
+        this.setZIndex(val);
+    }
+
+    get zIndex(): number {
+        return (<TileLayerOptions>(<any>this).options).zIndex;
     }
 }
