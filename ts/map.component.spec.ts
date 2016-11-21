@@ -34,6 +34,32 @@ describe('Map Component', () => {
                 throw new Error(`Wrong value setted: ${ val } != ${ map.lat }`);
             }
         });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
+
+            map.latChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.lat = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
+
+            map.latChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setView([val, 0], 0);
+        });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
             var alreadyFired: boolean = false;
 
@@ -80,6 +106,32 @@ describe('Map Component', () => {
             if (map.lng !== val) {
                 throw new Error(`Wrong value setted: ${ val } != ${ map.lng }`);
             }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
+
+            map.lngChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.lng = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
+
+            map.lngChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setView([0, val], 0);
         });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
             var alreadyFired: boolean = false;
@@ -141,6 +193,32 @@ describe('Map Component', () => {
             }, 0);
 
         });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.zoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.zoom = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.zoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setView([0, 0], val);
+        });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
             var alreadyFired: boolean = false;
 
@@ -188,6 +266,32 @@ describe('Map Component', () => {
                 throw new Error(`Wrong value setted: ${ val } != ${ map.minZoom }`);
             }
         });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.minZoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.minZoom = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.minZoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setMinZoom(val);
+        });
     });
     describe('[(maxZoom)]', () => {
         var map: MapComponent;
@@ -218,6 +322,32 @@ describe('Map Component', () => {
             if (map.maxZoom !== val) {
                 throw new Error(`Wrong value setted: ${ val } != ${ map.maxZoom }`);
             }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.maxZoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.maxZoom = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.ceil(Math.random() * 15);
+
+            map.maxZoomChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setMaxZoom(val);
         });
     });
     describe('[(maxBounds)]', () => {
@@ -261,6 +391,38 @@ describe('Map Component', () => {
             if (map.maxBounds !== val) {
                 throw new Error(`Wrong value setted: ${ val } != ${ map.maxBounds }`);
             }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: LatLngBounds = new LatLngBounds([
+                [Math.random() * 100, Math.random() * 100],
+                [Math.random() * 100, Math.random() * 100]
+            ]);
+
+            map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.maxBounds = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: LatLngBounds = new LatLngBounds([
+                [Math.random() * 100, Math.random() * 100],
+                [Math.random() * 100, Math.random() * 100]
+            ]);
+
+            map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            map.setMaxBounds(val);
         });
     });
 
