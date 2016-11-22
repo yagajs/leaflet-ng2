@@ -1,8 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
-import { TileLayerDirective } from './tile-layer.directive';
-import { MapComponent } from './map.component';
-import { point, TileLayerOptions, Point, latLngBounds, LatLngBoundsExpression } from 'leaflet';
+import { TileLayerDirective,
+    MapComponent,
+    TileLayerOptions,
+    LatLngBoundsExpression } from './index';
+import { point, Point, latLngBounds } from 'leaflet';
 
 const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -704,14 +706,22 @@ describe('Tile-Layer Directive', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
-            layer.tileloadEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
-                return done();
-            });
-            layer.fire('tileload', testEvent);
+            var called: boolean; // this event is called multiple times in the life-circle of leaflet
+            setTimeout(() => {
+                layer.tileloadEvent.subscribe((event: any) => {
+                    /* istanbul ignore if */
+                    if (called) {
+                        return;
+                    }
+                    /* istanbul ignore if */
+                    if (event.testHandle !== testEvent.testHandle) {
+                        return done(new Error('Wrong event returned'));
+                    }
+                    called = true;
+                    return done();
+                });
+                layer.fire('tileload', testEvent);
+            }, 1);
         });
     });
     describe('(load)', () => {
@@ -726,15 +736,23 @@ describe('Tile-Layer Directive', () => {
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
-                testEvent: any = { testHandle };
-            layer.loadEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
-                return done();
-            });
-            layer.fire('load', testEvent);
+                testEvent: any = { target: layer, testHandle, type: 'load' };
+            var called: boolean; // this event is called multiple times in the life-circle of leaflet
+            setTimeout(() => {
+                layer.loadEvent.subscribe((event: any) => {
+                    /* istanbul ignore if */
+                    if (called) {
+                        return;
+                    }
+                    /* istanbul ignore if */
+                    if (event.testHandle !== testEvent.testHandle) {
+                        return done(new Error('Wrong event returned'));
+                    }
+                    called = true;
+                    return done();
+                });
+                layer.fire('load', testEvent);
+            }, 1);
         });
     });
 
