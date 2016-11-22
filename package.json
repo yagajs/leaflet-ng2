@@ -12,7 +12,8 @@
     "npm-lint": "node_modules/.bin/ts-npm-lint --fix-typings && node_modules/.bin/ts-npm-lint",
     "test": "npm run lint && npm run transpile && node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- test/*.js",
     "dist": "npm test && npm run npm-lint",
-    "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js"
+    "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js",
+    "dependency-check": "node_modules/.bin/node-dependencies"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "jsdom": "^9.8.3",
     "jsdom-global": "^2.1.0",
     "mocha": "^3.1.2",
+    "node-dependencies": "^0.3.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.0-rc.2",
     "ts-npm-lint": "^0.1.0",
