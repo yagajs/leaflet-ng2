@@ -2,12 +2,12 @@
   "globalDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "geojson": "registry:dt/geojson#0.0.0+20160619034323",
-    "leaflet": "registry:dt/leaflet#1.0.0-rc3+20161013145239"
+    "leaflet": "registry:dt/leaflet#1.0.0+20161110205015"
   },
   "dependencies": {
     "@angular/core": "npm:@angular/core"
   },
   "globalDevDependencies": {
-    "mocha": "registry:dt/mocha#2.2.5+20160720003353"
+    "mocha": "registry:dt/mocha#2.2.5+20161028141524"
   }
 }
