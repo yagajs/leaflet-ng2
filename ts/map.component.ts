@@ -6,9 +6,7 @@ import { Component,
     Inject,
     Input,
     Output,
-    EventEmitter,
-    // ContentChildren,
-    // QueryList
+    EventEmitter
 } from '@angular/core';
 import {
     Map,
@@ -27,8 +25,6 @@ import {
     ZoomAnimEvent,
     MapOptions
 } from 'leaflet';
-
-// import { TileLayerDirective } from './tile-layer.directive';
 
 const ANIMATION_DELAY: number = 50; // delay to wait for UI Changes...
 
@@ -224,11 +220,6 @@ export class MapComponent extends Map implements AfterViewInit {
         this.domRoot.appendChild(this.mapDomRoot);
 
         this.invalidateSize(false);
-
-        // this.tileLayerDirectives.forEach((tileLayerDirective: TileLayerDirective) => {
-        //     this.addLayer(tileLayerDirective);
-        // });
-        // this.tileLayerDirectives.changes.subscribe((...args) => {console.log('tile layer change', args);});
     }
 
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {
