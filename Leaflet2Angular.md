@@ -4,7 +4,7 @@
 Outputs of a directive or component...*
 
 *This list is written with the help of the
-[Leaflet Documentation](http://leafletjs.com/reference-1.0.0.html)*
+[Leaflet Documentation](http://leafletjs.com/reference-1.0.2.html)*
 
 ## Map
 
@@ -129,12 +129,14 @@ Animation Options
 ### Abstract Classes
 
 #### Layer Base
-For all Layers
+
+*For all Layers*
+
 * `[(display)]: boolean`
 * `[(opacity)]: number`
 * `[(zIndex)]: number`
-* `[(minZoom)]: number`
-* `[(maxZoom)]: number`
+* `[minZoom]: number` in some cases 2-way-binded
+* `[maxZoom]: number` in some cases 2-way-binded
 
 * `[interactive]: boolean`
 * `[attribution]: string`
@@ -202,24 +204,18 @@ Directive name in Angular2: `yaga-tile-layer`.
 * `[detectRetina]: boolean`
 * `[crossOrigin]: boolean`
 
-----
-
-*The following text should be proofed again...*
-
-----
-
 #### WMS
 
 Directive name in Angular2: `yaga-wms-layer`.
 
-look at TileLayer
+Extends TileLayer
 
 * `[layers]: string[]`
 * `[styles]: string[]`
 * `[format]: string`
 * `[transparent]: boolean`
 * `[version]: string`
-* ??? `[crs]: CRS`
+* `[crs]: CRS`
 * `[uppercase]: boolean`
 
 #### ImageOverlay
@@ -231,80 +227,109 @@ Directive name in Angular2: `yaga-image-overlay`.
 * `[(url)]: string`
 * `[crossOrigin]: boolean`
 * `[alt]: string`
-* `[largeLat]: number`
-* `[largeLng]: number`
-* `[smallLat]: number`
-* `[smallLng]: number`
+* `[(north)]: number`
+* `[(south)]: number`
+* `[(east)]: number`
+* `[(west)]: number`
 
 ### Vector
 
-#### GeoJSON
+#### Path
 
-Directive name in Angular2: `yaga-geojson-layer`.
+*Abstract class!*
 
-* `[(data)]: FeatureCollection`
-* `[defaultStyle]: Style`
-* `[styler]: (defaultStyle: Style) => Style`
-* `[defaultIcon]: Icon`
-* `[iconizer]: (defaultIcon: Icon) => Icon`
+* `[(display)]: boolean`
+* `[(stroke)]: boolean`
+* `[(color)]: string`
+* `[(weight)]: number`
+* `[(opacity)]: number`
+* `[(lineCap)]: string`
+* `[(lineJoin)]: string`
+* `[(dashArray)]: string`
+* `[(dashOffset)]: string`
+* `[(fill)]: boolean`
+* `[(fillColor)]: string`
+* `[(fillOpacity)]: number`
+* `[(fillRule)]: string`
+* `[(renderer)]: Renderer`	
+* `[(className)]: string`
+* `[(style)]: Style`
 
 #### Polyline
 
 Directive name in Angular2: `yaga-polyline`.
 
+Extends Path
+
 * ng-content(Tooltip, Popup)
 
-* `[(style)]: Style`
 * `[(latlngs)]: LatLng[]`
+* `[(geojson)]: GeoJSONFeature` *Note: any layer has to have a feature property to handle properties*
+* `[(properties)]: any | T` *Maybe as generic?*
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
+* `[smoothFactor]: number`
+* `[noClip]: boolean`
 
 #### Polygon
 
 Directive name in Angular2: `yaga-polygon`.
 
-look at Polyline
+Extends Polyline
 
 
 #### Rectangle
 
 Directive name in Angular2: `yaga-rectangle`.
 
-* ng-content(Tooltip, Popup)
+Extends Polygon
 
-* `[(style)]: Style`
 * `[(bounds)]: LatLngBounds`
-* `[(tooltipOpened)]: boolean`
-* `[(popupOpened)]: boolean`
+* `[(north)]: number`
+* `[(east)]: number`
+* `[(south)]: number`
+* `[(west)]: number`
 
 
 #### Circle
 
 Directive name in Angular2: `yaga-circle`.
 
-* ng-content(Tooltip, Popup)
 
-* `[(lat)]: number` 
+Extends Path
+
+* `[(center)]: LatLng`
+* `[(lat)]: number`
 * `[(lng)]: number`
-* `[(radius)]: number` // in meters
+* `[(radius)]: number` in meters
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
+* `[(geojson)]: GeoJSONFeature` *Note: save radius in properties*
+* `[(properties)]: any`
+
+
+#### GeoJSON
+
+Directive name in Angular2: `yaga-geojson-layer`.
+
+* `[(data)]: GeoJSONFeatureCollection`
+* `[defaultStyle]: Style`
+* `[styler]: (defaultStyle: Style) => Style`
+* `[defaultIcon]: Icon`
+* `[iconizer]: (defaultIcon: Icon) => Icon`
 
 #### CircleMarker
 
 Directive name in Angular2: `yaga-circle-marker`.
 
-* ng-content(Tooltip, Popup)
+Extends Path
 
 * `[(lat)]: number` 
 * `[(lng)]: number`
-* `[(radius)]: number` // in pixel
+* `[(radius)]: number` in pixel
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
 
-
-#### // SVG
-#### // Canvas
 
 ### UI
 
@@ -314,14 +339,27 @@ Directive name in Angular2: `yaga-marker`.
 
 * ng-content (Icon(s...), Tooltip, Popup)
 
+Extends Layer-Base
+
 * `[(lat)]: number`
+* `[(opacity)]: number`
 * `[(lng)]: number`
 * `[(zindex)]: number`
 * `[(draggable)]: boolean` dragging.enable und .disable überwachen
 * `[(opacity)]: number`
+* `[(icon)]: Icon`
+* `[(tooltipOpened)]: boolean`
+* `[(popupOpened)]: boolean`
 
 * `[minZoom]: number`
 * `[maxZoom]: number`
+* `[keyboard]: boolean`
+* `[title]: string`
+* `[alt]: string`
+* `[zIndexOffset]: number`
+* `[riseOnHover]: boolean`
+* `[riseOffset]: number`
+* `[pane]: string`
 
 Events:
 
@@ -331,19 +369,29 @@ Events:
 * `(drag): Event`
 * `(moveend): Event`
 
-* `(click): MouseEvent` 
-* `(dbclick): MouseEvent`
-* `(mousedown): MouseEvent`
-* `(mouseover): MouseEvent`
-* `(mouseout): MouseEvent` 
-* `(contextmenu): MouseEvent` 
-
 #### Popup
 
 Directive name in Angular2: `yaga-popup`.
 
 * ng-content(HTML)
-* `[(opened)]: boolean` // keine Information in der Klasse selbst!
+
+* `[(content)]: HTMLElement`
+* `[(opened)]: boolean`
+* `[(lat)]: number`
+* `[(lng)]: number`
+* `[(position)]: LatLng`
+* `[maxWidth]: number`
+* `[minWidth]: number`
+* `[maxHeight]: number`
+* `[autoPan]: boolean`
+* `[autoPanPaddingTopLeft]: Point`
+* `[autoPanPaddingBottomRight]: Point`
+* `[autoPanPadding]: Point`
+* `[keepInView]: boolean`
+* `[closeButton]: boolean`
+* `[autoClose]: boolean`
+* `[className]: string`
+* `[pane]: string`
 
 #### Tooltip
 
@@ -351,12 +399,29 @@ Directive name in Angular2: `yaga-tooltip`.
 
 * ng-content(HTML)
 * `[(opened)]: boolean`
+* `[(opacity)]: number`
+* `[offset]: Point`
+* `[direction]: string`
+* `[permanent]: boolean`
+* `[sticky]: boolean`
+* `[interactive]: boolean`
+* `[pane]: string`
 
 ### Structure
 
 #### LayerGroup
 
+*Actual not planed to support*
+
 Directive name in Angular2: `yaga-layer-group`.
+
+* ng-content(Layer(s...))
+
+#### FeatureGroup
+
+*Actual not planed to support*
+
+Directive name in Angular2: `yaga-feature-group`.
 
 * ng-content(Layer(s...))
 
@@ -436,3 +501,10 @@ Directive name in Angular2: `yaga-compass-sensor`.
 * `(trueHeading): number`
 * `(headingAccuracy): number`
 * `(timestamp): number`
+
+## Others
+
+*We will not implement SVG and Canvas ath the moment*
+
+*LayerGroup is difficult to implement because every layer wants to add itself to the map-component.
+Maybe we do not implement LayerGroup to Yaga*
