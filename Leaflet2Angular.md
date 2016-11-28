@@ -504,7 +504,7 @@ Directive name in Angular2: `yaga-compass-sensor`.
 
 ## Others
 
-*We will not implement SVG and Canvas ath the moment*
+*We will not implement SVG and Canvas at the moment*
 
 *LayerGroup is difficult to implement because every layer wants to add itself to the map-component.
 Maybe we do not implement LayerGroup to Yaga*
