@@ -471,6 +471,14 @@ declare namespace L {
 
     export function tileLayer(urlTemplate: string, options?: TileLayerOptions): TileLayer;
 
+
+    export namespace TileLayer {
+        export class WMS extends TileLayer {
+            constructor(baseUrl: string, options: WMSOptions);
+            setParams(params: Object, noRedraw?: boolean): this;
+        }
+    }
+
     export interface WMSOptions extends TileLayerOptions {
         layers: string;
         styles?: string;
@@ -481,13 +489,10 @@ declare namespace L {
         uppercase?: boolean;
     }
 
-    export class WMS extends TileLayer {
-        constructor(baseUrl: string, options: WMSOptions);
-        setParams(params: Object, noRedraw?: boolean): this;
-    }
+    export function tileLayer(urlTemplate: string, options?: TileLayerOptions): TileLayer;
 
     export namespace tileLayer {
-        export function wms(baseUrl: string, options: WMSOptions): WMS;
+        export function wms(baseUrl: string, options: WMSOptions): TileLayer.WMS;
     }
 
     export interface ImageOverlayOptions extends LayerOptions {
