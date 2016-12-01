@@ -476,6 +476,14 @@ declare namespace L {
         }
     }
 
+
+    export namespace TileLayer {
+        export class WMS extends TileLayer {
+            constructor(baseUrl: string, options: WMSOptions);
+            setParams(params: Object, noRedraw?: boolean): this;
+        }
+    }
+
     export interface WMSOptions extends TileLayerOptions {
         layers: string;
         styles?: string;
