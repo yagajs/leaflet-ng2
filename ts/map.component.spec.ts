@@ -1,7 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 
-import { MapComponent } from './map.component';
-import { LatLngBounds, point, MapOptions } from 'leaflet';
+import { MapComponent, MapOptions } from './index';
+import { LatLngBounds, point } from 'leaflet';
 
 describe('Map Component', () => {
     describe('[(lat)]', () => {
