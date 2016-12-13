@@ -76,7 +76,7 @@ describe('Tile-Layer Directive', () => {
                 }
             }
             /* istanbul ignore next */
-            return done(new Error('There is still an event on listener'));
+            return done(new Error('There is no event on listener'));
         });
         it('should set to false by removing from map', (done: MochaDone) => {
 
