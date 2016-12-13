@@ -166,23 +166,23 @@ Mouse Events
 
 **Extends Layer**
 
-* `[tileSize] Number: Point`
-* `[updateWhenIdle]: boolean`
-* `[updateWhenZooming]: boolean`
-* `[updateInterval]: number`
-* `[bounds]: LatLngBounds`
-* `[noWrap]: boolean`
-* `[className]: string`
-* `[keepBuffer]: number`
+* (tileLayer) `[tileSize] Number: Point`
+* (tileLayer) `[updateWhenIdle]: boolean`
+* (tileLayer) `[updateWhenZooming]: boolean`
+* (tileLayer) `[updateInterval]: number`
+* (tileLayer) `[bounds]: LatLngBounds`
+* (tileLayer) `[noWrap]: boolean`
+* (tileLayer) `[className]: string`
+* (tileLayer) `[keepBuffer]: number`
 
 
 Event
-* `(loading): Event`
-* `(tileunload): TileEvent`
-* `(tileloadstart): TileEvent`
-* `(tileerror): TileErrorEvent`
-* `(tileload): TileEvent`
-* `(load): Event`
+* (tileLayer) `(loading): Event`
+* (tileLayer) `(tileunload): TileEvent`
+* (tileLayer) `(tileloadstart): TileEvent`
+* (tileLayer) `(tileerror): TileErrorEvent`
+* (tileLayer) `(tileload): TileEvent`
+* (tileLayer) `(load): Event`
 
 ### Raster
 
@@ -194,16 +194,16 @@ Directive name in Angular2: `yaga-tile-layer`.
 
 * ng-content(Tooltip, Popup)
 
-* `[(url)]: string` 
-* `[maxNativeZoom]: number`
+* (ok) `[(url)]: string` 
+* (ok) `[maxNativeZoom]: number`
 * `[minNativeZoom]: number`
-* `[subdomains]: string[]` 
-* `[errorTileUrl]: string`
-* `[zoomOffset]: number`
-* `[tms]: boolean`
-* `[zoomReverse]: boolean`
-* `[detectRetina]: boolean`
-* `[crossOrigin]: boolean`
+* (ok) `[subdomains]: string[]` 
+* (ok) `[errorTileUrl]: string`
+* (ok) `[zoomOffset]: number`
+* (ok) `[tms]: boolean`
+* (ok) `[zoomReverse]: boolean`
+* (ok) `[detectRetina]: boolean`
+* (ok) `[crossOrigin]: boolean`
 
 #### WMS
 
