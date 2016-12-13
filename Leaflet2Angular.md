@@ -196,6 +196,7 @@ Directive name in Angular2: `yaga-tile-layer`.
 
 * `[(url)]: string` 
 * `[maxNativeZoom]: number`
+* `[minNativeZoom]: number`
 * `[subdomains]: string[]` 
 * `[errorTileUrl]: string`
 * `[zoomOffset]: number`
