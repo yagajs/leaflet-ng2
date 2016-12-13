@@ -16,12 +16,12 @@ Component name in Angular2: `yaga-map`.
 
 **Two-Way**
 
-* `[(lat)]: number`
-* `[(lng)]: number`
-* `[(zoom)]: number`
-* `[(minZoom)]: number`
-* `[(maxZoom)]: number`
-* `[(maxBounds)]: Bounds`
+* (ok) `[(lat)]: number`
+* (ok) `[(lng)]: number`
+* (ok) `[(zoom)]: number`
+* (ok) `[(minZoom)]: number`
+* (ok) `[(maxZoom)]: number`
+* (ok) `[(maxBounds)]: Bounds`
 
 **Options**
 
