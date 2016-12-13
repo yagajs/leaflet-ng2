@@ -379,11 +379,11 @@ Directive name in Angular2: `yaga-popup`.
 
 * ng-content(HTML)
 
-* `[(content)]: HTMLElement`
-* `[(opened)]: boolean`
-* `[(lat)]: number`
-* `[(lng)]: number`
-* `[(position)]: LatLng`
+* (ok) `[(content)]: HTMLElement`
+* (ok) `[(opened)]: boolean`
+* (ok) `[(lat)]: number`
+* (ok) `[(lng)]: number`
+* (ok) `[(position)]: LatLng`
 * `[maxWidth]: number`
 * `[minWidth]: number`
 * `[maxHeight]: number`
