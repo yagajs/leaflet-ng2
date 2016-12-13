@@ -1,4 +1,48 @@
 {
+  "jsRules": {
+    "class-name": true,
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-trailing-whitespace": true,
+    "no-unsafe-finally": true,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  },
   "rules": {
     "class-name": true,
     "comment-format": [
@@ -35,7 +79,6 @@
       "trace"
     ],
     "no-duplicate-variable": true,
-    "no-duplicate-key": true,
     "no-empty": true,
     "no-eval": true,
     "no-internal-module": true,
@@ -43,9 +86,7 @@
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-trailing-whitespace": true,
-    "no-unreachable": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": false,
     "object-literal-sort-keys": true,
@@ -83,11 +124,6 @@
         "property-declaration": "nospace",
         "variable-declaration": "nospace"
       }
-    ],
-    "use-strict": [
-      true,
-      "check-module",
-      "check-function"
     ],
     "variable-name": [
       true,
