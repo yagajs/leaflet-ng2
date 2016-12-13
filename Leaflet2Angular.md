@@ -26,100 +26,100 @@ Component name in Angular2: `yaga-map`.
 **Options**
 
 Interaction Options
-* `[closePopupOnClick]: boolean`
-* `[zoomSnap]: number`
-* `[zoomDelta]: number`
-* `[trackResize]: boolean`
-* `[boxZoom]: boolean`
-* `[doubleClickZoom]: boolean`
-* `[dragging]: boolean`
+* (ok) `[closePopupOnClick]: boolean`
+* (ok) `[zoomSnap]: number`
+* (ok) `[zoomDelta]: number`
+* (ok) `[trackResize]: boolean`
+* (rename) `[boxZoom]: boolean`
+* (rename) `[doubleClickZoom]: boolean`
+* (rename) `[dragging]: boolean`
 
 Map State Options
-* `[crs]: CRS`
+* (missing text) `[crs]: CRS`
 * `[center]: LatLng`
-* `[zoom]: number`
-* `[minZoom]: number`
-* `[maxZoom]: number`
-* `[layers]: Layer[]`
-* `[maxBounds]: LatLngBounds`
-* `[renderer]: Renderer`
+* (see twoway) `[zoom]: number`
+* (see twoway) `[minZoom]: number`
+* (see twoway) `[maxZoom]: number`
+* (not implemented)`[layers]: Layer[]`
+* (see twoway) `[maxBounds]: LatLngBounds`
+* (not implemented) `[renderer]: Renderer`
 
 Animation Options
-* `[fadeAnimation]: boolean`
-* `[markerZoomAnimation]: boolean`
-* `[transform3DLimit]: number`
-* `[zoomAnimation]: boolean`
-* `[zoomAnimationThreshold]: number`
+* (ok) `[fadeAnimation]: boolean`
+* (ok) `[markerZoomAnimation]: boolean`
+* (ok) `[transform3DLimit]: number`
+* (ok) `[zoomAnimation]: boolean`
+* (ok) `[zoomAnimationThreshold]: number`
 
 Panning Inertia Options
-* `[inertia]: boolean`
-* `[inertiaDeceleration]: number`
-* `[inertiaMaxSpeed]: number`
-* `[easeLinearity]: number`	
-* `[worldCopyJump]: boolean`
-* `[maxBoundsViscosity]: number`
+* (ok) `[inertia]: boolean`
+* (ok) `[inertiaDeceleration]: number`
+* (ok) `[inertiaMaxSpeed]: number`
+* (ok) `[easeLinearity]: number`	
+* (ok) `[worldCopyJump]: boolean`
+* (ok) `[maxBoundsViscosity]: number`
 
 Keyboard Navigation Options
-* `[keyboard]: boolean`
-* `[keyboardPanDelta]: number`
+* (rename) `[keyboard]: boolean`
+* (ok) `[keyboardPanDelta]: number`
 
 Mousewheel options
-* `[scrollWheelZoom]: boolean` //leaflet also supports `string` with the value `center`
-* `[wheelDebounceTime]: number`
-* `[wheelPxPerZoomLevel]: number`
+* (rename) `[scrollWheelZoom]: boolean` //leaflet also supports `string` with the value `center`
+* (ok) `[wheelDebounceTime]: number`
+* (ok) `[wheelPxPerZoomLevel]: number`
 
 Touch interaction options
-* `[tap]: boolean`
-* `[tapTolerance]: number`
-* `[touchZoom]: boolean`
-* `[bounceAtZoomLimits]: boolean`
+* (rename) `[tap]: boolean`
+* (ok) `[tapTolerance]: number`
+* (rename) `[touchZoom]: boolean`
+* (ok) `[bounceAtZoomLimits]: boolean`
 
 **Events**
 
 Layer events
-* `(baselayerchange): LayersControlEvent`
-* `(overlayadd): LayersControlEvent`
-* `(overlayremove): LayersControlEvent`
-* `(layeradd): LayerEvent`
-* `(layerremove): LayerEvent`
+* (ok) `(baselayerchange): LayersControlEvent`
+* (ok) `(overlayadd): LayersControlEvent`
+* (ok) `(overlayremove): LayersControlEvent`
+* (ok) `(layeradd): LayerEvent`
+* (ok) `(layerremove): LayerEvent`
 
 Map state change events
-* `(zoomlevelschange): Event`
-* `(resize): ResizeEvent`
-* `(unload): Event`
-* `(viewreset): Event`
-* `(load): Event`
-* `(zoomstart): Event`
-* `(movestart): Event`
-* `(zoom): Event`
-* `(move): Event`
-* `(zoomend): Event`
-* `(moveend): Event`
+* (ok) `(zoomlevelschange): Event`
+* (ok) `(resize): ResizeEvent`
+* (ok) `(unload): Event`
+* (ok) `(viewreset): Event`
+* (ok) `(load): Event`
+* (ok) `(zoomstart): Event`
+* (ok) `(movestart): Event`
+* (ok) `(zoom): Event`
+* (ok) `(move): Event`
+* (ok) `(zoomend): Event`
+* (ok) `(moveend): Event`
 
 
 Popup events
-* `(popupopen): PopupEvent`
-* `(popupclose): PopupEvent`
-* `(autopanstart): Event`
+* (ok) `(popupopen): PopupEvent`
+* (ok) `(popupclose): PopupEvent`
+* (ok) `(autopanstart): Event`
 
 Tooltip events
-* `(tooltipopen): TooltipEvent`
-* `(tooltipclose): TooltipEvent`
+* (ok) `(tooltipopen): TooltipEvent`
+* (ok) `(tooltipclose): TooltipEvent`
 
 Interaction events
-* `(click): MouseEvent`
-* `(dblclick): MouseEvent`
-* `(mousedown): MouseEvent`
-* `(mouseup): MouseEvent`
-* `(mouseover): MouseEvent`
-* `(mouseout): MouseEvent`
-* `(mousemove): MouseEvent`
-* `(contextmenu): MouseEvent`
-* `(keypress): KeyboardEvent`
-* `(preclick): MouseEvent`
+* (ok) `(click): MouseEvent`
+* (ok) `(dblclick): MouseEvent`
+* (ok) `(mousedown): MouseEvent`
+* (ok) `(mouseup): MouseEvent`
+* (ok) `(mouseover): MouseEvent`
+* (ok) `(mouseout): MouseEvent`
+* (ok) `(mousemove): MouseEvent`
+* (ok) `(contextmenu): MouseEvent`
+* (ok) `(keypress): KeyboardEvent`
+* (ok) `(preclick): MouseEvent`
 
 Animation Options
-* `(zoomanim): ZoomAnimEvent`
+* (ok) `(zoomanim): ZoomAnimEvent`
 
 * `attributionControl` over `yaga-attribution-control`
 * `zoomControl` over `yaga-zoom-control`
