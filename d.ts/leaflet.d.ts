@@ -1098,6 +1098,7 @@ declare namespace L {
         setLatLng(latlng: LatLngExpression): this;
         getContent(): Content;
         setContent(htmlContent: string): this;
+        setContent(htmlContent: Content): this;
         setContent(htmlContent: HTMLElement): this;
         setContent(htmlContent: (source: Layer) => Content): this;
         getElement(): Content;
