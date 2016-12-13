@@ -216,8 +216,10 @@ Extends TileLayer
 * `[format]: string`
 * `[transparent]: boolean`
 * `[version]: string`
-* `[crs]: CRS`
 * `[uppercase]: boolean`
+
+*No used:*
+* `[crs]: CRS` (crs support pnly in MapComponent)
 
 #### ImageOverlay
 
@@ -232,6 +234,7 @@ Directive name in Angular2: `yaga-image-overlay`.
 * `[(south)]: number`
 * `[(east)]: number`
 * `[(west)]: number`
+* `[(bounds)]: L.LatLngBounds`
 
 ### Vector
 
@@ -266,7 +269,7 @@ Extends Path
 
 * `[(latlngs)]: LatLng[]`
 * `[(geojson)]: GeoJSONFeature` *Note: any layer has to have a feature property to handle properties*
-* `[(properties)]: any | T` *Maybe as generic?*
+* `[(properties)]: any | T` *maybe implement something like: `type OptionalGenericFeature<T> = Feature | GenericFeature<T>`*
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
 * `[smoothFactor]: number`
@@ -346,7 +349,7 @@ Extends Layer-Base
 * `[(opacity)]: number`
 * `[(lng)]: number`
 * `[(zindex)]: number`
-* `[(draggable)]: boolean` dragging.enable und .disable überwachen
+* `[(draggable)]: boolean` *maybe observe dragging.enable and dragging.disable*
 * `[(opacity)]: number`
 * `[(icon)]: Icon`
 * `[(tooltipOpened)]: boolean`
