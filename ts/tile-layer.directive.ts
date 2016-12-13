@@ -16,6 +16,7 @@ import { TileLayer,
     TileEvent,
     TileErrorEvent } from 'leaflet';
 import { MapComponent } from './map.component';
+import { TRANSPARENT_PIXEL } from './consts';
 
 @Directive({
     selector: 'yaga-tile-layer'
@@ -49,7 +50,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
         // Transparent 1px image:
-        super('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
+        super(TRANSPARENT_PIXEL);
 
         this.on('remove', () => {
             this.displayChange.emit(false);
