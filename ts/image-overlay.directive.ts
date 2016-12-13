@@ -266,4 +266,28 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     get west(): number {
         return this.getBounds().getWest();
     }
+
+    @Input() set crossOrigin(val: boolean) {
+        (<ImageOverlayOptions>(<any>this).options).crossOrigin = val;
+        (<any>this)._initImage();
+    }
+    get crossOrigin(): boolean {
+        return (<ImageOverlayOptions>(<any>this).options).crossOrigin;
+    }
+
+    @Input() set alt(val: string) {
+        (<ImageOverlayOptions>(<any>this).options).alt = val;
+        (<any>this)._initImage();
+    }
+    get alt(): string {
+        return this.getElement().getAttribute('alt');
+    }
+    @Input() set interactive(val: boolean) {
+        (<ImageOverlayOptions>(<any>this).options).interactive = val;
+        this.onRemove((<any>(<any>this)._map));
+        this.onAdd((<any>(<any>this)._map));
+    }
+    get interactive(): boolean {
+        return (<ImageOverlayOptions>(<any>this).options).interactive;
+    }
 }

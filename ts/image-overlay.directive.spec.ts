@@ -940,4 +940,114 @@ describe('Image-Overlay Directive', () => {
             layer.fire('contextmenu', testEvent);
         });
     });
+
+
+
+    describe('[crossOrigin]', () => {
+        var map: MapComponent,
+            layer: ImageOverlayDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new ImageOverlayDirective(map);
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            layer.crossOrigin = false;
+            /* istanbul ignore if */
+            if ((<ImageOverlayOptions>(<any>layer).options).crossOrigin) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<ImageOverlayOptions>(<any>layer).options).crossOrigin = false;
+            layer.crossOrigin = true;
+            /* istanbul ignore if */
+            if (!(<ImageOverlayOptions>(<any>layer).options).crossOrigin) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            layer.crossOrigin = false;
+            /* istanbul ignore if */
+            if (layer.crossOrigin) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            layer.crossOrigin = true;
+            /* istanbul ignore if */
+            if (!layer.crossOrigin) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[interactive]', () => {
+        var map: MapComponent,
+            layer: ImageOverlayDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new ImageOverlayDirective(map);
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            layer.interactive = false;
+            /* istanbul ignore if */
+            if ((<ImageOverlayOptions>(<any>layer).options).interactive) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<ImageOverlayOptions>(<any>layer).options).interactive = false;
+            layer.interactive = true;
+            /* istanbul ignore if */
+            if (!(<ImageOverlayOptions>(<any>layer).options).interactive) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            layer.interactive = false;
+            /* istanbul ignore if */
+            if (layer.interactive) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            layer.interactive = true;
+            /* istanbul ignore if */
+            if (!layer.interactive) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[alt]', () => {
+        var map: MapComponent,
+            layer: ImageOverlayDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new ImageOverlayDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'Test alt';
+            layer.alt = val;
+            /* istanbul ignore if */
+            if ((<ImageOverlayOptions>(<any>layer).options).alt !== val || layer.getElement().getAttribute('alt') !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<ImageOverlayOptions>(<any>layer).options).alt }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'Test alt';
+            layer.alt = val;
+            /* istanbul ignore if */
+            if (layer.alt !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.alt }`);
+            }
+        });
+    });
 });

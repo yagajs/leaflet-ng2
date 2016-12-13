@@ -476,14 +476,6 @@ declare namespace L {
         }
     }
 
-
-    export namespace TileLayer {
-        export class WMS extends TileLayer {
-            constructor(baseUrl: string, options: WMSOptions);
-            setParams(params: Object, noRedraw?: boolean): this;
-        }
-    }
-
     export interface WMSOptions extends TileLayerOptions {
         layers: string;
         styles?: string;
@@ -515,6 +507,8 @@ declare namespace L {
         bringToBack(): this;
         setUrl(url: string): this;
         getElement(): HTMLElement;
+        getBounds(): LatLngBounds;
+        setBounds(latLngBounds: LatLngBounds): this;
     }
 
     export function imageOverlay(imageUrl: string, bounds: LatLngBoundsExpression, options?: ImageOverlayOptions): ImageOverlay;
