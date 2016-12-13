@@ -17,8 +17,6 @@ import { ImageOverlay,
 import { MapComponent } from './map.component';
 import { TRANSPARENT_PIXEL } from './consts';
 
-// TODO: add [interactive], [crossOrigin] and [alt]
-
 @Directive({
     selector: 'yaga-image-overlay'
 })
@@ -26,7 +24,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
-    // TODO: may implement -> @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
+    // maybe implement -> @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
 
     @Output() public boundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
     @Output() public northChange: EventEmitter<number> = new EventEmitter();
@@ -46,12 +44,6 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    // @Output('loading') public loadingEvent: EventEmitter<Event> = new EventEmitter();// TODO: maybe it exists undocumentated
-    // @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
-    // @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
-    // @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
-    // @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
-    // @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter(); // TODO: maybe it exists undocumentated
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
