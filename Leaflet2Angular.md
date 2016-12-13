@@ -133,8 +133,8 @@ Animation Options
 *For all Layers*
 
 * (tilelayer, image-overlay) `[(display)]: boolean`
-* (image-overlay) `[(opacity)]: number`
-* `[(zIndex)]: number`
+* (tilelayer, image-overlay) `[(opacity)]: number`
+* (tilelayer) `[(zIndex)]: number`
 * `[minZoom]: number` in some cases 2-way-binded
 * `[maxZoom]: number` in some cases 2-way-binded
 
@@ -143,24 +143,24 @@ Animation Options
 * `[pane]: string` 
 
 Layer Events
-* (image-overlay) `(add): Event`
-* (image-overlay) `(remove): Event`
+* (tilelayer, image-overlay) `(add): Event`
+* (tilelayer, image-overlay) `(remove): Event`
 
 Popup events
-* (image-overlay) `(popupopen): PopupEvent`
-* (image-overlay) `(popupclose): PopupEvent`
+* (tilelayer, image-overlay) `(popupopen): PopupEvent`
+* (tilelayer, image-overlay) `(popupclose): PopupEvent`
 
 Tooltip events
-* (image-overlay) `(tooltipopen): TooltipEvent`
-* (image-overlay) `(tooltipclose): TooltipEvent`
+* (tilelayer, image-overlay) `(tooltipopen): TooltipEvent`
+* (tilelayer, image-overlay) `(tooltipclose): TooltipEvent`
 
 Mouse Events
-* (image-overlay) `(click): MouseEvent`
-* (image-overlay) `(dbclick): MouseEvent`
-* (image-overlay) `(mousedown): MouseEvent`
-* (image-overlay)  `(mouseover): MouseEvent`
-* (image-overlay)  `(mouseout): MouseEvent`
-* (image-overlay)  `(contextmenu): MouseEvent`
+* (tilelayer, image-overlay) `(click): MouseEvent`
+* (tilelayer, image-overlay) `(dbclick): MouseEvent`
+* (tilelayer, image-overlay) `(mousedown): MouseEvent`
+* (tilelayer, image-overlay)  `(mouseover): MouseEvent`
+* (tilelayer, image-overlay)  `(mouseout): MouseEvent`
+* (tilelayer, image-overlay)  `(contextmenu): MouseEvent`
 
 #### GridLayer
 
