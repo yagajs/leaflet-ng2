@@ -132,35 +132,35 @@ Animation Options
 
 *For all Layers*
 
-* `[(display)]: boolean`
-* `[(opacity)]: number`
+* (tilelayer, image-overlay) `[(display)]: boolean`
+* (image-overlay) `[(opacity)]: number`
 * `[(zIndex)]: number`
 * `[minZoom]: number` in some cases 2-way-binded
 * `[maxZoom]: number` in some cases 2-way-binded
 
-* `[interactive]: boolean`
+* (image-overlay) `[interactive]: boolean`
 * `[attribution]: string`
 * `[pane]: string` 
 
 Layer Events
-* `(add): Event`
-* `(remove): Event`
+* (image-overlay) `(add): Event`
+* (image-overlay) `(remove): Event`
 
 Popup events
-* `(popupopen): PopupEvent`
-* `(popupclose): PopupEvent`
+* (image-overlay) `(popupopen): PopupEvent`
+* (image-overlay) `(popupclose): PopupEvent`
 
 Tooltip events
-* `(tooltipopen): TooltipEvent`
-* `(tooltipclose): TooltipEvent`
+* (image-overlay) `(tooltipopen): TooltipEvent`
+* (image-overlay) `(tooltipclose): TooltipEvent`
 
 Mouse Events
-* `(click): MouseEvent`
-* `(dbclick): MouseEvent`
-* `(mousedown): MouseEvent`
-* `(mouseover): MouseEvent`
-* `(mouseout): MouseEvent`
-* `(contextmenu): MouseEvent`
+* (image-overlay) `(click): MouseEvent`
+* (image-overlay) `(dbclick): MouseEvent`
+* (image-overlay) `(mousedown): MouseEvent`
+* (image-overlay)  `(mouseover): MouseEvent`
+* (image-overlay)  `(mouseout): MouseEvent`
+* (image-overlay)  `(contextmenu): MouseEvent`
 
 #### GridLayer
 
@@ -227,14 +227,14 @@ Directive name in Angular2: `yaga-image-overlay`.
 
 * ??? ng-content(Tooltip, Popup)
 
-* `[(url)]: string`
-* `[crossOrigin]: boolean`
-* `[alt]: string`
-* `[(north)]: number`
-* `[(south)]: number`
-* `[(east)]: number`
-* `[(west)]: number`
-* `[(bounds)]: L.LatLngBounds`
+* (ok) `[(url)]: string`
+* (ok) `[crossOrigin]: boolean`
+* (ok) `[alt]: string`
+* (ok) `[(north)]: number`
+* (ok) `[(south)]: number`
+* (ok) `[(east)]: number`
+* (ok) `[(west)]: number`
+* (ok) `[(bounds)]: L.LatLngBounds`
 
 ### Vector
 
