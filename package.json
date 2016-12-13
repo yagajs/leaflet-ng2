@@ -14,7 +14,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js",
     "dependency-check": "node_modules/.bin/node-dependencies",
-    "build-examples": "npm run transpile; cd examples; ../node_modules/.bin/tsc; browserify simple-tile-layer/index.js -o simple-tile-layer/bundle.js"
+    "build-examples": "npm run transpile && cd examples && ../node_modules/.bin/tsc && browserify simple-tile-layer/index.js -o simple-tile-layer/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "@angular/forms": "^2.1.2",
     "@angular/platform-browser": "^2.1.2",
     "@angular/platform-browser-dynamic": "^2.1.2",
+    "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",

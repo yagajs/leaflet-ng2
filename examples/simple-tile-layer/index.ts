@@ -12,6 +12,48 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 const platform = platformBrowserDynamic();
 
+/* tslint:disable:max-line-length */
+const template: string = `
+<div class="container">
+  <div class="map">
+    <yaga-map [(zoom)]="zoom" [(lat)]="lat" [(lng)]="lng">
+      <yaga-tile-layer *ngFor="let layer of tileLayers" [(url)]="layer.url" [(opacity)]="layer.opacity"></yaga-tile-layer>
+    </yaga-map>
+    <div class="map-status">
+      <div class="input-group">
+        <div class="input-group-btn">
+          <!-- Button and dropdown menu -->
+          <input type="text" class="form-control" [ngModel]="zoom">
+          <input type="text" class="form-control" [ngModel]="lat">
+          <input type="text" class="form-control" [ngModel]="lng">
+        </div>
+        <input type="text" class="form-control">
+      </div>
+    
+    </div>
+  </div>
+  
+  <div class="starter-template">
+    <h1>Layertree</h1>
+    <ol>
+  <li *ngFor="let layer of tileLayers">
+    <input class="form-control" type="text" [(ngModel)]="layer.url">
+    <input class="form-control" type="range" max="1" min="0" step="0.05" [(ngModel)]="layer.opacity">
+    <button class="btn btn-danger" (click)="removeLayer(layer)">Remove</button>
+  </li>
+  <li>
+    <input type="text" [(ngModel)]="newLayerUrl">
+    <input type="range" max="1" min="0" step="0.05" [(ngModel)]="newLayerOpacity">
+    <button (click)="addLayer()">Add</button>
+  </li>
+</ol>
+    </div>
+  
+</div><!-- /.container -->
+
+`;
+/* tslint:enable */
+
 interface ITileLayerOptions {
     url: string;
     opacity?: number;
@@ -19,23 +61,7 @@ interface ITileLayerOptions {
 
 @Component({
     selector: 'app',
-    template : `
-<yaga-map [(zoom)]="zoom" [(lat)]="lat" [(lng)]="lng">
-    <yaga-tile-layer *ngFor="let layer of tileLayers" [(url)]="layer.url" [(opacity)]="layer.opacity"></yaga-tile-layer>
-</yaga-map>
-<span>{{zoom}} / {{lat}} / {{lng}}</span>
-<ol>
-  <li *ngFor="let layer of tileLayers">
-    <input type="text" [(ngModel)]="layer.url">
-    <input type="range" max="1" min="0" step="0.05" [(ngModel)]="layer.opacity">
-    <button (click)="removeLayer(layer)">Remove</button>
-  </li>
-  <li>
-    <input type="text" [(ngModel)]="newLayerUrl">
-    <input type="range" max="1" min="0" step="0.05" [(ngModel)]="newLayerOpacity">
-    <button (click)="addLayer()">Add</button>
-  </li>
-</ol>`
+    template
 })
 export class AppComponent implements AfterViewInit {
     public zoom: number = 10;
@@ -51,10 +77,10 @@ export class AppComponent implements AfterViewInit {
     constructor() {
         (<any>window).app = this;
     }
-    public removeLayer(layer: ITileLayerOptions) {
+    public removeLayer(layer: ITileLayerOptions): void {
         this.tileLayers.splice(this.tileLayers.indexOf(layer), 1);
     }
-    public addLayer() {
+    public addLayer(): void {
         this.tileLayers.push({url: this.newLayerUrl, opacity: this.newLayerOpacity});
     }
 
