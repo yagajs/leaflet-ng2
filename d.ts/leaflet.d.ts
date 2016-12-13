@@ -506,6 +506,9 @@ declare namespace L {
         bringToFront(): this;
         bringToBack(): this;
         setUrl(url: string): this;
+        getElement(): HTMLElement;
+        getBounds(): LatLngBounds;
+        setBounds(latLngBounds: LatLngBounds): this;
     }
 
     export function imageOverlay(imageUrl: string, bounds: LatLngBoundsExpression, options?: ImageOverlayOptions): ImageOverlay;
