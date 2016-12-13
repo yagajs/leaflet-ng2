@@ -397,6 +397,9 @@ Directive name in Angular2: `yaga-popup`.
 * `[className]: string`
 * `[pane]: string`
 
+* `(close): Event`
+* `(open): Event`
+
 #### Tooltip
 
 Directive name in Angular2: `yaga-tooltip`.
