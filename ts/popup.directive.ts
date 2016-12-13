@@ -20,7 +20,7 @@ import { MapComponent } from './map.component';
 })
 export class PopupDirective extends Popup  {
     @Output() public contentChange: EventEmitter<Content> = new EventEmitter();
-    @Output() public openendChange: EventEmitter<boolean> = new EventEmitter();
+    @Output() public openedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
@@ -46,7 +46,7 @@ export class PopupDirective extends Popup  {
                 type: 'open'
             };
             this.openEvent.emit(event);
-            this.openendChange.emit(true);
+            this.openedChange.emit(true);
             tmp_ul.apply(this, args);
         };
         let tmp_c: Function = (<any>this)._close;
@@ -56,7 +56,7 @@ export class PopupDirective extends Popup  {
                 type: 'close'
             };
             this.closeEvent.emit(event);
-            this.openendChange.emit(false);
+            this.openedChange.emit(false);
             tmp_c.apply(this, args);
         };
     }
@@ -72,14 +72,14 @@ export class PopupDirective extends Popup  {
         return this.getContent();
     }
 
-    @Input() set openend(val: boolean) {
+    @Input() set opened(val: boolean) {
         if (val) {
             this.openOn(this.map);
             return;
         }
         (<any>this)._close();
     }
-    get openend(): boolean {
+    get opened(): boolean {
         return !!(<any>this)._map;
     }
 
@@ -99,10 +99,17 @@ export class PopupDirective extends Popup  {
     }
 
     @Input() set lng(val: number) {
-        this.setLatLng([this.lng, val]);
+        this.setLatLng([this.lat, val]);
     }
     get lng(): number {
         return this.getLatLng().lng;
+    }
+
+    @Input() set position(val: LatLng) {
+        this.setLatLng(val);
+    }
+    get position(): LatLng {
+        return this.getLatLng();
     }
 
     @Input() set maxWidth(val: number) {

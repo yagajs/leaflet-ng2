@@ -1,1300 +1,734 @@
 /// <reference path="../typings/index.d.ts" />
-// import { WmsLayerDirective,
-//     MapComponent,
-//     TileLayerOptions,
-//     LatLngBoundsExpression } from './index';
-// import { point, Point, latLngBounds } from 'leaflet';
 
-// const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+import { PopupDirective,
+    MapComponent,
+    PopupOptions,
+    LatLngBoundsExpression } from './index';
+import { point, Point, latLngBounds, latLng, LatLng } from 'leaflet';
+import popup = L.popup;
 
-// function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
-//     'use strict';
-//     const length: number = root.children.length;
-//     for (let i: number = 0; i < length; i += 1) {
-//         /* istanbul ignore else */
-//         if (root.children.item(i) === child) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 
-// describe('WMS-Layer Directive', () => {
-//     describe('[(display)]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should remove DOM container when not displaying', () => {
-//             layer.display = false;
-//             /* istanbul ignore if */
-//             if (hasAsChild(layer.getPane(), (<any>layer)._container)) {
-//                 throw new Error('Map is still parent element of the tile layer');
-//             }
-//         });
-//         it('should re-add DOM container when display is true again', () => {
-//             layer.display = false;
-//             layer.display = true;
+describe('Popup Directive', () => {
+    describe('[(opened)]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            (<any>popup)._wrapper = document.createElement('div');
+            popup.setLatLng(latLng(0, 0));
+            popup.openOn(map);
+            return done();
+        });
+        it('should remove DOM container when not opened', () => {
+            popup.opened = false;
+            /* istanbul ignore if */
+            if ((<HTMLElement>(<any>popup)._container).parentNode) {
+                throw new Error('Map is still parent element of the popup');
+            }
+        });
+        it('should re-add DOM container when opened is true again', () => {
+            popup.opened = true;
 
-//             /* istanbul ignore if */
-//             if (!hasAsChild(layer.getPane(), (<any>layer)._container)) {
-//                 throw new Error('Map is not parent element of the tile layer');
-//             }
-//         });
-//         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-//             const moveEvents: {fn: Function}[] = (<any>map)._events.move,
-//                 length: number = moveEvents.length,
-//                 originalEventListener: Function = layer.getEvents()['move'];
+            /* istanbul ignore if */
+            if (!(<HTMLElement>(<any>popup)._container).parentNode) {
+                throw new Error('Map is still parent element of the popup');
+            }
+        });
+    });
+    describe('[(content)]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            popup.content = EXAMPLE_CONTENT;
+            /* istanbul ignore if */
+            if ((<string>(<any>popup)._content) !== EXAMPLE_CONTENT) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ (<string>(<any>popup)._content) }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            popup.content = EXAMPLE_CONTENT;
+            /* istanbul ignore if */
+            if (popup.content !== EXAMPLE_CONTENT) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ popup.content }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            popup.setContent(EXAMPLE_CONTENT);
+            /* istanbul ignore if */
+            if (popup.content !== EXAMPLE_CONTENT) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ popup.content }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            popup.contentChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== EXAMPLE_CONTENT) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             layer.display = false;
+            popup.content = EXAMPLE_CONTENT;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   popup.content = EXAMPLE_CONTENT;
+            popup.contentChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== EXAMPLE_CONTENT + '?test') {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             for (let i: number = 0; i < length; i += 1) {
-//                 /* istanbul ignore if */
-//                 if (moveEvents[i] && moveEvents[i].fn === originalEventListener) {
-//                     return done(new Error('There is still an event on listener'));
-//                 }
-//             }
-//             return done();
-//         });
-//         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-//             const moveEvents: {fn: Function}[] = (<any>map)._events.move,
-//                 length: number = moveEvents.length,
-//                 originalEventListener: Function = layer.getEvents()['move'];
+            popup.setContent(EXAMPLE_CONTENT + '?test');
+        });
+    });
+    describe('[(lat)]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            popup.setLatLng(latLng(0, 0));
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.random() * 100;
+            popup.lat = val;
+            /* istanbul ignore if */
+            if (popup.getLatLng().lat !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng().lat }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.random() * 100;
+            popup.lat = val;
+            /* istanbul ignore if */
+            if (popup.lat !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.lat }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: number = Math.random() * 100;
+            popup.setLatLng([val, 0]);
+            /* istanbul ignore if */
+            if (popup.lat !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.lat }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
 
-//             layer.display = false;
-//             layer.display = true;
+            popup.latChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             for (let i: number = 0; i < length; i += 1) {
-//                 if (moveEvents[i] && moveEvents[i].fn === originalEventListener) {
-//                     return done();
-//                 }
-//             }
-//             /* istanbul ignore next */
-//             return done(new Error('There is no event on listener'));
-//         });
-//         it('should set to false by removing from map', (done: MochaDone) => {
+            popup.lat = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
 
-//             layer.displayChange.subscribe((val: boolean) => {
-//                 /* istanbul ignore if */
-//                 if (val !== false) {
-//                     return new Error('Wrong value emitted');
-//                 }
-//                 /* istanbul ignore if */
-//                 if (layer.display) {
-//                     return new Error('Wrong value from variable call');
-//                 }
-//                 done();
-//             });
+            popup.latChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             map.removeLayer(layer);
-//         });
-//         it('should set to true when adding to map again', (done: MochaDone) => {
-//             map.removeLayer(layer);
-//             layer.displayChange.subscribe((val: boolean) => {
-//                 /* istanbul ignore if */
-//                 if (val !== true) {
-//                     return done(new Error('Wrong value emitted'));
-//                 }
-//                 /* istanbul ignore if */
-//                 if (!layer.display) {
-//                     return done(new Error('Wrong value from variable call'));
-//                 }
-//                 done();
-//             });
 
-//             map.addLayer(layer);
-//         });
-//     });
-//     describe('[(url)]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             layer.url = TILE_LAYER_URL;
-//             /* istanbul ignore if */
-//             if ((<string>(<any>layer)._url) !== TILE_LAYER_URL) {
-//                 throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             layer.url = TILE_LAYER_URL;
-//             /* istanbul ignore if */
-//             if (layer.url !== TILE_LAYER_URL) {
-//                 throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Leaflet', () => {
-//             layer.setUrl(TILE_LAYER_URL);
-//             /* istanbul ignore if */
-//             if (layer.url !== TILE_LAYER_URL) {
-//                 throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
-//             }
-//         });
-//         it('should fire an event when changing in Angular', (done: MochaDone) => {
-//             layer.urlChange.subscribe((eventVal: string) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== TILE_LAYER_URL) {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
+            popup.setLatLng([val, 0]);
+        });
+    });
+    describe('[(lng)]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            popup.setLatLng(latLng(0, 0));
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.random() * 100;
+            popup.lng = val;
+            /* istanbul ignore if */
+            if (popup.getLatLng().lng !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng().lng }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.random() * 100;
+            popup.lng = val;
+            /* istanbul ignore if */
+            if (popup.lng !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.lng }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: number = Math.random() * 100;
+            popup.setLatLng([0, val]);
+            /* istanbul ignore if */
+            if (popup.lng !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.lng }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
 
-//             layer.url = TILE_LAYER_URL;
-//         });
-//         it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = TILE_LAYER_URL;
-//             layer.urlChange.subscribe((eventVal: string) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== TILE_LAYER_URL + '?test') {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
+            popup.lngChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             layer.setUrl(TILE_LAYER_URL + '?test');
-//         });
-//         it('should not emit anything when changing into same url', (done: MochaDone) => {
-//             layer.setUrl(TILE_LAYER_URL);
-//             setTimeout(() => {
-//                 /* istanbul ignore next */
-//                 layer.urlChange.subscribe(() => {
-//                     return done(new Error('Event fired'));
-//                 });
-//                 layer.setUrl(TILE_LAYER_URL);
-//                 return done();
-//             }, 0);
-//         });
-//     });
-//     describe('[(opacity)]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.opacity = val;
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if ((<TileLayerOptions>(<any>layer).options).opacity !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).opacity }`));
-//                 }
-//                 return done();
-//             }, 0);
+            popup.lng = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.random() * 100;
 
-//         });
-//         it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.opacity = val;
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if (layer.opacity !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-//                 }
-//                 return done();
-//             }, 0);
+            popup.lngChange.subscribe((eventVal: number) => {
+                /* istanbul ignore if */
+                if (eventVal !== val) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//         });
-//         it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.setOpacity(val);
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if (layer.opacity !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-//                 }
-//                 return done();
-//             }, 0);
 
-//         });
-//         it('should fire an event when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
+            popup.setLatLng([0, val]);
+        });
+    });
+    describe('[(position)]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            popup.setLatLng(latLng(0, 0));
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            popup.position = val;
+            /* istanbul ignore if */
+            if (popup.getLatLng().lat !== val.lat || popup.getLatLng().lng !== val.lng) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng() }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            popup.position = val;
+            /* istanbul ignore if */
+            if (popup.position !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.position }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            popup.setLatLng(val);
+            /* istanbul ignore if */
+            if (popup.position !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.position }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
-//             layer.opacityChange.subscribe((eventVal: number) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== val) {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
+            popup.positionChange.subscribe((eventVal: LatLng) => {
+                /* istanbul ignore if */
+                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             layer.opacity = val;
-//         });
-//         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-//             const val: number = Math.random();
+            popup.position = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
-//             layer.opacityChange.subscribe((eventVal: number) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== val) {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
+            popup.positionChange.subscribe((eventVal: LatLng) => {
+                /* istanbul ignore if */
+                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
 
-//             layer.setOpacity(val);
-//         });
-//     });
-//     describe('[(zIndex)]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.zIndex = val;
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if ((<TileLayerOptions>(<any>layer).options).zIndex !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).zIndex }`));
-//                 }
-//                 return done();
-//             }, 0);
+            popup.setLatLng(val);
+        });
+    });
 
-//         });
-//         it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.zIndex = val;
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if (layer.zIndex !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.zIndex }`));
-//                 }
-//                 return done();
-//             }, 0);
+    // Events
+    describe('(open)', () => {var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            popup.setLatLng(latLng(0, 0));
+            return done();
+        });
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            popup.openEvent.subscribe((event: any) => {
+                /* istanbul ignore if */
+                if (event.target !== popup) {
+                    return done(new Error('Wrong event returned'));
+                }
+                return done();
+            });
+            popup.openOn(map);
+        });
+    });
+    describe('(close)', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            popup.setLatLng(latLng(0, 0));
+            popup.openOn(map);
+            return done();
+        });
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            popup.closeEvent.subscribe((event: any) => {
+                /* istanbul ignore if */
+                if (event.target !== popup) {
+                    return done(new Error('Wrong event returned'));
+                }
+                return done();
+            });
+            (<any>popup)._close();
+        });
+    });
 
-//         });
-//         it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
-//             const val: number = Math.random();
-//             layer.setZIndex(val);
-//             setTimeout(() => {
-//                 /* istanbul ignore if */
-//                 if (layer.zIndex !== val) {
-//                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.zIndex }`));
-//                 }
-//                 return done();
-//             }, 0);
+    // Inputs
+    describe('[maxWidth]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.maxWidth = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).maxWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).maxWidth }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.maxWidth = val;
+            /* istanbul ignore if */
+            if (popup.maxWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.minWidth }`);
+            }
+        });
+    });
+    describe('[minWidth]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.minWidth = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).minWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).minWidth }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.minWidth = val;
+            /* istanbul ignore if */
+            if (popup.minWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.minWidth }`);
+            }
+        });
+    });
+    describe('[maxHeight]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.maxHeight = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).maxHeight !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).maxHeight }`);
+            }
+        });
+    });
+    describe('[autoPanPaddingTopLeft]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPaddingTopLeft = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).autoPanPaddingTopLeft !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPaddingTopLeft }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPaddingTopLeft = val;
+            /* istanbul ignore if */
+            if (popup.autoPanPaddingTopLeft !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPaddingTopLeft }`);
+            }
+        });
+    });
+    describe('[autoPanPaddingBottomRight]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPaddingBottomRight = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).autoPanPaddingBottomRight !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPaddingBottomRight }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPaddingBottomRight = val;
+            /* istanbul ignore if */
+            if (popup.autoPanPaddingBottomRight !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPaddingBottomRight }`);
+            }
+        });
+    });
+    describe('[autoPanPadding]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPadding = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).autoPanPadding !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPadding }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const num: number = Math.ceil(Math.random() * 1000),
+                val: Point = point(num, num);
+            popup.autoPanPadding = val;
+            /* istanbul ignore if */
+            if (popup.autoPanPadding !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPadding }`);
+            }
+        });
+    });
 
-//         });
-//         it('should fire an event when changing in Angular', (done: MochaDone) => {
-//             const val: number = Math.random();
+    describe('[autoPan]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            popup.autoPan = false;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).autoPan) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<PopupOptions>(<any>popup).options).autoPan = false;
+            popup.autoPan = true;
+            /* istanbul ignore if */
+            if (!(<PopupOptions>(<any>popup).options).autoPan) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            popup.autoPan = false;
+            /* istanbul ignore if */
+            if (popup.autoPan) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            popup.autoPan = true;
+            /* istanbul ignore if */
+            if (!popup.autoPan) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[keepInView]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            popup.keepInView = false;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).keepInView) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<PopupOptions>(<any>popup).options).keepInView = false;
+            popup.keepInView = true;
+            /* istanbul ignore if */
+            if (!(<PopupOptions>(<any>popup).options).keepInView) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            popup.keepInView = false;
+            /* istanbul ignore if */
+            if (popup.keepInView) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            popup.keepInView = true;
+            /* istanbul ignore if */
+            if (!popup.keepInView) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[closeButton]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            popup.closeButton = false;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).closeButton) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<PopupOptions>(<any>popup).options).closeButton = false;
+            popup.closeButton = true;
+            /* istanbul ignore if */
+            if (!(<PopupOptions>(<any>popup).options).closeButton) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            popup.closeButton = false;
+            /* istanbul ignore if */
+            if (popup.closeButton) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            popup.closeButton = true;
+            /* istanbul ignore if */
+            if (!popup.closeButton) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[autoClose]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            popup.autoClose = false;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).autoClose) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            (<PopupOptions>(<any>popup).options).autoClose = false;
+            popup.autoClose = true;
+            /* istanbul ignore if */
+            if (!(<PopupOptions>(<any>popup).options).autoClose) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            popup.autoClose = false;
+            /* istanbul ignore if */
+            if (popup.autoClose) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            popup.autoClose = true;
+            /* istanbul ignore if */
+            if (!popup.autoClose) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
 
-//             layer.zIndexChange.subscribe((eventVal: number) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== val) {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
-
-//             layer.zIndex = val;
-//         });
-//         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-//             const val: number = Math.random();
-
-//             layer.zIndexChange.subscribe((eventVal: number) => {
-//                 /* istanbul ignore if */
-//                 if (eventVal !== val) {
-//                     return done(new Error('Received wrong value'));
-//                 }
-//                 return done();
-//             });
-
-//             layer.setZIndex(val);
-//         });
-//     });
-
-//     // Events
-//     describe('(add)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.addEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('add', testEvent);
-//         });
-//     });
-//     describe('(remove)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.removeEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('remove', testEvent);
-//         });
-//     });
-//     describe('(popupopen)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.popupopenEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('popupopen', testEvent);
-//         });
-//     });
-//     describe('(popupclose)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.popupcloseEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('popupclose', testEvent);
-//         });
-//     });
-//     describe('(tooltipopen)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.tooltipopenEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('tooltipopen', testEvent);
-//         });
-//     });
-//     describe('(tooltipclose)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.tooltipcloseEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('tooltipclose', testEvent);
-//         });
-//     });
-//     describe('(click)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.clickEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('click', testEvent);
-//         });
-//     });
-//     describe('(dbclick)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.dbclickEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('dbclick', testEvent);
-//         });
-//     });
-//     describe('(mousedown)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.mousedownEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('mousedown', testEvent);
-//         });
-//     });
-//     describe('(mouseover)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.mouseoverEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('mouseover', testEvent);
-//         });
-//     });
-//     describe('(mouseout)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.mouseoutEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('mouseout', testEvent);
-//         });
-//     });
-//     describe('(contextmenu)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.contextmenuEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('contextmenu', testEvent);
-//         });
-//     });
-//     describe('(loading)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.loadingEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('loading', testEvent);
-//         });
-//     });
-//     describe('(tileunload)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             layer.off('tileunload', (<any>layer)._onTileRemove); // Hack to disable another listener
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.tileunloadEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('tileunload', testEvent);
-//         });
-//     });
-//     describe('(tileloadstart)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.tileloadstartEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('tileloadstart', testEvent);
-//         });
-//     });
-//     describe('(tileerror)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             layer.tileerrorEvent.subscribe((event: any) => {
-//                 /* istanbul ignore if */
-//                 if (event.testHandle !== testEvent.testHandle) {
-//                     return done(new Error('Wrong event returned'));
-//                 }
-//                 return done();
-//             });
-//             layer.fire('tileerror', testEvent);
-//         });
-//     });
-//     describe('(tileload)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { testHandle };
-//             var called: boolean; // this event is called multiple times in the life-circle of leaflet
-//             setTimeout(() => {
-//                 layer.tileloadEvent.subscribe((event: any) => {
-//                     /* istanbul ignore if */
-//                     if (called) {
-//                         return;
-//                     }
-//                     /* istanbul ignore if */
-//                     if (event.testHandle !== testEvent.testHandle) {
-//                         return done(new Error('Wrong event returned'));
-//                     }
-//                     called = true;
-//                     return done();
-//                 });
-//                 layer.fire('tileload', testEvent);
-//             }, 1);
-//         });
-//     });
-//     describe('(load)', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-//             const testHandle: any = {},
-//                 testEvent: any = { target: layer, testHandle, type: 'load' };
-//             var called: boolean; // this event is called multiple times in the life-circle of leaflet
-//             setTimeout(() => {
-//                 layer.loadEvent.subscribe((event: any) => {
-//                     /* istanbul ignore if */
-//                     if (called) {
-//                         return;
-//                     }
-//                     /* istanbul ignore if */
-//                     if (event.testHandle !== testEvent.testHandle) {
-//                         return done(new Error('Wrong event returned'));
-//                     }
-//                     called = true;
-//                     return done();
-//                 });
-//                 layer.fire('load', testEvent);
-//             }, 1);
-//         });
-//     });
-
-//     // Inputs
-//     describe('[tileSize]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const num: number = Math.ceil(Math.random() * 1000),
-//                 val: Point = point(num, num);
-//             layer.tileSize = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).tileSize !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).tileSize }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const num: number = Math.ceil(Math.random() * 1000),
-//                 val: Point = point(num, num);
-//             layer.tileSize = val;
-//             /* istanbul ignore if */
-//             if (layer.tileSize !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.tileSize }`);
-//             }
-//         });
-//     });
-//     describe('[bounds]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const num: number = Math.ceil(Math.random() * 1000),
-//                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
-//             layer.bounds = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).bounds !== val) {
-//                 throw new Error('Wrong value setted: ' +
-//                     JSON.stringify(val) +
-//                     ' != ' +
-//                     JSON.stringify((<TileLayerOptions>(<any>layer).options).bounds));
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const num: number = Math.ceil(Math.random() * 1000),
-//                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
-//             layer.bounds = val;
-//             /* istanbul ignore if */
-//             if (layer.bounds !== val) {
-//                 throw new Error(`Wrong value setted: ${ JSON.stringify(val) } != ${ JSON.stringify(layer.bounds) }`);
-//             }
-//         });
-//     });
-//     describe('[subdomains]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: string[] = ['a', 'b', 'c', 'd'];
-//             layer.subdomains = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).subdomains !== val) {
-//                 throw new Error('Wrong value setted: ' +
-//                     JSON.stringify(val) +
-//                     ' != ' +
-//                     JSON.stringify((<TileLayerOptions>(<any>layer).options).subdomains));
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: string[] = ['a', 'b', 'c', 'd'];
-//             layer.subdomains = val;
-//             /* istanbul ignore if */
-//             if (layer.subdomains !== val) {
-//                 throw new Error(`Wrong value setted: ${ JSON.stringify(val) } != ${ JSON.stringify(layer.subdomains) }`);
-//             }
-//         });
-//         it('should get an array of strings even if it has a string value', () => {
-//             const val: string = 'abcdefg';
-//             (<TileLayerOptions>(<any>layer).options).subdomains = val;
-//             /* istanbul ignore if */
-//             if (!Array.prototype.isPrototypeOf(layer.subdomains) && layer.subdomains.length !== val.length) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ JSON.stringify(layer.subdomains) }`);
-//             }
-//         });
-//     });
-//     describe('[className]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: string = 'test-class';
-//             layer.className = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).className !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).className }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: string = 'test-class';
-//             layer.className = val;
-//             /* istanbul ignore if */
-//             if (layer.className !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.className }`);
-//             }
-//         });
-//     });
-//     describe('[errorTileUrl]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: string = 'http://test';
-//             layer.errorTileUrl = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).errorTileUrl !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).errorTileUrl }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: string = 'http://test';
-//             layer.errorTileUrl = val;
-//             /* istanbul ignore if */
-//             if (layer.errorTileUrl !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.errorTileUrl }`);
-//             }
-//         });
-//     });
-//     describe('[updateInterval]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.updateInterval = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).updateInterval !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).updateInterval }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.updateInterval = val;
-//             /* istanbul ignore if */
-//             if (layer.updateInterval !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.updateInterval }`);
-//             }
-//         });
-//     });
-//     describe('[keepBuffer]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.keepBuffer = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).keepBuffer !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).keepBuffer }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.keepBuffer = val;
-//             /* istanbul ignore if */
-//             if (layer.keepBuffer !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.keepBuffer }`);
-//             }
-//         });
-//     });
-//     describe('[maxNativeZoom]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.maxNativeZoom = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).maxNativeZoom !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).maxNativeZoom }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.maxNativeZoom = val;
-//             /* istanbul ignore if */
-//             if (layer.maxNativeZoom !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.maxNativeZoom }`);
-//             }
-//         });
-//     });
-//     describe('[zoomOffset]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed in Leaflet when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.zoomOffset = val;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).zoomOffset !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).zoomOffset }`);
-//             }
-//         });
-//         it('should be changed in Angular when changing in Angular', () => {
-//             const val: number = Math.ceil(Math.random() * 1000);
-//             layer.zoomOffset = val;
-//             /* istanbul ignore if */
-//             if (layer.zoomOffset !== val) {
-//                 throw new Error(`Wrong value setted: ${ val } != ${ layer.zoomOffset }`);
-//             }
-//         });
-//     });
-//     describe('[tms]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.tms = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).tms) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).tms = false;
-//             layer.tms = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).tms) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.tms = false;
-//             /* istanbul ignore if */
-//             if (layer.tms) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.tms = true;
-//             /* istanbul ignore if */
-//             if (!layer.tms) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[zoomReverse]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.zoomReverse = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).zoomReverse) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).zoomReverse = false;
-//             layer.zoomReverse = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).zoomReverse) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.zoomReverse = false;
-//             /* istanbul ignore if */
-//             if (layer.zoomReverse) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.zoomReverse = true;
-//             /* istanbul ignore if */
-//             if (!layer.zoomReverse) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[detectRetina]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.detectRetina = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).detectRetina) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).detectRetina = false;
-//             layer.detectRetina = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).detectRetina) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.detectRetina = false;
-//             /* istanbul ignore if */
-//             if (layer.detectRetina) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.detectRetina = true;
-//             /* istanbul ignore if */
-//             if (!layer.detectRetina) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[crossOrigin]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.crossOrigin = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).crossOrigin) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).crossOrigin = false;
-//             layer.crossOrigin = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).crossOrigin) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.crossOrigin = false;
-//             /* istanbul ignore if */
-//             if (layer.crossOrigin) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.crossOrigin = true;
-//             /* istanbul ignore if */
-//             if (!layer.crossOrigin) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[updateWhenIdle]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.updateWhenIdle = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).updateWhenIdle) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).updateWhenIdle = false;
-//             layer.updateWhenIdle = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).updateWhenIdle) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.updateWhenIdle = false;
-//             /* istanbul ignore if */
-//             if (layer.updateWhenIdle) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.updateWhenIdle = true;
-//             /* istanbul ignore if */
-//             if (!layer.updateWhenIdle) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[updateWhenZooming]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.updateWhenZooming = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).updateWhenZooming) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).updateWhenZooming = false;
-//             layer.updateWhenZooming = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).updateWhenZooming) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.updateWhenZooming = false;
-//             /* istanbul ignore if */
-//             if (layer.updateWhenZooming) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.updateWhenZooming = true;
-//             /* istanbul ignore if */
-//             if (!layer.updateWhenZooming) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-//     describe('[noWrap]', () => {
-//         var map: MapComponent,
-//             layer: WmsLayerDirective;
-//         beforeEach((done) => {
-//             map = new MapComponent({nativeElement: document.createElement('div')});
-//             (<any>map)._size = point(100, 100);
-//             (<any>map)._pixelOrigin = point(50, 50);
-//             layer = new WmsLayerDirective(map);
-//             return done();
-//         });
-//         it('should be changed to false in Leaflet when changing in Angular to false', () => {
-//             layer.noWrap = false;
-//             /* istanbul ignore if */
-//             if ((<TileLayerOptions>(<any>layer).options).noWrap) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-//             (<TileLayerOptions>(<any>layer).options).noWrap = false;
-//             layer.noWrap = true;
-//             /* istanbul ignore if */
-//             if (!(<TileLayerOptions>(<any>layer).options).noWrap) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//         it('should be changed in Angular to false when changing in Angular to false', () => {
-//             layer.noWrap = false;
-//             /* istanbul ignore if */
-//             if (layer.noWrap) {
-//                 throw new Error(`It is not setted to false`);
-//             }
-//         });
-//         it('should be changed in Angular to true when changing in Angular to true', () => {
-//             layer.noWrap = true;
-//             /* istanbul ignore if */
-//             if (!layer.noWrap) {
-//                 throw new Error(`It is not setted to true`);
-//             }
-//         });
-//     });
-// });
+    describe('[className]', () => {var map: MapComponent,
+        popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'test-class';
+            popup.className = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).className !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).className }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'test-class';
+            popup.className = val;
+            /* istanbul ignore if */
+            if (popup.className !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.className }`);
+            }
+        });
+    });
+    describe('[pane]', () => {var map: MapComponent,
+        popup: PopupDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+            (<any>popup)._contentNode = document.createElement('div');
+            (<any>popup)._container = document.createElement('div');
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'test-class';
+            popup.pane = val;
+            /* istanbul ignore if */
+            if ((<PopupOptions>(<any>popup).options).pane !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).pane }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'test-class';
+            popup.pane = val;
+            /* istanbul ignore if */
+            if (popup.pane !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.pane }`);
+            }
+        });
+    });
+});
