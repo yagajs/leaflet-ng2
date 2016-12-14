@@ -26,6 +26,7 @@ Component name in Angular2: `yaga-map`.
 **Options**
 
 Interaction Options
+
 * (ok) `[closePopupOnClick]: boolean`
 * (ok) `[zoomSnap]: number`
 * (ok) `[zoomDelta]: number`
@@ -35,6 +36,7 @@ Interaction Options
 * (rename) `[dragging]: boolean`
 
 Map State Options
+
 * (missing text) `[crs]: CRS`
 * `[center]: LatLng`
 * (see twoway) `[zoom]: number`
@@ -45,6 +47,7 @@ Map State Options
 * (not implemented) `[renderer]: Renderer`
 
 Animation Options
+
 * (ok) `[fadeAnimation]: boolean`
 * (ok) `[markerZoomAnimation]: boolean`
 * (ok) `[transform3DLimit]: number`
@@ -52,6 +55,7 @@ Animation Options
 * (ok) `[zoomAnimationThreshold]: number`
 
 Panning Inertia Options
+
 * (ok) `[inertia]: boolean`
 * (ok) `[inertiaDeceleration]: number`
 * (ok) `[inertiaMaxSpeed]: number`
@@ -60,15 +64,18 @@ Panning Inertia Options
 * (ok) `[maxBoundsViscosity]: number`
 
 Keyboard Navigation Options
+
 * (rename) `[keyboard]: boolean`
 * (ok) `[keyboardPanDelta]: number`
 
 Mousewheel options
+
 * (rename) `[scrollWheelZoom]: boolean` //leaflet also supports `string` with the value `center`
 * (ok) `[wheelDebounceTime]: number`
 * (ok) `[wheelPxPerZoomLevel]: number`
 
 Touch interaction options
+
 * (rename) `[tap]: boolean`
 * (ok) `[tapTolerance]: number`
 * (rename) `[touchZoom]: boolean`
@@ -77,6 +84,7 @@ Touch interaction options
 **Events**
 
 Layer events
+
 * (ok) `(baselayerchange): LayersControlEvent`
 * (ok) `(overlayadd): LayersControlEvent`
 * (ok) `(overlayremove): LayersControlEvent`
@@ -84,6 +92,7 @@ Layer events
 * (ok) `(layerremove): LayerEvent`
 
 Map state change events
+
 * (ok) `(zoomlevelschange): Event`
 * (ok) `(resize): ResizeEvent`
 * (ok) `(unload): Event`
@@ -98,15 +107,18 @@ Map state change events
 
 
 Popup events
+
 * (ok) `(popupopen): PopupEvent`
 * (ok) `(popupclose): PopupEvent`
 * (ok) `(autopanstart): Event`
 
 Tooltip events
+
 * (ok) `(tooltipopen): TooltipEvent`
 * (ok) `(tooltipclose): TooltipEvent`
 
 Interaction events
+
 * (ok) `(click): MouseEvent`
 * (ok) `(dblclick): MouseEvent`
 * (ok) `(mousedown): MouseEvent`
@@ -119,6 +131,7 @@ Interaction events
 * (ok) `(preclick): MouseEvent`
 
 Animation Options
+
 * (ok) `(zoomanim): ZoomAnimEvent`
 
 * `attributionControl` over `yaga-attribution-control`
@@ -143,18 +156,22 @@ Animation Options
 * `[pane]: string` 
 
 Layer Events
+
 * (tilelayer, image-overlay) `(add): Event`
 * (tilelayer, image-overlay) `(remove): Event`
 
 Popup events
+
 * (tilelayer, image-overlay) `(popupopen): PopupEvent`
 * (tilelayer, image-overlay) `(popupclose): PopupEvent`
 
 Tooltip events
+
 * (tilelayer, image-overlay) `(tooltipopen): TooltipEvent`
 * (tilelayer, image-overlay) `(tooltipclose): TooltipEvent`
 
 Mouse Events
+
 * (tilelayer, image-overlay) `(click): MouseEvent`
 * (tilelayer, image-overlay) `(dbclick): MouseEvent`
 * (tilelayer, image-overlay) `(mousedown): MouseEvent`
@@ -219,6 +236,7 @@ Extends TileLayer
 * `[uppercase]: boolean`
 
 *No used:*
+
 * `[crs]: CRS` (crs support pnly in MapComponent)
 
 #### ImageOverlay
@@ -384,18 +402,18 @@ Directive name in Angular2: `yaga-popup`.
 * (ok) `[(lat)]: number`
 * (ok) `[(lng)]: number`
 * (ok) `[(position)]: LatLng`
-* `[maxWidth]: number`
-* `[minWidth]: number`
-* `[maxHeight]: number`
-* `[autoPan]: boolean`
-* `[autoPanPaddingTopLeft]: Point`
-* `[autoPanPaddingBottomRight]: Point`
-* `[autoPanPadding]: Point`
-* `[keepInView]: boolean`
-* `[closeButton]: boolean`
-* `[autoClose]: boolean`
-* `[className]: string`
-* `[pane]: string`
+* (ok) `[maxWidth]: number`
+* (ok) `[minWidth]: number`
+* (ok) `[maxHeight]: number`
+* (ok) `[autoPan]: boolean`
+* (ok) `[autoPanPaddingTopLeft]: Point`
+* (ok) `[autoPanPaddingBottomRight]: Point`
+* (ok) `[autoPanPadding]: Point`
+* (ok) `[keepInView]: boolean`
+* (ok) `[closeButton]: boolean`
+* (ok) `[autoClose]: boolean`
+* (ok) `[className]: string`
+* (ok) `[pane]: string`
 
 #### Tooltip
 
