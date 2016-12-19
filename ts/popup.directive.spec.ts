@@ -2,10 +2,8 @@
 
 import { PopupDirective,
     MapComponent,
-    PopupOptions,
-    LatLngBoundsExpression } from './index';
-import { point, Point, latLngBounds, latLng, LatLng } from 'leaflet';
-import popup = L.popup;
+    PopupOptions, Point } from './index';
+import { point, latLng, LatLng } from 'leaflet';
 
 const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 
@@ -287,7 +285,8 @@ describe('Popup Directive', () => {
     });
 
     // Events
-    describe('(open)', () => {var map: MapComponent,
+    describe('(open)', () => {
+        var map: MapComponent,
             popup: PopupDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
@@ -675,8 +674,9 @@ describe('Popup Directive', () => {
         });
     });
 
-    describe('[className]', () => {var map: MapComponent,
-        popup: PopupDirective;
+    describe('[className]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
@@ -703,8 +703,9 @@ describe('Popup Directive', () => {
             }
         });
     });
-    describe('[pane]', () => {var map: MapComponent,
-        popup: PopupDirective;
+    describe('[pane]', () => {
+        var map: MapComponent,
+            popup: PopupDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
