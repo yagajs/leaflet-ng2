@@ -1125,6 +1125,19 @@ declare namespace L {
 
     export class Tooltip extends Layer {
         constructor(options?: TooltipOptions, source?: Layer);
+        setOpacity(val: number): void;
+        getLatLng(): LatLng;
+        setLatLng(latlng: LatLngExpression): this;
+        getContent(): Content;
+        setContent(htmlContent: string): this;
+        setContent(htmlContent: Content): this;
+        setContent(htmlContent: HTMLElement): this;
+        setContent(htmlContent: (source: Layer) => Content): this;
+        getElement(): Content;
+        update(): void;
+        isOpen(): boolean;
+        bringToFront(): this;
+        bringToBack(): this;
     }
 
     export function tooltip(options?: TooltipOptions, source?: Layer): Tooltip;
@@ -1428,6 +1441,7 @@ declare namespace L {
 
     export class DivIcon extends Icon {
         constructor(options: DivIconOptions);
+        createIcon(oldIcon?: HTMLElement): HTMLElement;
     }
 
     export function divIcon(options: DivIconOptions): DivIcon;
