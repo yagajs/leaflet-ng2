@@ -4,6 +4,7 @@ export * from './tile-layer.directive';
 export * from './image-overlay.directive';
 export * from './popup.directive';
 export * from './icon.directive';
+export * from './div-icon.directive';
 
 export {
     MapOptions,
