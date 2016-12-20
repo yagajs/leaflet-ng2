@@ -3,6 +3,7 @@ export * from './map.component';
 export * from './tile-layer.directive';
 export * from './image-overlay.directive';
 export * from './popup.directive';
+export * from './wms-layer.directive';
 
 export {
     MapOptions,
@@ -14,4 +15,5 @@ export {
     PointExpression,
     BoundsExpression,
     LatLngExpression,
-} from 'leaflet';
+    Point,
+    WMSParams } from 'leaflet';
