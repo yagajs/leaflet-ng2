@@ -13,9 +13,7 @@ import { DivIcon,
     selector: 'yaga-icon'
 })
 export class DivIconDirective extends DivIcon  {
-
     @Output('update') public updateEvent: EventEmitter<Event> = new EventEmitter();
-
     protected contentHtml: HTMLElement;
 
     constructor(
@@ -57,7 +55,6 @@ export class DivIconDirective extends DivIcon  {
     }
 
     createIcon(oldDivIcon: HTMLElement): HTMLElement {
-
         let clonedOptions: DivIconOptions = Object.create((<DivIconOptions>(<any>this).options));
         clonedOptions.html = '';
         oldDivIcon = super.createIcon.call({options: clonedOptions}, oldDivIcon);
