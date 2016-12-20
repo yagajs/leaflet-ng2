@@ -57,14 +57,9 @@ export class DivIconDirective extends DivIcon  {
     }
 
     createIcon(oldDivIcon: HTMLElement): HTMLElement {
-        let clonedOptions: DivIconOptions = {
-            bgPos: (<DivIconOptions>(<any>this).options).bgPos,
-            className: (<DivIconOptions>(<any>this).options).className,
-            html: '',
-            iconAnchor: (<DivIconOptions>(<any>this).options).iconAnchor,
-            iconSize: (<DivIconOptions>(<any>this).options).iconSize,
-            popupAnchor: (<DivIconOptions>(<any>this).options).popupAnchor
-        };
+
+        let clonedOptions: DivIconOptions = Object.create((<DivIconOptions>(<any>this).options));
+        clonedOptions.html = '';
         oldDivIcon = super.createIcon.call({options: clonedOptions}, oldDivIcon);
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
         return oldDivIcon;
