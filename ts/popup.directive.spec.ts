@@ -348,8 +348,8 @@ describe('Popup Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.maxWidth = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).maxWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).maxWidth }`);
+            if (popup.options.maxWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.maxWidth }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -377,8 +377,8 @@ describe('Popup Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.minWidth = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).minWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).minWidth }`);
+            if (popup.options.minWidth !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.minWidth }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -406,8 +406,8 @@ describe('Popup Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.maxHeight = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).maxHeight !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).maxHeight }`);
+            if (popup.options.maxHeight !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.maxHeight }`);
             }
         });
     });
@@ -428,8 +428,8 @@ describe('Popup Directive', () => {
                 val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).autoPanPaddingTopLeft !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPaddingTopLeft }`);
+            if (popup.options.autoPanPaddingTopLeft !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPaddingTopLeft }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -459,8 +459,8 @@ describe('Popup Directive', () => {
                 val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).autoPanPaddingBottomRight !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPaddingBottomRight }`);
+            if (popup.options.autoPanPaddingBottomRight !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPaddingBottomRight }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -490,8 +490,8 @@ describe('Popup Directive', () => {
                 val: Point = point(num, num);
             popup.autoPanPadding = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).autoPanPadding !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).autoPanPadding }`);
+            if (popup.options.autoPanPadding !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPadding }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -520,15 +520,15 @@ describe('Popup Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoPan = false;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).autoPan) {
+            if (popup.options.autoPan) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<PopupOptions>(<any>popup).options).autoPan = false;
+            popup.options.autoPan = false;
             popup.autoPan = true;
             /* istanbul ignore if */
-            if (!(<PopupOptions>(<any>popup).options).autoPan) {
+            if (!popup.options.autoPan) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -562,15 +562,15 @@ describe('Popup Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.keepInView = false;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).keepInView) {
+            if (popup.options.keepInView) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<PopupOptions>(<any>popup).options).keepInView = false;
+            popup.options.keepInView = false;
             popup.keepInView = true;
             /* istanbul ignore if */
-            if (!(<PopupOptions>(<any>popup).options).keepInView) {
+            if (!popup.options.keepInView) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -604,15 +604,15 @@ describe('Popup Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.closeButton = false;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).closeButton) {
+            if (popup.options.closeButton) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<PopupOptions>(<any>popup).options).closeButton = false;
+            popup.options.closeButton = false;
             popup.closeButton = true;
             /* istanbul ignore if */
-            if (!(<PopupOptions>(<any>popup).options).closeButton) {
+            if (!popup.options.closeButton) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -646,15 +646,15 @@ describe('Popup Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoClose = false;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).autoClose) {
+            if (popup.options.autoClose) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<PopupOptions>(<any>popup).options).autoClose = false;
+            popup.options.autoClose = false;
             popup.autoClose = true;
             /* istanbul ignore if */
-            if (!(<PopupOptions>(<any>popup).options).autoClose) {
+            if (!popup.options.autoClose) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -690,8 +690,8 @@ describe('Popup Directive', () => {
             const val: string = 'test-class';
             popup.className = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).className }`);
+            if (popup.options.className !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.className }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -719,8 +719,8 @@ describe('Popup Directive', () => {
             const val: string = 'test-class';
             popup.pane = val;
             /* istanbul ignore if */
-            if ((<PopupOptions>(<any>popup).options).pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<PopupOptions>(<any>popup).options).pane }`);
+            if (popup.options.pane !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.pane }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {

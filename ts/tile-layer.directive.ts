@@ -149,7 +149,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.setOpacity(val);
     }
     get opacity(): number {
-        return (<TileLayerOptions>(<any>this).options).opacity;
+        return this.options.opacity;
     }
 
     @Input() set display(val: boolean) {
@@ -215,121 +215,121 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.setZIndex(val);
     }
     get zIndex(): number {
-        return (<TileLayerOptions>(<any>this).options).zIndex;
+        return this.options.zIndex;
     }
 
     set tileSize(val: Point) {
-        (<TileLayerOptions>(<any>this).options).tileSize = val;
+        this.options.tileSize = val;
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point>(<TileLayerOptions>(<any>this).options).tileSize);
+        return (<Point>this.options.tileSize);
     }
 
     set updateWhenIdle(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).updateWhenIdle = val;
+        this.options.updateWhenIdle = val;
     }
     get updateWhenIdle(): boolean {
-        return (<TileLayerOptions>(<any>this).options).updateWhenIdle;
+        return this.options.updateWhenIdle;
     }
 
     set updateWhenZooming(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).updateWhenZooming = val;
+        this.options.updateWhenZooming = val;
     }
     get updateWhenZooming(): boolean {
-        return (<TileLayerOptions>(<any>this).options).updateWhenZooming;
+        return this.options.updateWhenZooming;
     }
 
     set updateInterval(val: number) {
-        (<TileLayerOptions>(<any>this).options).updateInterval = val;
+        this.options.updateInterval = val;
     }
     get updateInterval(): number {
-        return (<TileLayerOptions>(<any>this).options).updateInterval;
+        return this.options.updateInterval;
     }
 
     set bounds(val: LatLngBoundsExpression) {
-        (<TileLayerOptions>(<any>this).options).bounds = val;
+        this.options.bounds = val;
     }
     get bounds(): LatLngBoundsExpression {
-        return (<TileLayerOptions>(<any>this).options).bounds;
+        return this.options.bounds;
     }
 
     set noWrap(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).noWrap = val;
+        this.options.noWrap = val;
     }
     get noWrap(): boolean {
-        return (<TileLayerOptions>(<any>this).options).noWrap;
+        return this.options.noWrap;
     }
 
     set className(val: string) {
-        (<TileLayerOptions>(<any>this).options).className = val;
+        this.options.className = val;
     }
     get className(): string {
-        return (<TileLayerOptions>(<any>this).options).className;
+        return this.options.className;
     }
 
     set keepBuffer(val: number) {
-        (<TileLayerOptions>(<any>this).options).keepBuffer = val;
+        this.options.keepBuffer = val;
     }
     get keepBuffer(): number {
-        return (<TileLayerOptions>(<any>this).options).keepBuffer;
+        return this.options.keepBuffer;
     }
 
     set maxNativeZoom(val: number) {
-        (<TileLayerOptions>(<any>this).options).maxNativeZoom = val;
+        this.options.maxNativeZoom = val;
     };
     get maxNativeZoom(): number {
-        return (<TileLayerOptions>(<any>this).options).maxNativeZoom;
+        return this.options.maxNativeZoom;
     }
 
     set subdomains(val: string[]) {
-        (<TileLayerOptions>(<any>this).options).subdomains = val;
+        this.options.subdomains = val;
     };
     get subdomains(): string[] {
-        if (typeof (<string>(<TileLayerOptions>(<any>this).options).subdomains) === 'string') {
-            (<TileLayerOptions>(<any>this).options).subdomains = (<string>(<TileLayerOptions>(<any>this).options).subdomains).split('');
+        if (typeof (<string>this.options.subdomains) === 'string') {
+            this.options.subdomains = (<string>this.options.subdomains).split('');
         }
-        return (<string[]>(<TileLayerOptions>(<any>this).options).subdomains);
+        return (<string[]>this.options.subdomains);
     }
 
     set errorTileUrl(val: string) {
-        (<TileLayerOptions>(<any>this).options).errorTileUrl = val;
+        this.options.errorTileUrl = val;
     };
     get errorTileUrl(): string {
-        return (<TileLayerOptions>(<any>this).options).errorTileUrl;
+        return this.options.errorTileUrl;
     }
 
     set zoomOffset(val: number) {
-        (<TileLayerOptions>(<any>this).options).zoomOffset = val;
+        this.options.zoomOffset = val;
     };
     get zoomOffset(): number {
-        return (<TileLayerOptions>(<any>this).options).zoomOffset;
+        return this.options.zoomOffset;
     }
 
     set tms(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).tms = val;
+        this.options.tms = val;
     };
     get tms(): boolean {
-        return (<TileLayerOptions>(<any>this).options).tms;
+        return this.options.tms;
     }
 
     set zoomReverse(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).zoomReverse = val;
+        this.options.zoomReverse = val;
     };
     get zoomReverse(): boolean {
-        return (<TileLayerOptions>(<any>this).options).zoomReverse;
+        return this.options.zoomReverse;
     }
 
     set detectRetina(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).detectRetina = val;
+        this.options.detectRetina = val;
     };
     get detectRetina(): boolean {
-        return (<TileLayerOptions>(<any>this).options).detectRetina;
+        return this.options.detectRetina;
     }
 
     set crossOrigin(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).crossOrigin = val;
+        this.options.crossOrigin = val;
     };
     get crossOrigin(): boolean {
-        return (<TileLayerOptions>(<any>this).options).crossOrigin;
+        return this.options.crossOrigin;
     }
 }

@@ -101,87 +101,87 @@ export class PopupDirective extends Popup  {
     }
 
     @Input() set maxWidth(val: number) {
-        (<PopupOptions>(<any>this).options).maxWidth = val;
+        this.options.maxWidth = val;
         (<any>this)._updateLayout();
     }
     get maxWidth(): number {
-        return (<PopupOptions>(<any>this).options).maxWidth;
+        return this.options.maxWidth;
     }
     @Input() set minWidth(val: number) {
-        (<PopupOptions>(<any>this).options).minWidth = val;
+        this.options.minWidth = val;
         (<any>this)._updateLayout();
     }
     get minWidth(): number {
-        return (<PopupOptions>(<any>this).options).minWidth;
+        return this.options.minWidth;
     }
     @Input() set maxHeight(val: number) {
-        (<PopupOptions>(<any>this).options).maxHeight = val;
+        this.options.maxHeight = val;
         (<any>this)._updateLayout();
     }
     get maxHeight(): number {
-        return (<PopupOptions>(<any>this).options).maxHeight;
+        return this.options.maxHeight;
     }
     @Input() set autoPan(val: boolean) {
-        (<PopupOptions>(<any>this).options).autoPan = val;
+        this.options.autoPan = val;
         (<any>this)._updateLayout();
     }
     get autoPan(): boolean {
-        return (<PopupOptions>(<any>this).options).autoPan;
+        return this.options.autoPan;
     }
     @Input() set autoPanPaddingTopLeft(val: Point) {
-        (<PopupOptions>(<any>this).options).autoPanPaddingTopLeft = val;
+        this.options.autoPanPaddingTopLeft = val;
         (<any>this)._updateLayout();
     }
     get autoPanPaddingTopLeft(): Point {
-        return (<Point>(<PopupOptions>(<any>this).options).autoPanPaddingTopLeft);
+        return (<Point>this.options.autoPanPaddingTopLeft);
     }
     @Input() set autoPanPaddingBottomRight(val: Point) {
-        (<PopupOptions>(<any>this).options).autoPanPaddingBottomRight = val;
+        this.options.autoPanPaddingBottomRight = val;
         (<any>this)._updateLayout();
     }
     get autoPanPaddingBottomRight(): Point {
-        return (<Point>(<PopupOptions>(<any>this).options).autoPanPaddingBottomRight);
+        return (<Point>this.options.autoPanPaddingBottomRight);
     }
     @Input() set autoPanPadding(val: Point) {
-        (<PopupOptions>(<any>this).options).autoPanPadding = val;
+        this.options.autoPanPadding = val;
         (<any>this)._updateLayout();
     }
     get autoPanPadding(): Point {
-        return (<Point>(<PopupOptions>(<any>this).options).autoPanPadding);
+        return (<Point>this.options.autoPanPadding);
     }
     @Input() set keepInView(val: boolean) {
-        (<PopupOptions>(<any>this).options).keepInView = val;
+        this.options.keepInView = val;
         (<any>this)._updateLayout();
     }
     get keepInView(): boolean {
-        return (<PopupOptions>(<any>this).options).keepInView;
+        return this.options.keepInView;
     }
     @Input() set closeButton(val: boolean) {
-        (<PopupOptions>(<any>this).options).closeButton = val;
+        this.options.closeButton = val;
         (<any>this)._updateLayout();
     }
     get closeButton(): boolean {
-        return (<PopupOptions>(<any>this).options).closeButton;
+        return this.options.closeButton;
     }
     @Input() set autoClose(val: boolean) {
-        (<PopupOptions>(<any>this).options).autoClose = val;
+        this.options.autoClose = val;
         (<any>this)._updateLayout();
     }
     get autoClose(): boolean {
-        return (<PopupOptions>(<any>this).options).autoClose;
+        return this.options.autoClose;
     }
     @Input() set className(val: string) {
-        (<PopupOptions>(<any>this).options).className = val;
+        this.options.className = val;
         (<any>this)._updateLayout();
     }
     get className(): string {
-        return (<PopupOptions>(<any>this).options).className;
+        return this.options.className;
     }
     @Input() set pane(val: string) {
-        (<PopupOptions>(<any>this).options).pane = val;
+        this.options.pane = val;
         (<any>this)._updateLayout();
     }
     get pane(): string {
-        return (<PopupOptions>(<any>this).options).pane;
+        return this.options.pane;
     }
 }

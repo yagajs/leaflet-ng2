@@ -14,4 +14,4 @@ export {
     PointExpression,
     BoundsExpression,
     LatLngExpression,
-} from 'leaflet';
+    Point } from 'leaflet';
