@@ -218,70 +218,70 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return (<TileLayerOptions>(<any>this).options).zIndex;
     }
 
-    set tileSize(val: Point) {
+    @Input() set tileSize(val: Point) {
         (<TileLayerOptions>(<any>this).options).tileSize = val;
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
         return (<Point>(<TileLayerOptions>(<any>this).options).tileSize);
     }
 
-    set updateWhenIdle(val: boolean) {
+    @Input() set updateWhenIdle(val: boolean) {
         (<TileLayerOptions>(<any>this).options).updateWhenIdle = val;
     }
     get updateWhenIdle(): boolean {
         return (<TileLayerOptions>(<any>this).options).updateWhenIdle;
     }
 
-    set updateWhenZooming(val: boolean) {
+    @Input() set updateWhenZooming(val: boolean) {
         (<TileLayerOptions>(<any>this).options).updateWhenZooming = val;
     }
     get updateWhenZooming(): boolean {
         return (<TileLayerOptions>(<any>this).options).updateWhenZooming;
     }
 
-    set updateInterval(val: number) {
+    @Input() set updateInterval(val: number) {
         (<TileLayerOptions>(<any>this).options).updateInterval = val;
     }
     get updateInterval(): number {
         return (<TileLayerOptions>(<any>this).options).updateInterval;
     }
 
-    set bounds(val: LatLngBoundsExpression) {
+    @Input() set bounds(val: LatLngBoundsExpression) {
         (<TileLayerOptions>(<any>this).options).bounds = val;
     }
     get bounds(): LatLngBoundsExpression {
         return (<TileLayerOptions>(<any>this).options).bounds;
     }
 
-    set noWrap(val: boolean) {
+    @Input() set noWrap(val: boolean) {
         (<TileLayerOptions>(<any>this).options).noWrap = val;
     }
     get noWrap(): boolean {
         return (<TileLayerOptions>(<any>this).options).noWrap;
     }
 
-    set className(val: string) {
+    @Input() set className(val: string) {
         (<TileLayerOptions>(<any>this).options).className = val;
     }
     get className(): string {
         return (<TileLayerOptions>(<any>this).options).className;
     }
 
-    set keepBuffer(val: number) {
+    @Input() set keepBuffer(val: number) {
         (<TileLayerOptions>(<any>this).options).keepBuffer = val;
     }
     get keepBuffer(): number {
         return (<TileLayerOptions>(<any>this).options).keepBuffer;
     }
 
-    set maxNativeZoom(val: number) {
+    @Input() set maxNativeZoom(val: number) {
         (<TileLayerOptions>(<any>this).options).maxNativeZoom = val;
     };
     get maxNativeZoom(): number {
         return (<TileLayerOptions>(<any>this).options).maxNativeZoom;
     }
 
-    set subdomains(val: string[]) {
+    @Input() set subdomains(val: string[]) {
         (<TileLayerOptions>(<any>this).options).subdomains = val;
     };
     get subdomains(): string[] {
@@ -291,42 +291,42 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return (<string[]>(<TileLayerOptions>(<any>this).options).subdomains);
     }
 
-    set errorTileUrl(val: string) {
+    @Input() set errorTileUrl(val: string) {
         (<TileLayerOptions>(<any>this).options).errorTileUrl = val;
     };
     get errorTileUrl(): string {
         return (<TileLayerOptions>(<any>this).options).errorTileUrl;
     }
 
-    set zoomOffset(val: number) {
+    @Input() set zoomOffset(val: number) {
         (<TileLayerOptions>(<any>this).options).zoomOffset = val;
     };
     get zoomOffset(): number {
         return (<TileLayerOptions>(<any>this).options).zoomOffset;
     }
 
-    set tms(val: boolean) {
+    @Input() set tms(val: boolean) {
         (<TileLayerOptions>(<any>this).options).tms = val;
     };
     get tms(): boolean {
         return (<TileLayerOptions>(<any>this).options).tms;
     }
 
-    set zoomReverse(val: boolean) {
+    @Input() set zoomReverse(val: boolean) {
         (<TileLayerOptions>(<any>this).options).zoomReverse = val;
     };
     get zoomReverse(): boolean {
         return (<TileLayerOptions>(<any>this).options).zoomReverse;
     }
 
-    set detectRetina(val: boolean) {
+    @Input() set detectRetina(val: boolean) {
         (<TileLayerOptions>(<any>this).options).detectRetina = val;
     };
     get detectRetina(): boolean {
         return (<TileLayerOptions>(<any>this).options).detectRetina;
     }
 
-    set crossOrigin(val: boolean) {
+    @Input() set crossOrigin(val: boolean) {
         (<TileLayerOptions>(<any>this).options).crossOrigin = val;
     };
     get crossOrigin(): boolean {
