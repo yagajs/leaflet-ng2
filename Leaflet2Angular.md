@@ -259,6 +259,8 @@ Directive name in Angular2: `yaga-image-overlay`.
 * `[(className)]: string`
 * `[(style)]: Style`
 
+* `[interactive]: boolean`
+
 #### Polyline
 
 Directive name in Angular2: `yaga-polyline`.
@@ -269,7 +271,7 @@ Extends Path
 
 * `[(latlngs)]: LatLng[]`
 * `[(geojson)]: GeoJSONFeature` *Note: any layer has to have a feature property to handle properties*
-* `[(properties)]: any | T` *maybe implement something like: `type OptionalGenericFeature<T> = Feature | GenericFeature<T>`*
+* `[properties]: any | T` *maybe implement something like: `type OptionalGenericFeature<T> = Feature | GenericFeature<T>`*
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
 * `[smoothFactor]: number`
