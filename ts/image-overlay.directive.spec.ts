@@ -191,8 +191,8 @@ describe('Image-Overlay Directive', () => {
             layer.opacity = val;
             setTimeout(() => {
                 /* istanbul ignore if */
-                if ((<ImageOverlayOptions>(<any>layer).options).opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ (<ImageOverlayOptions>(<any>layer).options).opacity }`));
+                if (layer.options.opacity !== val) {
+                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.opacity }`));
                 }
                 return done();
             }, 0);
@@ -956,15 +956,15 @@ describe('Image-Overlay Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
             /* istanbul ignore if */
-            if ((<ImageOverlayOptions>(<any>layer).options).crossOrigin) {
+            if (layer.options.crossOrigin) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<ImageOverlayOptions>(<any>layer).options).crossOrigin = false;
+            layer.options.crossOrigin = false;
             layer.crossOrigin = true;
             /* istanbul ignore if */
-            if (!(<ImageOverlayOptions>(<any>layer).options).crossOrigin) {
+            if (!layer.options.crossOrigin) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -996,15 +996,15 @@ describe('Image-Overlay Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.interactive = false;
             /* istanbul ignore if */
-            if ((<ImageOverlayOptions>(<any>layer).options).interactive) {
+            if (layer.options.interactive) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<ImageOverlayOptions>(<any>layer).options).interactive = false;
+            layer.options.interactive = false;
             layer.interactive = true;
             /* istanbul ignore if */
-            if (!(<ImageOverlayOptions>(<any>layer).options).interactive) {
+            if (!layer.options.interactive) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1037,8 +1037,8 @@ describe('Image-Overlay Directive', () => {
             const val: string = 'Test alt';
             layer.alt = val;
             /* istanbul ignore if */
-            if ((<ImageOverlayOptions>(<any>layer).options).alt !== val || layer.getElement().getAttribute('alt') !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<ImageOverlayOptions>(<any>layer).options).alt }`);
+            if (layer.options.alt !== val || layer.getElement().getAttribute('alt') !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.alt }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {

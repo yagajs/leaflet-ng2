@@ -191,7 +191,7 @@ describe('Tile-Layer Directive', () => {
             layer.opacity = val;
             setTimeout(() => {
                 /* istanbul ignore if */
-                if ((<TileLayerOptions>(<any>layer).options).opacity !== val) {
+                if (layer.options.opacity !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).opacity }`));
                 }
                 return done();
@@ -264,7 +264,7 @@ describe('Tile-Layer Directive', () => {
             layer.zIndex = val;
             setTimeout(() => {
                 /* istanbul ignore if */
-                if ((<TileLayerOptions>(<any>layer).options).zIndex !== val) {
+                if (layer.options.zIndex !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).zIndex }`));
                 }
                 return done();
@@ -772,8 +772,8 @@ describe('Tile-Layer Directive', () => {
                 val: Point = point(num, num);
             layer.tileSize = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).tileSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).tileSize }`);
+            if (layer.options.tileSize !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.tileSize }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -801,11 +801,11 @@ describe('Tile-Layer Directive', () => {
                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
             layer.bounds = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).bounds !== val) {
+            if (layer.options.bounds !== val) {
                 throw new Error('Wrong value setted: ' +
                     JSON.stringify(val) +
                     ' != ' +
-                    JSON.stringify((<TileLayerOptions>(<any>layer).options).bounds));
+                    JSON.stringify(layer.options.bounds));
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -832,11 +832,11 @@ describe('Tile-Layer Directive', () => {
             const val: string[] = ['a', 'b', 'c', 'd'];
             layer.subdomains = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).subdomains !== val) {
+            if (layer.options.subdomains !== val) {
                 throw new Error('Wrong value setted: ' +
                     JSON.stringify(val) +
                     ' != ' +
-                    JSON.stringify((<TileLayerOptions>(<any>layer).options).subdomains));
+                    JSON.stringify(layer.options.subdomains));
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -849,7 +849,7 @@ describe('Tile-Layer Directive', () => {
         });
         it('should get an array of strings even if it has a string value', () => {
             const val: string = 'abcdefg';
-            (<TileLayerOptions>(<any>layer).options).subdomains = val;
+            layer.options.subdomains = val;
             /* istanbul ignore if */
             if (!Array.prototype.isPrototypeOf(layer.subdomains) && layer.subdomains.length !== val.length) {
                 throw new Error(`Wrong value setted: ${ val } != ${ JSON.stringify(layer.subdomains) }`);
@@ -870,8 +870,8 @@ describe('Tile-Layer Directive', () => {
             const val: string = 'test-class';
             layer.className = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).className }`);
+            if (layer.options.className !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.className }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -897,8 +897,8 @@ describe('Tile-Layer Directive', () => {
             const val: string = 'http://test';
             layer.errorTileUrl = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).errorTileUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).errorTileUrl }`);
+            if (layer.options.errorTileUrl !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.errorTileUrl }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -924,8 +924,8 @@ describe('Tile-Layer Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.updateInterval = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).updateInterval !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).updateInterval }`);
+            if (layer.options.updateInterval !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.updateInterval }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -951,8 +951,8 @@ describe('Tile-Layer Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.keepBuffer = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).keepBuffer !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).keepBuffer }`);
+            if (layer.options.keepBuffer !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.keepBuffer }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -978,8 +978,8 @@ describe('Tile-Layer Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.maxNativeZoom = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).maxNativeZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).maxNativeZoom }`);
+            if (layer.options.maxNativeZoom !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.maxNativeZoom }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1005,8 +1005,8 @@ describe('Tile-Layer Directive', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.zoomOffset = val;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).zoomOffset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>layer).options).zoomOffset }`);
+            if (layer.options.zoomOffset !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.zoomOffset }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1031,15 +1031,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.tms = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).tms) {
+            if (layer.options.tms) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).tms = false;
+            layer.options.tms = false;
             layer.tms = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).tms) {
+            if (!layer.options.tms) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1071,15 +1071,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.zoomReverse = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).zoomReverse) {
+            if (layer.options.zoomReverse) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).zoomReverse = false;
+            layer.options.zoomReverse = false;
             layer.zoomReverse = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).zoomReverse) {
+            if (!layer.options.zoomReverse) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1111,15 +1111,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.detectRetina = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).detectRetina) {
+            if (layer.options.detectRetina) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).detectRetina = false;
+            layer.options.detectRetina = false;
             layer.detectRetina = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).detectRetina) {
+            if (!layer.options.detectRetina) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1151,15 +1151,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).crossOrigin) {
+            if (layer.options.crossOrigin) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).crossOrigin = false;
+            layer.options.crossOrigin = false;
             layer.crossOrigin = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).crossOrigin) {
+            if (!layer.options.crossOrigin) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1191,15 +1191,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenIdle = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).updateWhenIdle) {
+            if (layer.options.updateWhenIdle) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).updateWhenIdle = false;
+            layer.options.updateWhenIdle = false;
             layer.updateWhenIdle = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).updateWhenIdle) {
+            if (!layer.options.updateWhenIdle) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1231,15 +1231,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenZooming = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).updateWhenZooming) {
+            if (layer.options.updateWhenZooming) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).updateWhenZooming = false;
+            layer.options.updateWhenZooming = false;
             layer.updateWhenZooming = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).updateWhenZooming) {
+            if (!layer.options.updateWhenZooming) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1271,15 +1271,15 @@ describe('Tile-Layer Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noWrap = false;
             /* istanbul ignore if */
-            if ((<TileLayerOptions>(<any>layer).options).noWrap) {
+            if (layer.options.noWrap) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TileLayerOptions>(<any>layer).options).noWrap = false;
+            layer.options.noWrap = false;
             layer.noWrap = true;
             /* istanbul ignore if */
-            if (!(<TileLayerOptions>(<any>layer).options).noWrap) {
+            if (!layer.options.noWrap) {
                 throw new Error(`It is not setted to true`);
             }
         });

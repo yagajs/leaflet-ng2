@@ -290,35 +290,35 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setMaxBounds(val);
     }
     get maxBounds(): LatLngBounds {
-        return (<LatLngBounds>(<MapOptions>(<any>this).options).maxBounds);
+        return (<LatLngBounds>this.options.maxBounds);
     }
 
     // One-way Input
     @Input() set closePopupOnClick(val: boolean) {
-        (<MapOptions>(<any>this).options).closePopupOnClick = val;
+        this.options.closePopupOnClick = val;
     }
     get closePopupOnClick(): boolean {
-        return (<MapOptions>(<any>this).options).closePopupOnClick;
+        return this.options.closePopupOnClick;
     }
 
     @Input() set zoomSnap(val: number) {
-        (<MapOptions>(<any>this).options).zoomSnap = val;
+        this.options.zoomSnap = val;
     }
     get zoomSnap(): number {
-        return (<MapOptions>(<any>this).options).zoomSnap;
+        return this.options.zoomSnap;
     }
     @Input() set zoomDelta(val: number) {
-        (<MapOptions>(<any>this).options).zoomDelta = val;
+        this.options.zoomDelta = val;
     }
     get zoomDelta(): number {
-        return (<MapOptions>(<any>this).options).zoomDelta;
+        return this.options.zoomDelta;
     }
 
     @Input() set trackResize(val: boolean) {
-        (<MapOptions>(<any>this).options).trackResize = val;
+        this.options.trackResize = val;
     }
     get trackResize(): boolean {
-        return (<MapOptions>(<any>this).options).trackResize;
+        return this.options.trackResize;
     }
 
     // maybe 2way!?!
@@ -358,80 +358,80 @@ export class MapComponent extends Map implements AfterViewInit {
     }
 
     @Input() set fadeAnimation(val: boolean) {
-        (<MapOptions>(<any>this).options).fadeAnimation = val;
+        this.options.fadeAnimation = val;
     }
     get fadeAnimation(): boolean {
-        return (<MapOptions>(<any>this).options).fadeAnimation;
+        return this.options.fadeAnimation;
     }
 
     @Input() set markerZoomAnimation(val: boolean) {
-        (<MapOptions>(<any>this).options).markerZoomAnimation = val;
+        this.options.markerZoomAnimation = val;
     }
     get markerZoomAnimation(): boolean {
-        return (<MapOptions>(<any>this).options).markerZoomAnimation;
+        return this.options.markerZoomAnimation;
     }
 
     @Input() set transform3DLimit(val: number) {
-        (<MapOptions>(<any>this).options).transform3DLimit = val;
+        this.options.transform3DLimit = val;
     }
     get transform3DLimit(): number {
-        return (<MapOptions>(<any>this).options).transform3DLimit;
+        return this.options.transform3DLimit;
     }
 
     @Input() set zoomAnimation(val: boolean) {
-        (<MapOptions>(<any>this).options).zoomAnimation = val;
+        this.options.zoomAnimation = val;
     }
     get zoomAnimation(): boolean {
-        return (<MapOptions>(<any>this).options).zoomAnimation;
+        return this.options.zoomAnimation;
     }
 
     @Input() set zoomAnimationThreshold(val: number) {
-        (<MapOptions>(<any>this).options).zoomAnimationThreshold = val;
+        this.options.zoomAnimationThreshold = val;
     }
     get zoomAnimationThreshold(): number {
-        return (<MapOptions>(<any>this).options).zoomAnimationThreshold;
+        return this.options.zoomAnimationThreshold;
     }
 
     @Input() set inertia(val: boolean) {
-        (<MapOptions>(<any>this).options).inertia = val;
+        this.options.inertia = val;
     }
     get inertia(): boolean {
-        return (<MapOptions>(<any>this).options).inertia;
+        return this.options.inertia;
     }
 
     @Input() set inertiaDeceleration(val: number) {
-        (<MapOptions>(<any>this).options).inertiaDeceleration = val;
+        this.options.inertiaDeceleration = val;
     }
     get inertiaDeceleration(): number {
-        return (<MapOptions>(<any>this).options).inertiaDeceleration;
+        return this.options.inertiaDeceleration;
     }
 
     @Input() set inertiaMaxSpeed(val: number) {
-        (<MapOptions>(<any>this).options).inertiaMaxSpeed = val;
+        this.options.inertiaMaxSpeed = val;
     }
     get inertiaMaxSpeed(): number {
-        return (<MapOptions>(<any>this).options).inertiaMaxSpeed;
+        return this.options.inertiaMaxSpeed;
     }
 
     @Input() set easeLinearity(val: number) {
-        (<MapOptions>(<any>this).options).easeLinearity = val;
+        this.options.easeLinearity = val;
     }
     get easeLinearity(): number {
-        return (<MapOptions>(<any>this).options).easeLinearity;
+        return this.options.easeLinearity;
     }
 
     @Input() set worldCopyJump(val: boolean) {
-        (<MapOptions>(<any>this).options).worldCopyJump = val;
+        this.options.worldCopyJump = val;
     }
     get worldCopyJump(): boolean {
-        return (<MapOptions>(<any>this).options).worldCopyJump;
+        return this.options.worldCopyJump;
     }
 
     @Input() set maxBoundsViscosity(val: number) {
-        (<MapOptions>(<any>this).options).maxBoundsViscosity = val;
+        this.options.maxBoundsViscosity = val;
     }
     get maxBoundsViscosity(): number {
-        return (<MapOptions>(<any>this).options).maxBoundsViscosity;
+        return this.options.maxBoundsViscosity;
     }
 
     // maybe 2way!?!
@@ -447,10 +447,10 @@ export class MapComponent extends Map implements AfterViewInit {
     }
 
     @Input() set keyboardPanDelta(val: number) {
-        (<MapOptions>(<any>this).options).keyboardPanDelta = val;
+        this.options.keyboardPanDelta = val;
     }
     get keyboardPanDelta(): number {
-        return (<MapOptions>(<any>this).options).keyboardPanDelta;
+        return this.options.keyboardPanDelta;
     }
 
     // maybe 2way!?!
@@ -466,39 +466,39 @@ export class MapComponent extends Map implements AfterViewInit {
     }
 
     @Input() set wheelDebounceTime(val: number) {
-        (<MapOptions>(<any>this).options).wheelDebounceTime = val;
+        this.options.wheelDebounceTime = val;
     }
     get wheelDebounceTime(): number {
-        return (<MapOptions>(<any>this).options).wheelDebounceTime;
+        return this.options.wheelDebounceTime;
     }
 
     @Input() set wheelPxPerZoomLevel(val: number) {
-        (<MapOptions>(<any>this).options).wheelPxPerZoomLevel = val;
+        this.options.wheelPxPerZoomLevel = val;
     }
     get wheelPxPerZoomLevel(): number {
-        return (<MapOptions>(<any>this).options).wheelPxPerZoomLevel;
+        return this.options.wheelPxPerZoomLevel;
     }
 
 
     @Input() set tapEnabled(val: boolean) {
-        (<MapOptions>(<any>this).options).tap = val;
+        this.options.tap = val;
     }
     get tapEnabled(): boolean {
-        return (<MapOptions>(<any>this).options).tap;
+        return this.options.tap;
     }
 
     @Input() set tapTolerance(val: number) {
-        (<MapOptions>(<any>this).options).tapTolerance = val;
+        this.options.tapTolerance = val;
     }
     get tapTolerance(): number {
-        return (<MapOptions>(<any>this).options).tapTolerance;
+        return this.options.tapTolerance;
     }
 
     @Input() set bounceAtZoomLimits(val: boolean) {
-        (<MapOptions>(<any>this).options).bounceAtZoomLimits = val;
+        this.options.bounceAtZoomLimits = val;
     }
     get bounceAtZoomLimits(): boolean {
-        return (<MapOptions>(<any>this).options).bounceAtZoomLimits;
+        return this.options.bounceAtZoomLimits;
     }
     // maybe 2way!?!
     @Input() set touchZoomEnabled(val: boolean) {

@@ -1049,15 +1049,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.closePopupOnClick = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).closePopupOnClick) {
+            if (map.options.closePopupOnClick) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).closePopupOnClick = false;
+            map.options.closePopupOnClick = false;
             map.closePopupOnClick = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).closePopupOnClick) {
+            if (!map.options.closePopupOnClick) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1086,8 +1086,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomSnap = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).zoomSnap !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).zoomSnap }`);
+            if (map.options.zoomSnap !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomSnap }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1109,8 +1109,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomDelta = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).zoomDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).zoomDelta }`);
+            if (map.options.zoomDelta !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomDelta }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1131,15 +1131,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.trackResize = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).trackResize) {
+            if (map.options.trackResize) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).trackResize = false;
+            map.options.trackResize = false;
             map.trackResize = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).trackResize) {
+            if (!map.options.trackResize) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1275,15 +1275,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.fadeAnimation = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).fadeAnimation) {
+            if (map.options.fadeAnimation) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).fadeAnimation = false;
+            map.options.fadeAnimation = false;
             map.fadeAnimation = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).fadeAnimation) {
+            if (!map.options.fadeAnimation) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1311,15 +1311,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.markerZoomAnimation = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).markerZoomAnimation) {
+            if (map.options.markerZoomAnimation) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).markerZoomAnimation = false;
+            map.options.markerZoomAnimation = false;
             map.markerZoomAnimation = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).markerZoomAnimation) {
+            if (!map.options.markerZoomAnimation) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1348,8 +1348,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.transform3DLimit = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).transform3DLimit !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).transform3DLimit }`);
+            if (map.options.transform3DLimit !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.transform3DLimit }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1370,15 +1370,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.zoomAnimation = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).zoomAnimation) {
+            if (map.options.zoomAnimation) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).zoomAnimation = false;
+            map.options.zoomAnimation = false;
             map.zoomAnimation = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).zoomAnimation) {
+            if (!map.options.zoomAnimation) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1407,8 +1407,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.zoomAnimationThreshold = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).zoomAnimationThreshold !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).zoomAnimationThreshold }`);
+            if (map.options.zoomAnimationThreshold !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomAnimationThreshold }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1429,15 +1429,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.inertia = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).inertia) {
+            if (map.options.inertia) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).inertia = false;
+            map.options.inertia = false;
             map.inertia = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).inertia) {
+            if (!map.options.inertia) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1466,8 +1466,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaDeceleration = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).inertiaDeceleration !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).inertiaDeceleration }`);
+            if (map.options.inertiaDeceleration !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.inertiaDeceleration }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1489,8 +1489,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaMaxSpeed = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).inertiaMaxSpeed !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).inertiaMaxSpeed }`);
+            if (map.options.inertiaMaxSpeed !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.inertiaMaxSpeed }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1512,8 +1512,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.easeLinearity = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).easeLinearity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).easeLinearity }`);
+            if (map.options.easeLinearity !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.easeLinearity }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1534,15 +1534,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.worldCopyJump = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).worldCopyJump) {
+            if (map.options.worldCopyJump) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).worldCopyJump = false;
+            map.options.worldCopyJump = false;
             map.worldCopyJump = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).worldCopyJump) {
+            if (!map.options.worldCopyJump) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1571,8 +1571,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.maxBoundsViscosity = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).maxBoundsViscosity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).maxBoundsViscosity }`);
+            if (map.options.maxBoundsViscosity !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.maxBoundsViscosity }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1630,8 +1630,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.keyboardPanDelta = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).keyboardPanDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).keyboardPanDelta }`);
+            if (map.options.keyboardPanDelta !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.keyboardPanDelta }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1689,8 +1689,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelDebounceTime = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).wheelDebounceTime !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).wheelDebounceTime }`);
+            if (map.options.wheelDebounceTime !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.wheelDebounceTime }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1712,8 +1712,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelPxPerZoomLevel = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).wheelPxPerZoomLevel !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).wheelPxPerZoomLevel }`);
+            if (map.options.wheelPxPerZoomLevel !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.wheelPxPerZoomLevel }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1735,8 +1735,8 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.tapTolerance = val;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).tapTolerance !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<MapOptions>(<any>map).options).tapTolerance }`);
+            if (map.options.tapTolerance !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ map.options.tapTolerance }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -1757,15 +1757,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.tapEnabled = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).tap) {
+            if (map.options.tap) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).tap = false;
+            map.options.tap = false;
             map.tapEnabled = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).tap) {
+            if (!map.options.tap) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -1793,15 +1793,15 @@ describe('Map Component', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.bounceAtZoomLimits = false;
             /* istanbul ignore if */
-            if ((<MapOptions>(<any>map).options).bounceAtZoomLimits) {
+            if (map.options.bounceAtZoomLimits) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<MapOptions>(<any>map).options).bounceAtZoomLimits = false;
+            map.options.bounceAtZoomLimits = false;
             map.bounceAtZoomLimits = true;
             /* istanbul ignore if */
-            if (!(<MapOptions>(<any>map).options).bounceAtZoomLimits) {
+            if (!map.options.bounceAtZoomLimits) {
                 throw new Error(`It is not setted to true`);
             }
         });
