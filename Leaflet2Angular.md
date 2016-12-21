@@ -477,6 +477,7 @@ Directive name in Angular2: `yaga-icon`.
 * `[shadowUrl]: string`
 * `[shadowSize]: number[]`
 * `[shadowAnchor]: number[]`
+* `(update): Event`
 
 ### DivIcon
 

@@ -9,3 +9,5 @@ require('../lib/map.component.spec');
 require('../lib/tile-layer.directive.spec');
 require('../lib/image-overlay.directive.spec');
 require('../lib/popup.directive.spec');
+require('../lib/icon.directive.spec');
+require('../lib/div-icon.directive.spec');
