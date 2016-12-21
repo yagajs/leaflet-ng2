@@ -407,6 +407,9 @@ Directive name in Angular2: `yaga-tooltip`.
 * ng-content(HTML)
 * `[(opened)]: boolean`
 * `[(opacity)]: number`
+* `[(lat)]: number`
+* `[(lng)]: number`
+* `[(position)]: LatLng`
 * `[offset]: Point`
 * `[direction]: string`
 * `[permanent]: boolean`
@@ -477,6 +480,7 @@ Directive name in Angular2: `yaga-icon`.
 * `[shadowUrl]: string`
 * `[shadowSize]: number[]`
 * `[shadowAnchor]: number[]`
+* `(update): Event`
 
 ### DivIcon
 
