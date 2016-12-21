@@ -467,6 +467,7 @@ declare namespace L {
     export class TileLayer extends GridLayer {
         constructor(urlTemplate: string, options?: TileLayerOptions);
         setUrl(url: string, noRedraw?: boolean): this;
+        options: TileLayerOptions;
     }
 
     export namespace TileLayer {
@@ -509,6 +510,7 @@ declare namespace L {
         getElement(): HTMLElement;
         getBounds(): LatLngBounds;
         setBounds(latLngBounds: LatLngBounds): this;
+        options: ImageOverlayOptions;
     }
 
     export function imageOverlay(imageUrl: string, bounds: LatLngBoundsExpression, options?: ImageOverlayOptions): ImageOverlay;
@@ -541,6 +543,7 @@ declare namespace L {
         setStyle(style: PathOptions): this;
         bringToFront(): this;
         bringToBack(): this;
+        options: PanOptions;
     }
 
     export interface PolylineOptions extends PathOptions {
@@ -572,6 +575,7 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.LineString | GeoJSON.MultiLineString;
+        options: PolylineOptions;
     }
 
     export function polyline(latlngs: Array<LatLng>, options?: PolylineOptions): Polyline;
@@ -594,6 +598,7 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Polygon | GeoJSON.MultiPolygon;
+        options: PolylineOptions;
     }
 
     export function polygon(latlngs: Array<LatLng>, options?: PolylineOptions): Polygon;
@@ -926,6 +931,8 @@ declare namespace L {
         asFeature(geojson: GeoJSON.GeometryObject): GeoJSON.Feature<GeoJSON.GeometryObject>;
 
         asFeature(geojson: GeoJSON.Feature<GeoJSON.GeometryObject>): GeoJSON.Feature<GeoJSON.GeometryObject>;
+
+        options: GeoJSONOptions;
     }
 
     /**
@@ -1107,6 +1114,7 @@ declare namespace L {
         bringToFront(): this;
         bringToBack(): this;
         openOn(map: Map): this;
+        options: PopupOptions;
     }
 
     export function popup(options?: PopupOptions, source?: Layer): Popup;
@@ -1138,6 +1146,7 @@ declare namespace L {
         isOpen(): boolean;
         bringToFront(): this;
         bringToBack(): this;
+        options: TooltipOptions
     }
 
     export function tooltip(options?: TooltipOptions, source?: Layer): Tooltip;
@@ -1399,6 +1408,7 @@ declare namespace L {
         scrollWheelZoom: Handler;
         tap: Handler;
         touchZoom: Handler;
+        options: MapOptions;
     }
 
     export function map(id: string, options?: MapOptions): Map;
@@ -1422,6 +1432,7 @@ declare namespace L {
         constructor(options: IconOptions);
         createIcon(oldIcon?: HTMLElement): HTMLElement;
         createShadow(oldIcon?: HTMLElement): HTMLElement;
+        options: IconOptions;
     }
 
     export namespace Icon {
@@ -1439,9 +1450,10 @@ declare namespace L {
         className?: string;
     }
 
-    export class DivIcon extends Icon {
+    export class DivIcon extends Layer {
         constructor(options: DivIconOptions);
         createIcon(oldIcon?: HTMLElement): HTMLElement;
+        options: DivIconOptions;
     }
 
     export function divIcon(options: DivIconOptions): DivIcon;
