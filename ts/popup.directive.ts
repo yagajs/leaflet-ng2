@@ -39,26 +39,14 @@ export class PopupDirective extends Popup  {
         this.map = mapComponent;
         this.setContent(elementRef.nativeElement);
 
-        let tmp_ul: Function = (<any>this)._updateLayout;
-        (<any>this)._updateLayout = (...args: any[]) => {
-            let event: Event = {
-                target: this,
-                type: 'open'
-            };
+        this.on('add', (event: Event): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
-            tmp_ul.apply(this, args);
-        };
-        let tmp_c: Function = (<any>this)._close;
-        (<any>this)._close = (...args: any[]) => {
-            let event: Event = {
-                target: this,
-                type: 'close'
-            };
+        });
+        this.on('remove', (event: Event): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
-            tmp_c.apply(this, args);
-        };
+        });
     }
 
     setContent(content: any): this { // Content

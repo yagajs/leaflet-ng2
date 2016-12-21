@@ -13,6 +13,7 @@ export {
     PopupOptions,
     TooltipOptions,  
     ImageOverlayOptions,  
+    ImageOverlayOptions,
     IconOptions,
     LatLngBoundsExpression,
     LatLngBounds,

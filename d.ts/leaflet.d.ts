@@ -1441,6 +1441,7 @@ declare namespace L {
 
     export class DivIcon extends Icon {
         constructor(options: DivIconOptions);
+        createIcon(oldIcon?: HTMLElement): HTMLElement;
     }
 
     export function divIcon(options: DivIconOptions): DivIcon;
