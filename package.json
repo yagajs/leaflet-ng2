@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "npm install && node_modules/.bin/typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts",
-    "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
+    "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules examples/**/*.js examples/**/*.js.map",
     "reinit": "npm run clean; npm run init",
     "transpile": "node_modules/.bin/tsc",
     "lint": "node_modules/.bin/tslint ts/**",
@@ -13,7 +13,8 @@
     "test": "npm run lint && npm run transpile && node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- test/*.js",
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js",
-    "dependency-check": "node_modules/.bin/node-dependencies"
+    "dependency-check": "node_modules/.bin/node-dependencies",
+    "build-examples": "npm run transpile && cd examples && ../node_modules/.bin/tsc && browserify simple-tile-layer/index.js -o simple-tile-layer/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,12 @@
   },
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
+    "@angular/common": "^2.1.2",
+    "@angular/compiler": "^2.1.2",
+    "@angular/forms": "^2.1.2",
+    "@angular/platform-browser": "^2.1.2",
+    "@angular/platform-browser-dynamic": "^2.1.2",
+    "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",

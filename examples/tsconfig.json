@@ -4,19 +4,12 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": true,
-        "declaration": true,
-        "outDir": "./lib",
+        "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
     },
     "exclude": [
         "node_modules",
-        "typings",
-        "lib",
-        "test",
-        "browser-test",
-        "coverage",
-        "d.ts",
-        "examples"
+        ".."
     ]
 }
