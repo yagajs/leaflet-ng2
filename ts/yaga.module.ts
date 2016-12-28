@@ -1,8 +1,12 @@
 import { NgModule }      from '@angular/core';
-import { MapComponent }   from './map.component';
-import { TileLayerDirective }   from './tile-layer.directive';
+import { MapComponent,
+    ImageOverlayDirective,
+    PopupDirective,
+    TileLayerDirective,
+    IconDirective,
+    DivIconDirective } from './index';
 @NgModule({
-    declarations: [ MapComponent, TileLayerDirective ],
-    exports: [ MapComponent, TileLayerDirective ]
+    declarations: [ MapComponent, TileLayerDirective, ImageOverlayDirective, PopupDirective, IconDirective, DivIconDirective ],
+    exports: [ MapComponent, TileLayerDirective, ImageOverlayDirective, PopupDirective, IconDirective, DivIconDirective ]
 })
 export class YagaModule { }
