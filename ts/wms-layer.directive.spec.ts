@@ -1,12 +1,13 @@
 /// <reference path="../typings/index.d.ts" />
-
-import { TileLayerDirective,
+import { WmsLayerDirective,
     MapComponent,
     TileLayerOptions,
-    LatLngBoundsExpression } from './index';
+    LatLngBoundsExpression,
+    WMSParams } from './index';
 import { point, Point, latLngBounds } from 'leaflet';
 
-const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const WMS_LAYER_URL: string = 'http://www.wms.nrw.de/geobasis/wms_nw_dtk?';
+const WMS_LAYER_NAMES: string[] = ['nw_dtk_col'];
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -20,15 +21,15 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     return false;
 }
 
-describe('Tile-Layer Directive', () => {
+describe('WMS-Layer Directive', () => {
     describe('[(display)]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should remove DOM container when not displaying', () => {
@@ -113,77 +114,77 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[(url)]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
+            layer.url = WMS_LAYER_URL;
             /* istanbul ignore if */
-            if ((<string>(<any>layer)._url) !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
+            if ((<string>(<any>layer)._url) !== WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
+            layer.url = WMS_LAYER_URL;
             /* istanbul ignore if */
-            if (layer.url !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(WMS_LAYER_URL);
             /* istanbul ignore if */
-            if (layer.url !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== TILE_LAYER_URL) {
+                if (eventVal !== WMS_LAYER_URL) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.url = TILE_LAYER_URL;
+            layer.url = WMS_LAYER_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = TILE_LAYER_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = WMS_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== TILE_LAYER_URL + '?test') {
+                if (eventVal !== WMS_LAYER_URL + '?test') {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.setUrl(TILE_LAYER_URL + '?test');
+            layer.setUrl(WMS_LAYER_URL + '?test');
         });
         it('should not emit anything when changing into same url', (done: MochaDone) => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(WMS_LAYER_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
                 layer.urlChange.subscribe(() => {
                     return done(new Error('Event fired'));
                 });
-                layer.setUrl(TILE_LAYER_URL);
+                layer.setUrl(WMS_LAYER_URL);
                 return done();
             }, 0);
         });
     });
     describe('[(opacity)]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
@@ -251,12 +252,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[(zIndex)]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
@@ -323,15 +324,326 @@ describe('Tile-Layer Directive', () => {
         });
     });
 
-    // Events
-    describe('(add)', () => {
+    describe('[(layers)]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.layers = WMS_LAYER_NAMES;
+            /* istanbul ignore if */
+            if (layer.wmsParams.layers !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.layers }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.layers = WMS_LAYER_NAMES;
+            /* istanbul ignore if */
+            if (layer.layers.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            layer.setParams({layers: WMS_LAYER_NAMES.join(',')});
+            /* istanbul ignore if */
+            if (layer.layers.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.layersChange.subscribe((eventVal: string[]) => {
+                /* istanbul ignore if */
+                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.layers = WMS_LAYER_NAMES;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            layer.layers = WMS_LAYER_NAMES;
+            layer.layersChange.subscribe((eventVal: string[]) => {
+                /* istanbul ignore if */
+                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.setParams({layers: WMS_LAYER_NAMES.join(',')});
+        });
+    });
+    describe('[(styles)]', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.styles = WMS_LAYER_NAMES;
+            /* istanbul ignore if */
+            if (layer.wmsParams.styles !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.styles }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.styles = WMS_LAYER_NAMES;
+            /* istanbul ignore if */
+            if (layer.styles.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.styles = WMS_LAYER_NAMES.join(',');
+            layer.setParams(params);
+            /* istanbul ignore if */
+            if (layer.styles.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.stylesChange.subscribe((eventVal: string[]) => {
+                /* istanbul ignore if */
+                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.styles = WMS_LAYER_NAMES;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            layer.stylesChange.subscribe((eventVal: string[]) => {
+                /* istanbul ignore if */
+                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.styles = WMS_LAYER_NAMES.join(',');
+            layer.setParams(params);
+        });
+    });
+    describe('[(transparent)]', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            layer.transparent = false;
+            /* istanbul ignore if */
+            if (layer.wmsParams.transparent) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            layer.wmsParams.transparent = false;
+            layer.transparent = true;
+            /* istanbul ignore if */
+            if (!layer.wmsParams.transparent) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            layer.transparent = false;
+            /* istanbul ignore if */
+            if (layer.transparent) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            layer.transparent = true;
+            /* istanbul ignore if */
+            if (!layer.transparent) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Leaflet to false', () => {
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.transparent = false;
+            layer.setParams(params);
+            /* istanbul ignore if */
+            if (layer.transparent) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Leaflet to true', () => {
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.transparent = true;
+            layer.setParams(params);
+            /* istanbul ignore if */
+            if (!layer.transparent) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.transparentChange.subscribe((eventVal: boolean) => {
+                /* istanbul ignore if */
+                if (!eventVal) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.transparent = true;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.layers = WMS_LAYER_NAMES;
+            layer.transparentChange.subscribe((eventVal: boolean) => {
+                /* istanbul ignore if */
+                if (!eventVal) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.transparent = true;
+            layer.setParams(params);
+        });
+    });
+    describe('[(format)]', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        const FORMAT: string = 'image/png';
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.format = FORMAT;
+            /* istanbul ignore if */
+            if (layer.wmsParams.format !== FORMAT) {
+                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.wmsParams.format }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.format = FORMAT;
+            /* istanbul ignore if */
+            if (layer.format !== FORMAT) {
+                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.format }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.format = FORMAT;
+            layer.setParams(params);
+            /* istanbul ignore if */
+            if (layer.format !== FORMAT) {
+                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.format }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.formatChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== FORMAT) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.format = FORMAT;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            layer.formatChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== FORMAT) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.format = FORMAT;
+            layer.setParams(params);
+        });
+    });
+    describe('[(version)]', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        const VERSION: string = '1.0.0';
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.version = VERSION;
+            /* istanbul ignore if */
+            if (layer.wmsParams.version !== VERSION) {
+                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.wmsParams.version }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.version = VERSION;
+            /* istanbul ignore if */
+            if (layer.version !== VERSION) {
+                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.version }`);
+            }
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.version = VERSION;
+            layer.setParams(params);
+            /* istanbul ignore if */
+            if (layer.version !== VERSION) {
+                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.version }`);
+            }
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.versionChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== VERSION) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+
+            layer.version = VERSION;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            layer.versionChange.subscribe((eventVal: string) => {
+                /* istanbul ignore if */
+                if (eventVal !== VERSION) {
+                    return done(new Error('Received wrong value'));
+                }
+                return done();
+            });
+            const params: WMSParams = Object.create(layer.wmsParams);
+            params.version = VERSION;
+            layer.setParams(params);
+        });
+    });
+
+    // Events
+    describe('(add)', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -349,12 +661,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(remove)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -372,12 +684,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(popupopen)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -395,12 +707,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(popupclose)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -418,12 +730,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tooltipopen)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -441,12 +753,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tooltipclose)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -464,12 +776,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(click)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -487,12 +799,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(dbclick)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -510,12 +822,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(mousedown)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -533,12 +845,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(mouseover)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -556,12 +868,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(mouseout)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -579,12 +891,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(contextmenu)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -602,12 +914,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(loading)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -625,12 +937,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tileunload)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             layer.off('tileunload', (<any>layer)._onTileRemove); // Hack to disable another listener
             return done();
         });
@@ -649,12 +961,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tileloadstart)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -672,12 +984,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tileerror)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -695,12 +1007,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(tileload)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -726,12 +1038,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('(load)', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -759,12 +1071,12 @@ describe('Tile-Layer Directive', () => {
     // Inputs
     describe('[tileSize]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -788,12 +1100,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[bounds]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -820,12 +1132,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[subdomains]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -858,12 +1170,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[className]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -885,12 +1197,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[errorTileUrl]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -912,12 +1224,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[updateInterval]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -939,12 +1251,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[keepBuffer]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -966,12 +1278,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[maxNativeZoom]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -993,12 +1305,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[zoomOffset]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -1020,12 +1332,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[tms]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1060,12 +1372,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[zoomReverse]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1100,12 +1412,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[detectRetina]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1140,12 +1452,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[crossOrigin]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1180,12 +1492,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[updateWhenIdle]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1220,12 +1532,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[updateWhenZooming]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1260,12 +1572,12 @@ describe('Tile-Layer Directive', () => {
     });
     describe('[noWrap]', () => {
         var map: MapComponent,
-            layer: TileLayerDirective;
+            layer: WmsLayerDirective;
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
+            layer = new WmsLayerDirective(map);
             return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
@@ -1294,6 +1606,46 @@ describe('Tile-Layer Directive', () => {
             layer.noWrap = true;
             /* istanbul ignore if */
             if (!layer.noWrap) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+    });
+    describe('[uppercase]', () => {
+        var map: MapComponent,
+            layer: WmsLayerDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new WmsLayerDirective(map);
+            return done();
+        });
+        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+            layer.uppercase = false;
+            /* istanbul ignore if */
+            if (layer.options.uppercase) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+            layer.options.uppercase = false;
+            layer.uppercase = true;
+            /* istanbul ignore if */
+            if (!layer.options.uppercase) {
+                throw new Error(`It is not setted to true`);
+            }
+        });
+        it('should be changed in Angular to false when changing in Angular to false', () => {
+            layer.uppercase = false;
+            /* istanbul ignore if */
+            if (layer.uppercase) {
+                throw new Error(`It is not setted to false`);
+            }
+        });
+        it('should be changed in Angular to true when changing in Angular to true', () => {
+            layer.uppercase = true;
+            /* istanbul ignore if */
+            if (!layer.uppercase) {
                 throw new Error(`It is not setted to true`);
             }
         });

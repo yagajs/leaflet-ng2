@@ -5,25 +5,27 @@ import { Directive,
     Inject,
     forwardRef,
     ElementRef } from '@angular/core';
-import { Popup,
-    PopupOptions,
+import { Tooltip,
+    TooltipOptions,
     Point,
     LatLng,
     Event,
     Content,
     LatLngExpression,
-    latLng } from 'leaflet';
+    latLng,
+    Direction } from 'leaflet';
 import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-popup'
+    selector: 'yaga-tooltip'
 })
-export class PopupDirective extends Popup  {
+export class TooltipDirective extends Tooltip  {
     @Output() public contentChange: EventEmitter<Content> = new EventEmitter();
     @Output() public openedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
+    @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
 
     @Output('open') public openEvent: EventEmitter<Event> = new EventEmitter();
     @Output('close') public closeEvent: EventEmitter<Event> = new EventEmitter();
@@ -62,7 +64,7 @@ export class PopupDirective extends Popup  {
 
     @Input() set opened(val: boolean) {
         if (val) {
-            this.openOn(this.map);
+            this.map.openTooltip(this);
             return;
         }
         (<any>this)._close();
@@ -100,88 +102,65 @@ export class PopupDirective extends Popup  {
         return this.getLatLng();
     }
 
-    @Input() set maxWidth(val: number) {
-        this.options.maxWidth = val;
-        (<any>this)._updateLayout();
+    setOpacity(val: number): void {
+        super.setOpacity(val);
+        this.opacityChange.emit(val);
     }
-    get maxWidth(): number {
-        return this.options.maxWidth;
+    @Input() set opacity(val: number) {
+        this.setOpacity(val);
     }
-    @Input() set minWidth(val: number) {
-        this.options.minWidth = val;
-        (<any>this)._updateLayout();
+    get opacity(): number {
+        return (<TooltipOptions>(<any>this).options).opacity;
     }
-    get minWidth(): number {
-        return this.options.minWidth;
-    }
-    @Input() set maxHeight(val: number) {
-        this.options.maxHeight = val;
-        (<any>this)._updateLayout();
-    }
-    get maxHeight(): number {
-        return this.options.maxHeight;
-    }
-    @Input() set autoPan(val: boolean) {
-        this.options.autoPan = val;
-        (<any>this)._updateLayout();
-    }
-    get autoPan(): boolean {
-        return this.options.autoPan;
-    }
-    @Input() set autoPanPaddingTopLeft(val: Point) {
-        this.options.autoPanPaddingTopLeft = val;
-        (<any>this)._updateLayout();
-    }
-    get autoPanPaddingTopLeft(): Point {
-        return (<Point>this.options.autoPanPaddingTopLeft);
-    }
-    @Input() set autoPanPaddingBottomRight(val: Point) {
-        this.options.autoPanPaddingBottomRight = val;
-        (<any>this)._updateLayout();
-    }
-    get autoPanPaddingBottomRight(): Point {
-        return (<Point>this.options.autoPanPaddingBottomRight);
-    }
-    @Input() set autoPanPadding(val: Point) {
-        this.options.autoPanPadding = val;
-        (<any>this)._updateLayout();
-    }
-    get autoPanPadding(): Point {
-        return (<Point>this.options.autoPanPadding);
-    }
-    @Input() set keepInView(val: boolean) {
-        this.options.keepInView = val;
-        (<any>this)._updateLayout();
-    }
-    get keepInView(): boolean {
-        return this.options.keepInView;
-    }
-    @Input() set closeButton(val: boolean) {
-        this.options.closeButton = val;
-        (<any>this)._updateLayout();
-    }
-    get closeButton(): boolean {
-        return this.options.closeButton;
-    }
-    @Input() set autoClose(val: boolean) {
-        this.options.autoClose = val;
-        (<any>this)._updateLayout();
-    }
-    get autoClose(): boolean {
-        return this.options.autoClose;
-    }
+
     @Input() set className(val: string) {
-        this.options.className = val;
+        (<TooltipOptions>(<any>this).options).className = val;
         (<any>this)._updateLayout();
     }
     get className(): string {
-        return this.options.className;
+        return (<TooltipOptions>(<any>this).options).className;
     }
     @Input() set pane(val: string) {
-        this.options.pane = val;
+        (<TooltipOptions>(<any>this).options).pane = val;
         (<any>this)._updateLayout();
     }
     get pane(): string {
-        return this.options.pane;
+        return (<TooltipOptions>(<any>this).options).pane;
+    }
+
+    @Input() set interactive(val: boolean) {
+        (<TooltipOptions>(<any>this).options).interactive = val;
+        (<any>this)._updateLayout();
+    }
+    get interactive(): boolean {
+        return (<TooltipOptions>(<any>this).options).interactive;
+    }
+
+    @Input() set sticky(val: boolean) {
+        (<TooltipOptions>(<any>this).options).sticky = val;
+    }
+    get sticky(): boolean {
+        return (<TooltipOptions>(<any>this).options).sticky;
+    }
+
+    @Input() set direction(val: Direction) {
+        (<TooltipOptions>(<any>this).options).direction = val;
+    }
+    get direction(): Direction {
+        return (<TooltipOptions>(<any>this).options).direction;
+    }
+
+    @Input() set permanent(val: boolean) {
+        (<TooltipOptions>(<any>this).options).permanent = val;
+    }
+    get permanent(): boolean {
+        return (<TooltipOptions>(<any>this).options).permanent;
+    }
+
+    @Input() set offset(val: Point) {
+        (<TooltipOptions>(<any>this).options).offset = val;
+    }
+    get offset(): Point {
+        return (<Point>(<TooltipOptions>(<any>this).options).offset);
     }
 }
