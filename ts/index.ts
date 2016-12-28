@@ -6,6 +6,7 @@ export * from './popup.directive';
 export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
+export * from './marker.directive';
 
 export {
     MapOptions,
@@ -14,6 +15,7 @@ export {
     TooltipOptions,
     ImageOverlayOptions,
     IconOptions,
+    MarkerOptions,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,
