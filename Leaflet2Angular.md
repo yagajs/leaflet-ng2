@@ -59,7 +59,7 @@ Panning Inertia Options
 * (ok) `[inertia]: boolean`
 * (ok) `[inertiaDeceleration]: number`
 * (ok) `[inertiaMaxSpeed]: number`
-* (ok) `[easeLinearity]: number`	
+* (ok) `[easeLinearity]: number`
 * (ok) `[worldCopyJump]: boolean`
 * (ok) `[maxBoundsViscosity]: number`
 
@@ -145,61 +145,62 @@ Animation Options
 
 *For all Layers*
 
-* (tilelayer, image-overlay) `[(display)]: boolean`
-* (tilelayer, image-overlay) `[(opacity)]: number`
-* (tilelayer) `[(zIndex)]: number`
+* `[(display)]: boolean` (tilelayer, image-overlay, WMS-Layer)
+* `[(opacity)]: number` (tilelayer, image-overlay, WMS-Layer)
+* `[(zIndex)]: number` (tilelayer, WMS-Layer)
 * `[minZoom]: number` in some cases 2-way-binded
 * `[maxZoom]: number` in some cases 2-way-binded
 
-* (image-overlay) `[interactive]: boolean`
+* `[interactive]: boolean` (image-overlay)
 * `[attribution]: string`
-* `[pane]: string` 
+* `[pane]: string`
 
 Layer Events
 
-* (tilelayer, image-overlay) `(add): Event`
-* (tilelayer, image-overlay) `(remove): Event`
+* `(add): Event` (tilelayer, image-overlay, WMS-Layer)
+* `(remove): Event` (tilelayer, image-overlay, WMS-Layer)
 
 Popup events
 
-* (tilelayer, image-overlay) `(popupopen): PopupEvent`
-* (tilelayer, image-overlay) `(popupclose): PopupEvent`
+* `(popupopen): PopupEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(popupclose): PopupEvent` (tilelayer, image-overlay, WMS-Layer)
 
 Tooltip events
 
-* (tilelayer, image-overlay) `(tooltipopen): TooltipEvent`
-* (tilelayer, image-overlay) `(tooltipclose): TooltipEvent`
+* `(tooltipopen): TooltipEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(tooltipclose): TooltipEvent` (tilelayer, image-overlay, WMS-Layer)
 
 Mouse Events
 
-* (tilelayer, image-overlay) `(click): MouseEvent`
-* (tilelayer, image-overlay) `(dbclick): MouseEvent`
-* (tilelayer, image-overlay) `(mousedown): MouseEvent`
-* (tilelayer, image-overlay)  `(mouseover): MouseEvent`
-* (tilelayer, image-overlay)  `(mouseout): MouseEvent`
-* (tilelayer, image-overlay)  `(contextmenu): MouseEvent`
+* `(click): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(dbclick): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(mousedown): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(mouseover): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(mouseout): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
+* `(contextmenu): MouseEvent` (tilelayer, image-overlay, WMS-Layer)
 
 #### GridLayer
 
 **Extends Layer**
 
-* (tileLayer) `[tileSize] Number: Point`
-* (tileLayer) `[updateWhenIdle]: boolean`
-* (tileLayer) `[updateWhenZooming]: boolean`
-* (tileLayer) `[updateInterval]: number`
-* (tileLayer) `[bounds]: LatLngBounds`
-* (tileLayer) `[noWrap]: boolean`
-* (tileLayer) `[className]: string`
-* (tileLayer) `[keepBuffer]: number`
+* `[tileSize] Number: Point` (tileLayer, WMS-Layer)
+* `[updateWhenIdle]: boolean` (tileLayer, WMS-Layer)
+* `[updateWhenZooming]: boolean` (tileLayer, WMS-Layer)
+* `[updateInterval]: number` (tileLayer, WMS-Layer)
+* `[bounds]: LatLngBounds` (tileLayer, WMS-Layer)
+* `[noWrap]: boolean` (tileLayer, WMS-Layer)
+* `[className]: string` (tileLayer, WMS-Layer)
+* `[keepBuffer]: number` (tileLayer, WMS-Layer)
 
 
 Event
-* (tileLayer) `(loading): Event`
-* (tileLayer) `(tileunload): TileEvent`
-* (tileLayer) `(tileloadstart): TileEvent`
-* (tileLayer) `(tileerror): TileErrorEvent`
-* (tileLayer) `(tileload): TileEvent`
-* (tileLayer) `(load): Event`
+
+* `(loading): Event` (tileLayer, WMS-Layer)
+* `(tileunload): TileEvent` (tileLayer, WMS-Layer)
+* `(tileloadstart): TileEvent` (tileLayer, WMS-Layer)
+* `(tileerror): TileErrorEvent` (tileLayer, WMS-Layer)
+* `(tileload): TileEvent` (tileLayer, WMS-Layer)
+* `(load): Event` (tileLayer, WMS-Layer)
 
 ### Raster
 
@@ -211,16 +212,16 @@ Directive name in Angular2: `yaga-tile-layer`.
 
 * ng-content(Tooltip, Popup)
 
-* (ok) `[(url)]: string` 
-* (ok) `[maxNativeZoom]: number`
+* `[(url)]: string` (tileLayer, WMS-Layer)
+* `[maxNativeZoom]: number` (tileLayer, WMS-Layer)
 * `[minNativeZoom]: number`
-* (ok) `[subdomains]: string[]` 
-* (ok) `[errorTileUrl]: string`
-* (ok) `[zoomOffset]: number`
-* (ok) `[tms]: boolean`
-* (ok) `[zoomReverse]: boolean`
-* (ok) `[detectRetina]: boolean`
-* (ok) `[crossOrigin]: boolean`
+* `[subdomains]: string[]` (tileLayer, WMS-Layer)
+* `[errorTileUrl]: string` (tileLayer, WMS-Layer)
+* `[zoomOffset]: number` (tileLayer, WMS-Layer)
+* `[tms]: boolean` (tileLayer, WMS-Layer)
+* `[zoomReverse]: boolean` (tileLayer, WMS-Layer)
+* `[detectRetina]: boolean` (tileLayer, WMS-Layer)
+* `[crossOrigin]: boolean` (tileLayer, WMS-Layer)
 
 #### WMS
 
@@ -228,12 +229,12 @@ Directive name in Angular2: `yaga-wms-layer`.
 
 Extends TileLayer
 
-* `[layers]: string[]`
-* `[styles]: string[]`
-* `[format]: string`
-* `[transparent]: boolean`
-* `[version]: string`
-* `[uppercase]: boolean`
+* `[layers]: string[]` (WMS-Layer)
+* `[styles]: string[]` (WMS-Layer)
+* `[format]: string` (WMS-Layer)
+* `[transparent]: boolean` (WMS-Layer)
+* `[version]: string` (WMS-Layer)
+* `[uppercase]: boolean` (WMS-Layer)
 
 *No used:*
 
@@ -245,14 +246,14 @@ Directive name in Angular2: `yaga-image-overlay`.
 
 * ??? ng-content(Tooltip, Popup)
 
-* (ok) `[(url)]: string`
-* (ok) `[crossOrigin]: boolean`
-* (ok) `[alt]: string`
-* (ok) `[(north)]: number`
-* (ok) `[(south)]: number`
-* (ok) `[(east)]: number`
-* (ok) `[(west)]: number`
-* (ok) `[(bounds)]: L.LatLngBounds`
+* `[(url)]: string` (image-overlay)
+* `[crossOrigin]: boolean` (image-overlay)
+* `[alt]: string` (image-overlay)
+* `[(north)]: number` (image-overlay)
+* `[(south)]: number` (image-overlay)
+* `[(east)]: number` (image-overlay)
+* `[(west)]: number` (image-overlay)
+* `[(bounds)]: L.LatLngBounds` (image-overlay)
 
 ### Vector
 
@@ -273,7 +274,7 @@ Directive name in Angular2: `yaga-image-overlay`.
 * `[(fillColor)]: string`
 * `[(fillOpacity)]: number`
 * `[(fillRule)]: string`
-* `[(renderer)]: Renderer`	
+* `[(renderer)]: Renderer`
 * `[(className)]: string`
 * `[(style)]: Style`
 
@@ -346,7 +347,7 @@ Directive name in Angular2: `yaga-circle-marker`.
 
 Extends Path
 
-* `[(lat)]: number` 
+* `[(lat)]: number`
 * `[(lng)]: number`
 * `[(radius)]: number` in pixel
 * `[(tooltipOpened)]: boolean`
@@ -397,37 +398,52 @@ Directive name in Angular2: `yaga-popup`.
 
 * ng-content(HTML)
 
-* (ok) `[(content)]: HTMLElement`
-* (ok) `[(opened)]: boolean`
-* (ok) `[(lat)]: number`
-* (ok) `[(lng)]: number`
-* (ok) `[(position)]: LatLng`
-* (ok) `[maxWidth]: number`
-* (ok) `[minWidth]: number`
-* (ok) `[maxHeight]: number`
-* (ok) `[autoPan]: boolean`
-* (ok) `[autoPanPaddingTopLeft]: Point`
-* (ok) `[autoPanPaddingBottomRight]: Point`
-* (ok) `[autoPanPadding]: Point`
-* (ok) `[keepInView]: boolean`
-* (ok) `[closeButton]: boolean`
-* (ok) `[autoClose]: boolean`
-* (ok) `[className]: string`
-* (ok) `[pane]: string`
+* `[(content)]: HTMLElement` (Popup)
+* `[(opened)]: boolean` (Popup)
+* `[(lat)]: number` (Popup)
+* `[(lng)]: number` (Popup)
+* `[(position)]: LatLng` (Popup)
+* `[maxWidth]: number` (Popup)
+* `[minWidth]: number` (Popup)
+* `[maxHeight]: number` (Popup)
+* `[autoPan]: boolean` (Popup)
+* `[autoPanPaddingTopLeft]: Point` (Popup)
+* `[autoPanPaddingBottomRight]: Point` (Popup)
+* `[autoPanPadding]: Point` (Popup)
+* `[keepInView]: boolean` (Popup)
+* `[closeButton]: boolean` (Popup)
+* `[autoClose]: boolean` (Popup)
+* `[className]: string` (Popup)
+* `[pane]: string` (Popup)
+
+Also tested but not in list:
+
+* `[(open)]: `    (Popup)
+* `[(close)]: `    (Popup)
 
 #### Tooltip
 
 Directive name in Angular2: `yaga-tooltip`.
 
 * ng-content(HTML)
-* `[(opened)]: boolean`
-* `[(opacity)]: number`
-* `[offset]: Point`
-* `[direction]: string`
-* `[permanent]: boolean`
-* `[sticky]: boolean`
-* `[interactive]: boolean`
-* `[pane]: string`
+* `[(opened)]: boolean` (Tooltip)
+* `[(opacity)]: number` (Tooltip)
+* `[offset]: Point` (Tooltip)
+* `[direction]: string` (Tooltip)
+* `[permanent]: boolean` (Tooltip)
+* `[sticky]: boolean` (Tooltip)
+* `[interactive]: boolean` (Tooltip)
+* `[pane]: string` (Tooltip)
+
+Also tested but not on list:
+
+* `[content]: `
+* `[lat]: `
+* `[lng]: `
+* `[position]: `
+* `[open]: `
+* `[close]: `
+* `[className]: `
 
 ### Structure
 
@@ -481,17 +497,21 @@ Directive name in Angular2: `yaga-scale-control`.
 
 ## Basic Types
 
-### Icon
+### Icon (two times tested)
 
 Directive name in Angular2: `yaga-icon`.
 
-* `[iconUrl]: string`
-* `[iconSize]: number[]`
-* `[iconAnchor]: number[]`
-* `[popupAnchor]: number[]`
-* `[shadowUrl]: string`
-* `[shadowSize]: number[]`
-* `[shadowAnchor]: number[]`
+* `[iconUrl]: string` (icon)
+* `[iconSize]: number[]` (icon)
+* `[iconAnchor]: number[]` (icon)
+* `[popupAnchor]: number[]` (icon)
+* `[shadowUrl]: string` (icon)
+* `[shadowSize]: number[]` (icon)
+* `[shadowAnchor]: number[]` (icon)
+
+Also tested, but not on list:
+
+* `[update]: ` (icon)
 
 ### DivIcon
 
