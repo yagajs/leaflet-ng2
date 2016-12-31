@@ -4,7 +4,10 @@ import { Directive,
     EventEmitter,
     Inject,
     forwardRef,
-    ElementRef } from '@angular/core';
+    ElementRef,
+    ContentChild,
+    AfterViewInit,
+    OnDestroy } from '@angular/core';
 import { Marker,
     MarkerOptions,
     Event,
@@ -18,10 +21,15 @@ import { Marker,
     Handler } from 'leaflet';
 import { MapComponent } from './map.component';
 
+// Content-Child imports
+import { PopupDirective } from './popup.directive';
+import { TooltipDirective } from './tooltip.directive';
+import { IconDirective } from './icon.directive';
+
 @Directive({
     selector: 'yaga-marker'
 })
-export class MarkerDirective extends Marker  {
+export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy {
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
@@ -39,6 +47,10 @@ export class MarkerDirective extends Marker  {
     @Output('drag') public dragEvent: EventEmitter<Event> = new EventEmitter();
     @Output('moveend') public moveendEvent: EventEmitter<Event> = new EventEmitter();
 
+    @ContentChild(PopupDirective) public popupDirective: PopupDirective;
+    @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
+    @ContentChild(IconDirective) public iconDirective: IconDirective;
+
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
@@ -50,6 +62,11 @@ export class MarkerDirective extends Marker  {
         });
         this.on('add', () => {
             this.displayChange.emit(true);
+        });
+        this.on('drag', (event: DragEndEvent) => {
+            this.latChange.emit(this.getLatLng().lat);
+            this.lngChange.emit(this.getLatLng().lng);
+            this.positionChange.emit(this.getLatLng());
         });
 
         // Events
@@ -82,6 +99,25 @@ export class MarkerDirective extends Marker  {
             return val;
         };
         // TODO: this.addIcon(IconDirective / DivIconDirective)
+    }
+
+    ngAfterViewInit(): void {
+        if (this.iconDirective) {
+            this.setIcon(this.iconDirective);
+            this.iconDirective.updateEvent.subscribe((event: Event) => {
+                this.setIcon(event.target); // TODO: with event.target or with this.iconDirective???
+            });
+        }
+        if (this.popupDirective) {
+            this.bindPopup(this.popupDirective);
+        }
+        if (this.tooltipDirective) {
+            this.bindTooltip(this.tooltipDirective);
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.removeFrom((<any>this)._map);
     }
 
     @Input() set display(val: boolean) {
@@ -145,20 +181,20 @@ export class MarkerDirective extends Marker  {
         return this;
     }
     @Input() set position(val: LatLng) {
-        this.setLatLng(val);
+        super.setLatLng(val);
     }
     get position(): LatLng {
         return this.getLatLng();
     }
 
     @Input() set lat(val: number) {
-        this.setLatLng([val, this.lng]);
+        super.setLatLng([val, this.lng]);
     }
     get lat(): number {
         return this.getLatLng().lat;
     }
     @Input() set lng(val: number) {
-        this.setLatLng([this.lat, val]);
+        super.setLatLng([this.lat, val]);
     }
     get lng(): number {
         return this.getLatLng().lng;
