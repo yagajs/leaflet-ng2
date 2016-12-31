@@ -14,7 +14,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js",
     "dependency-check": "node_modules/.bin/node-dependencies",
-    "build-examples": "npm run transpile && cd examples && ../node_modules/.bin/tsc && browserify simple-tile-layer/index.js -o simple-tile-layer/bundle.js"
+    "build-examples": "npm run transpile && cd examples && ../node_modules/.bin/tsc **/*.ts --experimentalDecorators && browserify simple-tile-layer/index.js -o simple-tile-layer/bundle.js && browserify popup/index.js -o popup/bundle.js"
   },
   "repository": {
     "type": "git",
