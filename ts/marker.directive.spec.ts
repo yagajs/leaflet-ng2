@@ -18,7 +18,7 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     return false;
 }
 
-describe('Icon Directive', () => {
+describe('Marker Directive', () => {
     describe('[(display)]', () => {
         var map: MapComponent,
         layer: MarkerDirective;
