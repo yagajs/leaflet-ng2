@@ -7,7 +7,8 @@ import { Directive,
     ElementRef,
     ContentChild,
     AfterViewInit,
-    OnDestroy } from '@angular/core';
+    OnDestroy,
+    Optional } from '@angular/core';
 import { Marker,
     MarkerOptions,
     Event,
@@ -47,9 +48,9 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     @Output('drag') public dragEvent: EventEmitter<Event> = new EventEmitter();
     @Output('moveend') public moveendEvent: EventEmitter<Event> = new EventEmitter();
 
-    @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-    @ContentChild(IconDirective) public iconDirective: IconDirective;
+    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
+    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
+    @Optional() @ContentChild(IconDirective) public iconDirective: IconDirective;
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
