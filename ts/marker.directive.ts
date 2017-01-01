@@ -52,6 +52,8 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
     @Optional() @ContentChild(IconDirective) public iconDirective: IconDirective;
 
+    private initialized: boolean = false;
+
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
@@ -103,6 +105,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     }
 
     ngAfterViewInit(): void {
+        this.initialized = true; // Otherwise lng gets overwritten to 0
         if (this.iconDirective) {
             this.setIcon(this.iconDirective);
             this.iconDirective.updateEvent.subscribe((event: Event) => {
@@ -176,26 +179,28 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
 
     setLatLng(val: LatLng | LatLngLiteral | LatLngTuple): this {
         super.setLatLng((<any>val));
-        this.positionChange.emit(this.getLatLng());
-        this.latChange.emit(this.getLatLng().lat);
-        this.lngChange.emit(this.getLatLng().lng);
+        if (this.initialized) {
+            this.positionChange.emit(this.getLatLng());
+            this.latChange.emit(this.getLatLng().lat);
+            this.lngChange.emit(this.getLatLng().lng);
+        }
         return this;
     }
     @Input() set position(val: LatLng) {
-        super.setLatLng(val);
+        this.setLatLng(val);
     }
     get position(): LatLng {
         return this.getLatLng();
     }
 
     @Input() set lat(val: number) {
-        super.setLatLng([val, this.lng]);
+        this.setLatLng([val, this.lng]);
     }
     get lat(): number {
         return this.getLatLng().lat;
     }
     @Input() set lng(val: number) {
-        super.setLatLng([this.lat, val]);
+        this.setLatLng([this.lat, val]);
     }
     get lng(): number {
         return this.getLatLng().lng;
