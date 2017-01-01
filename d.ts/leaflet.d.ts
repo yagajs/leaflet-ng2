@@ -544,6 +544,7 @@ declare namespace L {
         bringToFront(): this;
         bringToBack(): this;
         options: PanOptions;
+        feature: GeoJSON.Feature<GeoJSON.GeometryObject>;
     }
 
     export interface PolylineOptions extends PathOptions {
@@ -565,6 +566,7 @@ declare namespace L {
         addLatLng(latlng: Array<LatLng>): this; // these three overloads aren't explicitly noted in the docs
         addLatLng(latlng: Array<LatLngLiteral>): this;
         addLatLng(latlng: Array<LatLngTuple>): this;
+        getElement(): HTMLElement;
     }
 
     export class Polyline extends InternalPolyline {
@@ -574,7 +576,7 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLng>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
-        toGeoJSON(): GeoJSON.LineString | GeoJSON.MultiLineString;
+        toGeoJSON(): GeoJSON.Feature<GeoJSON.LineString | GeoJSON.MultiLineString>;
         options: PolylineOptions;
     }
 
@@ -1542,6 +1544,10 @@ declare namespace L {
         export const vml: boolean;
 
         export const svg: boolean;
+    }
+
+    export namespace Util {
+        export var lastId: number;
     }
 }
 

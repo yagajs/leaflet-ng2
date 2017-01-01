@@ -7,6 +7,9 @@ export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
 export * from './marker.directive';
+export * from './polyline.directive';
+
+export * from './d.ts/generic-geojson';
 
 export {
     MapOptions,
@@ -23,4 +26,9 @@ export {
     LatLngExpression,
     LatLng,
     Direction,
-    Point } from 'leaflet';
+    Point,
+    PathOptions,
+    FillRule,
+    LineCapShape,
+    LineJoinShape,
+    PolylineOptions } from 'leaflet';
