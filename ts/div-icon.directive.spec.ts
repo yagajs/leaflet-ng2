@@ -8,7 +8,7 @@ import { TRANSPARENT_PIXEL } from './consts';
 
 const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 
-describe('Icon Directive', () => {
+describe('DivIcon Directive', () => {
     // Events
     describe('(update)', () => {
         var map: MapComponent,
