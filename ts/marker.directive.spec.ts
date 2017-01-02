@@ -1,7 +1,12 @@
 /// <reference path="../typings/index.d.ts" />
 
 import { MarkerDirective,
-    MapComponent, LatLng } from './index';
+    MapComponent,
+    LatLng,
+    PopupDirective,
+    TooltipDirective,
+    IconDirective,
+    TRANSPARENT_PIXEL } from './index';
 import { point, latLng } from 'leaflet';
 
 const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
@@ -191,6 +196,7 @@ describe('Marker Directive', () => {
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
+            layer.ngAfterViewInit();
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -253,6 +259,7 @@ describe('Marker Directive', () => {
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
+            layer.ngAfterViewInit();
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -315,6 +322,7 @@ describe('Marker Directive', () => {
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
+            layer.ngAfterViewInit();
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -582,4 +590,99 @@ describe('Marker Directive', () => {
             layer.fire('moveend', testEvent);
         });
     });
+});
+
+describe('Popup in Marker Directive', () => {
+    var map: MapComponent,
+        layer: MarkerDirective,
+        popup: PopupDirective,
+        testDiv: HTMLElement;
+    before((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        testDiv = document.createElement('div');
+        popup = new PopupDirective(map, { nativeElement: testDiv });
+
+        // Hack to get write-access to readonly property
+        layer = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
+        return done();
+    });
+    it('should bind popup', () => {
+        layer.ngAfterViewInit();
+        if (!(<any>layer)._popup) {
+            throw new Error('There is no popup binded');
+        }
+        if ((<any>layer)._popup !== popup) {
+            throw new Error('There is a wrong popup binded');
+        }
+    });
+});
+
+describe('Tooltip in Marker Directive', () => {
+    var map: MapComponent,
+        layer: MarkerDirective,
+        tooltip: TooltipDirective,
+        testDiv: HTMLElement;
+    before((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        testDiv = document.createElement('div');
+        tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+
+        // Hack to get write-access to readonly property
+        layer = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
+        return done();
+    });
+    it('should bind tooltip', () => {
+        layer.ngAfterViewInit();
+        if (!(<any>layer)._tooltip) {
+            throw new Error('There is no tooltip binded');
+        }
+        if ((<any>layer)._tooltip !== tooltip) {
+            throw new Error('There is a wrong tooltip binded');
+        }
+    });
+});
+
+describe('Icon in Marker Directive', () => {
+    var map: MapComponent,
+        layer: MarkerDirective,
+        icon: IconDirective,
+        testDiv: HTMLElement;
+    before((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        testDiv = document.createElement('div');
+        icon = new IconDirective();
+        icon.iconUrl = TRANSPARENT_PIXEL;
+
+        // Hack to get write-access to readonly property
+        layer = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
+        return done();
+    });
+    it('should bind icon', () => {
+        layer.ngAfterViewInit();
+        if (!(<any>layer)._icon) {
+            throw new Error('There is no icon binded');
+        }
+        if ((<HTMLElement>(<any>layer)._icon).getAttribute('src') !== TRANSPARENT_PIXEL) {
+            throw new Error('There is a wrong icon binded');
+        }
+    });
+    it('should bind icon again on changes in icon directive', () => {
+        const TEST_VALUE: string = 'path/to/icon.png';
+        layer.ngAfterViewInit();
+        icon.iconUrl = TEST_VALUE;
+
+        if (!(<any>layer)._icon) {
+            throw new Error('There is no icon binded');
+        }
+        if ((<HTMLElement>(<any>layer)._icon).getAttribute('src') !== TEST_VALUE) {
+            throw new Error('There is a wrong icon binded');
+        }
+    });
+
 });
