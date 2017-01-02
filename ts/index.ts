@@ -6,9 +6,12 @@ export * from './popup.directive';
 export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
-export * from './polyline.directive';
 
+export * from './marker.directive';
+export * from './polyline.directive';
 export * from './d.ts/generic-geojson';
+
+export * from './consts';
 
 export {
     MapOptions,
@@ -17,6 +20,7 @@ export {
     TooltipOptions,
     ImageOverlayOptions,
     IconOptions,
+    MarkerOptions,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,
