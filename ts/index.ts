@@ -9,6 +9,7 @@ export * from './tooltip.directive';
 
 export * from './marker.directive';
 export * from './polyline.directive';
+export * from './polygon.directive';
 export * from './d.ts/generic-geojson';
 
 export * from './consts';
