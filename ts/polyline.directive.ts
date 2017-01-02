@@ -4,7 +4,10 @@ import { Directive,
     EventEmitter,
     Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
+    OnDestroy,
+    Optional,
+    ContentChild,
+    AfterViewInit } from '@angular/core';
 import { Polyline,
     PolylineOptions,
     LatLngBoundsExpression,
@@ -26,10 +29,14 @@ import { MapComponent } from './map.component';
 
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 
+// Content-Child imports
+import { PopupDirective } from './popup.directive';
+import { TooltipDirective } from './tooltip.directive';
+
 @Directive({
     selector: 'yaga-polyline'
 })
-export class PolylineDirective<T> extends Polyline implements OnDestroy  {
+export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterViewInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -63,6 +70,9 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy  {
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
+
+    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
+    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
@@ -118,6 +128,15 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy  {
         this.on('contextmenu', (event: MouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
+    }
+
+    ngAfterViewInit(): void {
+        if (this.popupDirective) {
+            this.bindPopup(this.popupDirective);
+        }
+        if (this.tooltipDirective) {
+            this.bindTooltip(this.tooltipDirective);
+        }
     }
 
     ngOnDestroy(): void {
