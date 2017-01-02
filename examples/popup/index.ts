@@ -23,6 +23,10 @@ const template: string = `
         <yaga-tooltip>{{ tooltipContent }}</yaga-tooltip>
         <yaga-icon [iconUrl]="iconUrl" [shadowUrl]="shadowUrl" [iconSize]="[iconWidth, iconHeight]" [shadowSize]="[50, 64]" [iconAnchor]="[22, 94]" [shadowAnchor]="[4, 62]" [popupAnchor]="[-3, -76]"></yaga-icon>
       </yaga-marker>
+      <yaga-polyline [latLngs]="polyline" [(color)]="pathColor">
+        <yaga-popup>{{ popupContent }}</yaga-popup>
+        <yaga-tooltip>{{ tooltipContent }}</yaga-tooltip>
+      </yaga-polyline>
     </yaga-map>
   </div>
   
@@ -51,6 +55,10 @@ const template: string = `
           <input type="number" class="form-control" [(ngModel)]="iconWidth">
           <input type="number" class="form-control" [(ngModel)]="iconHeight">
       </div>
+    <h2>Polyline</h2>
+    <h6>Color</h6>
+    <input type="text" class="form-control" [(ngModel)]="pathColor" />
+    
   </div>
   
 </div><!-- /.container -->
@@ -74,6 +82,8 @@ export class AppComponent implements AfterViewInit {
     public tooltipOpened: boolean = false;
     public iconUrl: string = 'http://leafletjs.com/examples/custom-icons/leaf-green.png';
     public shadowUrl: string = 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png';
+    public polyline: [number, number][] = [[51 , 7], [51.1 , 7.1], [51.2 , 7]];
+    public pathColor: string = 'red';
 
     @ViewChild(MapComponent) private mapComponent: MapComponent;
 
@@ -95,8 +105,8 @@ export class AppComponent implements AfterViewInit {
 }
 
 @NgModule({
-    imports:      [ BrowserModule, FormsModule, YagaModule ],
     declarations: [ AppComponent ],
+    imports:      [ BrowserModule, FormsModule, YagaModule ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
