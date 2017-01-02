@@ -2,6 +2,8 @@
 
 import { PolylineDirective,
     MapComponent,
+    PopupDirective,
+    TooltipDirective,
     LatLngExpression } from './index';
 import { point, SVG, PathOptions, latLng, LatLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
@@ -285,5 +287,61 @@ describe('Polyline Directive', () => {
                 throw new Error(`It is not setted to true`);
             }
         });
+    });
+});
+
+describe('Popup in Polyline Directive', () => {
+    var map: MapComponent,
+        layer: PolylineDirective<any>,
+        popup: PopupDirective,
+        testDiv: HTMLElement;
+    before((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        testDiv = document.createElement('div');
+        popup = new PopupDirective(map, { nativeElement: testDiv });
+
+        // Hack to get write-access to readonly property
+        layer = Object.create(new PolylineDirective<any>(map), { popupDirective: {value: popup} });
+        return done();
+    });
+    it('should bind popup', () => {
+        layer.ngAfterViewInit();
+        if (!(<any>layer)._popup) {
+            throw new Error('There is no popup binded');
+        }
+        if ((<any>layer)._popup !== popup) {
+            throw new Error('There is a wrong popup binded');
+        }
+    });
+});
+
+describe('Tooltip in Polyline Directive', () => {
+    var map: MapComponent,
+        layer: PolylineDirective<any>,
+        tooltip: TooltipDirective,
+        testDiv: HTMLElement;
+    before((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        testDiv = document.createElement('div');
+        tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+
+        // Hack to get write-access to readonly property
+        layer = Object.create(new PolylineDirective<any>(map), { tooltipDirective: {value: tooltip} });
+        return done();
+    });
+    it('should bind tooltip', () => {
+        layer.ngAfterViewInit();
+        if (!(<any>layer)._tooltip) {
+            throw new Error('There is no tooltip binded');
+        }
+        if ((<any>layer)._tooltip !== tooltip) {
+            throw new Error('There is a wrong tooltip binded');
+        }
     });
 });
