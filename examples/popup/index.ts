@@ -23,7 +23,7 @@ const template: string = `
         <yaga-tooltip>{{ tooltipContent }}</yaga-tooltip>
         <yaga-icon [iconUrl]="iconUrl" [shadowUrl]="shadowUrl" [iconSize]="[iconWidth, iconHeight]" [shadowSize]="[50, 64]" [iconAnchor]="[22, 94]" [shadowAnchor]="[4, 62]" [popupAnchor]="[-3, -76]"></yaga-icon>
       </yaga-marker>
-      <yaga-polyline [latLngs]="polyline" [(color)]="pathColor">
+      <yaga-polyline [(latLngs)]="polyline" [(color)]="pathColor">
         <yaga-popup>{{ popupContent }}</yaga-popup>
         <yaga-tooltip>{{ tooltipContent }}</yaga-tooltip>
       </yaga-polyline>
@@ -58,7 +58,7 @@ const template: string = `
     <h2>Polyline</h2>
     <h6>Color</h6>
     <input type="text" class="form-control" [(ngModel)]="pathColor" />
-    
+    <span>{{ polyline }}</span>
   </div>
   
 </div><!-- /.container -->
