@@ -7,7 +7,6 @@ import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 import { IconDirective } from './icon.directive';
 import { DivIconDirective } from './div-icon.directive';
-import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { PolylineDirective } from './polyline.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-        MarkerDirective,
         PolylineDirective
     ],
     exports: [
@@ -30,7 +28,6 @@ import { PolylineDirective } from './polyline.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-        MarkerDirective,
         PolylineDirective
     ]
 })
