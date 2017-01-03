@@ -211,11 +211,11 @@ Directive name in Angular2: `yaga-wms-layer`.
 
 Extends TileLayer
 
-* `[layers]: string[]`
-* `[styles]: string[]`
-* `[format]: string`
-* `[transparent]: boolean`
-* `[version]: string`
+* `[(layers)]: string[]`
+* `[(styles)]: string[]`
+* `[(format)]: string`
+* `[(transparent)]: boolean`
+* `[(version)]: string`
 * `[uppercase]: boolean`
 
 *No used:*
