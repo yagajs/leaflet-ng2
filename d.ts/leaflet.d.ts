@@ -557,9 +557,9 @@ declare namespace L {
 
     class InternalPolyline extends Path {
         getLatLngs(): Array<LatLng>;
-        setLatLngs(latlngs: Array<LatLng>): this;
-        setLatLngs(latlngs: Array<LatLngLiteral>): this;
-        setLatLngs(latlngs: Array<LatLngTuple>): this;
+        setLatLngs(latlngs: LatLng[] | LatLng[][]): this;
+        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][]): this;
+        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][]): this;
         isEmpty(): boolean;
         getCenter(): LatLng;
         getBounds(): LatLngBounds;
@@ -580,9 +580,6 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Feature<GeoJSON.LineString | GeoJSON.MultiLineString>;
-        setLatLngs(latlngs: LatLng[] | LatLng[][]): this;
-        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][]): this;
-        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][]): this;
 
         options: PolylineOptions;
     }
