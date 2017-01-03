@@ -686,3 +686,26 @@ describe('Icon in Marker Directive', () => {
     });
 
 });
+
+describe('Destroying a Marker Directive', () => {
+    var map: MapComponent,
+        layer: MarkerDirective;
+    beforeEach((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new MarkerDirective(map);
+        return done();
+    });
+    it('should remove Marker Directive from map on destroy', () => {
+        /* istanbul ignore if */
+        if (!map.hasLayer(layer)) {
+            throw new Error('The layer is not part of the map before destroying');
+        }
+        layer.ngOnDestroy();
+        /* istanbul ignore if */
+        if (map.hasLayer(layer)) {
+            throw new Error('The layer is still part of the map after destroying');
+        }
+    });
+});
