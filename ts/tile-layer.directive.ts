@@ -219,7 +219,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     }
 
     @Input() set tileSize(val: Point) {
-        (<TileLayerOptions>(<any>this).options).tileSize = val;
         this.options.tileSize = val;
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
@@ -227,7 +226,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     }
 
     @Input() set updateWhenIdle(val: boolean) {
-        (<TileLayerOptions>(<any>this).options).updateWhenIdle = val;
         this.options.updateWhenIdle = val;
     }
     get updateWhenIdle(): boolean {
