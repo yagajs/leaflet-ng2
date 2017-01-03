@@ -473,7 +473,10 @@ declare namespace L {
     export namespace TileLayer {
         export class WMS extends TileLayer {
             constructor(baseUrl: string, options: WMSOptions);
-            setParams(params: Object, noRedraw?: boolean): this;
+            setParams(params: WMSParams, noRedraw?: boolean): this;
+
+            wmsParams: WMSParams;
+            options: WMSOptions;
         }
     }
 
@@ -485,6 +488,18 @@ declare namespace L {
         version?: string;
         crs?: CRS;
         uppercase?: boolean;
+    }
+
+    export interface WMSParams {
+        format?: string;
+        layers: string;
+        request?: string;
+        service?: string;
+        styles?: string;
+        version?: string;
+        transparent?: boolean;
+        width?: number;
+        height?: number;
     }
 
     export function tileLayer(urlTemplate: string, options?: TileLayerOptions): TileLayer;

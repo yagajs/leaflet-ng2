@@ -3,6 +3,7 @@ export * from './map.component';
 export * from './tile-layer.directive';
 export * from './image-overlay.directive';
 export * from './popup.directive';
+export * from './wms-layer.directive';
 export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
@@ -29,4 +30,5 @@ export {
     FillRule,
     LineCapShape,
     LineJoinShape,
-    PolylineOptions} from 'leaflet';
+    PolylineOptions,
+    WMSParams } from 'leaflet';
