@@ -7,7 +7,6 @@ export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
 export * from './marker.directive';
-export * from './polyline.directive';
 
 export * from './consts';
 
