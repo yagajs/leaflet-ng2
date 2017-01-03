@@ -24,7 +24,8 @@ import { Polyline,
     Util,
     LatLng,
     LatLngTuple,
-    LatLngExpression } from 'leaflet';
+    LatLngExpression,
+    LatLngLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
 
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
@@ -144,7 +145,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         this.removeFrom((<any>this)._map);
     }
 
-    setLatLngs(val: (LatLng | LatLngTuple | LatLngExpression)[]): this {
+    setLatLngs(val: ((LatLng | LatLngTuple | LatLngExpression)[] | (LatLng | LatLngTuple | LatLngExpression)[][])): this {
         super.setLatLngs((<any>val));
         this.latLngsChange.emit((<any>this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
@@ -156,10 +157,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    @Input() set latLngs(val: LatLng[]) {
+    @Input() set latLngs(val: LatLng[] | LatLng[][]) {
         this.setLatLngs(val);
     }
-    get latLngs(): LatLng[] {
+    get latLngs(): LatLng[] | LatLng[][] {
         return (<any>this)._latlngs;
     }
 
@@ -179,6 +180,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
             this.setLatLngs((<any>rg));
             return;
         }
+        /* istanbul ignore else */
         if (geomType === 'MultiLineString') {
             const rg: [number, number][][] = [];
             for (let i: number = 0; i < (<GeoJSON.MultiLineString>val.geometry).coordinates.length; i += 1) {
@@ -193,6 +195,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
             this.setLatLngs((<any>rg));
             return;
         }
+        /* istanbul ignore next */
         throw new Error('Unsupported geometry type: ' + geomType );
     }
     get geoJSON(): IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {

@@ -85,13 +85,9 @@ declare namespace L {
     export type LatLngExpression = LatLng | LatLngLiteral | LatLngTuple;
 
     export function latLng(latitude: number, longitude: number, altitude?: number): LatLng;
-
     export function latLng(coords: LatLngTuple): LatLng;
-
     export function latLng(coords: [number, number, number]): LatLng;
-
     export function latLng(coords: LatLngLiteral): LatLng;
-
     export function latLng(coords: {lat: number, lng: number, alt: number}): LatLng;
 
     export class LatLngBounds {
@@ -134,11 +130,8 @@ declare namespace L {
     type LatLngBoundsExpression = LatLngBounds | LatLngBoundsLiteral;
 
     export function latLngBounds(southWest: LatLng, northEast: LatLng): LatLngBounds;
-
     export function latLngBounds(southWest: LatLngLiteral, northEast: LatLngLiteral): LatLngBounds;
-
     export function latLngBounds(southWest: LatLngTuple, northEast: LatLngTuple): LatLngBounds;
-
     export function latLngBounds(latlngs: LatLngBoundsLiteral): LatLngBounds;
 
     export type PointTuple = [number, number];
@@ -173,9 +166,7 @@ declare namespace L {
     type PointExpression = Point | PointTuple;
 
     export function point(x: number, y: number, round?: boolean): Point;
-
     export function point(coords: PointTuple): Point;
-
     export function point(coords: {x: number, y: number}): Point;
 
     export type BoundsLiteral = Array<PointTuple>;
@@ -207,11 +198,8 @@ declare namespace L {
     type BoundsExpression = Bounds | BoundsLiteral;
 
     export function bounds(topLeft: Point, bottomRight: Point): Bounds;
-
     export function bounds(topLeft: PointTuple, bottomRight: PointTuple): Bounds;
-
     export function bounds(points: Array<Point>): Bounds;
-
     export function bounds(points: BoundsLiteral): Bounds;
 
     export type EventHandlerFn = (event: Event) => void;
@@ -592,19 +580,18 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Feature<GeoJSON.LineString | GeoJSON.MultiLineString>;
+        setLatLngs(latlngs: LatLng[] | LatLng[][]): this;
+        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][]): this;
+        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][]): this;
+
         options: PolylineOptions;
     }
 
     export function polyline(latlngs: Array<LatLng>, options?: PolylineOptions): Polyline;
-
     export function polyline(latlngs: Array<LatLngLiteral>, options?: PolylineOptions): Polyline;
-
     export function polyline(latlngs: Array<LatLngTuple>, options?: PolylineOptions): Polyline;
-
     export function polyline(latlngs: Array<Array<LatLng>>, options?: PolylineOptions): Polyline;
-
     export function polyline(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions): Polyline;
-
     export function polyline(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions): Polyline;
 
     export class Polygon extends InternalPolyline {
@@ -619,15 +606,10 @@ declare namespace L {
     }
 
     export function polygon(latlngs: Array<LatLng>, options?: PolylineOptions): Polygon;
-
     export function polygon(latlngs: Array<LatLngLiteral>, options?: PolylineOptions): Polygon;
-
     export function polygon(latlngs: Array<LatLngTuple>, options?: PolylineOptions): Polygon;
-
     export function polygon(latlngs: Array<Array<LatLng>>, options?: PolylineOptions): Polygon;
-
     export function polygon(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions): Polygon;
-
     export function polygon(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions): Polygon;
 
     export class Rectangle extends Polygon {
@@ -638,7 +620,6 @@ declare namespace L {
     }
 
     export function rectangle(latLngBounds: LatLngBounds, options?: PolylineOptions): Rectangle;
-
     export function rectangle(latLngBounds: LatLngBoundsLiteral, options?: PolylineOptions): Rectangle;
 
     export interface CircleMarkerOptions extends PathOptions {
@@ -659,9 +640,7 @@ declare namespace L {
     }
 
     export function circleMarker(latlng: LatLng, options?: CircleMarkerOptions): CircleMarker;
-
     export function circleMarker(latlng: LatLngLiteral, options?: CircleMarkerOptions): CircleMarker;
-
     export function circleMarker(latlng: LatLngLiteral, options?: CircleMarkerOptions): CircleMarker;
 
     export interface CircleOptions extends PathOptions {
@@ -681,15 +660,10 @@ declare namespace L {
     }
 
     export function circle(latlng: LatLng, options?: CircleOptions): Circle;
-
     export function circle(latlng: LatLngLiteral, options?: CircleOptions): Circle;
-
     export function circle(latlng: LatLngTuple, options?: CircleOptions): Circle;
-
     export function circle(latlng: LatLng, radius: number, options?: CircleOptions): Circle;
-
     export function circle(latlng: LatLngLiteral, radius: number, options?: CircleOptions): Circle;
-
     export function circle(latlng: LatLngTuple, radius: number, options?: CircleOptions): Circle;
 
     export interface RendererOptions extends LayerOptions {
