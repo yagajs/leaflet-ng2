@@ -29,7 +29,7 @@ import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
-    selector: 'yaga-polyline'
+    selector: 'yaga-polygon'
 })
 export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterViewInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -50,8 +50,9 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     @Output() public styleChange: EventEmitter<PathOptions> = new EventEmitter();
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.MultiPolygon, T>> = new EventEmitter();
-
+    /* tslint:disable:max-line-length */
+    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
@@ -138,7 +139,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         this.removeFrom((<any>this)._map);
     }
 
-    setLatLngs(val: (LatLng | LatLngTuple | LatLngExpression)[]): this {
+    setLatLngs(val: (
+        (LatLng | LatLngTuple | LatLngExpression)[] |
+        (LatLng | LatLngTuple | LatLngExpression)[][] |
+        (LatLng | LatLngTuple | LatLngExpression)[][][])): this {
+
         super.setLatLngs((<any>val));
         this.latLngsChange.emit((<any>this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
@@ -150,41 +155,55 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    @Input() set latLngs(val: LatLng[]) {
+    @Input() set latLngs(val: LatLng[] | LatLng[][] | LatLng[][][]) {
         this.setLatLngs(val);
     }
-    get latLngs(): LatLng[] {
+    get latLngs(): LatLng[] | LatLng[][] | LatLng[][][] {
         return (<any>this)._latlngs;
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.MultiPolygon, T>) {
+    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
-        if ((<any>val.geometry.type) === 'Polygon') {
-            const tmp: [number, number][][] = val.geometry.coordinates;
+        let geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
+
+        if (geomType === 'Polygon') {
             const rg: [number, number][][] = [];
-            for (let i: number = 0; i < tmp.length; i += 1) {
-                rg.push([tmp[i][1], tmp[i][0]]);
+            for (let i: number = 0; i < (<GeoJSON.Polygon>val.geometry).coordinates.length; i += 1) {
+                rg.push([]);
+                for (let n: number = 0; n < (<GeoJSON.Polygon>val.geometry).coordinates[i].length; n += 1) {
+                    rg[i].push([
+                        (<GeoJSON.Polygon>val.geometry).coordinates[i][n][1],
+                        (<GeoJSON.Polygon>val.geometry).coordinates[i][n][0]]
+                    );
+                }
             }
             this.setLatLngs((<any>rg));
+            return;
         }
-        if (val.geometry.type === 'MultiPolygon') {
+        /* istanbul ignore else */
+        if (geomType === 'MultiPolygon') {
             const rg: [number, number][][][] = [];
-            for (let i: number = 0; i < val.geometry.coordinates.length; i += 1) {
+            for (let i: number = 0; i < (<GeoJSON.MultiPolygon>val.geometry).coordinates.length; i += 1) {
                 rg.push([]);
-                for (let n: number = 0; n < val.geometry.coordinates[i].length; n += 1) {
+                for (let n: number = 0; n < (<GeoJSON.MultiPolygon>val.geometry).coordinates[i].length; n += 1) {
                     rg[i].push([]);
-                    for (let m: number = 0; m < val.geometry.coordinates[i][n].length; m += 1) {
-                        rg[i][n].push([val.geometry.coordinates[i][n][m][1], val.geometry.coordinates[i][n][m][0]]);
+                    for (let m: number = 0; m < (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n].length; m += 1) {
+                        rg[i][n].push([
+                            (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n][m][1],
+                            (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n][m][0]]
+                        );
                     }
                 }
             }
             this.setLatLngs((<any>rg));
-
+            return;
         }
+        /* istanbul ignore next */
+        throw new Error('Unsupported geometry type: ' + geomType );
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.MultiPolygon, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.MultiPolygon, T>>this.toGeoJSON());
+    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (<IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>>this.toGeoJSON());
     }
 
 

@@ -7,6 +7,7 @@ import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 import { IconDirective } from './icon.directive';
 import { DivIconDirective } from './div-icon.directive';
+import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PolygonDirective } from './polygon.directive';
 
@@ -19,13 +20,9 @@ import { PolygonDirective } from './polygon.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-<<<<<<< HEAD
         MarkerDirective,
         PolylineDirective,
         PolygonDirective
-=======
-        PolylineDirective
->>>>>>> polyline-directive
     ],
     exports: [
         MapComponent,
@@ -35,13 +32,9 @@ import { PolygonDirective } from './polygon.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-<<<<<<< HEAD
         MarkerDirective,
         PolylineDirective,
         PolygonDirective
-=======
-        PolylineDirective
->>>>>>> polyline-directive
     ]
 })
 export class YagaModule { }

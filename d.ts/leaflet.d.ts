@@ -599,7 +599,11 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLng>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
-        toGeoJSON(): GeoJSON.Polygon | GeoJSON.MultiPolygon;
+        toGeoJSON(): GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>;
+
+        setLatLngs(latlngs: LatLng[] | LatLng[][] | LatLng[][][]): this;
+        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][] | LatLngLiteral[][][]): this;
+        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][] | LatLngTuple[][][]): this;
     }
 
     export function polygon(latlngs: Array<LatLng>, options?: PolylineOptions): Polygon;
