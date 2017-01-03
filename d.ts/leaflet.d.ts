@@ -557,9 +557,6 @@ declare namespace L {
 
     class InternalPolyline extends Path {
         getLatLngs(): Array<LatLng>;
-        setLatLngs(latlngs: LatLng[] | LatLng[][]): this;
-        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][]): this;
-        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][]): this;
         isEmpty(): boolean;
         getCenter(): LatLng;
         getBounds(): LatLngBounds;
@@ -570,6 +567,8 @@ declare namespace L {
         addLatLng(latlng: Array<LatLngLiteral>): this;
         addLatLng(latlng: Array<LatLngTuple>): this;
         getElement(): HTMLElement;
+
+        options: PolylineOptions;
     }
 
     export class Polyline extends InternalPolyline {
@@ -581,7 +580,9 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Feature<GeoJSON.LineString | GeoJSON.MultiLineString>;
 
-        options: PolylineOptions;
+        setLatLngs(latlngs: LatLng[] | LatLng[][]): this;
+        setLatLngs(latlngs: LatLngLiteral[] | LatLngLiteral[][]): this;
+        setLatLngs(latlngs: LatLngTuple[] | LatLngTuple[][]): this;
     }
 
     export function polyline(latlngs: Array<LatLng>, options?: PolylineOptions): Polyline;
@@ -599,7 +600,6 @@ declare namespace L {
         constructor(latlngs: Array<Array<LatLngLiteral>>, options?: PolylineOptions);
         constructor(latlngs: Array<Array<LatLngTuple>>, options?: PolylineOptions);
         toGeoJSON(): GeoJSON.Polygon | GeoJSON.MultiPolygon;
-        options: PolylineOptions;
     }
 
     export function polygon(latlngs: Array<LatLng>, options?: PolylineOptions): Polygon;
