@@ -693,6 +693,51 @@ describe('Polyline Directive', () => {
             }
         });
     });
+
+    describe('[properties]', () => {
+        interface ITestProperties {
+            test: string;
+        }
+        var map: MapComponent,
+            layer: PolylineDirective<ITestProperties>;
+        const TEST_OBJECT: ITestProperties = {
+            test: 'OK'
+        };
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            (<any>map)._renderer = (<any>map)._renderer || new SVG();
+
+            layer = new PolylineDirective<any>(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.properties = TEST_OBJECT;
+            /* istanbul ignore if */
+            if (layer.feature.properties !== TEST_OBJECT) {
+                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.feature.properties }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.properties = TEST_OBJECT;
+            /* istanbul ignore if */
+            if (layer.properties !== TEST_OBJECT) {
+                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.properties }`);
+            }
+        });
+        it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
+            layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                /* istanbul ignore if */
+                if (val.properties !== TEST_OBJECT) {
+                    return done(new Error('Wrong value received'));
+                }
+                return done();
+            });
+            layer.properties = TEST_OBJECT;
+        });
+    });
+
     describe('[noClip]', () => {
         var map: MapComponent,
             layer: PolylineDirective<any>;
