@@ -55,8 +55,9 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
     @Output() public styleChange: EventEmitter<PathOptions> = new EventEmitter();
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.LineString, T>> = new EventEmitter();
-
+    /* tslint:disable:max-line-length */
+    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
+    /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
@@ -162,19 +163,40 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         return (<any>this)._latlngs;
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.LineString, T>) {
+    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
         this.feature.properties = val.properties;
 
-        if (val.geometry.type === 'LineString') {
+        let geomType: any = val.geometry.type; // Normally '(Multi)LineString'
+
+        if (geomType === 'LineString') {
             const rg: [number, number][] = [];
-            for (let i: number = 0; i < val.geometry.coordinates.length; i += 1) {
-                rg.push([val.geometry.coordinates[i][1], val.geometry.coordinates[i][0]]);
+            for (let i: number = 0; i < (<GeoJSON.LineString>val.geometry).coordinates.length; i += 1) {
+                rg.push([
+                    (<GeoJSON.LineString>val.geometry).coordinates[i][1],
+                    (<GeoJSON.LineString>val.geometry).coordinates[i][0]]
+                );
             }
             this.setLatLngs((<any>rg));
+            return;
         }
+        if (geomType === 'MultiLineString') {
+            const rg: [number, number][][] = [];
+            for (let i: number = 0; i < (<GeoJSON.MultiLineString>val.geometry).coordinates.length; i += 1) {
+                rg.push([]);
+                for (let n: number = 0; n < (<GeoJSON.MultiLineString>val.geometry).coordinates[i].length; n += 1) {
+                    rg[i].push([
+                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][1],
+                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][0]]
+                    );
+                }
+            }
+            this.setLatLngs((<any>rg));
+            return;
+        }
+        throw new Error('Unsupported geometry type: ' + geomType );
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.LineString, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.LineString, T>>this.toGeoJSON());
+    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
+        return (<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>>this.toGeoJSON());
     }
 
 
