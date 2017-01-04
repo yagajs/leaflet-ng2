@@ -15,3 +15,4 @@ require('../lib/icon.directive.spec');
 require('../lib/div-icon.directive.spec');
 require('../lib/marker.directive.spec');
 require('../lib/polyline.directive.spec');
+require('../lib/circle.directive.spec');
