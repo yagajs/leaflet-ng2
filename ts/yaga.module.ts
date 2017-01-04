@@ -8,6 +8,7 @@ import { TooltipDirective } from './tooltip.directive';
 import { IconDirective } from './icon.directive';
 import { DivIconDirective } from './div-icon.directive';
 import { PolylineDirective } from './polyline.directive';
+import { MarkerDirective } from './marker.directive';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { PolylineDirective } from './polyline.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-        PolylineDirective
+        PolylineDirective,
+        MarkerDirective
     ],
     exports: [
         MapComponent,
@@ -28,7 +30,8 @@ import { PolylineDirective } from './polyline.directive';
         TooltipDirective,
         IconDirective,
         DivIconDirective,
-        PolylineDirective
+        PolylineDirective,
+        MarkerDirective
     ]
 })
 export class YagaModule { }

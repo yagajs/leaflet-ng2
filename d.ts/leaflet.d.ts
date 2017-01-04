@@ -1469,8 +1469,10 @@ declare namespace L {
         setZIndexOffset(offset: number): this;
         setIcon(icon: Icon): this;
         setOpacity(opacity: number): this;
+        getElement(): HTMLElement;
 
         // Properties
+        options: MarkerOptions;
         dragging: Handler;
     }
 
