@@ -11,6 +11,7 @@ import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PolygonDirective } from './polygon.directive';
 import { CircleDirective } from './circle.directive';
+import { CircleMarkerDirective } from './circle-marker.directive';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { CircleDirective } from './circle.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
-        CircleDirective
+        CircleDirective,
+        CircleMarkerDirective
     ],
     exports: [
         MapComponent,
@@ -37,7 +39,8 @@ import { CircleDirective } from './circle.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
-        CircleDirective
+        CircleDirective,
+        CircleMarkerDirective
     ]
 })
 export class YagaModule { }
