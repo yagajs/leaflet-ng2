@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-import { CircleDirective,
+import { CircleMarkerDirective,
     MapComponent,
     PopupDirective,
     TooltipDirective,
@@ -10,11 +10,11 @@ import { createPathTests } from './path-directives.spec';
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 
 describe('Circle Directive', () => {
-    createPathTests(CircleDirective);
+    createPathTests(CircleMarkerDirective);
 
     describe('[(position)]', () => {
         var map: MapComponent,
-            layer: CircleDirective<any>;
+            layer: CircleMarkerDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
@@ -22,7 +22,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             layer.ngAfterViewInit();
             return done();
         });
@@ -86,7 +86,7 @@ describe('Circle Directive', () => {
 
     describe('[(lat)]', () => {
         var map: MapComponent,
-            layer: CircleDirective<any>;
+            layer: CircleMarkerDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
@@ -94,7 +94,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             layer.ngAfterViewInit();
             return done();
         });
@@ -152,7 +152,7 @@ describe('Circle Directive', () => {
     });
     describe('[(lng)]', () => {
         var map: MapComponent,
-            layer: CircleDirective<any>;
+            layer: CircleMarkerDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
@@ -160,7 +160,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             layer.ngAfterViewInit();
             return done();
         });
@@ -218,7 +218,7 @@ describe('Circle Directive', () => {
     });
     describe('[(radius)]', () => {
         var map: MapComponent,
-            layer: CircleDirective<any>;
+            layer: CircleMarkerDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
@@ -226,7 +226,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             layer.ngAfterViewInit();
             return done();
         });
@@ -285,7 +285,7 @@ describe('Circle Directive', () => {
 
     describe('[(geoJSON)]', () => {
         var map: MapComponent,
-            layer: CircleDirective<any>;
+            layer: CircleMarkerDirective<any>;
         const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.Point, any> = {
             geometry: {
                 coordinates: [1, 3],
@@ -301,7 +301,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             layer.ngAfterViewInit();
             return done();
         });
@@ -362,7 +362,7 @@ describe('Circle Directive', () => {
             test: string;
         }
         var map: MapComponent,
-            layer: CircleDirective<ITestProperties>;
+            layer: CircleMarkerDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
@@ -372,7 +372,7 @@ describe('Circle Directive', () => {
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-            layer = new CircleDirective<any>(map);
+            layer = new CircleMarkerDirective<any>(map);
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -405,7 +405,7 @@ describe('Circle Directive', () => {
 
 describe('Popup in Circle Directive', () => {
     var map: MapComponent,
-        layer: CircleDirective<any>,
+        layer: CircleMarkerDirective<any>,
         popup: PopupDirective,
         testDiv: HTMLElement;
     before((done) => {
@@ -417,7 +417,7 @@ describe('Popup in Circle Directive', () => {
         popup = new PopupDirective(map, { nativeElement: testDiv });
 
         // Hack to get write-access to readonly property
-        layer = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
+        layer = Object.create(new CircleMarkerDirective<any>(map), { popupDirective: {value: popup} });
         return done();
     });
     it('should bind popup', () => {
@@ -435,7 +435,7 @@ describe('Popup in Circle Directive', () => {
 
 describe('Tooltip in Circle Directive', () => {
     var map: MapComponent,
-        layer: CircleDirective<any>,
+        layer: CircleMarkerDirective<any>,
         tooltip: TooltipDirective,
         testDiv: HTMLElement;
     before((done) => {
@@ -447,7 +447,7 @@ describe('Tooltip in Circle Directive', () => {
         tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
         // Hack to get write-access to readonly property
-        layer = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+        layer = Object.create(new CircleMarkerDirective<any>(map), { tooltipDirective: {value: tooltip} });
         return done();
     });
     it('should bind tooltip', () => {
@@ -465,7 +465,7 @@ describe('Tooltip in Circle Directive', () => {
 
 describe('Destroying a Circle Directive', () => {
     var map: MapComponent,
-        layer: CircleDirective<any>,
+        layer: CircleMarkerDirective<any>,
         tooltip: TooltipDirective,
         testDiv: HTMLElement;
     before((done) => {
@@ -475,7 +475,7 @@ describe('Destroying a Circle Directive', () => {
         (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
         // Hack to get write-access to readonly property
-        layer = new CircleDirective<any>(map);
+        layer = new CircleMarkerDirective<any>(map);
         return done();
     });
     it('should remove Circle Directive from map on destroy', () => {
