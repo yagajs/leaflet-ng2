@@ -218,70 +218,70 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return this.options.zIndex;
     }
 
-    set tileSize(val: Point) {
+    @Input() set tileSize(val: Point) {
         this.options.tileSize = val;
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
         return (<Point>this.options.tileSize);
     }
 
-    set updateWhenIdle(val: boolean) {
+    @Input() set updateWhenIdle(val: boolean) {
         this.options.updateWhenIdle = val;
     }
     get updateWhenIdle(): boolean {
         return this.options.updateWhenIdle;
     }
 
-    set updateWhenZooming(val: boolean) {
+    @Input() set updateWhenZooming(val: boolean) {
         this.options.updateWhenZooming = val;
     }
     get updateWhenZooming(): boolean {
         return this.options.updateWhenZooming;
     }
 
-    set updateInterval(val: number) {
+    @Input() set updateInterval(val: number) {
         this.options.updateInterval = val;
     }
     get updateInterval(): number {
         return this.options.updateInterval;
     }
 
-    set bounds(val: LatLngBoundsExpression) {
+    @Input() set bounds(val: LatLngBoundsExpression) {
         this.options.bounds = val;
     }
     get bounds(): LatLngBoundsExpression {
         return this.options.bounds;
     }
 
-    set noWrap(val: boolean) {
+    @Input() set noWrap(val: boolean) {
         this.options.noWrap = val;
     }
     get noWrap(): boolean {
         return this.options.noWrap;
     }
 
-    set className(val: string) {
+    @Input() set className(val: string) {
         this.options.className = val;
     }
     get className(): string {
         return this.options.className;
     }
 
-    set keepBuffer(val: number) {
+    @Input() set keepBuffer(val: number) {
         this.options.keepBuffer = val;
     }
     get keepBuffer(): number {
         return this.options.keepBuffer;
     }
 
-    set maxNativeZoom(val: number) {
+    @Input() set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
     };
     get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
     }
 
-    set subdomains(val: string[]) {
+    @Input() set subdomains(val: string[]) {
         this.options.subdomains = val;
     };
     get subdomains(): string[] {
@@ -291,42 +291,42 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return (<string[]>this.options.subdomains);
     }
 
-    set errorTileUrl(val: string) {
+    @Input() set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
     };
     get errorTileUrl(): string {
         return this.options.errorTileUrl;
     }
 
-    set zoomOffset(val: number) {
+    @Input() set zoomOffset(val: number) {
         this.options.zoomOffset = val;
     };
     get zoomOffset(): number {
         return this.options.zoomOffset;
     }
 
-    set tms(val: boolean) {
+    @Input() set tms(val: boolean) {
         this.options.tms = val;
     };
     get tms(): boolean {
         return this.options.tms;
     }
 
-    set zoomReverse(val: boolean) {
+    @Input() set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
     };
     get zoomReverse(): boolean {
         return this.options.zoomReverse;
     }
 
-    set detectRetina(val: boolean) {
+    @Input() set detectRetina(val: boolean) {
         this.options.detectRetina = val;
     };
     get detectRetina(): boolean {
         return this.options.detectRetina;
     }
 
-    set crossOrigin(val: boolean) {
+    @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
     };
     get crossOrigin(): boolean {

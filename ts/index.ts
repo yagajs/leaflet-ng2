@@ -7,8 +7,10 @@ export * from './wms-layer.directive';
 export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
+export * from './marker.directive';
 export * from './polyline.directive';
 
+export * from './consts';
 export * from './d.ts/generic-geojson';
 
 export {
@@ -18,6 +20,7 @@ export {
     TooltipOptions,
     ImageOverlayOptions,
     IconOptions,
+    MarkerOptions,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,
