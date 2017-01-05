@@ -1299,3 +1299,26 @@ describe('Tile-Layer Directive', () => {
         });
     });
 });
+
+describe('Destroying a Tile-Layer Directive', () => {
+    var map: MapComponent,
+        layer: TileLayerDirective;
+    beforeEach((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new TileLayerDirective(map);
+        return done();
+    });
+    it('should remove Tile-Layer Directive from map on destroy', () => {
+        /* istanbul ignore if */
+        if (!map.hasLayer(layer)) {
+            throw new Error('The layer is not part of the map before destroying');
+        }
+        layer.ngOnDestroy();
+        /* istanbul ignore if */
+        if (map.hasLayer(layer)) {
+            throw new Error('The layer is still part of the map after destroying');
+        }
+    });
+});
