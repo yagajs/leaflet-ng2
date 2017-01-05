@@ -9,6 +9,7 @@ import { IconDirective } from './icon.directive';
 import { DivIconDirective } from './div-icon.directive';
 import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
+import { PolygonDirective } from './polygon.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
 
@@ -23,6 +24,7 @@ import { CircleMarkerDirective } from './circle-marker.directive';
         DivIconDirective,
         MarkerDirective,
         PolylineDirective,
+        PolygonDirective,
         CircleDirective,
         CircleMarkerDirective
     ],
@@ -36,6 +38,7 @@ import { CircleMarkerDirective } from './circle-marker.directive';
         DivIconDirective,
         MarkerDirective,
         PolylineDirective,
+        PolygonDirective,
         CircleDirective,
         CircleMarkerDirective
     ]
