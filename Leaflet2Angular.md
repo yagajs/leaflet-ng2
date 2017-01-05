@@ -304,7 +304,7 @@ Directive name in Angular2: `yaga-circle`.
 
 Extends Path
 
-* `[(center)]: LatLng`
+* `[(position)]: LatLng`
 * `[(lat)]: number`
 * `[(lng)]: number`
 * `[(radius)]: number` in meters

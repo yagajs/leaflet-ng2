@@ -16,3 +16,4 @@ require('../lib/div-icon.directive.spec');
 require('../lib/marker.directive.spec');
 require('../lib/polyline.directive.spec');
 require('../lib/polygon.directive.spec');
+require('../lib/circle.directive.spec');

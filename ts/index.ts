@@ -10,8 +10,11 @@ export * from './tooltip.directive';
 export * from './marker.directive';
 export * from './polyline.directive';
 export * from './polygon.directive';
+export * from './circle.directive';
 
 export * from './d.ts/generic-geojson';
+export * from './consts';
+
 export * from './consts';
 
 export {
@@ -22,6 +25,7 @@ export {
     ImageOverlayOptions,
     IconOptions,
     MarkerOptions,
+    CircleOptions,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,

@@ -631,7 +631,7 @@ declare namespace L {
         constructor(latlng: LatLng, options?: CircleMarkerOptions);
         constructor(latlng: LatLngLiteral, options?: CircleMarkerOptions);
         constructor(latlng: LatLngLiteral, options?: CircleMarkerOptions);
-        toGeoJSON(): GeoJSON.Point;
+        toGeoJSON(): GeoJSON.Feature<GeoJSON.Point>;
         setLatLng(latLng: LatLng): this;
         setLatLng(latLng: LatLngLiteral): this;
         setLatLng(latLng: LatLngTuple): this;
@@ -658,6 +658,9 @@ declare namespace L {
         setRadius(radius: number): this;
         getRadius(): number;
         getBounds(): LatLngBounds;
+        getElement(): HTMLElement;
+
+        options: CircleOptions;
     }
 
     export function circle(latlng: LatLng, options?: CircleOptions): Circle;
