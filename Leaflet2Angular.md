@@ -345,12 +345,12 @@ Directive name in Angular2: `yaga-marker`.
 
 Extends Layer-Base
 
+* `[(position)]: LatLng`
 * `[(lat)]: number`
-* `[(opacity)]: number`
 * `[(lng)]: number`
+* `[(opacity)]: number`
 * `[(zindex)]: number`
 * `[(draggable)]: boolean` *maybe observe dragging.enable and dragging.disable*
-* `[(opacity)]: number`
 * `[(icon)]: Icon`
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
