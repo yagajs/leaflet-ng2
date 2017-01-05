@@ -8,8 +8,10 @@ export * from './icon.directive';
 export * from './div-icon.directive';
 export * from './tooltip.directive';
 export * from './marker.directive';
+export * from './polyline.directive';
 
 export * from './consts';
+export * from './d.ts/generic-geojson';
 
 export {
     MapOptions,
@@ -27,4 +29,9 @@ export {
     LatLng,
     Direction,
     Point,
+    PathOptions,
+    FillRule,
+    LineCapShape,
+    LineJoinShape,
+    PolylineOptions,
     WMSParams } from 'leaflet';
