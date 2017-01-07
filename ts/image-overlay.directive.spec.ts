@@ -1051,3 +1051,26 @@ describe('Image-Overlay Directive', () => {
         });
     });
 });
+
+describe('Destroying a Image-Overlay Directive', () => {
+    var map: MapComponent,
+        layer: ImageOverlayDirective;
+    beforeEach((done) => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new ImageOverlayDirective(map);
+        return done();
+    });
+    it('should remove Image-Overlay Directive from map on destroy', () => {
+        /* istanbul ignore if */
+        if (!map.hasLayer(layer)) {
+            throw new Error('The layer is not part of the map before destroying');
+        }
+        layer.ngOnDestroy();
+        /* istanbul ignore if */
+        if (map.hasLayer(layer)) {
+            throw new Error('The layer is still part of the map after destroying');
+        }
+    });
+});

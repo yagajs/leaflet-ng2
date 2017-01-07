@@ -211,11 +211,11 @@ Directive name in Angular2: `yaga-wms-layer`.
 
 Extends TileLayer
 
-* `[layers]: string[]`
-* `[styles]: string[]`
-* `[format]: string`
-* `[transparent]: boolean`
-* `[version]: string`
+* `[(layers)]: string[]`
+* `[(styles)]: string[]`
+* `[(format)]: string`
+* `[(transparent)]: boolean`
+* `[(version)]: string`
 * `[uppercase]: boolean`
 
 *No used:*
@@ -259,6 +259,8 @@ Directive name in Angular2: `yaga-image-overlay`.
 * `[(className)]: string`
 * `[(style)]: Style`
 
+* `[interactive]: boolean`
+
 #### Polyline
 
 Directive name in Angular2: `yaga-polyline`.
@@ -269,7 +271,7 @@ Extends Path
 
 * `[(latlngs)]: LatLng[]`
 * `[(geojson)]: GeoJSONFeature` *Note: any layer has to have a feature property to handle properties*
-* `[(properties)]: any | T` *maybe implement something like: `type OptionalGenericFeature<T> = Feature | GenericFeature<T>`*
+* `[properties]: any | T` *maybe implement something like: `type OptionalGenericFeature<T> = Feature | GenericFeature<T>`*
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
 * `[smoothFactor]: number`
@@ -302,7 +304,7 @@ Directive name in Angular2: `yaga-circle`.
 
 Extends Path
 
-* `[(center)]: LatLng`
+* `[(position)]: LatLng`
 * `[(lat)]: number`
 * `[(lng)]: number`
 * `[(radius)]: number` in meters
@@ -345,12 +347,12 @@ Directive name in Angular2: `yaga-marker`.
 
 Extends Layer-Base
 
+* `[(position)]: LatLng`
 * `[(lat)]: number`
-* `[(opacity)]: number`
 * `[(lng)]: number`
+* `[(opacity)]: number`
 * `[(zindex)]: number`
 * `[(draggable)]: boolean` *maybe observe dragging.enable and dragging.disable*
-* `[(opacity)]: number`
 * `[(icon)]: Icon`
 * `[(tooltipOpened)]: boolean`
 * `[(popupOpened)]: boolean`
