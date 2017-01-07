@@ -21,7 +21,8 @@ import { Rectangle,
     LatLngTuple,
     LatLngBounds,
     LatLngExpression,
-    latLngBounds } from 'leaflet';
+    latLngBounds,
+    LatLngBoundsLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
 
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
@@ -76,6 +77,8 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
     @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
+
+    private initialized: boolean = false;
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
@@ -134,6 +137,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     }
 
     ngAfterViewInit(): void {
+        this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
         }
@@ -144,6 +148,19 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
     ngOnDestroy(): void {
         this.removeFrom((<any>this)._map);
+    }
+
+    setBounds(val: LatLngBounds | LatLngBoundsLiteral): this {
+        super.setBounds((<any>val));
+        if (!this.initialized) {
+            return this;
+        }
+        this.boundsChange.emit(this.getBounds());
+        this.northChange.emit(this.getBounds().getNorth());
+        this.eastChange.emit(this.getBounds().getEast());
+        this.southChange.emit(this.getBounds().getSouth());
+        this.westChange.emit(this.getBounds().getWest());
+        return this;
     }
 
     @Input() set bounds(val: LatLngBounds) {
