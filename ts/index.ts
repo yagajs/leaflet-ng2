@@ -13,6 +13,7 @@ export * from './polygon.directive';
 export * from './rectangle.directive';
 export * from './circle.directive';
 export * from './circle-marker.directive';
+export * from './attribution-control.directive';
 export * from './scale-control.directive';
 
 export * from './d.ts/generic-geojson';
@@ -28,6 +29,7 @@ export { Control,
     IconOptions,
     MarkerOptions,
     CircleOptions,
+    ControlPosition,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,
