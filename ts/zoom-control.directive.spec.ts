@@ -5,7 +5,7 @@ import { ZoomControlDirective,
     ControlPosition } from './index';
 import { point, Point, latLngBounds } from 'leaflet';
 
-describe('Scale-Control Directive', () => {
+describe('Zoom-Control Directive', () => {
     describe('[(position)]', () => {
         var map: MapComponent,
             control: ZoomControlDirective;
@@ -65,6 +65,130 @@ describe('Scale-Control Directive', () => {
             });
 
             control.setPosition(val);
+        });
+    });
+
+    // Events
+    describe('(add)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when adding to map', (done: MochaDone) => {
+            map.removeControl(control);
+
+            control.addEvent.subscribe(() => {
+                done();
+            });
+            map.addControl(control);
+        });
+    });
+    describe('(remove)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when removing from map', (done: MochaDone) => {
+            control.removeEvent.subscribe(() => {
+                done();
+            });
+            map.removeControl(control);
+        });
+    });
+
+    describe('(click)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+            control.clickEvent.subscribe(() => {
+                done();
+            });
+            control.getContainer().dispatchEvent(new CustomEvent('click'));
+        });
+    });
+    describe('(dbclick)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+            control.dbclickEvent.subscribe(() => {
+                done();
+            });
+            control.getContainer().dispatchEvent(new CustomEvent('dbclick'));
+        });
+    });
+    describe('(mousedown)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+            control.mousedownEvent.subscribe(() => {
+                done();
+            });
+            control.getContainer().dispatchEvent(new CustomEvent('mousedown'));
+        });
+    });
+    describe('(mouseover)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+            control.mouseoverEvent.subscribe(() => {
+                done();
+            });
+            control.getContainer().dispatchEvent(new CustomEvent('mouseover'));
+        });
+    });
+    describe('(mouseout)', () => {
+         var map: MapComponent,
+            control: ZoomControlDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            control = new ZoomControlDirective(map);
+            return done();
+        });
+        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+            control.mouseoutEvent.subscribe(() => {
+                done();
+            });
+            control.getContainer().dispatchEvent(new CustomEvent('mouseout'));
         });
     });
 
@@ -228,7 +352,7 @@ describe('Scale-Control Directive', () => {
 
 });
 
-describe('Destroying a Scale Control Directive', () => {
+describe('Destroying a Zoom Control Directive', () => {
     var map: MapComponent,
         control: ZoomControlDirective;
     beforeEach((done) => {
