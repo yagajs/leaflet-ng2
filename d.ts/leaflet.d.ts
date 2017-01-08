@@ -1027,7 +1027,9 @@ declare namespace L {
             zoomOutTitle?: string;
         }
 
-        export interface Zoom extends Control {}
+        export class Zoom extends Control {
+            options: Control.ZoomOptions;
+        }
 
         export interface AttributionOptions extends ControlOptions {
             prefix?: string | boolean;
