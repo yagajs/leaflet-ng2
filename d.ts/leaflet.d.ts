@@ -1060,7 +1060,9 @@ declare namespace L {
             updateWhenIdle?: boolean;
         }
 
-        export class Scale extends Control {}
+        export class Scale extends Control {
+            options: Control.ScaleOptions;
+        }
     }
 
     export namespace control {

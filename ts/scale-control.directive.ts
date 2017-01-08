@@ -6,11 +6,12 @@ import { Directive,
     forwardRef,
     OnDestroy } from '@angular/core';
 import { Control,
-    ControlPosition } from 'leaflet';
+    ControlPosition,
+    Map } from 'leaflet';
 import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-tile-layer'
+    selector: 'yaga-scale-control'
 })
 export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -28,9 +29,24 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
-        // Transparent 1px image:
         super();
         mapComponent.addControl(this);
+
+        const self: this = this;
+
+        const originalOnRemove: Function = this.onRemove;
+        this.onRemove = function (map: Map): any {
+            originalOnRemove.call(this, map);
+            self.displayChange.emit(false);
+            return self;
+        };
+
+        const originalOnAdd: Function = this.onAdd;
+        this.onAdd = function (map: Map): HTMLElement {
+            const tmp: HTMLElement = originalOnAdd.call(this, map);
+            self.displayChange.emit(true);
+            return tmp;
+        };
     }
 
     ngOnDestroy(): void {
@@ -44,17 +60,26 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     }
 
     @Input() set opacity(val: number) {
-        (<HTMLElement>(<any>this)._container).style.opacity = val.toString();
+        this.getContainer().style.opacity = val.toString();
     }
     get opacity(): number {
-        return parseFloat((<HTMLElement>(<any>this)._container).style.opacity);
+        return parseFloat(this.getContainer().style.opacity);
     }
 
     @Input() set display(val: boolean) {
-      return;
+        if (!(<any>this)._map) {
+            // No map available...
+            return;
+        }
+        if (val) {
+            this.getContainer().style.display = '';
+            return;
+        }
+        this.getContainer().style.display = 'none';
+        return;
     }
     get display(): boolean {
-        return false;
+        return (<any>this)._map && this.getContainer().style.display !== 'none';
     }
 
     @Input() set position(val: ControlPosition) {
@@ -65,46 +90,46 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     }
 
     @Input() set maxWidth(val: number) {
-      (<Control.ScaleOptions>(<any>this).options).maxWidth = val;
+      this.options.maxWidth = val;
       (<any>this)._update();
     }
     get maxWidth(): number {
-      return (<Control.ScaleOptions>(<any>this).options).maxWidth;
+      return this.options.maxWidth;
     }
 
     @Input() set metric(val: boolean) {
-      while ((<HTMLElement>(<any>this)._container).hasChildNodes()) {
-          (<HTMLElement>(<any>this)._container).removeChild(
-            (<HTMLElement>(<any>this)._container).lastChild
+      while (this.getContainer().hasChildNodes()) {
+          this.getContainer().removeChild(
+            this.getContainer().lastChild
           );
       }
-      (<Control.ScaleOptions>(<any>this).options).metric = val;
+      this.options.metric = val;
       (<any>this)._addScales(
-        (<Control.ScaleOptions>(<any>this).options),
+        this.options,
         'leaflet-control-scale-line',
-        (<HTMLElement>(<any>this)._container)
+        this.getContainer()
       );
       (<any>this)._update();
     }
     get metric(): boolean {
-      return (<Control.ScaleOptions>(<any>this).options).metric;
+      return this.options.metric;
     }
 
     @Input() set imperial(val: boolean) {
-      while ((<HTMLElement>(<any>this)._container).hasChildNodes()) {
-          (<HTMLElement>(<any>this)._container).removeChild(
-            (<HTMLElement>(<any>this)._container).lastChild
+      while (this.getContainer().hasChildNodes()) {
+          this.getContainer().removeChild(
+            this.getContainer().lastChild
           );
       }
-      (<Control.ScaleOptions>(<any>this).options).imperial = val;
+      this.options.imperial = val;
       (<any>this)._addScales(
-        (<Control.ScaleOptions>(<any>this).options),
+        this.options,
         'leaflet-control-scale-line',
-        (<HTMLElement>(<any>this)._container)
+        this.getContainer()
       );
       (<any>this)._update();
     }
     get imperial (): boolean {
-      return (<Control.ScaleOptions>(<any>this).options).imperial;
+      return this.options.imperial;
     }
 }
