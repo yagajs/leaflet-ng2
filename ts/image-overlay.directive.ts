@@ -51,8 +51,6 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, [[0, 0], [1, 1]], {});
 
-        (<any>window).g = this;
-
         this.on('remove', () => {
             this.displayChange.emit(false);
         });
