@@ -1033,10 +1033,13 @@ declare namespace L {
             prefix?: string | boolean;
         }
 
-        export interface Attribution extends Control {
+        export class Attribution extends Control {
+            constructor(options: Control.AttributionOptions);
             setPrefix(prefix: string): this;
             addAttribution(text: string): this;
             removeAttribution(text: string): this;
+
+            options: Control.AttributionOptions;
         }
 
         export interface LayersOptions extends ControlOptions {

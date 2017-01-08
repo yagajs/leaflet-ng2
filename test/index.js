@@ -18,3 +18,4 @@ require('../lib/polyline.directive.spec');
 require('../lib/polygon.directive.spec');
 require('../lib/circle.directive.spec');
 require('../lib/circle-marker.directive.spec');
+require('../lib/attribution-control.directive.spec');

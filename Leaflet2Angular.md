@@ -456,7 +456,8 @@ Directive name in Angular2: `yaga-zoom-control`.
 
 Directive name in Angular2: `yaga-attribution-control`.
 
-* `[prefix]: string = 'Yaga'`
+* `[(prefix)]: string = 'Yaga'`
+* `[(attributions)]: string[]`
 
 ### Layers???
 
