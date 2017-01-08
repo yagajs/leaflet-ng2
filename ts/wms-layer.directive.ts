@@ -14,18 +14,24 @@ import { TileLayer,
     PopupEvent,
     TooltipEvent,
     TileEvent,
-    TileErrorEvent } from 'leaflet';
+    TileErrorEvent,
+    WMSParams} from 'leaflet';
 import { MapComponent } from './map.component';
-import { TRANSPARENT_PIXEL } from './consts';
 
 @Directive({
-    selector: 'yaga-tile-layer'
+    selector: 'yaga-wms-layer'
 })
-export class TileLayerDirective extends TileLayer implements OnDestroy  {
+export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
+
+    @Output() public layersChange: EventEmitter<string[]> = new EventEmitter();
+    @Output() public stylesChange: EventEmitter<string[]> = new EventEmitter();
+    @Output() public formatChange: EventEmitter<string> = new EventEmitter();
+    @Output() public versionChange: EventEmitter<string> = new EventEmitter();
+    @Output() public transparentChange: EventEmitter<boolean> = new EventEmitter();
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
@@ -50,7 +56,8 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
         // Transparent 1px image:
-        super(TRANSPARENT_PIXEL);
+        super('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkY' +
+            'AAAAAYAAjCB0C8AAAAASUVORK5CYII=', {layers: ''});
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -331,5 +338,64 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     };
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
+    }
+
+    @Input() set uppercase(val: boolean) {
+        this.options.uppercase = val;
+    };
+    get uppercase(): boolean {
+        return this.options.uppercase;
+    }
+
+
+    // WMS Params
+    setParams(params: WMSParams, redraw?: boolean): this {
+        super.setParams(params, redraw);
+        this.layersChange.emit(this.wmsParams.layers.split(','));
+        this.stylesChange.emit(this.wmsParams.styles.split(','));
+        this.formatChange.emit(this.wmsParams.format);
+        this.versionChange.emit(this.wmsParams.version);
+        this.transparentChange.emit(this.wmsParams.transparent);
+        return this;
+    }
+    @Input() set layers(val: string[]) {
+        const newParams: WMSParams = Object.create(this.wmsParams);
+        newParams.layers = val.join(',');
+        this.setParams(newParams);
+    };
+    get layers(): string[] {
+        return this.wmsParams.layers.split(',');
+    }
+    @Input() set styles(val: string[]) {
+        const newParams: WMSParams = Object.create(this.wmsParams);
+        newParams.styles = val.join(',');
+        this.setParams(newParams);
+    };
+    get styles(): string[] {
+        return this.wmsParams.styles.split(',');
+    }
+    @Input() set format(val: string) {
+        const newParams: WMSParams = Object.create(this.wmsParams);
+        newParams.format = val;
+        this.setParams(newParams);
+    };
+    get format(): string {
+        return this.wmsParams.format;
+    }
+    @Input() set version(val: string) {
+        const newParams: WMSParams = Object.create(this.wmsParams);
+        newParams.version = val;
+        this.setParams(newParams);
+    };
+    get version(): string {
+        return this.wmsParams.version;
+    }
+    @Input() set transparent(val: boolean) {
+        const newParams: WMSParams = Object.create(this.wmsParams);
+        newParams.transparent = val;
+        this.setParams(newParams);
+    };
+    get transparent(): boolean {
+        return this.wmsParams.transparent;
     }
 }

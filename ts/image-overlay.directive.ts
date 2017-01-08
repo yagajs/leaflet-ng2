@@ -5,27 +5,32 @@ import { Directive,
     Inject,
     forwardRef,
     OnDestroy } from '@angular/core';
-import { TileLayer,
-    TileLayerOptions,
+import { ImageOverlay,
+    ImageOverlayOptions,
     LatLngBoundsExpression,
-    Point,
     Map,
     Event,
     PopupEvent,
     TooltipEvent,
-    TileEvent,
-    TileErrorEvent } from 'leaflet';
+    LatLngBounds,
+    latLngBounds } from 'leaflet';
 import { MapComponent } from './map.component';
 import { TRANSPARENT_PIXEL } from './consts';
 
 @Directive({
-    selector: 'yaga-tile-layer'
+    selector: 'yaga-image-overlay'
 })
-export class TileLayerDirective extends TileLayer implements OnDestroy  {
+export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
-    @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
+    // maybe implement -> @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
+
+    @Output() public boundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
+    @Output() public northChange: EventEmitter<number> = new EventEmitter();
+    @Output() public eastChange: EventEmitter<number> = new EventEmitter();
+    @Output() public southChange: EventEmitter<number> = new EventEmitter();
+    @Output() public westChange: EventEmitter<number> = new EventEmitter();
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
@@ -39,18 +44,14 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('loading') public loadingEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
-    @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
-    @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
-    @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
-    @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
         // Transparent 1px image:
-        super(TRANSPARENT_PIXEL);
+        super(TRANSPARENT_PIXEL, [[0, 0], [1, 1]], {});
+
+        (<any>window).g = this;
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -98,37 +99,18 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.on('contextmenu', (event: MouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        this.on('loading', (event: Event) => {
-            this.loadingEvent.emit(event);
-        });
-        this.on('tileunload', (event: TileEvent) => {
-            this.tileunloadEvent.emit(event);
-        });
-        this.on('tileloadstart', (event: TileEvent) => {
-            this.tileloadstartEvent.emit(event);
-        });
-        this.on('tileerror', (event: TileErrorEvent) => {
-            this.tileerrorEvent.emit(event);
-        });
-        this.on('tileload', (event: TileEvent) => {
-            this.tileloadEvent.emit(event);
-        });
-        this.on('load', (event: Event) => {
-            this.loadEvent.emit(event);
-        });
     }
 
     ngOnDestroy(): void {
-        console.log('Destroy');
         this.removeFrom((<any>this)._map);
     }
 
-    setUrl(url: string, noRedraw?: boolean): this {
+    setUrl(url: string): this {
         if (this.url === url) {
             return;
         }
         this.urlChange.emit(url);
-        return super.setUrl(url, noRedraw);
+        return super.setUrl(url);
     }
     @Input() set url(val: string) {
         this.setUrl(val);
@@ -164,7 +146,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             eventKeys: string[];
         try {
             pane = this.getPane();
-            container = this.getContainer();
+            container = this.getElement();
             map = (<any>this)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
@@ -178,7 +160,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             for (let i: number = 0; i < eventKeys.length; i += 1) {
                 map.on(eventKeys[i], events[eventKeys[i]], this);
             }
-            this.redraw();
         } else {
             // hide layer
             pane.removeChild(container);
@@ -192,7 +173,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             container: HTMLElement;
         try {
             pane = this.getPane();
-            container = this.getContainer();
+            container = this.getElement();
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -206,130 +187,99 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return false;
     }
 
-    setZIndex(val: number): this {
-        super.setZIndex(val);
-        this.zIndexChange.emit(val);
+    setBounds(val: LatLngBoundsExpression): this {
+        super.setBounds(latLngBounds((<any>val)));
+
+        this.boundsChange.emit(this.bounds);
+        this.northChange.emit(this.north);
+        this.eastChange.emit(this.east);
+        this.southChange.emit(this.south);
+        this.westChange.emit(this.west);
+
         return this;
     }
-    @Input() set zIndex(val: number) {
-        this.setZIndex(val);
+    @Input() set bounds(val: LatLngBounds) {
+        this.setBounds(val);
     }
-    get zIndex(): number {
-        return this.options.zIndex;
+    get bounds(): LatLngBounds {
+        return this.getBounds();
     }
+    @Input() set north(val: number) {
+        const oldBounds: LatLngBounds = this.getBounds();
 
-    @Input() set tileSize(val: Point) {
-        this.options.tileSize = val;
-    }
-    get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point>this.options.tileSize);
-    }
+        // super because we call the change listeners ourselves
+        super.setBounds(latLngBounds([
+            [oldBounds.getSouth(), oldBounds.getWest()],
+            [val, oldBounds.getEast()]
+        ]));
 
-    @Input() set updateWhenIdle(val: boolean) {
-        this.options.updateWhenIdle = val;
+        this.boundsChange.emit(this.bounds);
+        this.northChange.emit(val);
     }
-    get updateWhenIdle(): boolean {
-        return this.options.updateWhenIdle;
+    get north(): number {
+        return this.getBounds().getNorth();
     }
+    @Input() set east(val: number) {
+        const oldBounds: LatLngBounds = this.getBounds();
+        super.setBounds(latLngBounds([
+            [oldBounds.getSouth(), oldBounds.getWest()],
+            [oldBounds.getNorth(), val]
+        ]));
 
-    @Input() set updateWhenZooming(val: boolean) {
-        this.options.updateWhenZooming = val;
+        this.boundsChange.emit(this.bounds);
+        this.eastChange.emit(val);
     }
-    get updateWhenZooming(): boolean {
-        return this.options.updateWhenZooming;
+    get east(): number {
+        return this.getBounds().getEast();
     }
+    @Input() set south(val: number) {
+        const oldBounds: LatLngBounds = this.getBounds();
+        super.setBounds(latLngBounds([
+            [val, oldBounds.getWest()],
+            [oldBounds.getNorth(), oldBounds.getEast()]
+        ]));
 
-    @Input() set updateInterval(val: number) {
-        this.options.updateInterval = val;
+        this.boundsChange.emit(this.bounds);
+        this.southChange.emit(val);
     }
-    get updateInterval(): number {
-        return this.options.updateInterval;
+    get south(): number {
+        return this.getBounds().getSouth();
     }
+    @Input() set west(val: number) {
+        const oldBounds: LatLngBounds = this.getBounds();
+        super.setBounds(latLngBounds([
+            [oldBounds.getSouth(), val],
+            [oldBounds.getNorth(), oldBounds.getEast()]
+        ]));
 
-    @Input() set bounds(val: LatLngBoundsExpression) {
-        this.options.bounds = val;
+        this.boundsChange.emit(this.bounds);
+        this.westChange.emit(val);
     }
-    get bounds(): LatLngBoundsExpression {
-        return this.options.bounds;
-    }
-
-    @Input() set noWrap(val: boolean) {
-        this.options.noWrap = val;
-    }
-    get noWrap(): boolean {
-        return this.options.noWrap;
-    }
-
-    @Input() set className(val: string) {
-        this.options.className = val;
-    }
-    get className(): string {
-        return this.options.className;
-    }
-
-    @Input() set keepBuffer(val: number) {
-        this.options.keepBuffer = val;
-    }
-    get keepBuffer(): number {
-        return this.options.keepBuffer;
-    }
-
-    @Input() set maxNativeZoom(val: number) {
-        this.options.maxNativeZoom = val;
-    };
-    get maxNativeZoom(): number {
-        return this.options.maxNativeZoom;
-    }
-
-    @Input() set subdomains(val: string[]) {
-        this.options.subdomains = val;
-    };
-    get subdomains(): string[] {
-        if (typeof (<string>this.options.subdomains) === 'string') {
-            this.options.subdomains = (<string>this.options.subdomains).split('');
-        }
-        return (<string[]>this.options.subdomains);
-    }
-
-    @Input() set errorTileUrl(val: string) {
-        this.options.errorTileUrl = val;
-    };
-    get errorTileUrl(): string {
-        return this.options.errorTileUrl;
-    }
-
-    @Input() set zoomOffset(val: number) {
-        this.options.zoomOffset = val;
-    };
-    get zoomOffset(): number {
-        return this.options.zoomOffset;
-    }
-
-    @Input() set tms(val: boolean) {
-        this.options.tms = val;
-    };
-    get tms(): boolean {
-        return this.options.tms;
-    }
-
-    @Input() set zoomReverse(val: boolean) {
-        this.options.zoomReverse = val;
-    };
-    get zoomReverse(): boolean {
-        return this.options.zoomReverse;
-    }
-
-    @Input() set detectRetina(val: boolean) {
-        this.options.detectRetina = val;
-    };
-    get detectRetina(): boolean {
-        return this.options.detectRetina;
+    get west(): number {
+        return this.getBounds().getWest();
     }
 
     @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-    };
+        (<any>this)._initImage();
+    }
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
+    }
+
+    @Input() set alt(val: string) {
+        this.options.alt = val;
+        (<any>this)._initImage();
+    }
+    get alt(): string {
+        return this.getElement().getAttribute('alt');
+    }
+    @Input() set interactive(val: boolean) {
+        this.options.interactive = val;
+        this.onRemove((<any>(<any>this)._map));
+        this.onAdd((<any>(<any>this)._map));
+    }
+    get interactive(): boolean {
+        return this.options.interactive;
     }
 }
