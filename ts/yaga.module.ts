@@ -10,9 +10,11 @@ import { DivIconDirective } from './div-icon.directive';
 import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PolygonDirective } from './polygon.directive';
+import { RectangleDirective } from './rectangle.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
 import { AttributionControlDirective } from './attribution-control.directive';
+import { ScaleControlDirective }   from './scale-control.directive';
 
 @NgModule({
     declarations: [
@@ -26,9 +28,11 @@ import { AttributionControlDirective } from './attribution-control.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
+        RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
         AttributionControlDirective
+        ScaleControlDirective
     ],
     exports: [
         MapComponent,
@@ -41,9 +45,11 @@ import { AttributionControlDirective } from './attribution-control.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
+        RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
         AttributionControlDirective
+        ScaleControlDirective
     ]
 })
 export class YagaModule { }
