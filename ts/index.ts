@@ -13,13 +13,13 @@ export * from './polygon.directive';
 export * from './rectangle.directive';
 export * from './circle.directive';
 export * from './circle-marker.directive';
+export * from './scale-control.directive';
 
 export * from './d.ts/generic-geojson';
 export * from './consts';
 
-export * from './consts';
-
-export {
+export { Control,
+    ControlPosition,
     MapOptions,
     TileLayerOptions,
     PopupOptions,

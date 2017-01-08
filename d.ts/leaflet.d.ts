@@ -1045,7 +1045,7 @@ declare namespace L {
             hideSingleBase?: boolean;
         }
 
-        export interface Layers extends Control {
+        export class Layers extends Control {
             addBaseLayer(layer: Layer, name: string): this;
             addOverlay(layer: Layer, name: string): this;
             removeLayer(layer: Layer): this;
@@ -1060,7 +1060,9 @@ declare namespace L {
             updateWhenIdle?: boolean;
         }
 
-        export interface Scale extends Control {}
+        export class Scale extends Control {
+            options: Control.ScaleOptions;
+        }
     }
 
     export namespace control {

@@ -13,6 +13,7 @@ import { PolygonDirective } from './polygon.directive';
 import { RectangleDirective } from './rectangle.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
+import { ScaleControlDirective }   from './scale-control.directive';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { CircleMarkerDirective } from './circle-marker.directive';
         PolygonDirective,
         RectangleDirective,
         CircleDirective,
-        CircleMarkerDirective
+        CircleMarkerDirective,
+        ScaleControlDirective
     ],
     exports: [
         MapComponent,
@@ -43,7 +45,8 @@ import { CircleMarkerDirective } from './circle-marker.directive';
         PolygonDirective,
         RectangleDirective,
         CircleDirective,
-        CircleMarkerDirective
+        CircleMarkerDirective,
+        ScaleControlDirective
     ]
 })
 export class YagaModule { }
