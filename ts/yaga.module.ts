@@ -13,6 +13,7 @@ import { PolygonDirective } from './polygon.directive';
 import { RectangleDirective } from './rectangle.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
+import { ZoomControlDirective } from './zoom-control.directive';
 import { AttributionControlDirective } from './attribution-control.directive';
 import { ScaleControlDirective }   from './scale-control.directive';
 
@@ -31,7 +32,8 @@ import { ScaleControlDirective }   from './scale-control.directive';
         RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
-        AttributionControlDirective
+        ZoomControlDirective,
+        AttributionControlDirective,
         ScaleControlDirective
     ],
     exports: [
@@ -48,7 +50,8 @@ import { ScaleControlDirective }   from './scale-control.directive';
         RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
-        AttributionControlDirective
+        ZoomControlDirective,
+        AttributionControlDirective,
         ScaleControlDirective
     ]
 })

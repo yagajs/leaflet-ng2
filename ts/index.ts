@@ -13,6 +13,7 @@ export * from './polygon.directive';
 export * from './rectangle.directive';
 export * from './circle.directive';
 export * from './circle-marker.directive';
+export * from './zoom-control.directive';
 export * from './attribution-control.directive';
 export * from './scale-control.directive';
 
@@ -25,6 +26,7 @@ export { Control,
     TileLayerOptions,
     PopupOptions,
     TooltipOptions,
+    ControlPosition,
     ImageOverlayOptions,
     IconOptions,
     MarkerOptions,

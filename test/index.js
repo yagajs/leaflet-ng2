@@ -19,5 +19,6 @@ require('../lib/polygon.directive.spec');
 require('../lib/rectangle.directive.spec');
 require('../lib/circle.directive.spec');
 require('../lib/circle-marker.directive.spec');
+require('../lib/zoom-control.directive.spec');
 require('../lib/attribution-control.directive.spec');
 require('../lib/scale-control.directive.spec');
