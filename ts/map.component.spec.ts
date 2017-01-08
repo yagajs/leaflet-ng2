@@ -850,8 +850,6 @@ describe('Map Component', () => {
         beforeEach((done) => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             map.doubleClickZoom.disable();
-            // map.removeEventListener('dblclick', map._on);
-            (<any>window).map = map;
             return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
