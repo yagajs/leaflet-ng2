@@ -47,8 +47,8 @@ describe('DivIcon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconSize = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).iconSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).iconSize }`);
+            if (icon.options.iconSize !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconSize }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -85,8 +85,8 @@ describe('DivIcon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconAnchor = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).iconAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).iconAnchor }`);
+            if (icon.options.iconAnchor !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconAnchor }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -123,8 +123,8 @@ describe('DivIcon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.popupAnchor = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).popupAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).popupAnchor }`);
+            if (icon.options.popupAnchor !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.popupAnchor }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {

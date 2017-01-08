@@ -47,8 +47,8 @@ describe('Icon Directive', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.iconUrl = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).iconUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).iconUrl }`);
+            if (icon.options.iconUrl !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconUrl }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -85,8 +85,8 @@ describe('Icon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconSize = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).iconSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).iconSize }`);
+            if (icon.options.iconSize !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconSize }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -123,8 +123,8 @@ describe('Icon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconAnchor = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).iconAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).iconAnchor }`);
+            if (icon.options.iconAnchor !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconAnchor }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -161,8 +161,8 @@ describe('Icon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.popupAnchor = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).popupAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).popupAnchor }`);
+            if (icon.options.popupAnchor !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.popupAnchor }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -199,8 +199,8 @@ describe('Icon Directive', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.shadowUrl = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).shadowUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).shadowUrl }`);
+            if (icon.options.shadowUrl !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowUrl }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -237,8 +237,8 @@ describe('Icon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowSize = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).shadowSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).shadowSize }`);
+            if (icon.options.shadowSize !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowSize }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -275,8 +275,8 @@ describe('Icon Directive', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowAnchor = val;
             /* istanbul ignore if */
-            if ((<IconOptions>(<any>icon).options).shadowAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<IconOptions>(<any>icon).options).shadowAnchor }`);
+            if (icon.options.shadowAnchor !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowAnchor }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {

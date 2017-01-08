@@ -110,57 +110,57 @@ export class TooltipDirective extends Tooltip  {
         this.setOpacity(val);
     }
     get opacity(): number {
-        return (<TooltipOptions>(<any>this).options).opacity;
+        return this.options.opacity;
     }
 
     @Input() set className(val: string) {
-        (<TooltipOptions>(<any>this).options).className = val;
+        this.options.className = val;
         (<any>this)._updateLayout();
     }
     get className(): string {
-        return (<TooltipOptions>(<any>this).options).className;
+        return this.options.className;
     }
     @Input() set pane(val: string) {
-        (<TooltipOptions>(<any>this).options).pane = val;
+        this.options.pane = val;
         (<any>this)._updateLayout();
     }
     get pane(): string {
-        return (<TooltipOptions>(<any>this).options).pane;
+        return this.options.pane;
     }
 
     @Input() set interactive(val: boolean) {
-        (<TooltipOptions>(<any>this).options).interactive = val;
+        this.options.interactive = val;
         (<any>this)._updateLayout();
     }
     get interactive(): boolean {
-        return (<TooltipOptions>(<any>this).options).interactive;
+        return this.options.interactive;
     }
 
     @Input() set sticky(val: boolean) {
-        (<TooltipOptions>(<any>this).options).sticky = val;
+        this.options.sticky = val;
     }
     get sticky(): boolean {
-        return (<TooltipOptions>(<any>this).options).sticky;
+        return this.options.sticky;
     }
 
     @Input() set direction(val: Direction) {
-        (<TooltipOptions>(<any>this).options).direction = val;
+        this.options.direction = val;
     }
     get direction(): Direction {
-        return (<TooltipOptions>(<any>this).options).direction;
+        return this.options.direction;
     }
 
     @Input() set permanent(val: boolean) {
-        (<TooltipOptions>(<any>this).options).permanent = val;
+        this.options.permanent = val;
     }
     get permanent(): boolean {
-        return (<TooltipOptions>(<any>this).options).permanent;
+        return this.options.permanent;
     }
 
     @Input() set offset(val: Point) {
-        (<TooltipOptions>(<any>this).options).offset = val;
+        this.options.offset = val;
     }
     get offset(): Point {
-        return (<Point>(<TooltipOptions>(<any>this).options).offset);
+        return (<Point>this.options.offset);
     }
 }
