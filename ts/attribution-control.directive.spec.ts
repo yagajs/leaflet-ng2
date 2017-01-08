@@ -291,41 +291,6 @@ describe('Attribution-Control Directive', () => {
             control.getContainer().dispatchEvent(new CustomEvent('mouseout'));
         });
     });
-
-    /*
-    describe('[zoomInText]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach((done) => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-            return done();
-        });
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            /* istanbul ignore if * /
-            if (control.options.zoomInText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted in options: ${ TEST_VALUE } != ${ control.options.zoomInText }`);
-            }
-            /* istanbul ignore if * /
-            if ((<HTMLElement>(<any>control)._zoomInButton).textContent !== TEST_VALUE) {
-                /* tslint:disable:max-line-length * /
-                throw new Error(`Wrong value setted in HTMLElement: ${ TEST_VALUE } != ${ (<HTMLElement>(<any>control).
-                        _zoomInButton).textContent }`);
-                /* tslint:enable * /
-            }
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            /* istanbul ignore if * /
-            if (control.zoomInText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ control.zoomInText }`);
-            }
-        });
-    });*/
 });
 
 describe('Destroying a Attribution Control Directive', () => {
