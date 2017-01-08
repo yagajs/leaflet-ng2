@@ -7,7 +7,8 @@ import { Directive,
     OnDestroy } from '@angular/core';
 import { Control,
     ControlPosition,
-    Map } from 'leaflet';
+    Map,
+    Event } from 'leaflet';
 import { MapComponent } from './map.component';
 
 @Directive({
@@ -38,6 +39,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         this.onRemove = function (map: Map): any {
             originalOnRemove.call(this, map);
             self.displayChange.emit(false);
+            self.removeEvent.emit({type: 'remove', target: self});
             return self;
         };
 
@@ -45,8 +47,26 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         this.onAdd = function (map: Map): HTMLElement {
             const tmp: HTMLElement = originalOnAdd.call(this, map);
             self.displayChange.emit(true);
+            self.addEvent.emit({type: 'add', target: self});
             return tmp;
         };
+
+        // Events
+        this.getContainer().addEventListener('click', (event: MouseEvent) => {
+            this.clickEvent.emit(event);
+        });
+        this.getContainer().addEventListener('dbclick', (event: MouseEvent) => {
+            this.dbclickEvent.emit(event);
+        });
+        this.getContainer().addEventListener('mousedown', (event: MouseEvent) => {
+            this.mousedownEvent.emit(event);
+        });
+        this.getContainer().addEventListener('mouseover', (event: MouseEvent) => {
+            this.mouseoverEvent.emit(event);
+        });
+        this.getContainer().addEventListener('mouseout', (event: MouseEvent) => {
+            this.mouseoutEvent.emit(event);
+        });
     }
 
     ngOnDestroy(): void {
