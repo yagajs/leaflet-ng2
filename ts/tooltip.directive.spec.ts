@@ -115,8 +115,8 @@ describe('Tooltip Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             tooltip.opacity = 0.123;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).opacity !== 0.123) {
-                throw new Error(`Wrong value setted: ${ 0.123 } != ${ (<TooltipOptions>(<any>tooltip).options).opacity }`);
+            if (tooltip.options.opacity !== 0.123) {
+                throw new Error(`Wrong value setted: ${ 0.123 } != ${ tooltip.options.opacity }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -409,8 +409,8 @@ describe('Tooltip Directive', () => {
             const val: string = 'test-class';
             tooltip.className = val;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TooltipOptions>(<any>tooltip).options).className }`);
+            if (tooltip.options.className !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.className }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -438,8 +438,8 @@ describe('Tooltip Directive', () => {
             const val: string = 'test-class';
             tooltip.pane = val;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TooltipOptions>(<any>tooltip).options).pane }`);
+            if (tooltip.options.pane !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.pane }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -467,8 +467,8 @@ describe('Tooltip Directive', () => {
             const val: Direction = 'top';
             tooltip.direction = val;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).direction !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TooltipOptions>(<any>tooltip).options).direction }`);
+            if (tooltip.options.direction !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.direction }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -496,8 +496,8 @@ describe('Tooltip Directive', () => {
             const val: Point = point(12, 34);
             tooltip.offset = val;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).offset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ (<TooltipOptions>(<any>tooltip).options).offset }`);
+            if (tooltip.options.offset !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.offset }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -526,15 +526,15 @@ describe('Tooltip Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.interactive = false;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).interactive) {
+            if (tooltip.options.interactive) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TooltipOptions>(<any>tooltip).options).interactive = false;
+            tooltip.options.interactive = false;
             tooltip.interactive = true;
             /* istanbul ignore if */
-            if (!(<TooltipOptions>(<any>tooltip).options).interactive) {
+            if (!tooltip.options.interactive) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -568,15 +568,15 @@ describe('Tooltip Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.sticky = false;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).sticky) {
+            if (tooltip.options.sticky) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TooltipOptions>(<any>tooltip).options).sticky = false;
+            tooltip.options.sticky = false;
             tooltip.sticky = true;
             /* istanbul ignore if */
-            if (!(<TooltipOptions>(<any>tooltip).options).sticky) {
+            if (!tooltip.options.sticky) {
                 throw new Error(`It is not setted to true`);
             }
         });
@@ -610,15 +610,15 @@ describe('Tooltip Directive', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.permanent = false;
             /* istanbul ignore if */
-            if ((<TooltipOptions>(<any>tooltip).options).permanent) {
+            if (tooltip.options.permanent) {
                 throw new Error(`It is not setted to false`);
             }
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
-            (<TooltipOptions>(<any>tooltip).options).permanent = false;
+            tooltip.options.permanent = false;
             tooltip.permanent = true;
             /* istanbul ignore if */
-            if (!(<TooltipOptions>(<any>tooltip).options).permanent) {
+            if (!tooltip.options.permanent) {
                 throw new Error(`It is not setted to true`);
             }
         });

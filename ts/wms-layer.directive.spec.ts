@@ -193,7 +193,7 @@ describe('WMS-Layer Directive', () => {
             setTimeout(() => {
                 /* istanbul ignore if */
                 if (layer.options.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).opacity }`));
+                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.opacity }`));
                 }
                 return done();
             }, 0);
@@ -266,7 +266,7 @@ describe('WMS-Layer Directive', () => {
             setTimeout(() => {
                 /* istanbul ignore if */
                 if (layer.options.zIndex !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ (<TileLayerOptions>(<any>map).options).zIndex }`));
+                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.zIndex }`));
                 }
                 return done();
             }, 0);

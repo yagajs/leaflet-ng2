@@ -24,38 +24,38 @@ export class DivIconDirective extends DivIcon  {
     }
 
     @Input() set iconSize(val: Point) {
-        (<DivIconOptions>(<any>this).options).iconSize = val;
+        this.options.iconSize = val;
         this.updateEvent.emit({
             target: this,
             type: 'update'
         });
     }
     get iconSize(): Point {
-        return (<Point>(<DivIconOptions>(<any>this).options).iconSize);
+        return (<Point>this.options.iconSize);
     }
     @Input() set iconAnchor(val: Point) {
-        (<DivIconOptions>(<any>this).options).iconAnchor = val;
+        this.options.iconAnchor = val;
         this.updateEvent.emit({
             target: this,
             type: 'update'
         });
     }
     get iconAnchor(): Point {
-        return (<Point>(<DivIconOptions>(<any>this).options).iconAnchor);
+        return (<Point>this.options.iconAnchor);
     }
     @Input() set popupAnchor(val: Point) {
-        (<DivIconOptions>(<any>this).options).popupAnchor = val;
+        this.options.popupAnchor = val;
         this.updateEvent.emit({
             target: this,
             type: 'update'
         });
     }
     get popupAnchor(): Point {
-        return (<Point>(<DivIconOptions>(<any>this).options).popupAnchor);
+        return (<Point>this.options.popupAnchor);
     }
 
     createIcon(oldDivIcon: HTMLElement): HTMLElement {
-        let clonedOptions: DivIconOptions = Object.create((<DivIconOptions>(<any>this).options));
+        let clonedOptions: DivIconOptions = Object.create(this.options);
         clonedOptions.html = '';
         oldDivIcon = super.createIcon.call({options: clonedOptions}, oldDivIcon);
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
