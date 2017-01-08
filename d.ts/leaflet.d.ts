@@ -1035,10 +1035,13 @@ declare namespace L {
             prefix?: string | boolean;
         }
 
-        export interface Attribution extends Control {
+        export class Attribution extends Control {
+            constructor(options: Control.AttributionOptions);
             setPrefix(prefix: string): this;
             addAttribution(text: string): this;
             removeAttribution(text: string): this;
+
+            options: Control.AttributionOptions;
         }
 
         export interface LayersOptions extends ControlOptions {
@@ -1047,7 +1050,7 @@ declare namespace L {
             hideSingleBase?: boolean;
         }
 
-        export interface Layers extends Control {
+        export class Layers extends Control {
             addBaseLayer(layer: Layer, name: string): this;
             addOverlay(layer: Layer, name: string): this;
             removeLayer(layer: Layer): this;
@@ -1062,7 +1065,9 @@ declare namespace L {
             updateWhenIdle?: boolean;
         }
 
-        export interface Scale extends Control {}
+        export class Scale extends Control {
+            options: Control.ScaleOptions;
+        }
     }
 
     export namespace control {

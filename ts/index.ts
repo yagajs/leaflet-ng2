@@ -10,16 +10,18 @@ export * from './tooltip.directive';
 export * from './marker.directive';
 export * from './polyline.directive';
 export * from './polygon.directive';
+export * from './rectangle.directive';
 export * from './circle.directive';
 export * from './circle-marker.directive';
 export * from './zoom-control.directive';
+export * from './attribution-control.directive';
+export * from './scale-control.directive';
 
 export * from './d.ts/generic-geojson';
 export * from './consts';
 
-export * from './consts';
-
-export {
+export { Control,
+    ControlPosition,
     MapOptions,
     TileLayerOptions,
     PopupOptions,
@@ -29,6 +31,7 @@ export {
     IconOptions,
     MarkerOptions,
     CircleOptions,
+    ControlPosition,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,

@@ -10,9 +10,12 @@ import { DivIconDirective } from './div-icon.directive';
 import { MarkerDirective } from './marker.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PolygonDirective } from './polygon.directive';
+import { RectangleDirective } from './rectangle.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
 import { ZoomControlDirective } from './zoom-control.directive';
+import { AttributionControlDirective } from './attribution-control.directive';
+import { ScaleControlDirective }   from './scale-control.directive';
 
 @NgModule({
     declarations: [
@@ -26,9 +29,12 @@ import { ZoomControlDirective } from './zoom-control.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
+        RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
-        ZoomControlDirective
+        ZoomControlDirective,
+        AttributionControlDirective,
+        ScaleControlDirective
     ],
     exports: [
         MapComponent,
@@ -41,9 +47,12 @@ import { ZoomControlDirective } from './zoom-control.directive';
         MarkerDirective,
         PolylineDirective,
         PolygonDirective,
+        RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
-        ZoomControlDirective
+        ZoomControlDirective,
+        AttributionControlDirective,
+        ScaleControlDirective
     ]
 })
 export class YagaModule { }
