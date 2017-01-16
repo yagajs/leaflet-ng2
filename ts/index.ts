@@ -14,8 +14,7 @@ export * from './circle.directive';
 export * from './circle-marker.directive';
 
 export * from './d.ts/generic-geojson';
-export * from './consts';
-
+export * from './register-styles';
 export * from './consts';
 
 export {

@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import { YagaModule, MapComponent } from '../../lib/index';
+import { YagaModule, MapComponent, registerStyles } from '../../lib/index';
 
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { NgModule }      from '@angular/core';
@@ -99,3 +99,6 @@ export class AppModule { }
 document.addEventListener('DOMContentLoaded', () => {
     platform.bootstrapModule(AppModule);
 });
+
+
+registerStyles();
