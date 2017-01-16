@@ -2,7 +2,6 @@
 
 import { ImageOverlayDirective,
     MapComponent,
-    ImageOverlayOptions,
     LatLngBounds } from './index';
 import { point, latLngBounds } from 'leaflet';
 

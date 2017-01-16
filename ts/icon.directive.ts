@@ -1,12 +1,8 @@
 import { Directive,
     Input,
     Output,
-    EventEmitter,
-    Inject,
-    forwardRef,
-    ElementRef } from '@angular/core';
+    EventEmitter } from '@angular/core';
 import { Icon,
-    IconOptions,
     Event,
     Point } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';

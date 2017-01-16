@@ -10,22 +10,16 @@ import { Directive,
     AfterViewInit } from '@angular/core';
 import { Polyline,
     PolylineOptions,
-    LatLngBoundsExpression,
-    Map,
     Event,
     PopupEvent,
     TooltipEvent,
-    LatLngBounds,
-    latLngBounds,
     PathOptions,
     FillRule,
     LineCapShape,
     LineJoinShape,
-    Util,
     LatLng,
     LatLngTuple,
-    LatLngExpression,
-    LatLngLiteral } from 'leaflet';
+    LatLngExpression } from 'leaflet';
 import { MapComponent } from './map.component';
 
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';

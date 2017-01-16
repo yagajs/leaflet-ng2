@@ -7,7 +7,6 @@ import { Directive,
     OnDestroy } from '@angular/core';
 import { Control,
     ControlPosition,
-    Map,
     Event } from 'leaflet';
 import { MapComponent } from './map.component';
 

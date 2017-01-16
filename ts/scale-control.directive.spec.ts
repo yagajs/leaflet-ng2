@@ -3,7 +3,7 @@
 import { ScaleControlDirective,
     MapComponent,
     ControlPosition } from './index';
-import { point, Point, latLngBounds } from 'leaflet';
+import { point } from 'leaflet';
 
 describe('Scale-Control Directive', () => {
     describe('[(position)]', () => {

@@ -5,10 +5,11 @@ import { RectangleDirective,
     PopupDirective,
     TooltipDirective,
     LatLngExpression,
-    LatLngBounds } from './index';
-import { point, SVG, PathOptions, latLng, LatLng, latLngBounds } from 'leaflet';
+    LatLngBounds,
+    LatLng,
+    IGenericGeoJSONFeature } from './index';
+import { point, SVG, latLng, latLngBounds } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 
 describe('Rectangle Directive', () => {
     createPathTests(RectangleDirective);

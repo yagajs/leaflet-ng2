@@ -3,8 +3,9 @@
 import { MapComponent,
     LineCapShape,
     LineJoinShape,
-    FillRule } from './index';
-import { point, SVG, PathOptions } from 'leaflet';
+    FillRule,
+    PathOptions } from './index';
+import { point, SVG } from 'leaflet';
 
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {

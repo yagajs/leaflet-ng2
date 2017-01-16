@@ -4,8 +4,9 @@ import { PolylineDirective,
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    LatLngExpression } from './index';
-import { point, SVG, PathOptions, latLng, LatLng } from 'leaflet';
+    LatLngExpression,
+    LatLng } from './index';
+import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 

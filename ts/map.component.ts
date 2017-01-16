@@ -22,9 +22,7 @@ import {
     TooltipEvent,
     MouseEvent,
     KeyboardEvent,
-    ZoomAnimEvent,
-    MapOptions
-} from 'leaflet';
+    ZoomAnimEvent } from 'leaflet';
 
 const ANIMATION_DELAY: number = 50; // delay to wait for UI Changes...
 

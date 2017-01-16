@@ -3,7 +3,7 @@
 import { ZoomControlDirective,
     MapComponent,
     ControlPosition } from './index';
-import { point, Point, latLngBounds } from 'leaflet';
+import { point } from 'leaflet';
 
 describe('Zoom-Control Directive', () => {
     describe('[(position)]', () => {

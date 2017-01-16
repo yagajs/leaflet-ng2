@@ -2,12 +2,10 @@
 
 import { TooltipDirective,
     MapComponent,
-    TooltipOptions,
-    LatLngBoundsExpression,
     Direction,
     Point,
     LatLng } from './index';
-import { point, latLngBounds, latLng } from 'leaflet';
+import { point, latLng } from 'leaflet';
 
 const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 

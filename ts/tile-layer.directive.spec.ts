@@ -2,9 +2,9 @@
 
 import { TileLayerDirective,
     MapComponent,
-    TileLayerOptions,
+    Point,
     LatLngBoundsExpression } from './index';
-import { point, Point, latLngBounds } from 'leaflet';
+import { point, latLngBounds } from 'leaflet';
 
 const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 

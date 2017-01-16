@@ -1,10 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 import { WmsLayerDirective,
     MapComponent,
-    TileLayerOptions,
     LatLngBoundsExpression,
-    WMSParams } from './index';
-import { point, Point, latLngBounds } from 'leaflet';
+    WMSParams,
+    Point } from './index';
+import { point, latLngBounds } from 'leaflet';
 
 const WMS_LAYER_URL: string = 'http://www.wms.nrw.de/geobasis/wms_nw_dtk?';
 const WMS_LAYER_NAMES: string[] = ['nw_dtk_col'];
