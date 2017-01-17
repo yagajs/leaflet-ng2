@@ -6,7 +6,6 @@ import { Directive,
     forwardRef,
     ElementRef } from '@angular/core';
 import { Tooltip,
-    TooltipOptions,
     Point,
     LatLng,
     Event,

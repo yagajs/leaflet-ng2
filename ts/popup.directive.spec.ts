@@ -2,8 +2,9 @@
 
 import { PopupDirective,
     MapComponent,
-    PopupOptions, Point } from './index';
-import { point, latLng, LatLng } from 'leaflet';
+    Point,
+    LatLng } from './index';
+import { point, latLng } from 'leaflet';
 
 const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 

@@ -9,8 +9,6 @@ import { MarkerDirective,
     TRANSPARENT_PIXEL } from './index';
 import { point, latLng } from 'leaflet';
 
-const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
-
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
     const length: number = root.children.length;

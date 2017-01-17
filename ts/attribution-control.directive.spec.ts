@@ -3,7 +3,7 @@
 import { AttributionControlDirective,
     MapComponent,
     ControlPosition } from './index';
-import { point, Point, latLngBounds } from 'leaflet';
+import { point } from 'leaflet';
 
 describe('Attribution-Control Directive', () => {
     describe('[(position)]', () => {

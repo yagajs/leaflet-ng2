@@ -6,7 +6,6 @@ import { Directive,
     forwardRef,
     OnDestroy } from '@angular/core';
 import { TileLayer,
-    TileLayerOptions,
     LatLngBoundsExpression,
     Point,
     Map,

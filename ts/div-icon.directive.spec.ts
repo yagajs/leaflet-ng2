@@ -2,11 +2,9 @@
 
 import { DivIconDirective,
     MapComponent,
-    IconOptions, Point } from './index';
-import { point, latLng, LatLng, Event } from 'leaflet';
-import { TRANSPARENT_PIXEL } from './consts';
-
-const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
+    Point,
+    Event } from './index';
+import { point } from 'leaflet';
 
 describe('DivIcon Directive', () => {
     // Events

@@ -6,7 +6,6 @@ import { Directive,
     forwardRef,
     OnDestroy } from '@angular/core';
 import { ImageOverlay,
-    ImageOverlayOptions,
     LatLngBoundsExpression,
     Map,
     Event,

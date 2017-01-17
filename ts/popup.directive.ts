@@ -6,7 +6,6 @@ import { Directive,
     forwardRef,
     ElementRef } from '@angular/core';
 import { Popup,
-    PopupOptions,
     Point,
     LatLng,
     Event,

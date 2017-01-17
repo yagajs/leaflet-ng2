@@ -19,8 +19,7 @@ import { CircleMarker,
     LineJoinShape,
     LatLng,
     LatLngTuple,
-    LatLngLiteral,
-    LatLngExpression } from 'leaflet';
+    LatLngLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
 
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
