@@ -208,7 +208,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     setZIndex(val: number): this {
         super.setZIndex(val);
         this.zIndexChange.emit(val);
-        this.redraw();
         return this;
     }
     @Input() set zIndex(val: number) {
