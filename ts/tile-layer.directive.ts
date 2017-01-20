@@ -280,6 +280,13 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return this.options.maxNativeZoom;
     }
 
+    @Input() set minNativeZoom(val: number) {
+        this.options.minNativeZoom = val;
+    };
+    get minNativeZoom(): number {
+        return this.options.minNativeZoom;
+    }
+
     @Input() set subdomains(val: string[]) {
         this.options.subdomains = val;
     };
