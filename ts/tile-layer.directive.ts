@@ -482,6 +482,18 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     }
 
     /**
+     * Input for the minNativeZoom.
+     * Use it with `<yaga-tile-layer [minNativeZoom]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-minnativezoom Original Leaflet documentation
+     */
+    @Input() set minNativeZoom(val: number) {
+        this.options.minNativeZoom = val;
+    };
+    get minNativeZoom(): number {
+        return this.options.minNativeZoom;
+    }
+
+    /**
      * Input for the subdomains.
      * Use it with `<yaga-tile-layer [subdomains]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-subdomains Original Leaflet documentation

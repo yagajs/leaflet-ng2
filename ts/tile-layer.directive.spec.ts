@@ -991,6 +991,33 @@ describe('Tile-Layer Directive', () => {
             }
         });
     });
+    describe('[minNativeZoom]', () => {
+        var map: MapComponent,
+            layer: TileLayerDirective;
+        beforeEach((done) => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            layer = new TileLayerDirective(map);
+            return done();
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            layer.minNativeZoom = val;
+            /* istanbul ignore if */
+            if (layer.options.minNativeZoom !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.minNativeZoom }`);
+            }
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            layer.minNativeZoom = val;
+            /* istanbul ignore if */
+            if (layer.minNativeZoom !== val) {
+                throw new Error(`Wrong value setted: ${ val } != ${ layer.minNativeZoom }`);
+            }
+        });
+    });
     describe('[zoomOffset]', () => {
         var map: MapComponent,
             layer: TileLayerDirective;

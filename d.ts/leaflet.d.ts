@@ -442,6 +442,7 @@ declare namespace L {
         minZoom?: number;
         maxZoom?: number;
         maxNativeZoom?: number;
+        minNativeZoom?: number;
         subdomains?: string | Array<string>;
         errorTileUrl?: string;
         zoomOffset?: number;
