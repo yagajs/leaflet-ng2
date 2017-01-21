@@ -1002,7 +1002,7 @@ describe('Tile-Layer Directive', () => {
             return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = Math.ceil(Math.random() * 5);
             layer.minNativeZoom = val;
             /* istanbul ignore if */
             if (layer.options.minNativeZoom !== val) {
@@ -1010,7 +1010,7 @@ describe('Tile-Layer Directive', () => {
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = Math.ceil(Math.random() * 5);
             layer.minNativeZoom = val;
             /* istanbul ignore if */
             if (layer.minNativeZoom !== val) {
