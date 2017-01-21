@@ -7,15 +7,16 @@ import { point } from 'leaflet';
 import { expect } from 'chai';
 
 describe('Attribution-Control Directive', () => {
+    var map: MapComponent,
+        control: AttributionControlDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        control = new AttributionControlDirective(map);
+    });
+
     describe('[(position)]', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
@@ -52,14 +53,6 @@ describe('Attribution-Control Directive', () => {
     });
 
     describe('[(prefix)]', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should be set to YAGA by default', () => {
             const html: string = control.getContainer().innerHTML;
             expect(html.indexOf('>YAGA<')).to.not.equal(-1);
@@ -102,14 +95,6 @@ describe('Attribution-Control Directive', () => {
     });
 
     describe('[opacity]', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
@@ -124,14 +109,6 @@ describe('Attribution-Control Directive', () => {
 
     // Events
     describe('(add)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when adding to map', (done: MochaDone) => {
             map.removeControl(control);
 
@@ -142,14 +119,6 @@ describe('Attribution-Control Directive', () => {
         });
     });
     describe('(remove)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when removing from map', (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
@@ -159,14 +128,6 @@ describe('Attribution-Control Directive', () => {
     });
 
     describe('(click)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
@@ -175,14 +136,6 @@ describe('Attribution-Control Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.dbclickEvent.subscribe(() => {
                 done();
@@ -191,14 +144,6 @@ describe('Attribution-Control Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
@@ -207,14 +152,6 @@ describe('Attribution-Control Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
@@ -223,14 +160,6 @@ describe('Attribution-Control Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-        var map: MapComponent,
-            control: AttributionControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new AttributionControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
@@ -238,30 +167,22 @@ describe('Attribution-Control Directive', () => {
             control.getContainer().dispatchEvent(new CustomEvent('mouseout'));
         });
     });
-});
 
-describe('Destroying a Attribution Control Directive', () => {
-    var map: MapComponent,
-        control: AttributionControlDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        control = new AttributionControlDirective(map);
-    });
-    it('should remove Tile-Layer Directive from map on destroy', () => {
-        expect(
-            control.getContainer().parentElement.parentElement.parentElement
-        ).to.equal(map.getContainer());
+    describe('Destroying a Attribution Control Directive', () => {
+        it('should remove Tile-Layer Directive from map on destroy', () => {
+            expect(
+                control.getContainer().parentElement.parentElement.parentElement
+            ).to.equal(map.getContainer());
 
-        control.ngOnDestroy();
+            control.ngOnDestroy();
 
-        expect(
-            control.getContainer() &&
-            control.getContainer().parentElement &&
-            control.getContainer().parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement
-        ).to.not.equal(map.getContainer());
+            expect(
+                control.getContainer() &&
+                control.getContainer().parentElement &&
+                control.getContainer().parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement
+            ).to.not.equal(map.getContainer());
+        });
     });
 });
