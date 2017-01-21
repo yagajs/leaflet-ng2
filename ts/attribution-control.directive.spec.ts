@@ -9,12 +9,11 @@ describe('Attribution-Control Directive', () => {
     describe('[(position)]', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
@@ -71,12 +70,11 @@ describe('Attribution-Control Directive', () => {
     describe('[(prefix)]', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should be set to YAGA by default', () => {
             /* istanbul ignore if */
@@ -143,12 +141,11 @@ describe('Attribution-Control Directive', () => {
     describe('[opacity]', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -172,12 +169,11 @@ describe('Attribution-Control Directive', () => {
     describe('(add)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when adding to map', (done: MochaDone) => {
             map.removeControl(control);
@@ -191,12 +187,11 @@ describe('Attribution-Control Directive', () => {
     describe('(remove)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when removing from map', (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
@@ -209,12 +204,11 @@ describe('Attribution-Control Directive', () => {
     describe('(click)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
@@ -226,12 +220,11 @@ describe('Attribution-Control Directive', () => {
     describe('(dbclick)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.dbclickEvent.subscribe(() => {
@@ -243,12 +236,11 @@ describe('Attribution-Control Directive', () => {
     describe('(mousedown)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
@@ -260,12 +252,11 @@ describe('Attribution-Control Directive', () => {
     describe('(mouseover)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
@@ -277,12 +268,11 @@ describe('Attribution-Control Directive', () => {
     describe('(mouseout)', () => {
         var map: MapComponent,
             control: AttributionControlDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             control = new AttributionControlDirective(map);
-            return done();
         });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
@@ -296,12 +286,11 @@ describe('Attribution-Control Directive', () => {
 describe('Destroying a Attribution Control Directive', () => {
     var map: MapComponent,
         control: AttributionControlDirective;
-    beforeEach((done) => {
+    beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
         (<any>map)._size = point(100, 100);
         (<any>map)._pixelOrigin = point(50, 50);
         control = new AttributionControlDirective(map);
-        return done();
     });
     it('should remove Tile-Layer Directive from map on destroy', () => {
         /* istanbul ignore if */

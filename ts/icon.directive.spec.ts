@@ -12,12 +12,11 @@ describe('Icon Directive', () => {
     describe('(update)', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should fire event in Angular when changing', (done: MochaDone) => {
             icon.updateEvent.subscribe((event: any) => {
@@ -35,12 +34,11 @@ describe('Icon Directive', () => {
     describe('[iconUrl]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
@@ -73,12 +71,11 @@ describe('Icon Directive', () => {
     describe('[iconSize]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -111,12 +108,11 @@ describe('Icon Directive', () => {
     describe('[iconAnchor]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -149,12 +145,11 @@ describe('Icon Directive', () => {
     describe('[popupAnchor]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -187,12 +182,11 @@ describe('Icon Directive', () => {
     describe('[shadowUrl]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
@@ -225,12 +219,11 @@ describe('Icon Directive', () => {
     describe('[shadowSize]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -263,12 +256,11 @@ describe('Icon Directive', () => {
     describe('[shadowAnchor]', () => {
         var map: MapComponent,
             icon: IconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new IconDirective();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);

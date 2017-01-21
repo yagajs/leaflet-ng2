@@ -6,9 +6,8 @@ import { point } from 'leaflet';
 describe('Map Component', () => {
     describe('[(lat)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -79,9 +78,8 @@ describe('Map Component', () => {
     });
     describe('[(lng)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -152,10 +150,9 @@ describe('Map Component', () => {
     });
     describe('[(zoom)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._zoomAnimated = false;
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.ceil(Math.random() * 15);
@@ -238,9 +235,8 @@ describe('Map Component', () => {
     });
     describe('[(minZoom)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
@@ -295,9 +291,8 @@ describe('Map Component', () => {
     });
     describe('[(maxZoom)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
@@ -352,12 +347,11 @@ describe('Map Component', () => {
     });
     describe('[(maxBounds)]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
 
             // Fix for no browser-test
             (<any>map)._size = point(100, 100);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLngBounds = new LatLngBounds([
@@ -429,9 +423,8 @@ describe('Map Component', () => {
     // Events
     describe('(baselayerchange)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -448,9 +441,8 @@ describe('Map Component', () => {
     });
     describe('(overlayadd)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -467,9 +459,8 @@ describe('Map Component', () => {
     });
     describe('(overlayremove)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -486,9 +477,8 @@ describe('Map Component', () => {
     });
     describe('(layeradd)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -505,9 +495,8 @@ describe('Map Component', () => {
     });
     describe('(layerremove)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -524,9 +513,8 @@ describe('Map Component', () => {
     });
     describe('(zoomlevelschange)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -543,9 +531,8 @@ describe('Map Component', () => {
     });
     describe('(resize)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -562,9 +549,8 @@ describe('Map Component', () => {
     });
     describe('(unload)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -581,9 +567,8 @@ describe('Map Component', () => {
     });
     describe('(viewreset)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -600,9 +585,8 @@ describe('Map Component', () => {
     });
     describe('(load)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -619,9 +603,8 @@ describe('Map Component', () => {
     });
     describe('(zoomstart)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -638,9 +621,8 @@ describe('Map Component', () => {
     });
     describe('(movestart)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -657,9 +639,8 @@ describe('Map Component', () => {
     });
     describe('(zoom)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -676,9 +657,8 @@ describe('Map Component', () => {
     });
     describe('(move)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -695,9 +675,8 @@ describe('Map Component', () => {
     });
     describe('(zoomend)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -714,9 +693,8 @@ describe('Map Component', () => {
     });
     describe('(moveend)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -733,9 +711,8 @@ describe('Map Component', () => {
     });
     describe('(popupopen)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -752,9 +729,8 @@ describe('Map Component', () => {
     });
     describe('(popupclose)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -771,9 +747,8 @@ describe('Map Component', () => {
     });
     describe('(autopanstart)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -790,9 +765,8 @@ describe('Map Component', () => {
     });
     describe('(tooltipopen)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -809,9 +783,8 @@ describe('Map Component', () => {
     });
     describe('(tooltipclose)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -828,9 +801,8 @@ describe('Map Component', () => {
     });
     describe('(click)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -847,10 +819,9 @@ describe('Map Component', () => {
     });
     describe('(dblclick)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             map.doubleClickZoom.disable();
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -867,9 +838,8 @@ describe('Map Component', () => {
     });
     describe('(mousedown)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -886,9 +856,8 @@ describe('Map Component', () => {
     });
     describe('(mouseup)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -905,9 +874,8 @@ describe('Map Component', () => {
     });
     describe('(mouseover)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -924,9 +892,8 @@ describe('Map Component', () => {
     });
     describe('(mouseout)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -943,9 +910,8 @@ describe('Map Component', () => {
     });
     describe('(mousemove)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -962,9 +928,8 @@ describe('Map Component', () => {
     });
     describe('(contextmenu)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -981,9 +946,8 @@ describe('Map Component', () => {
     });
     describe('(keypress)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1000,9 +964,8 @@ describe('Map Component', () => {
     });
     describe('(preclick)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1019,10 +982,9 @@ describe('Map Component', () => {
     });
     describe('(zoomanim)', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._zoomAnimated = false;
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1040,9 +1002,8 @@ describe('Map Component', () => {
 
     describe('[closePopupOnClick]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.closePopupOnClick = false;
@@ -1076,9 +1037,8 @@ describe('Map Component', () => {
     });
     describe('[zoomSnap]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
@@ -1099,9 +1059,8 @@ describe('Map Component', () => {
     });
     describe('[zoomDelta]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
@@ -1122,9 +1081,8 @@ describe('Map Component', () => {
     });
     describe('[trackResize]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.trackResize = false;
@@ -1158,9 +1116,8 @@ describe('Map Component', () => {
     });
     describe('[boxZoomEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.boxZoomEnabled = false;
@@ -1194,9 +1151,8 @@ describe('Map Component', () => {
     });
     describe('[doubleClickZoomEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.doubleClickZoomEnabled = false;
@@ -1230,9 +1186,8 @@ describe('Map Component', () => {
     });
     describe('[draggingEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.draggingEnabled = false;
@@ -1266,9 +1221,8 @@ describe('Map Component', () => {
     });
     describe('[fadeAnimation]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.fadeAnimation = false;
@@ -1302,9 +1256,8 @@ describe('Map Component', () => {
     });
     describe('[markerZoomAnimation]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.markerZoomAnimation = false;
@@ -1338,9 +1291,8 @@ describe('Map Component', () => {
     });
     describe('[transform3DLimit]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1361,9 +1313,8 @@ describe('Map Component', () => {
     });
     describe('[zoomAnimation]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.zoomAnimation = false;
@@ -1397,9 +1348,8 @@ describe('Map Component', () => {
     });
     describe('[zoomAnimationThreshold]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1420,9 +1370,8 @@ describe('Map Component', () => {
     });
     describe('[inertia]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.inertia = false;
@@ -1456,9 +1405,8 @@ describe('Map Component', () => {
     });
     describe('[inertiaDeceleration]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1479,9 +1427,8 @@ describe('Map Component', () => {
     });
     describe('[inertiaMaxSpeed]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1502,9 +1449,8 @@ describe('Map Component', () => {
     });
     describe('[easeLinearity]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1525,9 +1471,8 @@ describe('Map Component', () => {
     });
     describe('[worldCopyJump]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.worldCopyJump = false;
@@ -1561,9 +1506,8 @@ describe('Map Component', () => {
     });
     describe('[maxBoundsViscosity]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1584,9 +1528,8 @@ describe('Map Component', () => {
     });
     describe('[keyboardEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.keyboardEnabled = false;
@@ -1620,9 +1563,8 @@ describe('Map Component', () => {
     });
     describe('[keyboardPanDelta]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1643,9 +1585,8 @@ describe('Map Component', () => {
     });
     describe('[scrollWheelZoomEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.scrollWheelZoomEnabled = false;
@@ -1679,9 +1620,8 @@ describe('Map Component', () => {
     });
     describe('[wheelDebounceTime]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1702,9 +1642,8 @@ describe('Map Component', () => {
     });
     describe('[wheelPxPerZoomLevel]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1725,9 +1664,8 @@ describe('Map Component', () => {
     });
     describe('[tapTolerance]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1748,9 +1686,8 @@ describe('Map Component', () => {
     });
     describe('[tapEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.tapEnabled = false;
@@ -1784,9 +1721,8 @@ describe('Map Component', () => {
     });
     describe('[bounceAtZoomLimits]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.bounceAtZoomLimits = false;
@@ -1820,9 +1756,8 @@ describe('Map Component', () => {
     });
     describe('[touchZoomEnabled]', () => {
         var map: MapComponent;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.touchZoomEnabled = false;
