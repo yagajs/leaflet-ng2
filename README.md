@@ -1,6 +1,6 @@
 # Yaga - leaflet-ng2
 
-[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=master)](https://travis-ci.org/yagajs/leaflet-ng2)
+[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
 [![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
 
 Angular 2 module for Leaflet. This module serves components and
