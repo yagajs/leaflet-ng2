@@ -38,3 +38,6 @@ jspm_packages
 
 lib
 typings
+
+examples/**/*.js
+examples/**/*.js.map

@@ -14,6 +14,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; node_modules/.bin/browserify test/index.js -o browser-test/bundle.js",
     "doc": "node_modules/.bin/typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
+    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js",
     "dependency-check": "node_modules/.bin/node-dependencies"
   },
   "repository": {

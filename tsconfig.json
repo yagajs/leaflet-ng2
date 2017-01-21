@@ -16,6 +16,7 @@
         "test",
         "browser-test",
         "coverage",
+        "examples",
         "d.ts"
     ]
 }

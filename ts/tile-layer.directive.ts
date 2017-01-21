@@ -22,7 +22,7 @@ import { TRANSPARENT_PIXEL } from './consts';
  * @link http://leafletjs.com/reference-1.0.2.html#tilelayer Original Leaflet documentation
  * @link http://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
  * @link http://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
- * @link http://leaflet-ng2.yagajs.org/classes/tilelayerdirective.html API documentation
+ * @link http://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
  * @example http://leaflet-ng2.yagajs.org/latest/examples#tile-layer-directive
  */
 @Directive({
