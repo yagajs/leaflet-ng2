@@ -13,7 +13,7 @@ describe('Tooltip Directive', () => {
     describe('[(opened)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -23,7 +23,6 @@ describe('Tooltip Directive', () => {
             (<any>tooltip)._wrapper = document.createElement('div');
             tooltip.setLatLng(latLng(0, 0));
             map.openTooltip(tooltip);
-            return done();
         });
         it('should remove DOM container when not opened', () => {
             tooltip.opened = false;
@@ -44,14 +43,13 @@ describe('Tooltip Directive', () => {
     describe('[(content)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             tooltip.content = EXAMPLE_CONTENT;
@@ -101,14 +99,13 @@ describe('Tooltip Directive', () => {
     describe('[(opacity)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             tooltip.opacity = 0.123;
@@ -157,13 +154,12 @@ describe('Tooltip Directive', () => {
     describe('[(lat)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             tooltip.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -220,13 +216,12 @@ describe('Tooltip Directive', () => {
     describe('[(lng)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             tooltip.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -283,13 +278,12 @@ describe('Tooltip Directive', () => {
     describe('[(position)]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             tooltip.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
@@ -347,13 +341,12 @@ describe('Tooltip Directive', () => {
     describe('(open)', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             tooltip.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             tooltip.openEvent.subscribe((event: any) => {
@@ -369,14 +362,13 @@ describe('Tooltip Directive', () => {
     describe('(close)', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             tooltip.setLatLng(latLng(0, 0));
             map.openTooltip(tooltip);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             tooltip.closeEvent.subscribe((event: any) => {
@@ -394,14 +386,13 @@ describe('Tooltip Directive', () => {
     describe('[className]', () => {
         var map: MapComponent,
         tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
@@ -423,14 +414,13 @@ describe('Tooltip Directive', () => {
     describe('[pane]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
@@ -452,14 +442,13 @@ describe('Tooltip Directive', () => {
     describe('[direction]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Direction = 'top';
@@ -481,14 +470,13 @@ describe('Tooltip Directive', () => {
     describe('[offset]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(12, 34);
@@ -512,14 +500,13 @@ describe('Tooltip Directive', () => {
     describe('[interactive]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.interactive = false;
@@ -554,14 +541,13 @@ describe('Tooltip Directive', () => {
     describe('[sticky]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.sticky = false;
@@ -596,14 +582,13 @@ describe('Tooltip Directive', () => {
     describe('[permanent]', () => {
         var map: MapComponent,
             tooltip: TooltipDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
             (<any>tooltip)._contentNode = document.createElement('div');
             (<any>tooltip)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.permanent = false;

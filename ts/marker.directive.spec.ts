@@ -25,12 +25,11 @@ describe('Marker Directive', () => {
     describe('[(display)]', () => {
         var map: MapComponent,
         layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
@@ -61,7 +60,7 @@ describe('Marker Directive', () => {
                     return done(new Error('There is still an event on listener'));
                 }
             }
-            return done();
+            done();
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
             const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
@@ -115,12 +114,11 @@ describe('Marker Directive', () => {
     describe('[(opacity)]', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -189,13 +187,12 @@ describe('Marker Directive', () => {
     describe('[(lat)]', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -252,13 +249,12 @@ describe('Marker Directive', () => {
     describe('[(lng)]', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -315,13 +311,12 @@ describe('Marker Directive', () => {
     describe('[(position)]', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
@@ -379,12 +374,11 @@ describe('Marker Directive', () => {
     describe('[title]', () => {
        var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
@@ -406,12 +400,11 @@ describe('Marker Directive', () => {
     describe('[alt]', () => {
        var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
@@ -434,12 +427,11 @@ describe('Marker Directive', () => {
     describe('[draggable]', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.draggable = false;
@@ -476,12 +468,11 @@ describe('Marker Directive', () => {
     describe('(dragend)', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -499,12 +490,11 @@ describe('Marker Directive', () => {
     describe('(dragstart)', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -522,12 +512,11 @@ describe('Marker Directive', () => {
     describe('(movestart)', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -545,12 +534,11 @@ describe('Marker Directive', () => {
     describe('(drag)', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -568,12 +556,11 @@ describe('Marker Directive', () => {
     describe('(moveend)', () => {
         var map: MapComponent,
             layer: MarkerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new MarkerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -688,12 +675,11 @@ describe('Icon in Marker Directive', () => {
 describe('Destroying a Marker Directive', () => {
     var map: MapComponent,
         layer: MarkerDirective;
-    beforeEach((done) => {
+    beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
         (<any>map)._size = point(100, 100);
         (<any>map)._pixelOrigin = point(50, 50);
         layer = new MarkerDirective(map);
-        return done();
     });
     it('should remove Marker Directive from map on destroy', () => {
         /* istanbul ignore if */
