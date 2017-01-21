@@ -24,6 +24,18 @@ const template: string = `
       [(maxZoom)]="maxZoom"
       (baselayerchange)="baselayerchangeEventValue = 'baselayer change'"
       (move)="handleMoveEvent($event);"
+      
+      
+      (click)="handleClickEvent($event);"
+      (dblclick)="handleDblclickEvent($event);"
+      (mousedown)="handleMousedownEvent($event);"
+      (mouseup)="handleMouseupEvent($event);"
+      (mouseover)="handleMouseoverEvent($event);"
+      (mouseout)="handleMouseoutEvent($event);"
+      (mousemove)="handleMousemoveEvent($event);"
+      (contextmenu)="handleContextmenuEvent($event);"
+      (keypress)="handleKeypressEvent($event);"
+      (preclick)="handlePreclickEvent($event);"
     >
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
@@ -58,11 +70,52 @@ const template: string = `
       <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="baselayerchangeEventValue">
     </div>
     
-    
-    
+    <h4>Map state change events</h4>
     <div class="input-group">
       <span class="input-group-addon fixed-space">Leaflet event move</span>
       <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="moveEventValue">
+    </div>
+    
+    <h4>Interaction events</h4>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event click</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="clickEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event dblclick</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="dblclickEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event mousedown</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="mousedownEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event mouseup</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="mouseupEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event mouseover</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="mouseoverEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event mouseout</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="mouseoutEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event mousemove</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="mousemoveEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event contextmenu</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="contextmenuEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event keypress</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="keypressEventValue">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event preclick</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="preclickEventValue">
     </div>
 </div><!-- /.container -->
 
@@ -90,6 +143,17 @@ export class AppComponent implements AfterViewInit {
     public baselayerchangeEventValue: string = '';
     public moveEventValue: string = '';
 
+    public clickEventValue: string = '';
+    public dblclickEventValue: string = '';
+    public mousedownEventValue: string = '';
+    public mouseupEventValue: string = '';
+    public mouseoverEventValue: string = '';
+    public mouseoutEventValue: string = '';
+    public mousemoveEventValue: string = '';
+    public contextmenuEventValue: string = '';
+    public keypressEventValue: string = '';
+    public preclickEventValue: string = '';
+
     public tileLayers: ITileLayerOptions[] = [{url: 'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png', opacity: 1}];
 
     @ViewChild(MapComponent) private mapComponent: MapComponent;
@@ -104,12 +168,66 @@ export class AppComponent implements AfterViewInit {
         }, HIDE_DELAY);
     };
 
-    public removeLayer(layer: ITileLayerOptions): void {
-        this.tileLayers.splice(this.tileLayers.indexOf(layer), 1);
-    }
-    public addLayer(): void {
-        this.tileLayers.push({url: this.newLayerUrl, opacity: this.newLayerOpacity});
-    }
+    public handleClickEvent(event: Event): void {
+        this.clickEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.clickEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleDblclickEvent(event: Event): void {
+        this.dblclickEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.dblclickEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleMousedownEvent(event: Event): void {
+        this.mousedownEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.mousedownEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleMouseupEvent(event: Event): void {
+        this.mouseupEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.mouseupEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleMouseoverEvent(event: Event): void {
+        this.mouseoverEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.mouseoverEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleMouseoutEvent(event: Event): void {
+        this.mouseoutEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.mouseoutEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleMousemoveEvent(event: Event): void {
+        this.mousemoveEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.mousemoveEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleContextmenuEvent(event: Event): void {
+        this.contextmenuEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.contextmenuEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handleKeypressEvent(event: Event): void {
+        this.keypressEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.keypressEventValue = '';
+        }, HIDE_DELAY);
+    };
+    public handlePreclickEvent(event: Event): void {
+        this.preclickEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.preclickEventValue = '';
+        }, HIDE_DELAY);
+    };
 
     public ngAfterViewInit(): void {
         (<any>window).map = this.mapComponent;
@@ -207,18 +325,7 @@ export class AppComponent implements AfterViewInit {
 
  (tooltipopen): TooltipEvent
  (tooltipclose): TooltipEvent
- Interaction events
 
- (click): MouseEvent
- (dblclick): MouseEvent
- (mousedown): MouseEvent
- (mouseup): MouseEvent
- (mouseover): MouseEvent
- (mouseout): MouseEvent
- (mousemove): MouseEvent
- (contextmenu): MouseEvent
- (keypress): KeyboardEvent
- (preclick): MouseEvent
  Animation Options
 
  (zoomanim): ZoomAnimEvent
