@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import { YagaModule, MapComponent } from '../../lib/index'; // @yaga/leflet-ng2
+import { YagaModule, MapComponent, Event } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, AfterViewInit, ViewChild, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
@@ -16,34 +16,54 @@ const platform: PlatformRef = platformBrowserDynamic();
 const template: string = `
 <div class="container">
   <div class="map">
-    <yaga-map [(zoom)]="zoom" [(lat)]="lat" [(lng)]="lng">
+    <yaga-map
+      [(zoom)]="zoom"
+      [(lat)]="lat"
+      [(lng)]="lng"
+      [(minZoom)]="minZoom"
+      [(maxZoom)]="maxZoom"
+      (baselayerchange)="baselayerchangeEventValue = 'baselayer change'"
+      (move)="handleMoveEvent($event);"
+    >
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
   </div>
   
   <div>
-    <h3>Properties</h3>
+    <h3>Two-Way binded properties</h3>
     <div class="input-group">
       <span class="input-group-addon fixed-space">Zoom</span>
-      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="zoom">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Latitude</span>
+      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="lat">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Longitude</span>
+      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="lng">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Minimal zoom</span>
+      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="minZoom">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Maximal zoom</span>
+      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="maxZoom">
+    </div>
+    <h3>Listener properties</h3>
+    <h4>Layer events</h4>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event baselayerchange</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="baselayerchangeEventValue">
     </div>
     
     
     
-    <ol>
-  <li *ngFor="let layer of tileLayers">
-    <input class="form-control" type="text" [(ngModel)]="layer.url">
-    <input class="form-control" type="range" max="1" min="0" step="0.05" [(ngModel)]="layer.opacity">
-    <button class="btn btn-danger" (click)="removeLayer(layer)">Remove</button>
-  </li>
-  <li>
-    <input type="text" [(ngModel)]="newLayerUrl">
-    <input type="range" max="1" min="0" step="0.05" [(ngModel)]="newLayerOpacity">
-    <button (click)="addLayer()">Add</button>
-  </li>
-</ol>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Leaflet event move</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="moveEventValue">
     </div>
-  
 </div><!-- /.container -->
 
 `;
@@ -54,6 +74,8 @@ interface ITileLayerOptions {
     opacity?: number;
 }
 
+const HIDE_DELAY: number = 500;
+
 @Component({
     selector: 'app',
     template
@@ -63,10 +85,10 @@ export class AppComponent implements AfterViewInit {
     public zoom: number = 10;
     public lat: number = 51;
     public lng: number = 7;
-    public minZoom: number = 7;
-    public maxZoom: number = 7;
-    public newLayerUrl: string = 'http://b.tile.opentopomap.org/{z}/{x}/{y}.png';
-    public newLayerOpacity: number = 1;
+    public minZoom: number = 1;
+    public maxZoom: number = 15;
+    public baselayerchangeEventValue: string = '';
+    public moveEventValue: string = '';
 
     public tileLayers: ITileLayerOptions[] = [{url: 'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png', opacity: 1}];
 
@@ -75,6 +97,13 @@ export class AppComponent implements AfterViewInit {
     constructor() {
         (<any>window).app = this;
     }
+    public handleMoveEvent(event: Event): void {
+        this.moveEventValue = 'Event fired now...';
+        setTimeout(() => {
+            this.moveEventValue = '';
+        }, HIDE_DELAY);
+    };
+
     public removeLayer(layer: ITileLayerOptions): void {
         this.tileLayers.splice(this.tileLayers.indexOf(layer), 1);
     }

@@ -41,3 +41,5 @@ typings
 
 examples/**/*.js
 examples/**/*.js.map
+
+bundle.js
