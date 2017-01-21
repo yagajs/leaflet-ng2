@@ -4,6 +4,7 @@ import { AttributionControlDirective,
     MapComponent,
     ControlPosition } from './index';
 import { point } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Attribution-Control Directive', () => {
     describe('[(position)]', () => {
@@ -18,36 +19,23 @@ describe('Attribution-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.getPosition() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getPosition() }`);
-            }
+            expect(control.getPosition()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: ControlPosition = 'topright';
             control.setPosition(val);
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position ).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
-                return done();
-
+                expect(eventVal).to.equal(val);
+                done();
             });
 
             control.position = val;
@@ -55,12 +43,8 @@ describe('Attribution-Control Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
-                return done();
-
+                expect(eventVal).to.equal(val);
+                done();
             });
 
             control.setPosition(val);
@@ -77,48 +61,31 @@ describe('Attribution-Control Directive', () => {
             control = new AttributionControlDirective(map);
         });
         it('should be set to YAGA by default', () => {
-            /* istanbul ignore if */
-            if (control.getContainer().innerHTML.indexOf('>YAGA<') === -1) {
-                throw new Error(`It has not YAGA as default prefix`);
-            }
+            const html: string = control.getContainer().innerHTML;
+            expect(html.indexOf('>YAGA<')).to.not.equal(-1);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Attribution-Prefix';
             control.prefix = val;
-            /* istanbul ignore if */
-            if (control.options.prefix !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.options.prefix }`);
-            }
-            /* istanbul ignore if */
-            if (control.getContainer().innerHTML.indexOf(val) === -1) {
-                throw new Error(`Wrong value written in HTMLElement ${ control.getContainer().innerHTML }`);
-            }
+            expect(control.options.prefix).to.equal(val);
+            const html: string = control.getContainer().innerHTML;
+            expect(html.indexOf(val)).to.not.equal(-1);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'Attribution-Prefix';
             control.prefix = val;
-            /* istanbul ignore if */
-            if (control.prefix !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.prefix }`);
-            }
+            expect(control.prefix).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: string = 'Attribution-Prefix';
             control.setPrefix(val);
-            /* istanbul ignore if */
-            if (control.prefix !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.prefix }`);
-            }
+            expect(control.prefix).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: string = 'Attribution-Prefix';
             control.prefixChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
-                return done();
-
+                expect(eventVal).to.equal(val);
+                done();
             });
 
             control.prefix = val;
@@ -126,12 +93,8 @@ describe('Attribution-Control Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: string = 'Attribution-Prefix';
             control.prefixChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
-                return done();
-
+                expect(eventVal).to.equal(val);
+                done();
             });
 
             control.setPrefix(val);
@@ -150,18 +113,12 @@ describe('Attribution-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.getContainer().style.opacity !== val.toString()) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getContainer().style.opacity }`);
-            }
+            expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.opacity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.opacity }`);
-            }
+            expect(control.opacity).to.equal(val);
         });
     });
 
@@ -293,18 +250,18 @@ describe('Destroying a Attribution Control Directive', () => {
         control = new AttributionControlDirective(map);
     });
     it('should remove Tile-Layer Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
-            throw new Error('The control is not part of the map before destroying');
-        }
+        expect(
+            control.getContainer().parentElement.parentElement.parentElement
+        ).to.equal(map.getContainer());
+
         control.ngOnDestroy();
-        /* istanbul ignore if */
-        if (control.getContainer() &&
+
+        expect(
+            control.getContainer() &&
             control.getContainer().parentElement &&
             control.getContainer().parentElement.parentElement &&
             control.getContainer().parentElement.parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
+            control.getContainer().parentElement.parentElement.parentElement
+        ).to.not.equal(map.getContainer());
     });
 });
