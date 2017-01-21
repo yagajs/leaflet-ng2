@@ -22,9 +22,9 @@ const template: string = `
       [(lng)]="lng"
       [(minZoom)]="minZoom"
       [(maxZoom)]="maxZoom"
+      
       (baselayerchange)="baselayerchangeEventValue = 'baselayer change'"
       (move)="handleMoveEvent($event);"
-      
       
       (click)="handleClickEvent($event);"
       (dblclick)="handleDblclickEvent($event);"
@@ -36,6 +36,10 @@ const template: string = `
       (contextmenu)="handleContextmenuEvent($event);"
       (keypress)="handleKeypressEvent($event);"
       (preclick)="handlePreclickEvent($event);"
+      
+      [scrollWheelZoomEnabled]="scrollWheelZoom"
+      [touchZoomEnabled]="touchZoom"
+      [tapEnabled]="tap"
     >
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
@@ -117,6 +121,21 @@ const template: string = `
       <span class="input-group-addon fixed-space">Leaflet event preclick</span>
       <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [ngModel]="preclickEventValue">
     </div>
+    
+    <h3>Options</h3>
+    <h4>Mouse and Touch</h4>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Scroll Wheel Zoom</span>
+      <input type="checkbox" class="form-control" [(ngModel)]="scrollWheelZoom">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Touch Zoom</span>
+      <input type="checkbox" class="form-control" [(ngModel)]="touchZoom">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Tap Zoom</span>
+      <input type="checkbox" class="form-control" [(ngModel)]="tap">
+    </div>
 </div><!-- /.container -->
 
 `;
@@ -155,6 +174,10 @@ export class AppComponent implements AfterViewInit {
     public preclickEventValue: string = '';
 
     public tileLayers: ITileLayerOptions[] = [{url: 'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png', opacity: 1}];
+
+    public scrollWheelZoom: boolean = true;
+    public touchZoom: boolean = true;
+    public tap: boolean = true;
 
     @ViewChild(MapComponent) private mapComponent: MapComponent;
 
@@ -256,12 +279,6 @@ export class AppComponent implements AfterViewInit {
  [dragging]: boolean
  Map State Options
 
- [crs]: CRS
- [center]: LatLng
- [zoom]: number
- [minZoom]: number
- [maxZoom]: number
- [layers]: Layer[]
  [maxBounds]: LatLngBounds
  [renderer]: Renderer
  Animation Options
