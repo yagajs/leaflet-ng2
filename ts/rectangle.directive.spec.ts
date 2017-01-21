@@ -19,14 +19,13 @@ describe('Rectangle Directive', () => {
             var map: MapComponent,
                 layer: RectangleDirective<any>;
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new RectangleDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -117,14 +116,13 @@ describe('Rectangle Directive', () => {
                 [[latLng(1, 0), latLng(1, 1), latLng(0, 1)]],
                 [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]]
             ];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new RectangleDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -243,14 +241,13 @@ describe('Rectangle Directive', () => {
                 type: 'Feature'
             };
             const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1]]];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new RectangleDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
@@ -357,14 +354,13 @@ describe('Rectangle Directive', () => {
                 [[[0, 0], [1, 0], [1, 1]]],
                 [[[0, 0], [0, 1], [1, 1]]]
             ];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new RectangleDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
@@ -524,14 +520,13 @@ describe('Rectangle Directive', () => {
     describe('[(bounds)]', () => {
         var map: MapComponent,
                 layer: RectangleDirective<any>;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new RectangleDirective<any>(map);
-                return done();
             });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
@@ -547,7 +542,7 @@ describe('Rectangle Directive', () => {
                     layer.getBounds().getWest() !== val.getWest()) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.getBounds() }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -565,7 +560,7 @@ describe('Rectangle Directive', () => {
                     layer.bounds.getWest() !== val.getWest()) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.bounds }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -583,7 +578,7 @@ describe('Rectangle Directive', () => {
                     layer.bounds.getWest() !== val.getWest()) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.bounds }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -601,7 +596,7 @@ describe('Rectangle Directive', () => {
                     eventVal.getWest() !== val.getWest()) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
             layer.ngAfterViewInit();
             layer.bounds = val;
@@ -620,7 +615,7 @@ describe('Rectangle Directive', () => {
                     eventVal.getWest() !== val.getWest()) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -631,7 +626,7 @@ describe('Rectangle Directive', () => {
     describe('[(north)]', () => {
         var map: MapComponent,
                 layer: RectangleDirective<any>;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
@@ -639,7 +634,6 @@ describe('Rectangle Directive', () => {
 
                 layer = new RectangleDirective<any>(map);
                 layer.setBounds([[0, 0], [1, 1]]);
-                return done();
             });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -649,7 +643,7 @@ describe('Rectangle Directive', () => {
                 if (layer.getBounds().getNorth() !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.getBounds().getNorth() }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -661,7 +655,7 @@ describe('Rectangle Directive', () => {
                 if (layer.north !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.north }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -676,7 +670,7 @@ describe('Rectangle Directive', () => {
                 if (layer.north !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.north }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -688,7 +682,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -702,7 +696,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -715,7 +709,7 @@ describe('Rectangle Directive', () => {
     describe('[(east)]', () => {
         var map: MapComponent,
                 layer: RectangleDirective<any>;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
@@ -723,7 +717,6 @@ describe('Rectangle Directive', () => {
 
                 layer = new RectangleDirective<any>(map);
                 layer.setBounds([[0, 0], [1, 1]]);
-                return done();
             });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -733,7 +726,7 @@ describe('Rectangle Directive', () => {
                 if (layer.getBounds().getEast() !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.getBounds().getEast() }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -745,7 +738,7 @@ describe('Rectangle Directive', () => {
                 if (layer.east !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.east }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -760,7 +753,7 @@ describe('Rectangle Directive', () => {
                 if (layer.east !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.east }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -772,7 +765,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -786,7 +779,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -799,7 +792,7 @@ describe('Rectangle Directive', () => {
     describe('[(south)]', () => {
         var map: MapComponent,
                 layer: RectangleDirective<any>;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
@@ -807,7 +800,6 @@ describe('Rectangle Directive', () => {
 
                 layer = new RectangleDirective<any>(map);
                 layer.setBounds([[0, 0], [1, 1]]);
-                return done();
             });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -817,7 +809,7 @@ describe('Rectangle Directive', () => {
                 if (layer.getBounds().getSouth() !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.getBounds().getSouth() }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -829,7 +821,7 @@ describe('Rectangle Directive', () => {
                 if (layer.south !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.south }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -844,7 +836,7 @@ describe('Rectangle Directive', () => {
                 if (layer.south !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.south }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -856,7 +848,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -870,7 +862,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -883,7 +875,7 @@ describe('Rectangle Directive', () => {
     describe('[(west)]', () => {
         var map: MapComponent,
                 layer: RectangleDirective<any>;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
@@ -891,7 +883,6 @@ describe('Rectangle Directive', () => {
 
                 layer = new RectangleDirective<any>(map);
                 layer.setBounds([[0, 0], [1, 1]]);
-                return done();
             });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -901,7 +892,7 @@ describe('Rectangle Directive', () => {
                 if (layer.getBounds().getWest() !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.getBounds().getWest() }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -913,7 +904,7 @@ describe('Rectangle Directive', () => {
                 if (layer.west !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.west }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -928,7 +919,7 @@ describe('Rectangle Directive', () => {
                 if (layer.west !== val) {
                     return done(new Error(`Wrong value setted: ${ val } != ${ layer.west }`));
                 }
-                return done();
+                done();
             }, 0);
 
         });
@@ -940,7 +931,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -954,7 +945,7 @@ describe('Rectangle Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             layer.ngAfterViewInit();
@@ -968,14 +959,13 @@ describe('Rectangle Directive', () => {
     describe('[smoothFactor]', () => {
         var map: MapComponent,
             layer: RectangleDirective<any>;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new RectangleDirective<any>(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -1004,14 +994,13 @@ describe('Rectangle Directive', () => {
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new RectangleDirective<any>(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
@@ -1033,7 +1022,7 @@ describe('Rectangle Directive', () => {
                 if (val.properties !== TEST_OBJECT) {
                     return done(new Error('Wrong value received'));
                 }
-                return done();
+                done();
             });
             layer.properties = TEST_OBJECT;
         });
@@ -1042,14 +1031,13 @@ describe('Rectangle Directive', () => {
     describe('[noClip]', () => {
         var map: MapComponent,
             layer: RectangleDirective<any>;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new RectangleDirective<any>(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noClip = false;

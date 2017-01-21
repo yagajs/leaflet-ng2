@@ -17,14 +17,13 @@ describe('Polygon Directive', () => {
             var map: MapComponent,
                 layer: PolygonDirective<any>;
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new PolygonDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -115,14 +114,13 @@ describe('Polygon Directive', () => {
                 [[latLng(1, 0), latLng(1, 1), latLng(0, 1)]],
                 [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]]
             ];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new PolygonDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -241,14 +239,13 @@ describe('Polygon Directive', () => {
                 type: 'Feature'
             };
             const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1]]];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new PolygonDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
@@ -355,14 +352,13 @@ describe('Polygon Directive', () => {
                 [[[0, 0], [1, 0], [1, 1]]],
                 [[[0, 0], [0, 1], [1, 1]]]
             ];
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new PolygonDirective<any>(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
@@ -522,14 +518,13 @@ describe('Polygon Directive', () => {
     describe('[smoothFactor]', () => {
         var map: MapComponent,
             layer: PolygonDirective<any>;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new PolygonDirective<any>(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
@@ -558,14 +553,13 @@ describe('Polygon Directive', () => {
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new PolygonDirective<any>(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
@@ -596,14 +590,13 @@ describe('Polygon Directive', () => {
     describe('[noClip]', () => {
         var map: MapComponent,
             layer: PolygonDirective<any>;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new PolygonDirective<any>(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noClip = false;
