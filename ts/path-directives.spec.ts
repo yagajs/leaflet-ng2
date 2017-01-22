@@ -12,14 +12,13 @@ export function createPathTests(Constr: any): void {
         describe('[(display)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should remove DOM container when not displaying', () => {
                 layer.display = false;
@@ -74,14 +73,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: string = '#123456';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.color = TEST_VALUE;
@@ -131,14 +129,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: LineCapShape = 'butt';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.lineCap = TEST_VALUE;
@@ -189,14 +186,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: LineJoinShape = 'bevel';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.lineJoin = TEST_VALUE;
@@ -247,14 +243,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: string = '1, 2';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.dashArray = TEST_VALUE;
@@ -305,14 +300,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: string = '7px';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.dashOffset = TEST_VALUE;
@@ -363,14 +357,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: string = '#123456';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.fillColor = TEST_VALUE;
@@ -421,14 +414,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: FillRule = 'nonzero';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.fillRule = TEST_VALUE;
@@ -479,14 +471,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: string = 'testclass';
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.className = TEST_VALUE;
@@ -536,14 +527,13 @@ export function createPathTests(Constr: any): void {
         describe('[(opacity)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.random();
@@ -611,14 +601,13 @@ export function createPathTests(Constr: any): void {
         describe('[(weight)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.ceil(Math.random() * 10);
@@ -686,14 +675,13 @@ export function createPathTests(Constr: any): void {
         describe('[(fillOpacity)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.random();
@@ -762,14 +750,13 @@ export function createPathTests(Constr: any): void {
         describe('[(stroke)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular to false', (done: MochaDone) => {
                 const val: boolean = false;
@@ -876,14 +863,13 @@ export function createPathTests(Constr: any): void {
         describe('[(fill)]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular to false', (done: MochaDone) => {
                 const val: boolean = false;
@@ -992,14 +978,13 @@ export function createPathTests(Constr: any): void {
             var map: MapComponent,
                 layer: any;
             const TEST_VALUE: PathOptions = {opacity: 0.5, weight: 3, dashArray: '1, 2'};
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.style = TEST_VALUE;
@@ -1119,14 +1104,13 @@ export function createPathTests(Constr: any): void {
         describe('(add)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1144,14 +1128,13 @@ export function createPathTests(Constr: any): void {
         describe('(remove)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1169,14 +1152,13 @@ export function createPathTests(Constr: any): void {
         describe('(popupopen)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1194,14 +1176,13 @@ export function createPathTests(Constr: any): void {
         describe('(popupclose)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1219,14 +1200,13 @@ export function createPathTests(Constr: any): void {
         describe('(tooltipopen)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1244,14 +1224,13 @@ export function createPathTests(Constr: any): void {
         describe('(tooltipclose)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1269,14 +1248,13 @@ export function createPathTests(Constr: any): void {
         describe('(click)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1294,14 +1272,13 @@ export function createPathTests(Constr: any): void {
         describe('(dbclick)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1319,14 +1296,13 @@ export function createPathTests(Constr: any): void {
         describe('(mousedown)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1344,14 +1320,13 @@ export function createPathTests(Constr: any): void {
         describe('(mouseover)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1369,14 +1344,13 @@ export function createPathTests(Constr: any): void {
         describe('(mouseout)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1394,14 +1368,13 @@ export function createPathTests(Constr: any): void {
         describe('(contextmenu)', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
@@ -1420,14 +1393,13 @@ export function createPathTests(Constr: any): void {
         describe('[interactive]', () => {
             var map: MapComponent,
                 layer: any;
-            beforeEach((done) => {
+            beforeEach(() => {
                 map = new MapComponent({nativeElement: document.createElement('div')});
                 (<any>map)._size = point(100, 100);
                 (<any>map)._pixelOrigin = point(50, 50);
                 (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
                 layer = new Constr(map);
-                return done();
             });
             it('should be changed to false in Leaflet when changing in Angular to false', () => {
                 layer.interactive = false;

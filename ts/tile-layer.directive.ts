@@ -380,6 +380,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set tileSize(val: Point) {
         this.options.tileSize = val;
+        this.redraw();
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
         return (<Point>this.options.tileSize);
@@ -428,6 +429,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set bounds(val: LatLngBoundsExpression) {
         this.options.bounds = val;
+        this.redraw();
     }
     get bounds(): LatLngBoundsExpression {
         return this.options.bounds;
@@ -452,6 +454,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set className(val: string) {
         this.options.className = val;
+        this.redraw();
     }
     get className(): string {
         return this.options.className;
@@ -476,6 +479,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
+        this.redraw();
     };
     get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
@@ -488,6 +492,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set minNativeZoom(val: number) {
         this.options.minNativeZoom = val;
+        this.redraw();
     };
     get minNativeZoom(): number {
         return this.options.minNativeZoom;
@@ -515,6 +520,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
+        this.redraw();
     };
     get errorTileUrl(): string {
         return this.options.errorTileUrl;
@@ -527,6 +533,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set zoomOffset(val: number) {
         this.options.zoomOffset = val;
+        this.redraw();
     };
     get zoomOffset(): number {
         return this.options.zoomOffset;
@@ -539,6 +546,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set tms(val: boolean) {
         this.options.tms = val;
+        this.redraw();
     };
     get tms(): boolean {
         return this.options.tms;
@@ -551,6 +559,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
+        this.redraw();
     };
     get zoomReverse(): boolean {
         return this.options.zoomReverse;
@@ -563,6 +572,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set detectRetina(val: boolean) {
         this.options.detectRetina = val;
+        this.redraw();
     };
     get detectRetina(): boolean {
         return this.options.detectRetina;
@@ -575,6 +585,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
+        this.redraw();
     };
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
