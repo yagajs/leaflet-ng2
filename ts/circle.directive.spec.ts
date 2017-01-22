@@ -17,7 +17,7 @@ describe('Circle Directive', () => {
         var map: MapComponent,
             layer: CircleDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -25,7 +25,6 @@ describe('Circle Directive', () => {
 
             layer = new CircleDirective<any>(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.position = TEST_VALUE;
@@ -89,7 +88,7 @@ describe('Circle Directive', () => {
         var map: MapComponent,
             layer: CircleDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -97,7 +96,6 @@ describe('Circle Directive', () => {
 
             layer = new CircleDirective<any>(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -155,7 +153,7 @@ describe('Circle Directive', () => {
         var map: MapComponent,
             layer: CircleDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -163,7 +161,6 @@ describe('Circle Directive', () => {
 
             layer = new CircleDirective<any>(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -221,7 +218,7 @@ describe('Circle Directive', () => {
         var map: MapComponent,
             layer: CircleDirective<any>;
         const TEST_VALUE: LatLng = latLng(0, 1);
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -229,7 +226,6 @@ describe('Circle Directive', () => {
 
             layer = new CircleDirective<any>(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -296,7 +292,7 @@ describe('Circle Directive', () => {
             type: 'Feature'
         };
         const TEST_POINT: LatLngExpression = [3, 4];
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -304,7 +300,6 @@ describe('Circle Directive', () => {
 
             layer = new CircleDirective<any>(map);
             layer.ngAfterViewInit();
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.geoJSON = TEST_VALUE;
@@ -367,14 +362,13 @@ describe('Circle Directive', () => {
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
             layer = new CircleDirective<any>(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;

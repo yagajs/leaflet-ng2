@@ -11,12 +11,11 @@ describe('DivIcon Directive', () => {
     describe('(update)', () => {
         var map: MapComponent,
             icon: DivIconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new DivIconDirective({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should fire event in Angular when changing', (done: MochaDone) => {
             icon.updateEvent.subscribe((event: any) => {
@@ -34,12 +33,11 @@ describe('DivIcon Directive', () => {
     describe('[iconSize]', () => {
         var map: MapComponent,
             icon: DivIconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new DivIconDirective({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -72,12 +70,11 @@ describe('DivIcon Directive', () => {
     describe('[iconAnchor]', () => {
         var map: MapComponent,
             icon: DivIconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new DivIconDirective({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
@@ -110,12 +107,11 @@ describe('DivIcon Directive', () => {
     describe('[popupAnchor]', () => {
         var map: MapComponent,
             icon: DivIconDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             icon = new DivIconDirective({nativeElement: document.createElement('div')});
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);

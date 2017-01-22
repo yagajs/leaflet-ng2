@@ -12,7 +12,7 @@ describe('Popup Directive', () => {
     describe('[(opened)]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
@@ -22,7 +22,6 @@ describe('Popup Directive', () => {
             (<any>popup)._wrapper = document.createElement('div');
             popup.setLatLng(latLng(0, 0));
             popup.openOn(map);
-            return done();
         });
         it('should remove DOM container when not opened', () => {
             popup.opened = false;
@@ -43,14 +42,13 @@ describe('Popup Directive', () => {
     describe('[(content)]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
@@ -79,7 +77,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== EXAMPLE_CONTENT) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.content = EXAMPLE_CONTENT;
@@ -90,7 +88,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== EXAMPLE_CONTENT + '?test') {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.setContent(EXAMPLE_CONTENT + '?test');
@@ -99,13 +97,12 @@ describe('Popup Directive', () => {
     describe('[(lat)]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             popup.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -139,7 +136,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.lat = val;
@@ -152,7 +149,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
 
@@ -162,13 +159,12 @@ describe('Popup Directive', () => {
     describe('[(lng)]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             popup.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -202,7 +198,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.lng = val;
@@ -215,7 +211,7 @@ describe('Popup Directive', () => {
                 if (eventVal !== val) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
 
@@ -225,13 +221,12 @@ describe('Popup Directive', () => {
     describe('[(position)]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             popup.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
@@ -265,7 +260,7 @@ describe('Popup Directive', () => {
                 if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.position = val;
@@ -278,7 +273,7 @@ describe('Popup Directive', () => {
                 if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
                     return done(new Error('Received wrong value'));
                 }
-                return done();
+                done();
             });
 
             popup.setLatLng(val);
@@ -289,13 +284,12 @@ describe('Popup Directive', () => {
     describe('(open)', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             popup.setLatLng(latLng(0, 0));
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             popup.openEvent.subscribe((event: any) => {
@@ -303,7 +297,7 @@ describe('Popup Directive', () => {
                 if (event.target !== popup) {
                     return done(new Error('Wrong event returned'));
                 }
-                return done();
+                done();
             });
             popup.openOn(map);
         });
@@ -311,14 +305,13 @@ describe('Popup Directive', () => {
     describe('(close)', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             popup.setLatLng(latLng(0, 0));
             popup.openOn(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             popup.closeEvent.subscribe((event: any) => {
@@ -326,7 +319,7 @@ describe('Popup Directive', () => {
                 if (event.target !== popup) {
                     return done(new Error('Wrong event returned'));
                 }
-                return done();
+                done();
             });
             (<any>popup)._close();
         });
@@ -336,14 +329,13 @@ describe('Popup Directive', () => {
     describe('[maxWidth]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -365,14 +357,13 @@ describe('Popup Directive', () => {
     describe('[minWidth]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -394,14 +385,13 @@ describe('Popup Directive', () => {
     describe('[maxHeight]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -415,14 +405,13 @@ describe('Popup Directive', () => {
     describe('[autoPanPaddingTopLeft]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
@@ -446,14 +435,13 @@ describe('Popup Directive', () => {
     describe('[autoPanPaddingBottomRight]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
@@ -477,14 +465,13 @@ describe('Popup Directive', () => {
     describe('[autoPanPadding]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
@@ -509,14 +496,13 @@ describe('Popup Directive', () => {
     describe('[autoPan]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoPan = false;
@@ -551,14 +537,13 @@ describe('Popup Directive', () => {
     describe('[keepInView]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.keepInView = false;
@@ -593,14 +578,13 @@ describe('Popup Directive', () => {
     describe('[closeButton]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.closeButton = false;
@@ -635,14 +619,13 @@ describe('Popup Directive', () => {
     describe('[autoClose]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoClose = false;
@@ -678,14 +661,13 @@ describe('Popup Directive', () => {
     describe('[className]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
@@ -707,14 +689,13 @@ describe('Popup Directive', () => {
     describe('[pane]', () => {
         var map: MapComponent,
             popup: PopupDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
             (<any>popup)._contentNode = document.createElement('div');
             (<any>popup)._container = document.createElement('div');
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';

@@ -25,12 +25,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(display)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
@@ -61,7 +60,7 @@ describe('WMS-Layer Directive', () => {
                     return done(new Error('There is still an event on listener'));
                 }
             }
-            return done();
+            done();
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
             const moveEvents: {fn: Function}[] = (<any>map)._events.move,
@@ -115,12 +114,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(url)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = WMS_LAYER_URL;
@@ -180,12 +178,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(opacity)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -253,12 +250,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(zIndex)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
@@ -327,12 +323,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(layers)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.layers = WMS_LAYER_NAMES;
@@ -382,12 +377,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(styles)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.styles = WMS_LAYER_NAMES;
@@ -439,12 +433,11 @@ describe('WMS-Layer Directive', () => {
     describe('[(transparent)]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.transparent = false;
@@ -522,12 +515,11 @@ describe('WMS-Layer Directive', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
         const FORMAT: string = 'image/png';
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.format = FORMAT;
@@ -580,12 +572,11 @@ describe('WMS-Layer Directive', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
         const VERSION: string = '1.0.0';
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.version = VERSION;
@@ -639,12 +630,11 @@ describe('WMS-Layer Directive', () => {
     describe('(add)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -662,12 +652,11 @@ describe('WMS-Layer Directive', () => {
     describe('(remove)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -685,12 +674,11 @@ describe('WMS-Layer Directive', () => {
     describe('(popupopen)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -708,12 +696,11 @@ describe('WMS-Layer Directive', () => {
     describe('(popupclose)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -731,12 +718,11 @@ describe('WMS-Layer Directive', () => {
     describe('(tooltipopen)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -754,12 +740,11 @@ describe('WMS-Layer Directive', () => {
     describe('(tooltipclose)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -777,12 +762,11 @@ describe('WMS-Layer Directive', () => {
     describe('(click)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -800,12 +784,11 @@ describe('WMS-Layer Directive', () => {
     describe('(dbclick)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -823,12 +806,11 @@ describe('WMS-Layer Directive', () => {
     describe('(mousedown)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -846,12 +828,11 @@ describe('WMS-Layer Directive', () => {
     describe('(mouseover)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -869,12 +850,11 @@ describe('WMS-Layer Directive', () => {
     describe('(mouseout)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -892,12 +872,11 @@ describe('WMS-Layer Directive', () => {
     describe('(contextmenu)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -915,12 +894,11 @@ describe('WMS-Layer Directive', () => {
     describe('(loading)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -938,13 +916,12 @@ describe('WMS-Layer Directive', () => {
     describe('(tileunload)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
             layer.off('tileunload', (<any>layer)._onTileRemove); // Hack to disable another listener
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -962,12 +939,11 @@ describe('WMS-Layer Directive', () => {
     describe('(tileloadstart)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -985,12 +961,11 @@ describe('WMS-Layer Directive', () => {
     describe('(tileerror)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1008,12 +983,11 @@ describe('WMS-Layer Directive', () => {
     describe('(tileload)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1039,12 +1013,11 @@ describe('WMS-Layer Directive', () => {
     describe('(load)', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
@@ -1072,12 +1045,11 @@ describe('WMS-Layer Directive', () => {
     describe('[tileSize]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
@@ -1101,12 +1073,11 @@ describe('WMS-Layer Directive', () => {
     describe('[bounds]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
@@ -1133,12 +1104,11 @@ describe('WMS-Layer Directive', () => {
     describe('[subdomains]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string[] = ['a', 'b', 'c', 'd'];
@@ -1171,12 +1141,11 @@ describe('WMS-Layer Directive', () => {
     describe('[className]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
@@ -1198,12 +1167,11 @@ describe('WMS-Layer Directive', () => {
     describe('[errorTileUrl]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
@@ -1225,12 +1193,11 @@ describe('WMS-Layer Directive', () => {
     describe('[updateInterval]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -1252,12 +1219,11 @@ describe('WMS-Layer Directive', () => {
     describe('[keepBuffer]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -1279,12 +1245,11 @@ describe('WMS-Layer Directive', () => {
     describe('[maxNativeZoom]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -1306,12 +1271,11 @@ describe('WMS-Layer Directive', () => {
     describe('[minNativeZoom]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -1333,12 +1297,11 @@ describe('WMS-Layer Directive', () => {
     describe('[zoomOffset]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
@@ -1360,12 +1323,11 @@ describe('WMS-Layer Directive', () => {
     describe('[tms]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.tms = false;
@@ -1400,12 +1362,11 @@ describe('WMS-Layer Directive', () => {
     describe('[zoomReverse]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.zoomReverse = false;
@@ -1440,12 +1401,11 @@ describe('WMS-Layer Directive', () => {
     describe('[detectRetina]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.detectRetina = false;
@@ -1480,12 +1440,11 @@ describe('WMS-Layer Directive', () => {
     describe('[crossOrigin]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
@@ -1520,12 +1479,11 @@ describe('WMS-Layer Directive', () => {
     describe('[updateWhenIdle]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenIdle = false;
@@ -1560,12 +1518,11 @@ describe('WMS-Layer Directive', () => {
     describe('[updateWhenZooming]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenZooming = false;
@@ -1600,12 +1557,11 @@ describe('WMS-Layer Directive', () => {
     describe('[noWrap]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noWrap = false;
@@ -1640,12 +1596,11 @@ describe('WMS-Layer Directive', () => {
     describe('[uppercase]', () => {
         var map: MapComponent,
             layer: WmsLayerDirective;
-        beforeEach((done) => {
+        beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
             (<any>map)._size = point(100, 100);
             (<any>map)._pixelOrigin = point(50, 50);
             layer = new WmsLayerDirective(map);
-            return done();
         });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.uppercase = false;
