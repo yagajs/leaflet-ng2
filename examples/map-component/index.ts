@@ -40,8 +40,13 @@ const template: string = `
       [scrollWheelZoomEnabled]="scrollWheelZoom"
       [touchZoomEnabled]="touchZoom"
       [tapEnabled]="tap"
+      
+      [closePopupOnClick]="closePopupOnClick"
     >
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
+      <yaga-marker [lat]="51" [lng]="7">
+        <yaga-popup>This is the popup content...</yaga-popup>
+      </yaga-marker>
     </yaga-map>
   </div>
   
@@ -136,6 +141,12 @@ const template: string = `
       <span class="input-group-addon fixed-space">Tap Zoom</span>
       <input type="checkbox" class="form-control" [(ngModel)]="tap">
     </div>
+    
+    <h4>Popup and Tooltip</h4>
+    <div class="input-group">
+      <span class="input-group-addon fixed-space">Close Popup on click</span>
+      <input type="checkbox" class="form-control" [(ngModel)]="closePopupOnClick">
+    </div>
 </div><!-- /.container -->
 
 `;
@@ -178,6 +189,8 @@ export class AppComponent implements AfterViewInit {
     public scrollWheelZoom: boolean = true;
     public touchZoom: boolean = true;
     public tap: boolean = true;
+
+    public closePopupOnClick: boolean = true;
 
     @ViewChild(MapComponent) private mapComponent: MapComponent;
 
