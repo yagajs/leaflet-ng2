@@ -4,10 +4,9 @@ import { TooltipDirective,
     MapComponent,
     Direction,
     Point,
-    LatLng } from './index';
+    LatLng,
+    EXAMPLE_CONTENT } from './index';
 import { point, latLng } from 'leaflet';
-
-const EXAMPLE_CONTENT: string = 'Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.';
 
 describe('Tooltip Directive', () => {
     describe('[(opened)]', () => {
