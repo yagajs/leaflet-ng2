@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts && mkdir lib && cp -Rf ts/d.ts lib/",
+    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts && mkdir -p lib && cp -Rf ts/d.ts lib/",
     "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
     "reinit": "npm run clean; npm run init",
     "transpile": "tsc",
