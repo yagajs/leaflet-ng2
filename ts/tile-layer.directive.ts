@@ -20,10 +20,10 @@ import { TRANSPARENT_PIXEL } from './consts';
 /**
  * Directive for Tile-Layers
  * @link http://leafletjs.com/reference-1.0.2.html#tilelayer Original Leaflet documentation
- * @link http://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
- * @link http://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
- * @link http://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
- * @example http://leaflet-ng2.yagajs.org/latest/examples#tile-layer-directive
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
     selector: 'yaga-tile-layer'
