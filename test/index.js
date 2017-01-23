@@ -17,6 +17,7 @@ require('../lib/marker.directive.spec');
 require('../lib/polyline.directive.spec');
 require('../lib/polygon.directive.spec');
 require('../lib/rectangle.directive.spec');
+require('../lib/geojson.directive.spec');
 require('../lib/circle.directive.spec');
 require('../lib/circle-marker.directive.spec');
 require('../lib/zoom-control.directive.spec');
