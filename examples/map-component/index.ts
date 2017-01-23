@@ -2,14 +2,14 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
+import { YagaModule }                   from '../../lib/index'; // @yaga/leflet-ng2
 import { ExampleAppComponentBlueprint } from '../app-component-blueprint';
 
-import { Component, PlatformRef } from '@angular/core';
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Component, PlatformRef }       from '@angular/core';
+import { NgModule }                     from '@angular/core';
+import { BrowserModule }                from '@angular/platform-browser';
+import { FormsModule }                  from '@angular/forms';
+import { platformBrowserDynamic }       from '@angular/platform-browser-dynamic';
 
 const platform: PlatformRef = platformBrowserDynamic();
 
