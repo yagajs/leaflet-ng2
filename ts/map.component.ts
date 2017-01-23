@@ -23,8 +23,7 @@ import {
     MouseEvent,
     KeyboardEvent,
     ZoomAnimEvent } from 'leaflet';
-
-const ANIMATION_DELAY: number = 50; // delay to wait for UI Changes...
+import { ANIMATION_DELAY } from './consts';
 
 @Component({
     selector: 'yaga-map',
