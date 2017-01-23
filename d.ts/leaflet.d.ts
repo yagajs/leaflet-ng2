@@ -704,9 +704,9 @@ declare namespace L {
     export class LayerGroup extends Layer {
         constructor(layers: Array<Layer>);
         /**
-         * Returns a GeoJSON representation of the layer group (as a GeoJSON GeometryCollection).
+         * Returns a GeoJSON representation of the layer group (as a GeoJSON Feature).
          */
-        toGeoJSON(): GeoJSON.GeometryCollection;
+        toGeoJSON(): GeoJSON.FeatureCollection<GeoJSON.GeometryObject>;
 
         /**
          * Adds the given layer to the group.
@@ -820,7 +820,7 @@ declare namespace L {
          * }
          * ```
          */
-        pointToLayer?: (geoJsonPoint: GeoJSON.Point, latlng: LatLng) => Layer; // should import GeoJSON typings
+        pointToLayer?: (geoJsonPoint: GeoJSON.Feature<GeoJSON.Point>, latlng: LatLng) => Layer;
 
         /**
          * A Function defining the Path options for styling GeoJSON lines and polygons,

@@ -55,11 +55,12 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     protected mapComponent: MapComponent;
+    protected initialized: boolean = false;
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
-        super({features: [], type: 'FeatureCollection'}, {
+        super((<GeoJSON.GeoJsonObject>{features: [], type: 'FeatureCollection'}), {
             filter: (feature: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>) => {
                 return this.filterFeatures(feature);
             },
@@ -118,6 +119,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     }
 
     ngAfterViewInit(): void {
+        this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
         }
@@ -146,6 +148,11 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
 
     addData(data: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>): Layer {
         const returnValue: Layer = super.addData(data);
+
+        if (!this.initialized) {
+            return returnValue;
+        }
+
         this.dataChange.emit((<IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON()));
         return returnValue;
     }

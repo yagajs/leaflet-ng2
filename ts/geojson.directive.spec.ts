@@ -6,12 +6,12 @@ import { GeoJSONDirective,
     TooltipDirective,
     LatLng } from './index';
 import { expect } from 'chai';
-import { point, SVG } from 'leaflet';
+import { point, SVG, Layer } from 'leaflet';
 import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from './d.ts/generic-geojson';
 
 describe('GeoJSON Directive', () => {
     var map: MapComponent,
-        layer: GeoJSONDirective;
+        layer: GeoJSONDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
         (<any>map)._size = point(100, 100);
@@ -20,35 +20,36 @@ describe('GeoJSON Directive', () => {
 
         layer = new GeoJSONDirective(map);
     });
+    const TEST_VALUE: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
+        features: [
+            {
+                geometry: {
+                    coordinates: [7, 51],
+                    type: 'Point'
+                },
+                properties: {
+                    test: 'OK'
+                },
+                type: 'Feature'
+            }
+        ],
+        type: 'FeatureCollection'
+    };
 
     describe('[(data)]', () => {
-        const TEST_VALUE: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
-            features: [
-                {
-                    geometry: {
-                        coordinates: [7, 51],
-                        type: 'Point'
-                    },
-                    properties: {
-                        test: 'OK'
-                    },
-                    type: 'Feature'
-                }
-            ],
-            type: 'FeatureCollection'
-        };
+
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.data = TEST_VALUE;
 
-            expect(layer.toGeoJSON()).to.equal(TEST_VALUE);
+            expect(layer.toGeoJSON()).to.deep.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.data = TEST_VALUE;
-            expect(layer.data).to.equal(TEST_VALUE);
+            expect(layer.data).to.deep.equal(TEST_VALUE);
         });
         it('should be changed data in Angular when changing in Leaflet', () => {
             layer.setData(TEST_VALUE);
-            expect(layer.data).to.equal(TEST_VALUE);
+            expect(layer.data).to.deep.equal(TEST_VALUE);
         });
         it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
             layer.addData(TEST_VALUE.features[0]);
@@ -56,7 +57,7 @@ describe('GeoJSON Directive', () => {
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.dataChange.subscribe((eventVal: LatLng[]) => {
-                expect(eventVal).to.equal(TEST_VALUE);
+                expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
 
@@ -64,13 +65,14 @@ describe('GeoJSON Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
-                expect(eventVal).to.equal(TEST_VALUE);
+                expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
 
             layer.setData(TEST_VALUE);
         });
         it('should fire an event when adding in Leaflet', (done: MochaDone) => {
+            layer.ngAfterViewInit();
             layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
@@ -195,49 +197,38 @@ describe('GeoJSON Directive', () => {
 
     describe('Popup in GeoJSON Directive', () => {
         var popup: PopupDirective,
-            testDiv: HTMLElement;
+            testDiv: HTMLElement,
+            puLayer: GeoJSONDirective<any>;
         before((done) => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layer = Object.create(new GeoJSONDirective<any>(map), { popupDirective: {value: popup} });
+            puLayer = Object.create(new GeoJSONDirective<any>(map), { popupDirective: {value: popup} });
             return done();
         });
         it('should bind popup', () => {
-            layer.ngAfterViewInit();
-            /* istanbul ignore if */
-            if (!(<any>layer)._popup) {
-                throw new Error('There is no popup binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layer)._popup !== popup) {
-                throw new Error('There is a wrong popup binded');
-            }
+            puLayer.ngAfterViewInit();
+            expect((<any>puLayer)._popup).to.equal(popup);
         });
     });
 
     describe('Tooltip in GeoJSON Directive', () => {
         var tooltip: TooltipDirective,
-            testDiv: HTMLElement;
+            testDiv: HTMLElement,
+            ttLayer: GeoJSONDirective<any>;
         before((done) => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layer = Object.create(new GeoJSONDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            ttLayer = Object.create(new GeoJSONDirective<any>(map), { tooltipDirective: {value: tooltip} });
             return done();
         });
         it('should bind tooltip', () => {
-            layer.ngAfterViewInit();
-            /* istanbul ignore if */
-            if (!(<any>layer)._tooltip) {
-                throw new Error('There is no tooltip binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layer)._tooltip !== tooltip) {
-                throw new Error('There is a wrong tooltip binded');
-            }
+            ttLayer.ngAfterViewInit();
+            expect(ttLayer.tooltipDirective).to.equal(tooltip);
+            // expect((<any>layer)._tooltip).to.equal(tooltip);
         });
     });
 
