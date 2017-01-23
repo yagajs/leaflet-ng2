@@ -19,18 +19,6 @@ const template: string = `
     <yaga-map [(zoom)]="zoom" [(lat)]="lat" [(lng)]="lng">
       <yaga-tile-layer *ngFor="let layer of tileLayers" [(url)]="layer.url" [(opacity)]="layer.opacity"></yaga-tile-layer>
     </yaga-map>
-    <div class="map-status">
-      <div class="input-group">
-        <div class="input-group-btn">
-          <!-- Button and dropdown menu -->
-          <input type="text" class="form-control" [ngModel]="zoom">
-          <input type="text" class="form-control" [ngModel]="lat">
-          <input type="text" class="form-control" [ngModel]="lng">
-        </div>
-        <input type="text" class="form-control">
-      </div>
-    
-    </div>
   </div>
   
   <div class="starter-template">
@@ -67,7 +55,7 @@ export class AppComponent implements AfterViewInit {
     public zoom: number = 10;
     public lat: number = 51;
     public lng: number = 7;
-    public newLayerUrl: string = 'http://b.tile.opentopomap.org/{z}/{x}/{y}.png';
+    public newLayerUrl: string = 'https://b.tile.opentopomap.org/{z}/{x}/{y}.png';
     public newLayerOpacity: number = 1;
 
     public tileLayers: ITileLayerOptions[] = [{url: 'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png', opacity: 1}];
