@@ -14,9 +14,9 @@ and have to be merged to DefinitlyTyped.*
 
 * [YAGA-Website](https://yagajs.org)
 * [Project-Website](https://leaflet-ng2.yagajs.org)
-* [Unit-Tests](https://leaflet-ng2.yagajs.org/1.0.0-rc1/browser-test/)
-* [Test-Coverage](https://leaflet-ng2.yagajs.org/1.0.0-rc1/coverage/)
-* [API-Documentation](https://leaflet-ng2.yagajs.org/1.0.0-rc1/typedoc/)
+* [Unit-Tests](https://leaflet-ng2.yagajs.org/1.0.0-rc2/browser-test/)
+* [Test-Coverage](https://leaflet-ng2.yagajs.org/1.0.0-rc2/coverage/)
+* [API-Documentation](https://leaflet-ng2.yagajs.org/1.0.0-rc2/typedoc/)
 * [GitHub](https://github.com/yagajs/leaflet-ng2)
 * [NPM](https://www.npmjs.com/package/@yaga/leaflet-ng2)
 
@@ -82,7 +82,7 @@ After that you should be able to use the following directives or components:
 * `yaga-tooltip`
 * `yaga-zoom-control`
 
-For further information look at the [examples](https://leaflet-ng2.yagajs.org/1.0.0-rc1/examples/)
+For further information look at the [examples](https://leaflet-ng2.yagajs.org/1.0.0-rc2/examples/)
 
 
 ## Scripts Tasks
