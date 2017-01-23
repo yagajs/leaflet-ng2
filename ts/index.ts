@@ -11,6 +11,7 @@ export * from './marker.directive';
 export * from './polyline.directive';
 export * from './polygon.directive';
 export * from './rectangle.directive';
+export * from './geojson.directive';
 export * from './circle.directive';
 export * from './circle-marker.directive';
 export * from './zoom-control.directive';

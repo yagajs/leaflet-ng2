@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
+    "@types/chai": "^3.4.34",
     "browserify": "^13.1.1",
     "coveralls": "^2.11.15",
     "istanbul": "^0.4.5",
