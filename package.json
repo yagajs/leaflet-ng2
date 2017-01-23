@@ -2,9 +2,10 @@
   "name": "@yaga/leaflet-ng2",
   "version": "1.0.0",
   "description": "Angular2 module for Leaflet",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts",
+    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts && mkdir lib && cp -Rf ts/d.ts lib/",
     "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
     "reinit": "npm run clean; npm run init",
     "transpile": "tsc",
@@ -14,7 +15,8 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; browserify test/index.js -o browser-test/bundle.js",
     "doc": "typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
-    "dependency-check": "node-dependencies"
+    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js",
+    "dependency-check": "npm outdated && (node-dependencies || echo \"There are outdated sub-dependencies!\")"
   },
   "repository": {
     "type": "git",
@@ -42,7 +44,14 @@
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
     "@types/chai": "^3.4.34",
+    "@angular/common": "^2.4.2",
+    "@angular/compiler": "^2.4.2",
+    "@angular/forms": "^2.4.2",
+    "@angular/platform-browser": "^2.4.2",
+    "@angular/platform-browser-dynamic": "^2.4.2",
+    "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
+    "chai": "^3.5.0",
     "coveralls": "^2.11.15",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",

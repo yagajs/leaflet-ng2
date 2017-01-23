@@ -16,7 +16,6 @@ import { MapComponent } from './map.component';
 })
 export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
     @Output() public positionChange: EventEmitter<string> = new EventEmitter();
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -140,4 +139,18 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     get zoomOutTitle(): string {
         return this.options.zoomOutTitle;
     }
+
+    @Input() set zIndex(zIndex: number) {
+        if ( !zIndex ) {
+            zIndex = 0;
+        }
+
+        this.getContainer().style.zIndex = zIndex.toString();
+    }
+
+     get zIndex(): number {
+        return parseInt(this.getContainer().style.zIndex);
+    }
+
+
 }

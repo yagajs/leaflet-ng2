@@ -3,10 +3,9 @@
 import { TileLayerDirective,
     MapComponent,
     Point,
-    LatLngBoundsExpression } from './index';
+    LatLngBoundsExpression,
+    OSM_TILE_LAYER_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
-
-const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -120,56 +119,56 @@ describe('Tile-Layer Directive', () => {
             layer = new TileLayerDirective(map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
+            layer.url = OSM_TILE_LAYER_URL;
             /* istanbul ignore if */
-            if ((<string>(<any>layer)._url) !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
+            if ((<string>(<any>layer)._url) !== OSM_TILE_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ OSM_TILE_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
+            layer.url = OSM_TILE_LAYER_URL;
             /* istanbul ignore if */
-            if (layer.url !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== OSM_TILE_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ OSM_TILE_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(OSM_TILE_LAYER_URL);
             /* istanbul ignore if */
-            if (layer.url !== TILE_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ TILE_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== OSM_TILE_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ OSM_TILE_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== TILE_LAYER_URL) {
+                if (eventVal !== OSM_TILE_LAYER_URL) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.url = TILE_LAYER_URL;
+            layer.url = OSM_TILE_LAYER_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = TILE_LAYER_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = OSM_TILE_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== TILE_LAYER_URL + '?test') {
+                if (eventVal !== OSM_TILE_LAYER_URL + '?test') {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.setUrl(TILE_LAYER_URL + '?test');
+            layer.setUrl(OSM_TILE_LAYER_URL + '?test');
         });
         it('should not emit anything when changing into same url', (done: MochaDone) => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(OSM_TILE_LAYER_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
                 layer.urlChange.subscribe(() => {
                     return done(new Error('Event fired'));
                 });
-                layer.setUrl(TILE_LAYER_URL);
+                layer.setUrl(OSM_TILE_LAYER_URL);
                 return done();
             }, 0);
         });

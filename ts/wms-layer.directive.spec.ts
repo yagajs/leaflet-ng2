@@ -3,11 +3,10 @@ import { WmsLayerDirective,
     MapComponent,
     LatLngBoundsExpression,
     WMSParams,
-    Point } from './index';
+    Point,
+    EXAMPLE_WMS_LAYER_NAMES,
+    EXAMPLE_WMS_LAYER_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
-
-const WMS_LAYER_URL: string = 'http://www.wms.nrw.de/geobasis/wms_nw_dtk?';
-const WMS_LAYER_NAMES: string[] = ['nw_dtk_col'];
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -121,56 +120,56 @@ describe('WMS-Layer Directive', () => {
             layer = new WmsLayerDirective(map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.url = WMS_LAYER_URL;
+            layer.url = EXAMPLE_WMS_LAYER_URL;
             /* istanbul ignore if */
-            if ((<string>(<any>layer)._url) !== WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
+            if ((<string>(<any>layer)._url) !== EXAMPLE_WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.url = WMS_LAYER_URL;
+            layer.url = EXAMPLE_WMS_LAYER_URL;
             /* istanbul ignore if */
-            if (layer.url !== WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== EXAMPLE_WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setUrl(WMS_LAYER_URL);
+            layer.setUrl(EXAMPLE_WMS_LAYER_URL);
             /* istanbul ignore if */
-            if (layer.url !== WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_URL } != ${ layer.url }`);
+            if (layer.url !== EXAMPLE_WMS_LAYER_URL) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ layer.url }`);
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== WMS_LAYER_URL) {
+                if (eventVal !== EXAMPLE_WMS_LAYER_URL) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.url = WMS_LAYER_URL;
+            layer.url = EXAMPLE_WMS_LAYER_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = WMS_LAYER_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = EXAMPLE_WMS_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 /* istanbul ignore if */
-                if (eventVal !== WMS_LAYER_URL + '?test') {
+                if (eventVal !== EXAMPLE_WMS_LAYER_URL + '?test') {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.setUrl(WMS_LAYER_URL + '?test');
+            layer.setUrl(EXAMPLE_WMS_LAYER_URL + '?test');
         });
         it('should not emit anything when changing into same url', (done: MochaDone) => {
-            layer.setUrl(WMS_LAYER_URL);
+            layer.setUrl(EXAMPLE_WMS_LAYER_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
                 layer.urlChange.subscribe(() => {
                     return done(new Error('Event fired'));
                 });
-                layer.setUrl(WMS_LAYER_URL);
+                layer.setUrl(EXAMPLE_WMS_LAYER_URL);
                 return done();
             }, 0);
         });
@@ -330,48 +329,48 @@ describe('WMS-Layer Directive', () => {
             layer = new WmsLayerDirective(map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.layers = WMS_LAYER_NAMES;
+            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             /* istanbul ignore if */
-            if (layer.wmsParams.layers !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.layers }`);
+            if (layer.wmsParams.layers !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.layers }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.layers = WMS_LAYER_NAMES;
+            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             /* istanbul ignore if */
-            if (layer.layers.join(',') !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
+            if (layer.layers.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
             }
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setParams({layers: WMS_LAYER_NAMES.join(',')});
+            layer.setParams({layers: EXAMPLE_WMS_LAYER_NAMES.join(',')});
             /* istanbul ignore if */
-            if (layer.layers.join(',') !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
+            if (layer.layers.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.layersChange.subscribe((eventVal: string[]) => {
                 /* istanbul ignore if */
-                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.layers = WMS_LAYER_NAMES;
+            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.layers = WMS_LAYER_NAMES;
+            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.layersChange.subscribe((eventVal: string[]) => {
                 /* istanbul ignore if */
-                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.setParams({layers: WMS_LAYER_NAMES.join(',')});
+            layer.setParams({layers: EXAMPLE_WMS_LAYER_NAMES.join(',')});
         });
     });
     describe('[(styles)]', () => {
@@ -384,49 +383,49 @@ describe('WMS-Layer Directive', () => {
             layer = new WmsLayerDirective(map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.styles = WMS_LAYER_NAMES;
+            layer.styles = EXAMPLE_WMS_LAYER_NAMES;
             /* istanbul ignore if */
-            if (layer.wmsParams.styles !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.styles }`);
+            if (layer.wmsParams.styles !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.styles }`);
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.styles = WMS_LAYER_NAMES;
+            layer.styles = EXAMPLE_WMS_LAYER_NAMES;
             /* istanbul ignore if */
-            if (layer.styles.join(',') !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
+            if (layer.styles.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
             }
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
-            params.styles = WMS_LAYER_NAMES.join(',');
+            params.styles = EXAMPLE_WMS_LAYER_NAMES.join(',');
             layer.setParams(params);
             /* istanbul ignore if */
-            if (layer.styles.join(',') !== WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
+            if (layer.styles.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
+                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
                 /* istanbul ignore if */
-                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
 
-            layer.styles = WMS_LAYER_NAMES;
+            layer.styles = EXAMPLE_WMS_LAYER_NAMES;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
                 /* istanbul ignore if */
-                if (eventVal.join(',') !== WMS_LAYER_NAMES.join(',')) {
+                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
                     return done(new Error('Received wrong value'));
                 }
                 return done();
             });
             const params: WMSParams = Object.create(layer.wmsParams);
-            params.styles = WMS_LAYER_NAMES.join(',');
+            params.styles = EXAMPLE_WMS_LAYER_NAMES.join(',');
             layer.setParams(params);
         });
     });
@@ -497,7 +496,7 @@ describe('WMS-Layer Directive', () => {
 
             layer.transparent = true;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.layers = WMS_LAYER_NAMES;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.transparentChange.subscribe((eventVal: boolean) => {
                 /* istanbul ignore if */
                 if (!eventVal) {
