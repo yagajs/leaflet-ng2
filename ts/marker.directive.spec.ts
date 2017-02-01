@@ -22,7 +22,7 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Marker Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         layer: MarkerDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -487,7 +487,7 @@ describe('Marker Directive', () => {
     });
 
     describe('Popup in Marker Directive', () => {
-        var layerWithPopup: MarkerDirective,
+        let layerWithPopup: MarkerDirective,
             popup: PopupDirective,
             testDiv: HTMLElement;
         before(() => {
@@ -509,7 +509,7 @@ describe('Marker Directive', () => {
     });
 
     describe('Tooltip in Marker Directive', () => {
-        var layerWithTooltip: MarkerDirective,
+        let layerWithTooltip: MarkerDirective,
             tooltip: TooltipDirective,
             testDiv: HTMLElement;
         before(() => {
@@ -532,7 +532,7 @@ describe('Marker Directive', () => {
     });
 
     describe('Icon in Marker Directive', () => {
-        var layerWithIcon: MarkerDirective,
+        let layerWithIcon: MarkerDirective,
             icon: IconDirective,
             testDiv: HTMLElement;
         before(() => {

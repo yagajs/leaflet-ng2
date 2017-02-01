@@ -6,7 +6,7 @@ import { ZoomControlDirective,
 import { point } from 'leaflet';
 
 describe('Zoom-Control Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         control: ZoomControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});

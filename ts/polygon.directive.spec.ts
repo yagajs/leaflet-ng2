@@ -12,7 +12,7 @@ import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 describe('Polygon Directive', () => {
     createPathTests(PolygonDirective);
 
-    var map: MapComponent,
+    let map: MapComponent,
         layer: PolygonDirective<any>;
 
     beforeEach(() => {
@@ -572,7 +572,7 @@ describe('Polygon Directive', () => {
     });
 
     describe('Popup in Polygon Directive', () => {
-        var layerWithPopup: PolygonDirective<any>,
+        let layerWithPopup: PolygonDirective<any>,
             popup: PopupDirective,
             testDiv: HTMLElement;
         before(() => {
@@ -596,7 +596,7 @@ describe('Polygon Directive', () => {
     });
 
     describe('Tooltip in Polygon Directive', () => {
-        var layerWithTooltip: PolygonDirective<any>,
+        let layerWithTooltip: PolygonDirective<any>,
             tooltip: TooltipDirective,
             testDiv: HTMLElement;
         before(() => {

@@ -8,7 +8,7 @@ import { point } from 'leaflet';
 
 describe('DivIcon Directive', () => {
 
-    var map: MapComponent,
+    let map: MapComponent,
         icon: DivIconDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});

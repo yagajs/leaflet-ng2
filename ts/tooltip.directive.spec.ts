@@ -9,7 +9,7 @@ import { TooltipDirective,
 import { point, latLng } from 'leaflet';
 
 describe('Tooltip Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         tooltip: TooltipDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});

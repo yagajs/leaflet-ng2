@@ -20,7 +20,7 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Image-Overlay Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         layer: ImageOverlayDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -451,13 +451,7 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(south)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
             layer.setBounds(latLngBounds([
                 [0, 0],
                 [1, 1]
@@ -533,13 +527,7 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(west)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
             layer.setBounds(latLngBounds([
                 [0, 0],
                 [1, 1]

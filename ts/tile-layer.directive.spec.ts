@@ -20,7 +20,7 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Tile-Layer Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         layer: TileLayerDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -527,7 +527,7 @@ describe('Tile-Layer Directive', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
-            var called: boolean; // this event is called multiple times in the life-circle of leaflet
+            let called: boolean; // this event is called multiple times in the life-circle of leaflet
             setTimeout(() => {
                 layer.tileloadEvent.subscribe((event: any) => {
                     /* istanbul ignore if */
@@ -549,7 +549,7 @@ describe('Tile-Layer Directive', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { target: layer, testHandle, type: 'load' };
-            var called: boolean; // this event is called multiple times in the life-circle of leaflet
+            let called: boolean; // this event is called multiple times in the life-circle of leaflet
             setTimeout(() => {
                 layer.loadEvent.subscribe((event: any) => {
                     /* istanbul ignore if */

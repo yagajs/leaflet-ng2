@@ -6,7 +6,7 @@ import { ScaleControlDirective,
 import { point } from 'leaflet';
 
 describe('Scale-Control Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         control: ScaleControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -210,30 +210,23 @@ describe('Scale-Control Directive', () => {
             }
         });
     });
-});
 
-describe('Destroying a Scale Control Directive', () => {
-    var map: MapComponent,
-        control: ScaleControlDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        control = new ScaleControlDirective(map);
+    describe('Destroying a Scale Control Directive', () => {
+        it('should remove Tile-Layer Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
+                throw new Error('The control is not part of the map before destroying');
+            }
+            control.ngOnDestroy();
+            /* istanbul ignore if */
+            if (control.getContainer() &&
+                control.getContainer().parentElement &&
+                control.getContainer().parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
-    it('should remove Tile-Layer Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
-            throw new Error('The control is not part of the map before destroying');
-        }
-        control.ngOnDestroy();
-        /* istanbul ignore if */
-        if (control.getContainer() &&
-            control.getContainer().parentElement &&
-            control.getContainer().parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
-    });
+
 });

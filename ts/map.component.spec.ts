@@ -4,7 +4,7 @@ import { MapComponent, LatLngBounds } from './index';
 import { point } from 'leaflet';
 
 describe('Map Component', () => {
-    var map: MapComponent;
+    let map: MapComponent;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
         (<any>map)._zoomAnimated = false;
@@ -63,7 +63,7 @@ describe('Map Component', () => {
             map.setView([val, 0], 0);
         });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
-            var alreadyFired: boolean = false;
+            let alreadyFired: boolean = false;
 
             map.latChange.subscribe(() => {
                 /* istanbul ignore if */
@@ -131,7 +131,7 @@ describe('Map Component', () => {
             map.setView([0, val], 0);
         });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
-            var alreadyFired: boolean = false;
+            let alreadyFired: boolean = false;
 
             map.lngChange.subscribe(() => {
                 /* istanbul ignore if */
@@ -211,7 +211,7 @@ describe('Map Component', () => {
             map.setView([0, 0], val);
         });
         it('should threshold rapid changes in Angular when changing in Leaflet', (done: MochaDone) => {
-            var alreadyFired: boolean = false;
+            let alreadyFired: boolean = false;
 
             map.zoomChange.subscribe(() => {
                 /* istanbul ignore if */

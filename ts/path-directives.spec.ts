@@ -9,7 +9,7 @@ import { point, SVG } from 'leaflet';
 
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {
-        var map: MapComponent,
+        let map: MapComponent,
             layer: any;
         beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});

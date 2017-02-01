@@ -12,7 +12,7 @@ import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 import { expect } from 'chai';
 
 describe('Circle Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         layer: CircleMarkerDirective<any>;
     const TEST_VALUE: LatLng = latLng(0, 1);
     const TEST_POINT: LatLngExpression = [3, 4];
@@ -250,7 +250,7 @@ describe('Circle Directive', () => {
         interface ITestProperties {
             test: string;
         }
-        var layerWithProps: CircleMarkerDirective<ITestProperties>;
+        let layerWithProps: CircleMarkerDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
@@ -275,8 +275,8 @@ describe('Circle Directive', () => {
     });
 
     describe('Popup in Circle Directive', () => {
-        var popup: PopupDirective;
-        var testDiv: HTMLElement;
+        let popup: PopupDirective,
+            testDiv: HTMLElement;
 
         beforeEach(() => {
             testDiv = document.createElement('div');
@@ -293,8 +293,8 @@ describe('Circle Directive', () => {
     });
 
     describe('Tooltip in Circle Directive', () => {
-        var tooltip: TooltipDirective;
-        var testDiv: HTMLElement;
+        let tooltip: TooltipDirective,
+            testDiv: HTMLElement;
         beforeEach(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });

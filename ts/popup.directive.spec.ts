@@ -8,7 +8,7 @@ import { PopupDirective,
 import { point, latLng } from 'leaflet';
 
 describe('Popup Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         popup: PopupDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});

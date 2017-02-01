@@ -13,7 +13,7 @@ import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);
 
-    var map: MapComponent,
+    let map: MapComponent,
         layer: PolylineDirective<any>;
 
     beforeEach(() => {
@@ -511,7 +511,7 @@ describe('Polyline Directive', () => {
         interface ITestProperties {
             test: string;
         }
-        var layerWithPropertiesInterface: PolylineDirective<ITestProperties>;
+        let layerWithPropertiesInterface: PolylineDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
@@ -577,7 +577,7 @@ describe('Polyline Directive', () => {
     });
 
     describe('Popup in Polyline Directive', () => {
-        var layerWithPopup: PolylineDirective<any>,
+        let layerWithPopup: PolylineDirective<any>,
             popup: PopupDirective,
             testDiv: HTMLElement;
         before(() => {
@@ -601,7 +601,7 @@ describe('Polyline Directive', () => {
     });
 
     describe('Tooltip in Polyline Directive', () => {
-        var layerWithTooltip: PolylineDirective<any>,
+        let layerWithTooltip: PolylineDirective<any>,
             tooltip: TooltipDirective,
             testDiv: HTMLElement;
         before(() => {

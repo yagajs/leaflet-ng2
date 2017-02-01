@@ -10,7 +10,7 @@ import { point, SVG, Layer } from 'leaflet';
 import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from './d.ts/generic-geojson';
 
 describe('GeoJSON Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         layer: GeoJSONDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -196,7 +196,7 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('Popup in GeoJSON Directive', () => {
-        var popup: PopupDirective,
+        let popup: PopupDirective,
             testDiv: HTMLElement,
             puLayer: GeoJSONDirective<any>;
         before(() => {
@@ -213,7 +213,7 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('Tooltip in GeoJSON Directive', () => {
-        var tooltip: TooltipDirective,
+        let tooltip: TooltipDirective,
             testDiv: HTMLElement,
             ttLayer: GeoJSONDirective<any>;
         before(() => {

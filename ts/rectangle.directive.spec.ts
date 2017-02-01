@@ -14,7 +14,7 @@ import { createPathTests } from './path-directives.spec';
 describe('Rectangle Directive', () => {
     createPathTests(RectangleDirective);
 
-    var map: MapComponent,
+    let map: MapComponent,
         layer: RectangleDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
@@ -908,7 +908,7 @@ describe('Rectangle Directive', () => {
         interface ITestProperties {
             test: string;
         }
-        var layerWithProperties: RectangleDirective<ITestProperties>;
+        let layerWithProperties: RectangleDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
@@ -974,7 +974,7 @@ describe('Rectangle Directive', () => {
     });
 
     describe('Popup in Rectangle Directive', () => {
-        var layerWithPopup: RectangleDirective<any>,
+        let layerWithPopup: RectangleDirective<any>,
             popup: PopupDirective,
             testDiv: HTMLElement;
         before(() => {
@@ -998,7 +998,7 @@ describe('Rectangle Directive', () => {
     });
 
     describe('Tooltip in Rectangle Directive', () => {
-        var layerWithTooltip: RectangleDirective<any>,
+        let layerWithTooltip: RectangleDirective<any>,
             tooltip: TooltipDirective,
             testDiv: HTMLElement;
         before(() => {

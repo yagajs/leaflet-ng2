@@ -7,7 +7,7 @@ import { point } from 'leaflet';
 import { expect } from 'chai';
 
 describe('Attribution-Control Directive', () => {
-    var map: MapComponent,
+    let map: MapComponent,
         control: AttributionControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
