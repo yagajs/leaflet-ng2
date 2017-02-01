@@ -9,6 +9,7 @@ import { CircleDirective,
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { expect } from 'chai';
 
 describe('Circle Directive', () => {
     var map: MapComponent,
@@ -30,32 +31,19 @@ describe('Circle Directive', () => {
 
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.position = TEST_VALUE;
-            /* istanbul ignore if */
-            if ((<any>layer)._latlng !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ (<any>layer)._latlng }`);
-            }
-
+            expect((<any>layer)._latlng).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.position = TEST_VALUE;
-            /* istanbul ignore if */
-            if (layer.position !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.position }`);
-            }
+            expect(layer.position).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             layer.setLatLng(TEST_VALUE);
-            /* istanbul ignore if */
-            if (layer.position !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.position }`);
-            }
+            expect(layer.position).to.equal(TEST_VALUE);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal !== TEST_VALUE) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(TEST_VALUE);
                 return done();
             });
 
@@ -63,10 +51,7 @@ describe('Circle Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal !== TEST_VALUE) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(TEST_VALUE);
                 return done();
             });
 
@@ -87,39 +72,26 @@ describe('Circle Directive', () => {
     });
 
     describe('[(lat)]', () => {
-        const TEST_VALUE: LatLng = latLng(0, 1);
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lat = val;
-            /* istanbul ignore if */
-            if (layer.getLatLng().lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getLatLng().lat }`);
-            }
+            expect(layer.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lat = val;
-            /* istanbul ignore if */
-            if (layer.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lat }`);
-            }
+            expect(layer.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             layer.setLatLng([val, 0]);
-            /* istanbul ignore if */
-            if (layer.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lat }`);
-            }
+            expect(layer.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             layer.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -129,10 +101,7 @@ describe('Circle Directive', () => {
             const val: number = Math.random() * 100;
 
             layer.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -141,39 +110,26 @@ describe('Circle Directive', () => {
         });
     });
     describe('[(lng)]', () => {
-        const TEST_VALUE: LatLng = latLng(0, 1);
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lng = val;
-            /* istanbul ignore if */
-            if (layer.getLatLng().lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getLatLng().lng }`);
-            }
+            expect(layer.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lng = val;
-            /* istanbul ignore if */
-            if (layer.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lng }`);
-            }
+            expect(layer.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             layer.setLatLng([0, val]);
-            /* istanbul ignore if */
-            if (layer.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lng }`);
-            }
+            expect(layer.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             layer.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -183,13 +139,9 @@ describe('Circle Directive', () => {
             const val: number = Math.random() * 100;
 
             layer.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
-
 
             layer.setLatLng([0, val]);
         });
@@ -199,35 +151,23 @@ describe('Circle Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.radius = val;
-            /* istanbul ignore if */
-            if (layer.getRadius() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getRadius() }`);
-            }
+            expect(layer.getRadius()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.radius = val;
-            /* istanbul ignore if */
-            if (layer.radius !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.radius }`);
-            }
+            expect(layer.radius).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             layer.setRadius(val);
-            /* istanbul ignore if */
-            if (layer.radius !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.radius }`);
-            }
+            expect(layer.radius).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             layer.radiusChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -237,10 +177,7 @@ describe('Circle Directive', () => {
             const val: number = Math.random() * 100;
 
             layer.radiusChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -261,36 +198,21 @@ describe('Circle Directive', () => {
         const TEST_POINT: LatLngExpression = [3, 4];
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.geoJSON = TEST_VALUE;
-            /* istanbul ignore if */
-            if ((<LatLng>layer.position).lng !== TEST_VALUE.geometry.coordinates[0] ||
-                (<LatLng>layer.position).lat !== TEST_VALUE.geometry.coordinates[1]) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ layer.position }`);
-            }
-
+            expect((<LatLng>layer.position).lng).to.equal(TEST_VALUE.geometry.coordinates[0]);
+            expect((<LatLng>layer.position).lat).to.equal(TEST_VALUE.geometry.coordinates[1]);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.geoJSON = TEST_VALUE;
-            /* istanbul ignore if */
-            if (layer.geoJSON.geometry.coordinates[0] !== TEST_VALUE.geometry.coordinates[0] ||
-                layer.geoJSON.geometry.coordinates[1] !== TEST_VALUE.geometry.coordinates[1]) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-            }
+            expect(layer.geoJSON).to.deep.equal(TEST_VALUE);
         });
         it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
             layer.setLatLng(TEST_POINT);
-            /* istanbul ignore if */
-            if (layer.geoJSON.geometry.coordinates[0] !== TEST_POINT[1] ||
-                layer.geoJSON.geometry.coordinates[1] !== TEST_POINT[0]) {
-                throw new Error(`Wrong value setted: ${ TEST_POINT } != ${ layer.geoJSON.geometry.coordinates }`);
-            }
+            expect(layer.geoJSON.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
+            expect(layer.geoJSON.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
-                /* istanbul ignore if */
-                if (eventVal.geometry.coordinates[0] !== TEST_VALUE.geometry.coordinates[0] ||
-                    eventVal.geometry.coordinates[1] !== TEST_VALUE.geometry.coordinates[1]) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
 
@@ -298,12 +220,8 @@ describe('Circle Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
-                const values: [number, number] = (<any>eventVal.geometry.coordinates);
-                /* istanbul ignore if */
-                if (values[0] !== TEST_POINT[1] ||
-                    values[1] !== TEST_POINT[0]) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
+                expect(eventVal.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
                 return done();
             });
 
@@ -320,24 +238,15 @@ describe('Circle Directive', () => {
         };
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
-            /* istanbul ignore if */
-            if (layer.feature.properties !== TEST_OBJECT) {
-                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.feature.properties }`);
-            }
+            expect(layer.feature.properties).to.equal(TEST_OBJECT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
-            /* istanbul ignore if */
-            if (layer.properties !== TEST_OBJECT) {
-                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.properties }`);
-            }
+            expect(layer.properties).to.equal(TEST_OBJECT);
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
-                /* istanbul ignore if */
-                if (val.properties !== TEST_OBJECT) {
-                    return done(new Error('Wrong value received'));
-                }
+            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                expect(eventVal.properties).to.equal(TEST_OBJECT);
                 return done();
             });
             layer.properties = TEST_OBJECT;
@@ -349,26 +258,15 @@ describe('Circle Directive', () => {
             popup: PopupDirective,
             testDiv: HTMLElement;
         before(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            (<any>map)._renderer = (<any>map)._renderer || new SVG();
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
+            layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            layerWithPopup.ngAfterViewInit();
-            /* istanbul ignore if */
-            if (!(<any>layerWithPopup)._popup) {
-                throw new Error('There is no popup binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layerWithPopup)._popup !== popup) {
-                throw new Error('There is a wrong popup binded');
-            }
+            expect((<any>layerWithPopup)._popup).to.equal(popup);
         });
     });
 
@@ -386,31 +284,18 @@ describe('Circle Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            layerWithTooltip.ngAfterViewInit();
-            /* istanbul ignore if */
-            if (!(<any>layerWithTooltip)._tooltip) {
-                throw new Error('There is no tooltip binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
-                throw new Error('There is a wrong tooltip binded');
-            }
+            expect((<any>layerWithTooltip)._tooltip).to.equal(tooltip);
         });
     });
 
     describe('Destroying a Circle Directive', () => {
         it('should remove Circle Directive from map on destroy', () => {
-            /* istanbul ignore if */
-            if (!map.hasLayer(layer)) {
-                throw new Error('The layer is not part of the map before destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(true);
             layer.ngOnDestroy();
-            /* istanbul ignore if */
-            if (map.hasLayer(layer)) {
-                throw new Error('The layer is still part of the map after destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(false);
         });
     });
 });
