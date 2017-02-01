@@ -22,15 +22,15 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Marker Directive', () => {
-    describe('[(display)]', () => {
-        var map: MapComponent,
+    var map: MapComponent,
         layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new MarkerDirective(map);
+    });
+    describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
             /* istanbul ignore if */
@@ -112,14 +112,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('[(opacity)]', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.opacity = val;
@@ -185,13 +177,7 @@ describe('Marker Directive', () => {
     });
 
     describe('[(lat)]', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -247,13 +233,7 @@ describe('Marker Directive', () => {
         });
     });
     describe('[(lng)]', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -309,13 +289,7 @@ describe('Marker Directive', () => {
         });
     });
     describe('[(position)]', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
             layer.ngAfterViewInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -372,14 +346,6 @@ describe('Marker Directive', () => {
 
     // TODO: icon
     describe('[title]', () => {
-       var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.title = val;
@@ -398,14 +364,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('[alt]', () => {
-       var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.alt = val;
@@ -425,14 +383,6 @@ describe('Marker Directive', () => {
     });
 
     describe('[draggable]', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.draggable = false;
             /* istanbul ignore if */
@@ -466,14 +416,6 @@ describe('Marker Directive', () => {
 
     // Events
     describe('(dragend)', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -488,14 +430,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('(dragstart)', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -510,14 +444,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('(movestart)', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -532,14 +458,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('(drag)', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -554,14 +472,6 @@ describe('Marker Directive', () => {
         });
     });
     describe('(moveend)', () => {
-        var map: MapComponent,
-            layer: MarkerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new MarkerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -575,121 +485,99 @@ describe('Marker Directive', () => {
             layer.fire('moveend', testEvent);
         });
     });
-});
 
-describe('Popup in Marker Directive', () => {
-    var map: MapComponent,
-        layer: MarkerDirective,
-        popup: PopupDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        testDiv = document.createElement('div');
-        popup = new PopupDirective(map, { nativeElement: testDiv });
+    describe('Popup in Marker Directive', () => {
+        var layerWithPopup: MarkerDirective,
+            popup: PopupDirective,
+            testDiv: HTMLElement;
+        before(() => {
+            testDiv = document.createElement('div');
+            popup = new PopupDirective(map, { nativeElement: testDiv });
 
-        // Hack to get write-access to readonly property
-        layer = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
-        return done();
-    });
-    it('should bind popup', () => {
-        layer.ngAfterViewInit();
-        if (!(<any>layer)._popup) {
-            throw new Error('There is no popup binded');
-        }
-        if ((<any>layer)._popup !== popup) {
-            throw new Error('There is a wrong popup binded');
-        }
-    });
-});
-
-describe('Tooltip in Marker Directive', () => {
-    var map: MapComponent,
-        layer: MarkerDirective,
-        tooltip: TooltipDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        testDiv = document.createElement('div');
-        tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-        // Hack to get write-access to readonly property
-        layer = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
-        return done();
-    });
-    it('should bind tooltip', () => {
-        layer.ngAfterViewInit();
-        if (!(<any>layer)._tooltip) {
-            throw new Error('There is no tooltip binded');
-        }
-        if ((<any>layer)._tooltip !== tooltip) {
-            throw new Error('There is a wrong tooltip binded');
-        }
-    });
-});
-
-describe('Icon in Marker Directive', () => {
-    var map: MapComponent,
-        layer: MarkerDirective,
-        icon: IconDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        testDiv = document.createElement('div');
-        icon = new IconDirective();
-        icon.iconUrl = TRANSPARENT_PIXEL;
-
-        // Hack to get write-access to readonly property
-        layer = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
-        return done();
-    });
-    it('should bind icon', () => {
-        layer.ngAfterViewInit();
-        if (!(<any>layer)._icon) {
-            throw new Error('There is no icon binded');
-        }
-        if ((<HTMLElement>(<any>layer)._icon).getAttribute('src') !== TRANSPARENT_PIXEL) {
-            throw new Error('There is a wrong icon binded');
-        }
-    });
-    it('should bind icon again on changes in icon directive', () => {
-        const TEST_VALUE: string = 'path/to/icon.png';
-        layer.ngAfterViewInit();
-        icon.iconUrl = TEST_VALUE;
-
-        if (!(<any>layer)._icon) {
-            throw new Error('There is no icon binded');
-        }
-        if ((<HTMLElement>(<any>layer)._icon).getAttribute('src') !== TEST_VALUE) {
-            throw new Error('There is a wrong icon binded');
-        }
+            // Hack to get write-access to readonly property
+            layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
+            layerWithPopup.ngAfterViewInit();
+        });
+        it('should bind popup', () => {
+            if (!(<any>layerWithPopup)._popup) {
+                throw new Error('There is no popup binded');
+            }
+            if ((<any>layerWithPopup)._popup !== popup) {
+                throw new Error('There is a wrong popup binded');
+            }
+        });
     });
 
-});
+    describe('Tooltip in Marker Directive', () => {
+        var layerWithTooltip: MarkerDirective,
+            tooltip: TooltipDirective,
+            testDiv: HTMLElement;
+        before(() => {
+            testDiv = document.createElement('div');
+            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
-describe('Destroying a Marker Directive', () => {
-    var map: MapComponent,
-        layer: MarkerDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective(map);
+            // Hack to get write-access to readonly property
+            layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip.ngAfterViewInit();
+        });
+        it('should bind tooltip', () => {
+            if (!(<any>layerWithTooltip)._tooltip) {
+                throw new Error('There is no tooltip binded');
+            }
+            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
+                throw new Error('There is a wrong tooltip binded');
+            }
+        });
+
     });
-    it('should remove Marker Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (!map.hasLayer(layer)) {
-            throw new Error('The layer is not part of the map before destroying');
-        }
-        layer.ngOnDestroy();
-        /* istanbul ignore if */
-        if (map.hasLayer(layer)) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
+
+    describe('Icon in Marker Directive', () => {
+        var layerWithIcon: MarkerDirective,
+            icon: IconDirective,
+            testDiv: HTMLElement;
+        before(() => {
+            testDiv = document.createElement('div');
+            icon = new IconDirective();
+            icon.iconUrl = TRANSPARENT_PIXEL;
+
+            // Hack to get write-access to readonly property
+            layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
+
+            layerWithIcon.ngAfterViewInit();
+        });
+        it('should bind icon', () => {
+            if (!(<any>layerWithIcon)._icon) {
+                throw new Error('There is no icon binded');
+            }
+            if ((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src') !== TRANSPARENT_PIXEL) {
+                throw new Error('There is a wrong icon binded');
+            }
+        });
+        it('should bind icon again on changes in icon directive', () => {
+            const TEST_VALUE: string = 'path/to/icon.png';
+            icon.iconUrl = TEST_VALUE;
+
+            if (!(<any>layerWithIcon)._icon) {
+                throw new Error('There is no icon binded');
+            }
+            if ((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src') !== TEST_VALUE) {
+                throw new Error('There is a wrong icon binded');
+            }
+        });
+
+    });
+
+    describe('Destroying a Marker Directive', () => {
+        it('should remove Marker Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
 });

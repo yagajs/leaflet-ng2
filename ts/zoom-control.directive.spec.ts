@@ -6,15 +6,15 @@ import { ZoomControlDirective,
 import { point } from 'leaflet';
 
 describe('Zoom-Control Directive', () => {
+    var map: MapComponent,
+        control: ZoomControlDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        control = new ZoomControlDirective(map);
+    });
     describe('[(position)]', () => {
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
@@ -69,14 +69,6 @@ describe('Zoom-Control Directive', () => {
 
     // Events
     describe('(add)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when adding to map', (done: MochaDone) => {
             map.removeControl(control);
 
@@ -87,14 +79,6 @@ describe('Zoom-Control Directive', () => {
         });
     });
     describe('(remove)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when removing from map', (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
@@ -104,14 +88,6 @@ describe('Zoom-Control Directive', () => {
     });
 
     describe('(click)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
@@ -120,14 +96,6 @@ describe('Zoom-Control Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.dbclickEvent.subscribe(() => {
                 done();
@@ -136,14 +104,6 @@ describe('Zoom-Control Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
@@ -152,14 +112,6 @@ describe('Zoom-Control Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
@@ -168,14 +120,6 @@ describe('Zoom-Control Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-         var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
@@ -185,14 +129,6 @@ describe('Zoom-Control Directive', () => {
     });
 
     describe('[opacity]', () => {
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
@@ -213,14 +149,6 @@ describe('Zoom-Control Directive', () => {
 
     describe('[zoomInText]', () => {
         const TEST_VALUE: string = 'test-caption';
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInText = TEST_VALUE;
             /* istanbul ignore if */
@@ -244,14 +172,6 @@ describe('Zoom-Control Directive', () => {
     });
     describe('[zoomOutText]', () => {
         const TEST_VALUE: string = 'test-caption';
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutText = TEST_VALUE;
             /* istanbul ignore if */
@@ -276,14 +196,6 @@ describe('Zoom-Control Directive', () => {
 
     describe('[zoomInTitle]', () => {
         const TEST_VALUE: string = 'test-caption';
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInTitle = TEST_VALUE;
             /* istanbul ignore if */
@@ -307,14 +219,6 @@ describe('Zoom-Control Directive', () => {
     });
     describe('[zoomOutTitle]', () => {
         const TEST_VALUE: string = 'test-caption';
-        var map: MapComponent,
-            control: ZoomControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ZoomControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutTitle = TEST_VALUE;
             /* istanbul ignore if */
@@ -337,30 +241,21 @@ describe('Zoom-Control Directive', () => {
         });
     });
 
-});
-
-describe('Destroying a Zoom Control Directive', () => {
-    var map: MapComponent,
-        control: ZoomControlDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        control = new ZoomControlDirective(map);
-    });
-    it('should remove Tile-Layer Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
-            throw new Error('The control is not part of the map before destroying');
-        }
-        control.ngOnDestroy();
-        /* istanbul ignore if */
-        if (control.getContainer() &&
-            control.getContainer().parentElement &&
-            control.getContainer().parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
+    describe('Destroying a Zoom Control Directive', () => {
+        it('should remove Tile-Layer Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
+                throw new Error('The control is not part of the map before destroying');
+            }
+            control.ngOnDestroy();
+            /* istanbul ignore if */
+            if (control.getContainer() &&
+                control.getContainer().parentElement &&
+                control.getContainer().parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
 });

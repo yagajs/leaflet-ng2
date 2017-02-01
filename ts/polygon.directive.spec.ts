@@ -12,19 +12,21 @@ import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 describe('Polygon Directive', () => {
     createPathTests(PolygonDirective);
 
+    var map: MapComponent,
+        layer: PolygonDirective<any>;
+
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+
+        layer = new PolygonDirective<any>(map);
+    });
+
     describe('[(latlngs)]', () => {
         describe('for Polygons', () => {
-            var map: MapComponent,
-                layer: PolygonDirective<any>;
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new PolygonDirective<any>(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
                 /* istanbul ignore if */
@@ -108,20 +110,10 @@ describe('Polygon Directive', () => {
             });
         });
         describe('for MultiPolygons', () => {
-            var map: MapComponent,
-                layer: PolygonDirective<any>;
             const TEST_VALUE: LatLng[][][] = [
                 [[latLng(1, 0), latLng(1, 1), latLng(0, 1)]],
                 [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]]
             ];
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new PolygonDirective<any>(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
                 /* istanbul ignore if */
@@ -228,8 +220,6 @@ describe('Polygon Directive', () => {
 
     describe('[(geoJSON)]', () => {
         describe('for Polygon', () => {
-            var map: MapComponent,
-                layer: PolygonDirective<any>;
             const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
                     coordinates: [[[0, 1], [1, 1], [0, 0]]],
@@ -239,14 +229,6 @@ describe('Polygon Directive', () => {
                 type: 'Feature'
             };
             const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1]]];
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new PolygonDirective<any>(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
                 /* istanbul ignore if */
@@ -335,8 +317,6 @@ describe('Polygon Directive', () => {
             });
         });
         describe('for MultiPolygon', () => {
-            var map: MapComponent,
-                layer: PolygonDirective<any>;
             const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
                 geometry: {
                     coordinates: [
@@ -352,14 +332,6 @@ describe('Polygon Directive', () => {
                 [[[0, 0], [1, 0], [1, 1]]],
                 [[[0, 0], [0, 1], [1, 1]]]
             ];
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new PolygonDirective<any>(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
 
@@ -516,16 +488,6 @@ describe('Polygon Directive', () => {
     });
 
     describe('[smoothFactor]', () => {
-        var map: MapComponent,
-            layer: PolygonDirective<any>;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-            layer = new PolygonDirective<any>(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             layer.smoothFactor = val;
@@ -548,19 +510,9 @@ describe('Polygon Directive', () => {
         interface ITestProperties {
             test: string;
         }
-        var map: MapComponent,
-            layer: PolygonDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
             test: 'OK'
         };
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-            layer = new PolygonDirective<any>(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
             /* istanbul ignore if */
@@ -588,16 +540,6 @@ describe('Polygon Directive', () => {
     });
 
     describe('[noClip]', () => {
-        var map: MapComponent,
-            layer: PolygonDirective<any>;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-            layer = new PolygonDirective<any>(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noClip = false;
             /* istanbul ignore if */
@@ -628,92 +570,66 @@ describe('Polygon Directive', () => {
             }
         });
     });
-});
 
-describe('Popup in Polygon Directive', () => {
-    var map: MapComponent,
-        layer: PolygonDirective<any>,
-        popup: PopupDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
-        testDiv = document.createElement('div');
-        popup = new PopupDirective(map, { nativeElement: testDiv });
+    describe('Popup in Polygon Directive', () => {
+        var layerWithPopup: PolygonDirective<any>,
+            popup: PopupDirective,
+            testDiv: HTMLElement;
+        before(() => {
+            testDiv = document.createElement('div');
+            popup = new PopupDirective(map, { nativeElement: testDiv });
 
-        // Hack to get write-access to readonly property
-        layer = Object.create(new PolygonDirective<any>(map), { popupDirective: {value: popup} });
-        return done();
+            // Hack to get write-access to readonly property
+            layerWithPopup = Object.create(new PolygonDirective<any>(map), { popupDirective: {value: popup} });
+            layerWithPopup.ngAfterViewInit();
+        });
+        it('should bind popup', () => {
+            /* istanbul ignore if */
+            if (!(<any>layerWithPopup)._popup) {
+                throw new Error('There is no popup binded');
+            }
+            /* istanbul ignore if */
+            if ((<any>layerWithPopup)._popup !== popup) {
+                throw new Error('There is a wrong popup binded');
+            }
+        });
     });
-    it('should bind popup', () => {
-        layer.ngAfterViewInit();
-        /* istanbul ignore if */
-        if (!(<any>layer)._popup) {
-            throw new Error('There is no popup binded');
-        }
-        /* istanbul ignore if */
-        if ((<any>layer)._popup !== popup) {
-            throw new Error('There is a wrong popup binded');
-        }
-    });
-});
 
-describe('Tooltip in Polygon Directive', () => {
-    var map: MapComponent,
-        layer: PolygonDirective<any>,
-        tooltip: TooltipDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
-        testDiv = document.createElement('div');
-        tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+    describe('Tooltip in Polygon Directive', () => {
+        var layerWithTooltip: PolygonDirective<any>,
+            tooltip: TooltipDirective,
+            testDiv: HTMLElement;
+        before(() => {
+            testDiv = document.createElement('div');
+            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
-        // Hack to get write-access to readonly property
-        layer = Object.create(new PolygonDirective<any>(map), { tooltipDirective: {value: tooltip} });
-        return done();
+            // Hack to get write-access to readonly property
+            layerWithTooltip = Object.create(new PolygonDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip.ngAfterViewInit();
+        });
+        it('should bind tooltip', () => {
+            /* istanbul ignore if */
+            if (!(<any>layerWithTooltip)._tooltip) {
+                throw new Error('There is no tooltip binded');
+            }
+            /* istanbul ignore if */
+            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
+                throw new Error('There is a wrong tooltip binded');
+            }
+        });
     });
-    it('should bind tooltip', () => {
-        layer.ngAfterViewInit();
-        /* istanbul ignore if */
-        if (!(<any>layer)._tooltip) {
-            throw new Error('There is no tooltip binded');
-        }
-        /* istanbul ignore if */
-        if ((<any>layer)._tooltip !== tooltip) {
-            throw new Error('There is a wrong tooltip binded');
-        }
-    });
-});
 
-describe('Destroying a Polygon Directive', () => {
-    var map: MapComponent,
-        layer: PolygonDirective<any>,
-        tooltip: TooltipDirective,
-        testDiv: HTMLElement;
-    before((done) => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-        // Hack to get write-access to readonly property
-        layer = new PolygonDirective<any>(map);
-        return done();
-    });
-    it('should remove Polygon Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (!map.hasLayer(layer)) {
-            throw new Error('The layer is not part of the map before destroying');
-        }
-        layer.ngOnDestroy();
-        /* istanbul ignore if */
-        if (map.hasLayer(layer)) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
+    describe('Destroying a Polygon Directive', () => {
+        it('should remove Polygon Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
 });

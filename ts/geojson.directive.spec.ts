@@ -199,13 +199,12 @@ describe('GeoJSON Directive', () => {
         var popup: PopupDirective,
             testDiv: HTMLElement,
             puLayer: GeoJSONDirective<any>;
-        before((done) => {
+        before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             puLayer = Object.create(new GeoJSONDirective<any>(map), { popupDirective: {value: popup} });
-            return done();
         });
         it('should bind popup', () => {
             puLayer.ngAfterViewInit();
@@ -217,13 +216,12 @@ describe('GeoJSON Directive', () => {
         var tooltip: TooltipDirective,
             testDiv: HTMLElement,
             ttLayer: GeoJSONDirective<any>;
-        before((done) => {
+        before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             ttLayer = Object.create(new GeoJSONDirective<any>(map), { tooltipDirective: {value: tooltip} });
-            return done();
         });
         it('should bind tooltip', () => {
             ttLayer.ngAfterViewInit();

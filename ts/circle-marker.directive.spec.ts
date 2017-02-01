@@ -310,9 +310,6 @@ describe('Circle Directive', () => {
     });
 
     describe('Destroying a Circle Directive', () => {
-        var tooltip: TooltipDirective;
-        var testDiv: HTMLElement;
-
         before(() => {
             // Hack to get write-access to readonly property
             layer = new CircleMarkerDirective<any>(map);

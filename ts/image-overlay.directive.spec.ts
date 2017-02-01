@@ -20,15 +20,16 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Image-Overlay Directive', () => {
+    var map: MapComponent,
+        layer: ImageOverlayDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new ImageOverlayDirective(map);
+    });
+
     describe('[(display)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
             /* istanbul ignore if */
@@ -110,14 +111,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(url)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = TILE_LAYER_URL;
             /* istanbul ignore if */
@@ -174,14 +167,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(opacity)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.opacity = val;
@@ -246,14 +231,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(bounds)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
@@ -334,14 +311,6 @@ describe('Image-Overlay Directive', () => {
     });
 
     describe('[(north)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.north = val;
@@ -412,14 +381,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[(east)]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.east = val;
@@ -656,14 +617,6 @@ describe('Image-Overlay Directive', () => {
 
     // Events
     describe('(add)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -678,14 +631,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(remove)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -700,14 +645,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(popupopen)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -722,14 +659,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(popupclose)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -744,14 +673,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(tooltipopen)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -766,14 +687,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(tooltipclose)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -788,14 +701,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(click)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -810,14 +715,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -832,14 +729,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -854,14 +743,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -876,14 +757,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -898,14 +771,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('(contextmenu)', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -923,14 +788,6 @@ describe('Image-Overlay Directive', () => {
 
 
     describe('[crossOrigin]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
             /* istanbul ignore if */
@@ -962,14 +819,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[interactive]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.interactive = false;
             /* istanbul ignore if */
@@ -1001,14 +850,6 @@ describe('Image-Overlay Directive', () => {
         });
     });
     describe('[alt]', () => {
-        var map: MapComponent,
-            layer: ImageOverlayDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new ImageOverlayDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Test alt';
             layer.alt = val;
@@ -1026,26 +867,19 @@ describe('Image-Overlay Directive', () => {
             }
         });
     });
-});
 
-describe('Destroying a Image-Overlay Directive', () => {
-    var map: MapComponent,
-        layer: ImageOverlayDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        layer = new ImageOverlayDirective(map);
+    describe('Destroying a Image-Overlay Directive', () => {
+        it('should remove Image-Overlay Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
-    it('should remove Image-Overlay Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (!map.hasLayer(layer)) {
-            throw new Error('The layer is not part of the map before destroying');
-        }
-        layer.ngOnDestroy();
-        /* istanbul ignore if */
-        if (map.hasLayer(layer)) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
-    });
+
 });

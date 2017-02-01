@@ -20,15 +20,16 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Tile-Layer Directive', () => {
+    var map: MapComponent,
+        layer: TileLayerDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        layer = new TileLayerDirective(map);
+    });
+
     describe('[(display)]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
             /* istanbul ignore if */
@@ -110,14 +111,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[(url)]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = OSM_TILE_LAYER_URL;
             /* istanbul ignore if */
@@ -174,14 +167,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[(opacity)]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.opacity = val;
@@ -246,14 +231,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[(zIndex)]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
             layer.zIndex = val;
@@ -320,14 +297,6 @@ describe('Tile-Layer Directive', () => {
 
     // Events
     describe('(add)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -342,14 +311,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(remove)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -364,14 +325,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(popupopen)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -386,14 +339,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(popupclose)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -408,14 +353,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tooltipopen)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -430,14 +367,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tooltipclose)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -452,14 +381,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(click)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -474,14 +395,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -496,14 +409,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -518,14 +423,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -540,14 +437,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -562,14 +451,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(contextmenu)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -584,14 +465,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(loading)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -606,13 +479,7 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tileunload)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
             layer.off('tileunload', (<any>layer)._onTileRemove); // Hack to disable another listener
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
@@ -629,14 +496,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tileloadstart)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -651,14 +510,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tileerror)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -673,14 +524,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(tileload)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
@@ -703,14 +546,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('(load)', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {},
                 testEvent: any = { target: layer, testHandle, type: 'load' };
@@ -735,14 +570,6 @@ describe('Tile-Layer Directive', () => {
 
     // Inputs
     describe('[tileSize]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
@@ -763,14 +590,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[bounds]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
@@ -794,14 +613,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[subdomains]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string[] = ['a', 'b', 'c', 'd'];
             layer.subdomains = val;
@@ -831,14 +642,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[className]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             layer.className = val;
@@ -857,14 +660,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[errorTileUrl]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.errorTileUrl = val;
@@ -883,14 +678,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[updateInterval]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.updateInterval = val;
@@ -909,14 +696,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[keepBuffer]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.keepBuffer = val;
@@ -935,14 +714,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[maxNativeZoom]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.maxNativeZoom = val;
@@ -961,14 +732,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[minNativeZoom]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 5);
             layer.minNativeZoom = val;
@@ -987,14 +750,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[zoomOffset]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.zoomOffset = val;
@@ -1013,14 +768,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[tms]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.tms = false;
             /* istanbul ignore if */
@@ -1052,14 +799,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[zoomReverse]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.zoomReverse = false;
             /* istanbul ignore if */
@@ -1091,14 +830,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[detectRetina]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.detectRetina = false;
             /* istanbul ignore if */
@@ -1130,14 +861,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[crossOrigin]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
             /* istanbul ignore if */
@@ -1169,14 +892,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[updateWhenIdle]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenIdle = false;
             /* istanbul ignore if */
@@ -1208,14 +923,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[updateWhenZooming]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenZooming = false;
             /* istanbul ignore if */
@@ -1247,14 +954,6 @@ describe('Tile-Layer Directive', () => {
         });
     });
     describe('[noWrap]', () => {
-        var map: MapComponent,
-            layer: TileLayerDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            layer = new TileLayerDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noWrap = false;
             /* istanbul ignore if */
@@ -1285,26 +984,18 @@ describe('Tile-Layer Directive', () => {
             }
         });
     });
-});
 
-describe('Destroying a Tile-Layer Directive', () => {
-    var map: MapComponent,
-        layer: TileLayerDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        layer = new TileLayerDirective(map);
-    });
-    it('should remove Tile-Layer Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (!map.hasLayer(layer)) {
-            throw new Error('The layer is not part of the map before destroying');
-        }
-        layer.ngOnDestroy();
-        /* istanbul ignore if */
-        if (map.hasLayer(layer)) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
+    describe('Destroying a Tile-Layer Directive', () => {
+        it('should remove Tile-Layer Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
+        });
     });
 });

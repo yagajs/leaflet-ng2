@@ -6,15 +6,16 @@ import { ScaleControlDirective,
 import { point } from 'leaflet';
 
 describe('Scale-Control Directive', () => {
+    var map: MapComponent,
+        control: ScaleControlDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any>map)._size = point(100, 100);
+        (<any>map)._pixelOrigin = point(50, 50);
+        control = new ScaleControlDirective(map);
+    });
+
     describe('[(position)]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
@@ -69,14 +70,6 @@ describe('Scale-Control Directive', () => {
 
     // Events
     describe('(add)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when adding to map', (done: MochaDone) => {
             map.removeControl(control);
 
@@ -87,14 +80,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(remove)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when removing from map', (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
@@ -104,14 +89,6 @@ describe('Scale-Control Directive', () => {
     });
 
     describe('(click)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
@@ -120,14 +97,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.dbclickEvent.subscribe(() => {
                 done();
@@ -136,14 +105,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
@@ -152,14 +113,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
@@ -168,14 +121,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
@@ -185,14 +130,6 @@ describe('Scale-Control Directive', () => {
     });
 
     describe('[opacity]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
@@ -212,14 +149,6 @@ describe('Scale-Control Directive', () => {
     });
 
     describe('[metric]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             control.metric = false;
             /* istanbul ignore if */
@@ -251,14 +180,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('[imperial]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             control.imperial = false;
             /* istanbul ignore if */
