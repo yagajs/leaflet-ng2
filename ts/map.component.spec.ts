@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { MapComponent, LatLngBounds } from './index';
 import { point } from 'leaflet';
 

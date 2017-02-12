@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { PolylineDirective,
     MapComponent,
     PopupDirective,
@@ -8,7 +6,7 @@ import { PolylineDirective,
     LatLng } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { IGenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);

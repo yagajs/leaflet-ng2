@@ -22,7 +22,7 @@ import { CircleMarker,
     LatLngLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { IGenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';

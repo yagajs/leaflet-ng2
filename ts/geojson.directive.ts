@@ -18,7 +18,7 @@ import { GeoJSON,
 import { MarkerDirective } from './marker.directive';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeatureCollection, IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { IGenericGeoJSONFeatureCollection, IGenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';

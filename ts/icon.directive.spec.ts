@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { IconDirective,
     MapComponent,
     TRANSPARENT_PIXEL,

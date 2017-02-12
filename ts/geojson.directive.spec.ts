@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { GeoJSONDirective,
     MapComponent,
     PopupDirective,
@@ -7,7 +5,7 @@ import { GeoJSONDirective,
     LatLng } from './index';
 import { expect } from 'chai';
 import { point, SVG, Layer } from 'leaflet';
-import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from './d.ts/generic-geojson';
+import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 
 describe('GeoJSON Directive', () => {
     var map: MapComponent,
