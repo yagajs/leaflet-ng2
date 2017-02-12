@@ -5,7 +5,7 @@ import { RectangleDirective,
     LatLngExpression,
     LatLngBounds,
     LatLng,
-    IGenericGeoJSONFeature } from './index';
+    GenericGeoJSONFeature } from './index';
 import { point, SVG, latLng, latLngBounds } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 
@@ -230,7 +230,7 @@ describe('Rectangle Directive', () => {
         describe('for Polygon', () => {
             var map: MapComponent,
                 layer: RectangleDirective<any>;
-            const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.Polygon, any> = {
+            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
                     coordinates: [[[0, 1], [1, 1], [0, 0]]],
                     type: 'Polygon'
@@ -304,7 +304,7 @@ describe('Rectangle Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0][0] !== TEST_POLYGON[0][0][1] ||
@@ -322,7 +322,7 @@ describe('Rectangle Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_POLYGON);
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
@@ -337,7 +337,7 @@ describe('Rectangle Directive', () => {
         describe('for MultiPolygon', () => {
             var map: MapComponent,
                 layer: RectangleDirective<any>;
-            const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
+            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
                 geometry: {
                     coordinates: [
                         [[[1, 0], [1, 1], [0, 1]]],
@@ -476,7 +476,7 @@ describe('Rectangle Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0][0][0] !== TEST_MULTIPOLYGON[0][0][0][1] ||
@@ -501,7 +501,7 @@ describe('Rectangle Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0][3][0] !== 3 ||
@@ -1015,7 +1015,7 @@ describe('Rectangle Directive', () => {
             }
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 /* istanbul ignore if */
                 if (val.properties !== TEST_OBJECT) {
                     return done(new Error('Wrong value received'));

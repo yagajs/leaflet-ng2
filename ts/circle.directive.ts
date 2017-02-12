@@ -22,7 +22,7 @@ import { Circle,
     LatLngLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -54,7 +54,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public radiusChange: EventEmitter<number> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -80,7 +80,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     ) {
         super([0, 0]);
 
-        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'LineString', coordinates: []}};
+        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
 
         this.on('remove', () => {
@@ -189,7 +189,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         return this.getRadius();
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.Point, T>) {
+    @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
         let geomType: any = val.geometry.type; // Only 'Point'
@@ -205,8 +205,8 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         /* istanbul ignore next */
         throw new Error('Unsupported geometry type: ' + geomType );
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.Point, T>>this.toGeoJSON());
+    get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.Point, T>>this.toGeoJSON());
     }
 
 
@@ -333,10 +333,10 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     get className(): string {
         return this.options.className;
     }
-    @Input() set style(val: CircleOptions) {
+    @Input() set style(val: CircleMarkerOptions) {
         this.setStyle(val);
     }
-    get style(): CircleOptions {
+    get style(): CircleMarkerOptions {
         return this.options;
     }
 
@@ -381,6 +381,6 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         this.geoJSONChange.emit(this.geoJSON);
     }
     get properties(): T {
-        return this.feature.properties;
+        return (<T>this.feature.properties);
     }
 }

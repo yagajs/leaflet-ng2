@@ -6,7 +6,7 @@ import { CircleDirective,
     LatLng } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
-import { IGenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 describe('Circle Directive', () => {
     createPathTests(CircleDirective);
@@ -281,7 +281,7 @@ describe('Circle Directive', () => {
     describe('[(geoJSON)]', () => {
         var map: MapComponent,
             layer: CircleDirective<any>;
-        const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.Point, any> = {
+        const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Point, any> = {
             geometry: {
                 coordinates: [1, 3],
                 type: 'Point'
@@ -325,7 +325,7 @@ describe('Circle Directive', () => {
             }
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
                 /* istanbul ignore if */
                 if (eventVal.geometry.coordinates[0] !== TEST_VALUE.geometry.coordinates[0] ||
                     eventVal.geometry.coordinates[1] !== TEST_VALUE.geometry.coordinates[1]) {
@@ -337,7 +337,7 @@ describe('Circle Directive', () => {
             layer.geoJSON = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
                 const values: [number, number] = (<any>eventVal.geometry.coordinates);
                 /* istanbul ignore if */
                 if (values[0] !== TEST_POINT[1] ||
@@ -383,7 +383,7 @@ describe('Circle Directive', () => {
             }
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 /* istanbul ignore if */
                 if (val.properties !== TEST_OBJECT) {
                     return done(new Error('Wrong value received'));
