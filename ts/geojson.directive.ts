@@ -18,7 +18,7 @@ import { GeoJSON,
 import { MarkerDirective } from './marker.directive';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeatureCollection, IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeatureCollection, GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -29,7 +29,7 @@ import { TooltipDirective } from './tooltip.directive';
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterViewInit {
     /* tslint:disable:max-line-length */
-    @Output() public dataChange: EventEmitter<IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> = new EventEmitter();
+    @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -46,7 +46,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
     /* tslint:disable:max-line-length */
-    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer}> = new EventEmitter();
+    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer}> = new EventEmitter();
     /* tslint:enable */
 
     public defaultStyle: PathOptions = {};
@@ -61,16 +61,16 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
         super((<GeoJSON.GeoJsonObject>{features: [], type: 'FeatureCollection'}), {
-            filter: (feature: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>) => {
+            filter: (feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>) => {
                 return this.filterFeatures(feature);
             },
-            onEachFeature: (feature: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer) => {
+            onEachFeature: (feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer) => {
                 this.onEachFeatureEvent.emit({feature, layer});
             },
-            pointToLayer: (geoJSON: IGenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer => {
+            pointToLayer: (geoJSON: GenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer => {
                 return this.pointToLayer(geoJSON, latLng);
             },
-            style: (geoJSON: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>): PathOptions => {
+            style: (geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): PathOptions => {
                 return this.styler(geoJSON, this.defaultStyle);
             }
         });
@@ -132,43 +132,43 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
         this.removeFrom((<any>this)._map);
     }
 
-    pointToLayer(geoJSON: IGenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer {
+    pointToLayer(geoJSON: GenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer {
         const marker: MarkerDirective = new MarkerDirective(this.mapComponent);
         marker.setLatLng(latLng);
         return marker;
     }
 
-    styler(geoJSON: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>, defaultStyle: PathOptions): PathOptions {
+    styler(geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, defaultStyle: PathOptions): PathOptions {
         return defaultStyle;
     }
 
-    filterFeatures(geoJSON: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>): boolean {
+    filterFeatures(geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): boolean {
         return true;
     }
 
-    addData(data: IGenericGeoJSONFeature<GeoJSON.GeometryObject, T>): Layer {
+    addData(data: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): Layer {
         const returnValue: Layer = super.addData(data);
 
         if (!this.initialized) {
             return returnValue;
         }
 
-        this.dataChange.emit((<IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON()));
+        this.dataChange.emit((<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON()));
         return returnValue;
     }
 
-    setData(val: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>): this {
+    setData(val: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>): this {
         super.clearLayers();
         super.addData(val);
-        this.dataChange.emit((<IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON()));
+        this.dataChange.emit((<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON()));
         return this;
     }
 
-    @Input() set data(val: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>) {
+    @Input() set data(val: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>) {
         this.setData(val);
     }
-    get data(): IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T> {
-        return (<IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON());
+    get data(): GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T> {
+        return (<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>>this.toGeoJSON());
     }
 }
 

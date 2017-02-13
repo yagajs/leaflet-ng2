@@ -22,7 +22,7 @@ import { Polygon,
     LatLngExpression } from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -51,7 +51,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -162,7 +162,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         return (<any>this)._latlngs;
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         let geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -202,8 +202,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         /* istanbul ignore next */
         throw new Error('Unsupported geometry type: ' + geomType );
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>>this.toGeoJSON());
+    get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>>this.toGeoJSON());
     }
 
 
@@ -393,6 +393,6 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         this.geoJSONChange.emit(this.geoJSON);
     }
     get properties(): T {
-        return this.feature.properties;
+        return (<T>this.feature.properties);
     }
 }
