@@ -8,6 +8,7 @@ import { PolygonDirective,
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { expect } from 'chai';
 
 describe('Polygon Directive', () => {
     createPathTests(PolygonDirective);
@@ -29,49 +30,25 @@ describe('Polygon Directive', () => {
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if ((<any>layer)._latlngs[0][0] !== TEST_VALUE[0][0] ||
-                    (<any>layer)._latlngs[0][1] !== TEST_VALUE[0][1] ||
-                    (<any>layer)._latlngs[0][2] !== TEST_VALUE[0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ (<any>layer)._latlngs }`);
-                }
-
+                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0] !== TEST_VALUE[0][0] ||
-                    layer.latLngs[0][1] !== TEST_VALUE[0][1] ||
-                    layer.latLngs[0][2] !== TEST_VALUE[0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0] !== TEST_VALUE[0][0] ||
-                    layer.latLngs[0][1] !== TEST_VALUE[0][1] ||
-                    layer.latLngs[0][2] !== TEST_VALUE[0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when adding in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
-                /* istanbul ignore if */
-                if ((<LatLng[][]>layer.latLngs)[0][3].lat !== 3 ||
-                    (<LatLng[][]>layer.latLngs)[0][3].lng !== 3) {
-                    throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs }`);
-                }
+                expect((<LatLng[][]>layer.latLngs)[0][3].lat).to.equal(3);
+                expect((<LatLng[][]>layer.latLngs)[0][3].lng).to.equal(3);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0] !== TEST_VALUE[0][0] ||
-                        eventVal[0][1] !== TEST_VALUE[0][1] ||
-                        eventVal[0][2] !== TEST_VALUE[0][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -79,12 +56,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0] !== TEST_VALUE[0][0] ||
-                        eventVal[0][1] !== TEST_VALUE[0][1] ||
-                        eventVal[0][2] !== TEST_VALUE[0][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -116,65 +88,25 @@ describe('Polygon Directive', () => {
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if ((<any>layer)._latlngs[0][0][0] !== TEST_VALUE[0][0][0] ||
-                    (<any>layer)._latlngs[0][0][1] !== TEST_VALUE[0][0][1] ||
-                    (<any>layer)._latlngs[0][0][2] !== TEST_VALUE[0][0][2] ||
-
-                    (<any>layer)._latlngs[1][0][0] !== TEST_VALUE[1][0][0] ||
-                    (<any>layer)._latlngs[1][0][1] !== TEST_VALUE[1][0][1] ||
-                    (<any>layer)._latlngs[1][0][2] !== TEST_VALUE[1][0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ (<any>layer)._latlngs }`);
-                }
-
+                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0][0] !== TEST_VALUE[0][0][0] ||
-                    layer.latLngs[0][0][1] !== TEST_VALUE[0][0][1] ||
-                    layer.latLngs[0][0][2] !== TEST_VALUE[0][0][2] ||
-
-                    layer.latLngs[1][0][0] !== TEST_VALUE[1][0][0] ||
-                    layer.latLngs[1][0][1] !== TEST_VALUE[1][0][1] ||
-                    layer.latLngs[1][0][2] !== TEST_VALUE[1][0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0][0] !== TEST_VALUE[0][0][0] ||
-                    layer.latLngs[0][0][1] !== TEST_VALUE[0][0][1] ||
-                    layer.latLngs[0][0][2] !== TEST_VALUE[0][0][2] ||
-
-                    layer.latLngs[1][0][0] !== TEST_VALUE[1][0][0] ||
-                    layer.latLngs[1][0][1] !== TEST_VALUE[1][0][1] ||
-                    layer.latLngs[1][0][2] !== TEST_VALUE[1][0][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when adding in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0][3].lat !== 3 ||
-                    layer.latLngs[0][0][3].lng !== 3) {
-                    throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs[0][0] }`);
-                }
+                expect(layer.latLngs[0][0][3].lat).to.equal(3);
+                expect(layer.latLngs[0][0][3].lng).to.equal(3);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0][0] !== TEST_VALUE[0][0][0] ||
-                        eventVal[0][0][1] !== TEST_VALUE[0][0][1] ||
-                        eventVal[0][0][2] !== TEST_VALUE[0][0][2] ||
-
-                        eventVal[1][0][0] !== TEST_VALUE[1][0][0] ||
-                        eventVal[1][0][1] !== TEST_VALUE[1][0][1] ||
-                        eventVal[1][0][2] !== TEST_VALUE[1][0][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -182,16 +114,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0][0] !== TEST_VALUE[0][0][0] ||
-                        eventVal[0][0][1] !== TEST_VALUE[0][0][1] ||
-                        eventVal[0][0][2] !== TEST_VALUE[0][0][2] ||
-
-                        eventVal[1][0][0] !== TEST_VALUE[1][0][0] ||
-                        eventVal[1][0][1] !== TEST_VALUE[1][0][1] ||
-                        eventVal[1][0][2] !== TEST_VALUE[1][0][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -244,12 +167,7 @@ describe('Polygon Directive', () => {
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.geoJSON[0] !== TEST_VALUE[0] ||
-                    layer.geoJSON[1] !== TEST_VALUE[1] ||
-                    layer.geoJSON[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-                }
+                expect(layer.geoJSON).to.deep.equal(TEST_VALUE);
             });
             it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_POLYGON);
@@ -274,12 +192,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: LatLng[]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0] !== TEST_VALUE[0] ||
-                        eventVal[1] !== TEST_VALUE[1] ||
-                        eventVal[2] !== TEST_VALUE[2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -355,29 +268,7 @@ describe('Polygon Directive', () => {
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
-
-                /* istanbul ignore if */
-                if (layer.geoJSON.geometry.type !== 'MultiPolygon') {
-                    throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
-                }
-
-                const values: [number, number][][][] = (<any>layer.geoJSON.geometry.coordinates);
-                /* istanbul ignore if */
-                if (values[0][0][0][0] !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                    values[0][0][0][1] !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                    values[0][0][1][0] !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                    values[0][0][1][1] !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                    values[0][0][2][0] !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                    values[0][0][2][1] !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
-
-                    values[1][0][0][0] !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                    values[1][0][0][1] !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                    values[1][0][1][0] !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                    values[1][0][1][1] !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                    values[1][0][2][0] !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                    values[1][0][2][1] !== TEST_VALUE.geometry.coordinates[1][0][2][1]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-                }
+                expect(layer.geoJSON).to.deep.equal(TEST_VALUE);
             });
             it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
@@ -420,28 +311,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSON.Feature<GeoJSON.MultiPolygon>) => {
-                    /* istanbul ignore if */
-                    if (eventVal.geometry.type !== 'MultiPolygon') {
-                        return done(new Error('Received wrong geometry type: ' + eventVal.geometry.type));
-                    }
-                    const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
-
-                    /* istanbul ignore if */
-                    if (values[0][0][0][0] !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                        values[0][0][0][1] !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                        values[0][0][1][0] !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                        values[0][0][1][1] !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                        values[0][0][2][0] !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                        values[0][0][2][1] !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
-
-                        values[1][0][0][0] !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                        values[1][0][0][1] !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                        values[1][0][1][0] !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                        values[1][0][1][1] !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                        values[1][0][2][0] !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                        values[1][0][2][1] !== TEST_VALUE.geometry.coordinates[1][0][2][1]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -491,18 +361,12 @@ describe('Polygon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             layer.smoothFactor = val;
-            /* istanbul ignore if */
-            if (layer.options.smoothFactor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.smoothFactor }`);
-            }
+            expect(layer.options.smoothFactor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             layer.smoothFactor = val;
-            /* istanbul ignore if */
-            if (layer.smoothFactor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.smoothFactor }`);
-            }
+            expect(layer.smoothFactor).to.equal(val);
         });
     });
 
@@ -515,24 +379,15 @@ describe('Polygon Directive', () => {
         };
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
-            /* istanbul ignore if */
-            if (layer.feature.properties !== TEST_OBJECT) {
-                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.feature.properties }`);
-            }
+            expect(layer.feature.properties).to.equal(TEST_OBJECT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.properties = TEST_OBJECT;
-            /* istanbul ignore if */
-            if (layer.properties !== TEST_OBJECT) {
-                throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layer.properties }`);
-            }
+            expect(layer.properties).to.equal(TEST_OBJECT);
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
-                /* istanbul ignore if */
-                if (val.properties !== TEST_OBJECT) {
-                    return done(new Error('Wrong value received'));
-                }
+                expect(val.properties).to.equal(TEST_OBJECT);
                 return done();
             });
             layer.properties = TEST_OBJECT;
@@ -542,32 +397,20 @@ describe('Polygon Directive', () => {
     describe('[noClip]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noClip = false;
-            /* istanbul ignore if */
-            if (layer.options.noClip) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.noClip).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.noClip = false;
             layer.noClip = true;
-            /* istanbul ignore if */
-            if (!layer.options.noClip) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.noClip).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.noClip = false;
-            /* istanbul ignore if */
-            if (layer.noClip) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.noClip).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.noClip = true;
-            /* istanbul ignore if */
-            if (!layer.noClip) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.noClip).to.equal(true);
         });
     });
 
@@ -584,14 +427,7 @@ describe('Polygon Directive', () => {
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            /* istanbul ignore if */
-            if (!(<any>layerWithPopup)._popup) {
-                throw new Error('There is no popup binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layerWithPopup)._popup !== popup) {
-                throw new Error('There is a wrong popup binded');
-            }
+            expect((<any>layerWithPopup)._popup).to.equal(popup);
         });
     });
 
@@ -608,28 +444,15 @@ describe('Polygon Directive', () => {
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            /* istanbul ignore if */
-            if (!(<any>layerWithTooltip)._tooltip) {
-                throw new Error('There is no tooltip binded');
-            }
-            /* istanbul ignore if */
-            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
-                throw new Error('There is a wrong tooltip binded');
-            }
+            expect((<any>layerWithTooltip)._tooltip).to.equal(tooltip);
         });
     });
 
     describe('Destroying a Polygon Directive', () => {
         it('should remove Polygon Directive from map on destroy', () => {
-            /* istanbul ignore if */
-            if (!map.hasLayer(layer)) {
-                throw new Error('The layer is not part of the map before destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(true);
             layer.ngOnDestroy();
-            /* istanbul ignore if */
-            if (map.hasLayer(layer)) {
-                throw new Error('The layer is still part of the map after destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(false);
         });
     });
 });

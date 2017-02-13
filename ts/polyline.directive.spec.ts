@@ -9,6 +9,7 @@ import { PolylineDirective,
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { expect } from 'chai';
 
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);
@@ -30,13 +31,7 @@ describe('Polyline Directive', () => {
             const TEST_VALUE: LatLng[] = [latLng(0, 1), latLng(1, 1), latLng(1, 0)];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if ((<any>layer)._latlngs[0] !== TEST_VALUE[0] ||
-                    (<any>layer)._latlngs[1] !== TEST_VALUE[1] ||
-                    (<any>layer)._latlngs[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ (<any>layer)._latlngs }`);
-                }
-
+                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
