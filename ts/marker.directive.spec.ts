@@ -8,6 +8,7 @@ import { MarkerDirective,
     IconDirective,
     TRANSPARENT_PIXEL } from './index';
 import { point, latLng } from 'leaflet';
+import { expect } from 'chai';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -33,19 +34,14 @@ describe('Marker Directive', () => {
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
-            /* istanbul ignore if */
-            if (hasAsChild(layer.getPane(), layer.getElement())) {
-                throw new Error('Map is still parent element of the tile layer');
-            }
+
+            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(false);
         });
         it('should re-add DOM container when display is true again', () => {
             layer.display = false;
             layer.display = true;
 
-            /* istanbul ignore if */
-            if (!hasAsChild(layer.getPane(), layer.getElement())) {
-                throw new Error('Map is not parent element of the tile layer');
-            }
+            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
             const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
@@ -75,20 +71,12 @@ describe('Marker Directive', () => {
                     return done();
                 }
             }
-            /* istanbul ignore next */
-            return done(new Error('There is no event on listener'));
         });
         it('should set to false by removing from map', (done: MochaDone) => {
 
             layer.displayChange.subscribe((val: boolean) => {
-                /* istanbul ignore if */
-                if (val !== false) {
-                    return new Error('Wrong value emitted');
-                }
-                /* istanbul ignore if */
-                if (layer.display) {
-                    return new Error('Wrong value from variable call');
-                }
+                expect(val).to.equal(false);
+                expect(layer.display).to.equal(false);
                 done();
             });
 
@@ -97,14 +85,8 @@ describe('Marker Directive', () => {
         it('should set to true when adding to map again', (done: MochaDone) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
-                /* istanbul ignore if */
-                if (val !== true) {
-                    return done(new Error('Wrong value emitted'));
-                }
-                /* istanbul ignore if */
-                if (!layer.display) {
-                    return done(new Error('Wrong value from variable call'));
-                }
+                expect(val).to.equal(true);
+                expect(layer.display).to.equal(true);
                 done();
             });
 
@@ -112,50 +94,26 @@ describe('Marker Directive', () => {
         });
     });
     describe('[(opacity)]', () => {
-        it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random();
             layer.opacity = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.options.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.options.opacity).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random();
             layer.opacity = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.opacity).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random();
             layer.setOpacity(val);
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
 
             layer.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -165,10 +123,7 @@ describe('Marker Directive', () => {
             const val: number = Math.random();
 
             layer.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -183,35 +138,23 @@ describe('Marker Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lat = val;
-            /* istanbul ignore if */
-            if (layer.getLatLng().lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getLatLng().lat }`);
-            }
+            expect(layer.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lat = val;
-            /* istanbul ignore if */
-            if (layer.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lat }`);
-            }
+            expect(layer.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             layer.setLatLng([val, 0]);
-            /* istanbul ignore if */
-            if (layer.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lat }`);
-            }
+            expect(layer.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             layer.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -221,10 +164,7 @@ describe('Marker Directive', () => {
             const val: number = Math.random() * 100;
 
             layer.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -239,35 +179,23 @@ describe('Marker Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lng = val;
-            /* istanbul ignore if */
-            if (layer.getLatLng().lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getLatLng().lng }`);
-            }
+            expect(layer.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             layer.lng = val;
-            /* istanbul ignore if */
-            if (layer.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lng }`);
-            }
+            expect(layer.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             layer.setLatLng([0, val]);
-            /* istanbul ignore if */
-            if (layer.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.lng }`);
-            }
+            expect(layer.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             layer.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -277,10 +205,7 @@ describe('Marker Directive', () => {
             const val: number = Math.random() * 100;
 
             layer.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -295,35 +220,23 @@ describe('Marker Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             layer.position = val;
-            /* istanbul ignore if */
-            if (layer.getLatLng().lat !== val.lat || layer.getLatLng().lng !== val.lng) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.getLatLng() }`);
-            }
+            expect(layer.getLatLng()).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             layer.position = val;
-            /* istanbul ignore if */
-            if (layer.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.position }`);
-            }
+            expect(layer.position).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             layer.setLatLng(val);
-            /* istanbul ignore if */
-            if (layer.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.position }`);
-            }
+            expect(layer.position).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(val);
                 return done();
             });
 
@@ -333,10 +246,7 @@ describe('Marker Directive', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(val);
                 return done();
             });
 
@@ -349,68 +259,44 @@ describe('Marker Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.title = val;
-            /* istanbul ignore if */
-            if (layer.options.title !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.title }`);
-            }
+            expect(layer.options.title).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'http://test';
             layer.title = val;
-            /* istanbul ignore if */
-            if (layer.title !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.title }`);
-            }
+            expect(layer.title).to.equal(val);
         });
     });
     describe('[alt]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.alt = val;
-            /* istanbul ignore if */
-            if (layer.options.alt !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.alt }`);
-            }
+            expect(layer.options.alt).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'http://test';
             layer.alt = val;
-            /* istanbul ignore if */
-            if (layer.alt !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.alt }`);
-            }
+            expect(layer.alt).to.equal(val);
         });
     });
 
     describe('[draggable]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.draggable = false;
-            /* istanbul ignore if */
-            if (layer.dragging.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.dragging.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.dragging.disable();
             layer.draggable = true;
-            /* istanbul ignore if */
-            if (!layer.dragging.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.dragging.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.draggable = false;
-            /* istanbul ignore if */
-            if (layer.draggable) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.draggable).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.draggable = true;
-            /* istanbul ignore if */
-            if (!layer.draggable) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.draggable).to.equal(true);
         });
     });
 
@@ -420,10 +306,7 @@ describe('Marker Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.dragendEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testHandle);
                 return done();
             });
             layer.fire('dragend', testEvent);
@@ -434,10 +317,7 @@ describe('Marker Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.dragstartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testHandle);
                 return done();
             });
             layer.fire('dragstart', testEvent);
@@ -448,10 +328,7 @@ describe('Marker Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.movestartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testHandle);
                 return done();
             });
             layer.fire('movestart', testEvent);
@@ -462,10 +339,7 @@ describe('Marker Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.dragEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testHandle);
                 return done();
             });
             layer.fire('drag', testEvent);
@@ -476,10 +350,7 @@ describe('Marker Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.moveendEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testHandle);
                 return done();
             });
             layer.fire('moveend', testEvent);
@@ -569,15 +440,9 @@ describe('Marker Directive', () => {
 
     describe('Destroying a Marker Directive', () => {
         it('should remove Marker Directive from map on destroy', () => {
-            /* istanbul ignore if */
-            if (!map.hasLayer(layer)) {
-                throw new Error('The layer is not part of the map before destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(true);
             layer.ngOnDestroy();
-            /* istanbul ignore if */
-            if (map.hasLayer(layer)) {
-                throw new Error('The layer is still part of the map after destroying');
-            }
+            expect(map.hasLayer(layer)).to.equal(false);
         });
     });
 });

@@ -6,6 +6,7 @@ import { IconDirective,
     Point,
     Event } from './index';
 import { point } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Icon Directive', () => {
     let map: MapComponent,
@@ -21,6 +22,7 @@ describe('Icon Directive', () => {
     describe('(update)', () => {
         it('should fire event in Angular when changing', (done: MochaDone) => {
             icon.updateEvent.subscribe((event: any) => {
+                expect(event.target).to.equal(icon);
                 /* istanbul ignore if */
                 if (event.target !== icon) {
                     return done(new Error('Wrong event returned'));
@@ -36,26 +38,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.iconUrl = val;
-            /* istanbul ignore if */
-            if (icon.options.iconUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconUrl }`);
-            }
+            expect(icon.options.iconUrl).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.iconUrl = val;
-            /* istanbul ignore if */
-            if (icon.iconUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.iconUrl }`);
-            }
+            expect(icon.iconUrl).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.iconUrl = val;
@@ -65,26 +58,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconSize = val;
-            /* istanbul ignore if */
-            if (icon.options.iconSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconSize }`);
-            }
+            expect(icon.options.iconSize).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconSize = val;
-            /* istanbul ignore if */
-            if (icon.iconSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.iconSize }`);
-            }
+            expect(icon.iconSize).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.iconSize = val;
@@ -94,26 +78,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconAnchor = val;
-            /* istanbul ignore if */
-            if (icon.options.iconAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.iconAnchor }`);
-            }
+            expect(icon.iconAnchor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.iconAnchor = val;
-            /* istanbul ignore if */
-            if (icon.iconAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.iconAnchor }`);
-            }
+            expect(icon.iconAnchor).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.iconAnchor = val;
@@ -131,18 +106,12 @@ describe('Icon Directive', () => {
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.popupAnchor = val;
-            /* istanbul ignore if */
-            if (icon.popupAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.popupAnchor }`);
-            }
+            expect(icon.popupAnchor).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.popupAnchor = val;
@@ -152,26 +121,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.shadowUrl = val;
-            /* istanbul ignore if */
-            if (icon.options.shadowUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowUrl }`);
-            }
+            expect(icon.options.shadowUrl).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
             icon.shadowUrl = val;
-            /* istanbul ignore if */
-            if (icon.shadowUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.shadowUrl }`);
-            }
+            expect(icon.shadowUrl).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.shadowUrl = val;
@@ -181,26 +141,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowSize = val;
-            /* istanbul ignore if */
-            if (icon.options.shadowSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowSize }`);
-            }
+            expect(icon.options.shadowSize).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowSize = val;
-            /* istanbul ignore if */
-            if (icon.shadowSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.shadowSize }`);
-            }
+            expect(icon.shadowSize).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.shadowSize = val;
@@ -210,26 +161,17 @@ describe('Icon Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowAnchor = val;
-            /* istanbul ignore if */
-            if (icon.options.shadowAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.options.shadowAnchor }`);
-            }
+            expect(icon.options.shadowAnchor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.shadowAnchor = val;
-            /* istanbul ignore if */
-            if (icon.shadowAnchor !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ icon.shadowAnchor }`);
-            }
+            expect(icon.shadowAnchor).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
             icon.updateEvent.subscribe((ev: Event) => {
-                /* istanbul ignore if */
-                if (ev.target !== icon) {
-                    return done(new Error('Wrong Event fired...'));
-                }
+                expect(ev.target).to.equal(icon);
                 return done();
             });
             icon.shadowAnchor = val;

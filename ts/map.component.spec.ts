@@ -2,6 +2,7 @@
 
 import { MapComponent, LatLngBounds } from './index';
 import { point } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Map Component', () => {
     let map: MapComponent;
@@ -15,35 +16,23 @@ describe('Map Component', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             map.lat = val;
-            /* istanbul ignore if */
-            if (map.getCenter().lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.getCenter().lat }`);
-            }
+            expect(map.getCenter().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             map.lat = val;
-            /* istanbul ignore if */
-            if (map.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.lat }`);
-            }
+            expect(map.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             map.setView([val, 0], 0);
-            /* istanbul ignore if */
-            if (map.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.lat }`);
-            }
+            expect(map.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             map.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -53,10 +42,7 @@ describe('Map Component', () => {
             const val: number = Math.random() * 100;
 
             map.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -83,35 +69,23 @@ describe('Map Component', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             map.lng = val;
-            /* istanbul ignore if */
-            if (map.getCenter().lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.getCenter().lng }`);
-            }
+            expect(map.getCenter().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             map.lng = val;
-            /* istanbul ignore if */
-            if (map.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.lng }`);
-            }
+            expect(map.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             map.setView([0, val], 0);
-            /* istanbul ignore if */
-            if (map.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.lng }`);
-            }
+            expect(map.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             map.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -121,10 +95,7 @@ describe('Map Component', () => {
             const val: number = Math.random() * 100;
 
             map.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -148,50 +119,26 @@ describe('Map Component', () => {
         });
     });
     describe('[(zoom)]', () => {
-        it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.zoom = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (map.getZoom() !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ map.getZoom() }`));
-                }
-                return done();
-            }, 0);
-
+            expect(map.getZoom()).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.zoom = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (map.zoom !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ map.zoom }`));
-                }
-                return done();
-            }, 0);
-
+            expect(map.zoom).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.setView([0, 0], val);
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (map.zoom !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ map.zoom }`));
-                }
-                return done();
-            }, 0);
-
+            expect(map.zoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.zoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -201,10 +148,7 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.zoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -231,35 +175,23 @@ describe('Map Component', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.minZoom = val;
-            /* istanbul ignore if */
-            if (map.getMinZoom() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.getMinZoom() }`);
-            }
+            expect(map.getMinZoom()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.minZoom = val;
-            /* istanbul ignore if */
-            if (map.minZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.minZoom }`);
-            }
+            expect(map.minZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.setMinZoom(val);
-            /* istanbul ignore if */
-            if (map.zoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.minZoom }`);
-            }
+            expect(map.minZoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.minZoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -269,10 +201,7 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.minZoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -283,35 +212,23 @@ describe('Map Component', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.maxZoom = val;
-            /* istanbul ignore if */
-            if (map.getMaxZoom() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.getMaxZoom() }`);
-            }
+            expect(map.getMaxZoom()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.maxZoom = val;
-            /* istanbul ignore if */
-            if (map.maxZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxZoom }`);
-            }
+            expect(map.maxZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.ceil(Math.random() * 15);
             map.setMaxZoom(val);
-            /* istanbul ignore if */
-            if (map.maxZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxZoom }`);
-            }
+            expect(map.maxZoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.maxZoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -321,10 +238,7 @@ describe('Map Component', () => {
             const val: number = Math.ceil(Math.random() * 15);
 
             map.maxZoomChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -338,10 +252,7 @@ describe('Map Component', () => {
                 [Math.random() * 100, Math.random() * 100]
             ]);
             map.setMaxBounds(val);
-            /* istanbul ignore if */
-            if ((<any>map).options.maxBounds !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxBounds }`);
-            }
+            expect(map.options.maxBounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLngBounds = new LatLngBounds([
@@ -349,10 +260,7 @@ describe('Map Component', () => {
                 [Math.random() * 100, Math.random() * 100]
             ]);
             map.maxBounds = val;
-            /* istanbul ignore if */
-            if (map.maxBounds !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxBounds }`);
-            }
+            expect(map.maxBounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLngBounds = new LatLngBounds([
@@ -360,10 +268,7 @@ describe('Map Component', () => {
                 [Math.random() * 100, Math.random() * 100]
             ]);
             map.setMaxBounds(val);
-            /* istanbul ignore if */
-            if (map.maxBounds !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxBounds }`);
-            }
+            expect(map.maxBounds).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLngBounds = new LatLngBounds([
@@ -372,10 +277,7 @@ describe('Map Component', () => {
             ]);
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -388,10 +290,7 @@ describe('Map Component', () => {
             ]);
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -405,10 +304,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.baselayerchangeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('baselayerchange', testEvent);
@@ -419,10 +315,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.overlayaddEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('overlayadd', testEvent);
@@ -433,10 +326,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.overlayremoveEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('overlayremove', testEvent);
@@ -447,10 +337,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.layeraddEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('layeradd', testEvent);
@@ -461,10 +348,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.layerremoveEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('layerremove', testEvent);
@@ -475,10 +359,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.zoomlevelschangeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('zoomlevelschange', testEvent);
@@ -489,10 +370,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.resizeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('resize', testEvent);
@@ -503,10 +381,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.unloadEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('unload', testEvent);
@@ -517,10 +392,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.viewresetEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('viewreset', testEvent);
@@ -531,10 +403,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.loadEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('load', testEvent);
@@ -545,10 +414,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.zoomstartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('zoomstart', testEvent);
@@ -559,10 +425,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.movestartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('movestart', testEvent);
@@ -573,10 +436,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.zoomEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('zoom', testEvent);
@@ -587,10 +447,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.moveEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('move', testEvent);
@@ -601,10 +458,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.zoomendEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('zoomend', testEvent);
@@ -615,10 +469,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.moveendEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('moveend', testEvent);
@@ -629,10 +480,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.popupopenEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('popupopen', testEvent);
@@ -643,10 +491,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.popupcloseEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('popupclose', testEvent);
@@ -657,10 +502,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.autopanstartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('autopanstart', testEvent);
@@ -671,10 +513,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.tooltipopenEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('tooltipopen', testEvent);
@@ -685,10 +524,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.tooltipcloseEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('tooltipclose', testEvent);
@@ -699,10 +535,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.clickEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('click', testEvent);
@@ -714,10 +547,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle, originalEvent: {shiftKey: false }};
             map.dblclickEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('dblclick', testEvent);
@@ -728,10 +558,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.mousedownEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('mousedown', testEvent);
@@ -742,10 +569,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.mouseupEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('mouseup', testEvent);
@@ -756,10 +580,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.mouseoverEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('mouseover', testEvent);
@@ -770,10 +591,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.mouseoutEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('mouseout', testEvent);
@@ -784,10 +602,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.mousemoveEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('mousemove', testEvent);
@@ -798,10 +613,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.contextmenuEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('contextmenu', testEvent);
@@ -812,10 +624,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.keypressEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('keypress', testEvent);
@@ -826,10 +635,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             map.preclickEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('preclick', testEvent);
@@ -840,10 +646,7 @@ describe('Map Component', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle, center: {lat: 1, lng: 1}, zoom: 1 };
             map.zoomanimEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             map.fire('zoomanim', testEvent);
@@ -853,682 +656,430 @@ describe('Map Component', () => {
     describe('[closePopupOnClick]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.closePopupOnClick = false;
-            /* istanbul ignore if */
-            if (map.options.closePopupOnClick) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.closePopupOnClick).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.closePopupOnClick = false;
             map.closePopupOnClick = true;
-            /* istanbul ignore if */
-            if (!map.options.closePopupOnClick) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.closePopupOnClick).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.closePopupOnClick = false;
-            /* istanbul ignore if */
-            if (map.closePopupOnClick) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.closePopupOnClick).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.closePopupOnClick = true;
-            /* istanbul ignore if */
-            if (!map.closePopupOnClick) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.closePopupOnClick).to.equal(true);
         });
     });
     describe('[zoomSnap]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomSnap = val;
-            /* istanbul ignore if */
-            if (map.options.zoomSnap !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomSnap }`);
-            }
+            expect(map.options.zoomSnap !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomSnap = val;
-            /* istanbul ignore if */
-            if (map.zoomSnap !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.zoomSnap }`);
-            }
+            expect(map.zoomSnap !== val).to.equal(false);
         });
     });
     describe('[zoomDelta]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomDelta = val;
-            /* istanbul ignore if */
-            if (map.options.zoomDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomDelta }`);
-            }
+            expect(map.options.zoomDelta !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10) / 10;
             map.zoomDelta = val;
-            /* istanbul ignore if */
-            if (map.zoomDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.zoomDelta }`);
-            }
+            expect(map.zoomDelta !== val).to.equal(false);
         });
     });
     describe('[trackResize]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.trackResize = false;
-            /* istanbul ignore if */
-            if (map.options.trackResize) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.trackResize).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.trackResize = false;
             map.trackResize = true;
-            /* istanbul ignore if */
-            if (!map.options.trackResize) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.trackResize).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.trackResize = false;
-            /* istanbul ignore if */
-            if (map.trackResize) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.trackResize).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.trackResize = true;
-            /* istanbul ignore if */
-            if (!map.trackResize) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.trackResize).to.equal(true);
         });
     });
     describe('[boxZoomEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.boxZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.boxZoom.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.boxZoom.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.boxZoom.disable();
             map.boxZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.boxZoom.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.boxZoom.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.boxZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.boxZoomEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.boxZoomEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.boxZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.boxZoomEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.boxZoomEnabled).to.equal(true);
         });
     });
     describe('[doubleClickZoomEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.doubleClickZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.doubleClickZoom.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.doubleClickZoom.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.doubleClickZoom.disable();
             map.doubleClickZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.doubleClickZoom.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.doubleClickZoom.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.doubleClickZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.doubleClickZoomEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.doubleClickZoomEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.doubleClickZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.doubleClickZoomEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.doubleClickZoomEnabled).to.equal(true);
         });
     });
     describe('[draggingEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.draggingEnabled = false;
-            /* istanbul ignore if */
-            if (map.dragging.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.dragging.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.dragging.disable();
             map.draggingEnabled = true;
-            /* istanbul ignore if */
-            if (!map.dragging.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.dragging.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.draggingEnabled = false;
-            /* istanbul ignore if */
-            if (map.draggingEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.draggingEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.draggingEnabled = true;
-            /* istanbul ignore if */
-            if (!map.draggingEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.draggingEnabled).to.equal(true);
         });
     });
     describe('[fadeAnimation]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.fadeAnimation = false;
-            /* istanbul ignore if */
-            if (map.options.fadeAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.fadeAnimation).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.fadeAnimation = false;
             map.fadeAnimation = true;
-            /* istanbul ignore if */
-            if (!map.options.fadeAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.fadeAnimation).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.fadeAnimation = false;
-            /* istanbul ignore if */
-            if (map.fadeAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.fadeAnimation).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.fadeAnimation = true;
-            /* istanbul ignore if */
-            if (!map.fadeAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.fadeAnimation).to.equal(true);
         });
     });
     describe('[markerZoomAnimation]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.markerZoomAnimation = false;
-            /* istanbul ignore if */
-            if (map.options.markerZoomAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.markerZoomAnimation).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.markerZoomAnimation = false;
             map.markerZoomAnimation = true;
-            /* istanbul ignore if */
-            if (!map.options.markerZoomAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.markerZoomAnimation).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.markerZoomAnimation = false;
-            /* istanbul ignore if */
-            if (map.markerZoomAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.markerZoomAnimation).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.markerZoomAnimation = true;
-            /* istanbul ignore if */
-            if (!map.fadeAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.fadeAnimation).to.equal(true);
         });
     });
     describe('[transform3DLimit]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.transform3DLimit = val;
-            /* istanbul ignore if */
-            if (map.options.transform3DLimit !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.transform3DLimit }`);
-            }
+            expect(map.options.transform3DLimit !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.transform3DLimit = val;
-            /* istanbul ignore if */
-            if (map.transform3DLimit !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.transform3DLimit }`);
-            }
+            expect(map.transform3DLimit !== val).to.equal(false);
         });
     });
     describe('[zoomAnimation]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.zoomAnimation = false;
-            /* istanbul ignore if */
-            if (map.options.zoomAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.zoomAnimation).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.zoomAnimation = false;
             map.zoomAnimation = true;
-            /* istanbul ignore if */
-            if (!map.options.zoomAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.zoomAnimation).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.zoomAnimation = false;
-            /* istanbul ignore if */
-            if (map.zoomAnimation) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.zoomAnimation).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.zoomAnimation = true;
-            /* istanbul ignore if */
-            if (!map.zoomAnimation) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.zoomAnimation).to.equal(true);
         });
     });
     describe('[zoomAnimationThreshold]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.zoomAnimationThreshold = val;
-            /* istanbul ignore if */
-            if (map.options.zoomAnimationThreshold !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.zoomAnimationThreshold }`);
-            }
+            expect(map.options.zoomAnimationThreshold !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.zoomAnimationThreshold = val;
-            /* istanbul ignore if */
-            if (map.zoomAnimationThreshold !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.zoomAnimationThreshold }`);
-            }
+            expect(map.zoomAnimationThreshold !== val).to.equal(false);
         });
     });
     describe('[inertia]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.inertia = false;
-            /* istanbul ignore if */
-            if (map.options.inertia) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.inertia).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.inertia = false;
             map.inertia = true;
-            /* istanbul ignore if */
-            if (!map.options.inertia) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.inertia).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.inertia = false;
-            /* istanbul ignore if */
-            if (map.inertia) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.inertia).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.inertia = true;
-            /* istanbul ignore if */
-            if (!map.inertia) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.inertia).to.equal(true);
         });
     });
     describe('[inertiaDeceleration]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaDeceleration = val;
-            /* istanbul ignore if */
-            if (map.options.inertiaDeceleration !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.inertiaDeceleration }`);
-            }
+            expect(map.options.inertiaDeceleration !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaDeceleration = val;
-            /* istanbul ignore if */
-            if (map.inertiaDeceleration !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.inertiaDeceleration }`);
-            }
+            expect(map.inertiaDeceleration !== val).to.equal(false);
         });
     });
     describe('[inertiaMaxSpeed]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaMaxSpeed = val;
-            /* istanbul ignore if */
-            if (map.options.inertiaMaxSpeed !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.inertiaMaxSpeed }`);
-            }
+            expect(map.options.inertiaMaxSpeed !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.inertiaMaxSpeed = val;
-            /* istanbul ignore if */
-            if (map.inertiaMaxSpeed !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.inertiaMaxSpeed }`);
-            }
+            expect(map.inertiaMaxSpeed !== val).to.equal(false);
         });
     });
     describe('[easeLinearity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.easeLinearity = val;
-            /* istanbul ignore if */
-            if (map.options.easeLinearity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.easeLinearity }`);
-            }
+            expect(map.options.easeLinearity !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.easeLinearity = val;
-            /* istanbul ignore if */
-            if (map.easeLinearity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.easeLinearity }`);
-            }
+            expect(map.easeLinearity !== val).to.equal(false);
         });
     });
     describe('[worldCopyJump]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.worldCopyJump = false;
-            /* istanbul ignore if */
-            if (map.options.worldCopyJump) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.worldCopyJump).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.worldCopyJump = false;
             map.worldCopyJump = true;
-            /* istanbul ignore if */
-            if (!map.options.worldCopyJump) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.worldCopyJump).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.worldCopyJump = false;
-            /* istanbul ignore if */
-            if (map.worldCopyJump) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.worldCopyJump).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.worldCopyJump = true;
-            /* istanbul ignore if */
-            if (!map.worldCopyJump) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.worldCopyJump).to.equal(true);
         });
     });
     describe('[maxBoundsViscosity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.maxBoundsViscosity = val;
-            /* istanbul ignore if */
-            if (map.options.maxBoundsViscosity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.maxBoundsViscosity }`);
-            }
+            expect(map.options.maxBoundsViscosity !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.maxBoundsViscosity = val;
-            /* istanbul ignore if */
-            if (map.maxBoundsViscosity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.maxBoundsViscosity }`);
-            }
+            expect(map.maxBoundsViscosity !== val).to.equal(false);
         });
     });
     describe('[keyboardEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.keyboardEnabled = false;
-            /* istanbul ignore if */
-            if (map.keyboard.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.keyboard.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.keyboard.disable();
             map.keyboardEnabled = true;
-            /* istanbul ignore if */
-            if (!map.keyboard.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.keyboard.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.keyboardEnabled = false;
-            /* istanbul ignore if */
-            if (map.keyboardEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.keyboardEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.keyboardEnabled = true;
-            /* istanbul ignore if */
-            if (!map.keyboardEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.keyboardEnabled).to.equal(true);
         });
     });
     describe('[keyboardPanDelta]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.keyboardPanDelta = val;
-            /* istanbul ignore if */
-            if (map.options.keyboardPanDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.keyboardPanDelta }`);
-            }
+            expect(map.options.keyboardPanDelta !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.keyboardPanDelta = val;
-            /* istanbul ignore if */
-            if (map.keyboardPanDelta !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.keyboardPanDelta }`);
-            }
+            expect(map.keyboardPanDelta !== val).to.equal(false);
         });
     });
     describe('[scrollWheelZoomEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.scrollWheelZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.scrollWheelZoom.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.scrollWheelZoom.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.scrollWheelZoom.disable();
             map.scrollWheelZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.scrollWheelZoom.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.scrollWheelZoom.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.scrollWheelZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.scrollWheelZoomEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.scrollWheelZoomEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.scrollWheelZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.scrollWheelZoomEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.scrollWheelZoomEnabled).to.equal(true);
         });
     });
     describe('[wheelDebounceTime]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelDebounceTime = val;
-            /* istanbul ignore if */
-            if (map.options.wheelDebounceTime !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.wheelDebounceTime }`);
-            }
+            expect(map.options.wheelDebounceTime !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelDebounceTime = val;
-            /* istanbul ignore if */
-            if (map.wheelDebounceTime !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.wheelDebounceTime }`);
-            }
+            expect(map.wheelDebounceTime !== val).to.equal(false);
         });
     });
     describe('[wheelPxPerZoomLevel]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelPxPerZoomLevel = val;
-            /* istanbul ignore if */
-            if (map.options.wheelPxPerZoomLevel !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.wheelPxPerZoomLevel }`);
-            }
+            expect(map.options.wheelPxPerZoomLevel !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.wheelPxPerZoomLevel = val;
-            /* istanbul ignore if */
-            if (map.wheelPxPerZoomLevel !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.wheelPxPerZoomLevel }`);
-            }
+            expect(map.wheelPxPerZoomLevel !== val).to.equal(false);
         });
     });
     describe('[tapTolerance]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.tapTolerance = val;
-            /* istanbul ignore if */
-            if (map.options.tapTolerance !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.options.tapTolerance }`);
-            }
+            expect(map.options.tapTolerance !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 10);
             map.tapTolerance = val;
-            /* istanbul ignore if */
-            if (map.tapTolerance !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ map.tapTolerance }`);
-            }
+            expect(map.tapTolerance !== val).to.equal(false);
         });
     });
     describe('[tapEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.tapEnabled = false;
-            /* istanbul ignore if */
-            if (map.options.tap) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.tap).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.tap = false;
             map.tapEnabled = true;
-            /* istanbul ignore if */
-            if (!map.options.tap) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.tap).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.tapEnabled = false;
-            /* istanbul ignore if */
-            if (map.tapEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.tapEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.tapEnabled = true;
-            /* istanbul ignore if */
-            if (!map.tapEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.tapEnabled).to.equal(true);
         });
     });
     describe('[bounceAtZoomLimits]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.bounceAtZoomLimits = false;
-            /* istanbul ignore if */
-            if (map.options.bounceAtZoomLimits) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.options.bounceAtZoomLimits).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.options.bounceAtZoomLimits = false;
             map.bounceAtZoomLimits = true;
-            /* istanbul ignore if */
-            if (!map.options.bounceAtZoomLimits) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.options.bounceAtZoomLimits).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.bounceAtZoomLimits = false;
-            /* istanbul ignore if */
-            if (map.bounceAtZoomLimits) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.bounceAtZoomLimits).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.bounceAtZoomLimits = true;
-            /* istanbul ignore if */
-            if (!map.bounceAtZoomLimits) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.bounceAtZoomLimits).to.equal(true);
         });
     });
     describe('[touchZoomEnabled]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             map.touchZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.touchZoom.enabled()) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.touchZoom.enabled()).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             map.touchZoom.disable();
             map.touchZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.touchZoom.enabled()) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.touchZoom.enabled()).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             map.touchZoomEnabled = false;
-            /* istanbul ignore if */
-            if (map.touchZoomEnabled) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(map.touchZoomEnabled).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.touchZoomEnabled = true;
-            /* istanbul ignore if */
-            if (!map.touchZoomEnabled) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(map.touchZoomEnabled).to.equal(true);
         });
     });
 });
