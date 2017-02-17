@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { ScaleControlDirective,
     MapComponent,
     ControlPosition } from './index';

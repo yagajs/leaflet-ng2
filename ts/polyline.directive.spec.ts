@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { PolylineDirective,
     MapComponent,
     PopupDirective,
@@ -8,7 +6,7 @@ import { PolylineDirective,
     LatLng } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);
@@ -231,7 +229,7 @@ describe('Polyline Directive', () => {
         describe('for LineString', () => {
             var map: MapComponent,
                 layer: PolylineDirective<any>;
-            const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.LineString, any> = {
+            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.LineString, any> = {
                 geometry: {
                     coordinates: [[0, 1], [1, 1], [0, 0]],
                     type: 'LineString'
@@ -305,7 +303,7 @@ describe('Polyline Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                     const values: [number, number][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0] !== TEST_LINESTRING[0][1] ||
@@ -323,7 +321,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_LINESTRING);
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                     const values: [number, number][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[3][0] !== 3 ||
@@ -338,7 +336,7 @@ describe('Polyline Directive', () => {
         describe('for MultiLineString', () => {
             var map: MapComponent,
                 layer: PolylineDirective<any>;
-            const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.MultiLineString, any> = {
+            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiLineString, any> = {
                 geometry: {
                     coordinates: [
                         [[1, 0], [1, 1], [0, 1]],
@@ -477,7 +475,7 @@ describe('Polyline Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0][0] !== TEST_MULTILINESTRING[0][0][1] ||
@@ -502,7 +500,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
-                layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
@@ -577,7 +575,7 @@ describe('Polyline Directive', () => {
             }
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((val: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 /* istanbul ignore if */
                 if (val.properties !== TEST_OBJECT) {
                     return done(new Error('Wrong value received'));

@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { PopupDirective,
     MapComponent,
     Point,

@@ -22,7 +22,7 @@ import { Polyline,
     LatLngExpression } from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -51,7 +51,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -158,7 +158,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         return (<any>this)._latlngs;
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
+    @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
         this.feature.properties = val.properties;
 
         let geomType: any = val.geometry.type; // Normally '(Multi)LineString'
@@ -192,8 +192,8 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         /* istanbul ignore next */
         throw new Error('Unsupported geometry type: ' + geomType );
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>>this.toGeoJSON());
+    get geoJSON(): GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>>this.toGeoJSON());
     }
 
 
@@ -383,6 +383,6 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         this.geoJSONChange.emit(this.geoJSON);
     }
     get properties(): T {
-        return this.feature.properties;
+        return (<T>this.feature.properties);
     }
 }
