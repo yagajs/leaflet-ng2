@@ -15,6 +15,11 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
+
+<div class="container">
+    <h3>Zoom-Control Example</h3>
+</div>
+
 <div class="container">
   <div class="map">
     <yaga-map>
@@ -24,8 +29,11 @@ const template: string = `
       
       <yaga-zoom-control 
          [(position)]="position"
-         [(display)]="display"
-         [zIndex]="zIndex">
+         [zoomInText]="zoomInText"
+         [zoomInTitle]="zoomInTitle"
+         [zoomOutText]="zoomOutText"
+         [zoomOutTitle]="zoomOutTitle"
+      >
       </yaga-zoom-control>
     
     </yaga-map>
@@ -34,8 +42,31 @@ const template: string = `
 </div><!-- /.container -->
 
 <div class="container">
+
+    <h3>Zoom-Control options</h3>
+      
+    <div class="input-group">
+    <span class="input-group-addon fixed-space">zoomInText</span>
+      <input type="text" class="form-control"  [(ngModel)]="zoomInText">
+    </div><!-- /input-group -->
+       
+    <div class="input-group">
+    <span class="input-group-addon fixed-space">zoomInTitle</span>
+      <input type="text" class="form-control"  [(ngModel)]="zoomInTitle">
+    </div><!-- /input-group -->
+        
+    <div class="input-group">
+    <span class="input-group-addon fixed-space">zoomOutText</span>
+      <input type="text" class="form-control"  [(ngModel)]="zoomOutText">
+    </div><!-- /input-group -->
+       
+    <div class="input-group">
+    <span class="input-group-addon fixed-space">zoomOutTitle</span>
+      <input type="text" class="form-control"  [(ngModel)]="zoomOutTitle">
+    </div><!-- /input-group -->
+    
    
-    <h3>Two-Way bound properties</h3>   
+    <h3>Control options</h3>   
     <div class="input-group">
     <span class="input-group-addon fixed-space">Position</span>
     
@@ -46,20 +77,7 @@ const template: string = `
         </option>
     </select>
     </div><!-- /input-group -->
-    
-    
-    <h3>Listener properties</h3>   
-    <h4>Map state changed events</h4>   
-    <div class="input-group">
-        <span class="input-group-addon fixed-space">Display</span>
-        <input type="checkbox" class="form-control"  [(ngModel)]="display">
-    </div><!-- /input-group -->
-        
-    
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">Z-Index</span>
-      <input type="number" class="form-control"  [(ngModel)]="zIndex">
-    </div><!-- /input-group -->
+
     
 
     
@@ -78,15 +96,15 @@ interface ITileLayerOptions {
     template
 })
 export class AppComponent implements AfterViewInit {
-    public zoom: number = 10;
-    public lat: number = 51;
-    public lng: number = 7;
     public states: ControlPosition[]= [
         'topleft' , 'topright' , 'bottomleft' , 'bottomright'
     ];
     public position: ControlPosition;
-    public zIndex: number = 1;
-    public display: boolean = true;
+
+    public zoomInText: string = '+';
+    public zoomInTitle: string = 'Zoom in';
+    public zoomOutText: string = '-';
+    public zoomOutTitle: string ='Zoom out';
 
 
 
