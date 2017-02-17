@@ -69,9 +69,7 @@ const template: string = `
     <h3>Control options</h3>   
     <div class="input-group">
     <span class="input-group-addon fixed-space">Position</span>
-    
     <select  class="form-control" name="state" [(ngModel)]="position">
-        <option value="" disabled>Choose a position</option>
         <option *ngFor="let state of positionStates" [ngValue]="state">
         {{ state }}
         </option>
