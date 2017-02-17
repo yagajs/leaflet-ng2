@@ -142,7 +142,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
     public removeAllAttributions(silent?: boolean): this {
         let keys: string[] = Object.keys((<any>this)._attributions);
-        for (let i: number; i < keys.length; i += 1) {
+        for (let i: number = 0; i < keys.length; i += 1) {
             super.removeAttribution(keys[i]);
         }
         if (silent) {
