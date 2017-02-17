@@ -71,8 +71,8 @@ const template: string = `
     <span class="input-group-addon fixed-space">Position</span>
     
     <select  class="form-control" name="state" [(ngModel)]="position">
-        <option value="" disabled>Choose a state</option>
-        <option *ngFor="let state of states" [ngValue]="state">
+        <option value="" disabled>Choose a position</option>
+        <option *ngFor="let state of positionStates" [ngValue]="state">
         {{ state }}
         </option>
     </select>
@@ -96,7 +96,7 @@ interface ITileLayerOptions {
     template
 })
 export class AppComponent implements AfterViewInit {
-    public states: ControlPosition[]= [
+    public positionStates: ControlPosition[]= [
         'topleft' , 'topright' , 'bottomleft' , 'bottomright'
     ];
     public position: ControlPosition;
@@ -112,7 +112,7 @@ export class AppComponent implements AfterViewInit {
 
     constructor() {
         (<any>window).app = this;
-        this.position = this.states[0];
+        this.position = this.positionStates[0];
     }
 
     public handlePositionEvent(event: Event): void {
