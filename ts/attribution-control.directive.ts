@@ -9,6 +9,7 @@ import { Control,
     ControlPosition,
     Event } from 'leaflet';
 import { MapComponent } from './map.component';
+import { ATTRIBUTION_PREFIX } from './consts';
 
 @Directive({
     selector: 'yaga-attribution-control'
@@ -31,8 +32,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
-        super({prefix: '<a href="https://yagajs.org" title="YAGA">' +
-        'YAGA</a> | <a href="https://leaflet-ng2.yagajs.org" title="Leaflet in Angular2">leaflet-ng2</a>'});
+        super({prefix: ATTRIBUTION_PREFIX});
         mapComponent.addControl(this);
 
         const self: this = this;
