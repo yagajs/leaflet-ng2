@@ -31,7 +31,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
     ) {
-        super({prefix: '<a href="http://yagajs.org" title="A TypeScript library for interactive maps with Leaflet in Angular2">YAGA</a>'});
+        super({prefix: '<a href="https://yagajs.org" title="A TypeScript library for interactive maps with Leaflet in Angular2">YAGA leaflet-ng2</a>'});
         mapComponent.addControl(this);
 
         const self: this = this;
