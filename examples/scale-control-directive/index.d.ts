@@ -6,7 +6,7 @@ export declare class AppComponent implements AfterViewInit {
     metric: boolean;
     imperial: boolean;
     maxWidth: number;
-    states: ControlPosition[];
+    positionStates: ControlPosition[];
     position: ControlPosition;
     private mapComponent;
     constructor();

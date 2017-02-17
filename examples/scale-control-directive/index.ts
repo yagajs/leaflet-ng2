@@ -61,7 +61,7 @@ const template: string = `
     <span class="input-group-addon fixed-space">Position</span>
     
     <select  class="form-control" name="state" [(ngModel)]="position">
-        <option *ngFor="let state of states" [ngValue]="state">
+        <option *ngFor="let state of positionStates" [ngValue]="state">
         {{ state }}
         </option>
     </select>
@@ -81,7 +81,7 @@ export class AppComponent implements AfterViewInit {
     public imperial: boolean = true;
     // todo: public updateWhenIdle: boolean = true;
     public maxWidth: number = 150;
-    public states: ControlPosition[]= [
+    public positionStates: ControlPosition[]= [
         'bottomleft' , 'bottomright', 'topleft' , 'topright'
     ];
     public position: ControlPosition;
@@ -91,7 +91,7 @@ export class AppComponent implements AfterViewInit {
 
     constructor() {
         (<any>window).app = this;
-        this.position = this.states[0];
+        this.position = this.positionStates[0];
     }
 
     public handlePositionEvent(event: Event): void {
