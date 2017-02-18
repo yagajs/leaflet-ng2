@@ -21,6 +21,7 @@ import { CircleMarker,
     LatLngTuple,
     LatLngLiteral } from 'leaflet';
 import { MapComponent } from './map.component';
+import { lng2lat } from './lng2lat';
 
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
@@ -192,18 +193,13 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
-        let geomType: any = val.geometry.type; // Only 'Point'
+        let geomType: any = val.geometry.type; // Normally 'Point'
 
-        /* istanbul ignore else */
-        if (geomType === 'Point') {
-            this.setLatLng([
-                (<GeoJSON.Point>val.geometry).coordinates[1],
-                (<GeoJSON.Point>val.geometry).coordinates[0]
-            ]);
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'Point') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLng(<any>lng2lat(val.geometry.coordinates));
     }
     get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
         return (<GenericGeoJSONFeature<GeoJSON.Point, T>>this.toGeoJSON());
