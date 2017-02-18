@@ -23,6 +23,7 @@ import { Polyline,
 import { MapComponent } from './map.component';
 
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { lng2lat } from './lng2lat';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -163,34 +164,11 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
 
         let geomType: any = val.geometry.type; // Normally '(Multi)LineString'
 
-        if (geomType === 'LineString') {
-            const rg: [number, number][] = [];
-            for (let i: number = 0; i < (<GeoJSON.LineString>val.geometry).coordinates.length; i += 1) {
-                rg.push([
-                    (<GeoJSON.LineString>val.geometry).coordinates[i][1],
-                    (<GeoJSON.LineString>val.geometry).coordinates[i][0]]
-                );
-            }
-            this.setLatLngs((<any>rg));
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'LineString' && geomType !== 'MultiLineString') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore else */
-        if (geomType === 'MultiLineString') {
-            const rg: [number, number][][] = [];
-            for (let i: number = 0; i < (<GeoJSON.MultiLineString>val.geometry).coordinates.length; i += 1) {
-                rg.push([]);
-                for (let n: number = 0; n < (<GeoJSON.MultiLineString>val.geometry).coordinates[i].length; n += 1) {
-                    rg[i].push([
-                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][1],
-                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][0]]
-                    );
-                }
-            }
-            this.setLatLngs((<any>rg));
-            return;
-        }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLngs(<any>lng2lat(val.geometry.coordinates));
     }
     get geoJSON(): GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
         return (<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>>this.toGeoJSON());
