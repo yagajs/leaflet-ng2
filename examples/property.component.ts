@@ -64,6 +64,10 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
     {{ state }}
     </option>
   </select>
+</div>
+<div *ngIf="type === 'relative'"  class="input-group input-group-sx">
+  <span class="input-group-addon fixed-space">{{ name }}</span>
+  <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
 </div>`
 })
 export class ExamplePropertyComponent implements AfterViewInit {
