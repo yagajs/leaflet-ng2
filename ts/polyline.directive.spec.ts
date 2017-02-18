@@ -6,6 +6,7 @@ import { PolylineDirective,
     LatLng } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
+import { lng2lat } from './lng2lat';
 import { expect } from 'chai';
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
@@ -33,21 +34,11 @@ describe('Polyline Directive', () => {
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.latLngs[0] !== TEST_VALUE[0] ||
-                    layer.latLngs[1] !== TEST_VALUE[1] ||
-                    layer.latLngs[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
-                /* istanbul ignore if */
-                if (layer.latLngs[0] !== TEST_VALUE[0] ||
-                    layer.latLngs[1] !== TEST_VALUE[1] ||
-                    layer.latLngs[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when adding in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
@@ -60,12 +51,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0] !== TEST_VALUE[0] ||
-                        eventVal[1] !== TEST_VALUE[1] ||
-                        eventVal[2] !== TEST_VALUE[2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -73,12 +59,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0] !== TEST_VALUE[0] ||
-                        eventVal[1] !== TEST_VALUE[1] ||
-                        eventVal[2] !== TEST_VALUE[2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -110,43 +91,15 @@ describe('Polyline Directive', () => {
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if ((<any>layer)._latlngs[0][0] !== TEST_VALUE[0][0] ||
-                    (<any>layer)._latlngs[0][1] !== TEST_VALUE[0][1] ||
-                    (<any>layer)._latlngs[0][2] !== TEST_VALUE[0][2] ||
-
-                    (<any>layer)._latlngs[1][0] !== TEST_VALUE[1][0] ||
-                    (<any>layer)._latlngs[1][1] !== TEST_VALUE[1][1] ||
-                    (<any>layer)._latlngs[1][2] !== TEST_VALUE[1][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ (<any>layer)._latlngs }`);
-                }
-
+                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0] !== TEST_VALUE[0][0] ||
-                    layer.latLngs[0][1] !== TEST_VALUE[0][1] ||
-                    layer.latLngs[0][2] !== TEST_VALUE[0][2] ||
-
-                    layer.latLngs[1][0] !== TEST_VALUE[1][0] ||
-                    layer.latLngs[1][1] !== TEST_VALUE[1][1] ||
-                    layer.latLngs[1][2] !== TEST_VALUE[1][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
-                /* istanbul ignore if */
-                if (layer.latLngs[0][0] !== TEST_VALUE[0][0] ||
-                    layer.latLngs[0][1] !== TEST_VALUE[0][1] ||
-                    layer.latLngs[0][2] !== TEST_VALUE[0][2] ||
-
-                    layer.latLngs[1][0] !== TEST_VALUE[1][0] ||
-                    layer.latLngs[1][1] !== TEST_VALUE[1][1] ||
-                    layer.latLngs[1][2] !== TEST_VALUE[1][2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.latLngs }`);
-                }
+                expect(layer.latLngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when adding in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
@@ -159,16 +112,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0] !== TEST_VALUE[0][0] ||
-                        eventVal[0][1] !== TEST_VALUE[0][1] ||
-                        eventVal[0][2] !== TEST_VALUE[0][2] ||
-
-                        eventVal[1][0] !== TEST_VALUE[1][0] ||
-                        eventVal[1][1] !== TEST_VALUE[1][1] ||
-                        eventVal[1][2] !== TEST_VALUE[1][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -176,16 +120,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0][0] !== TEST_VALUE[0][0] ||
-                        eventVal[0][1] !== TEST_VALUE[0][1] ||
-                        eventVal[0][2] !== TEST_VALUE[0][2] ||
-
-                        eventVal[1][0] !== TEST_VALUE[1][0] ||
-                        eventVal[1][1] !== TEST_VALUE[1][1] ||
-                        eventVal[1][2] !== TEST_VALUE[1][2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -247,15 +182,7 @@ describe('Polyline Directive', () => {
             });
             it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_LINESTRING);
-                /* istanbul ignore if */
-                if (layer.geoJSON.geometry.coordinates[0][0] !== TEST_LINESTRING[0][1] ||
-                    layer.geoJSON.geometry.coordinates[0][1] !== TEST_LINESTRING[0][0] ||
-                    layer.geoJSON.geometry.coordinates[1][0] !== TEST_LINESTRING[1][1] ||
-                    layer.geoJSON.geometry.coordinates[1][1] !== TEST_LINESTRING[1][0] ||
-                    layer.geoJSON.geometry.coordinates[2][0] !== TEST_LINESTRING[2][1] ||
-                    layer.geoJSON.geometry.coordinates[2][1] !== TEST_LINESTRING[2][0]) {
-                    throw new Error(`Wrong value setted: ${ TEST_LINESTRING } != ${ layer.geoJSON.geometry.coordinates }`);
-                }
+                expect(lng2lat(layer.geoJSON.geometry.coordinates)).to.deep.equal(TEST_LINESTRING);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_LINESTRING);
@@ -268,12 +195,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: LatLng[]) => {
-                    /* istanbul ignore if */
-                    if (eventVal[0] !== TEST_VALUE[0] ||
-                        eventVal[1] !== TEST_VALUE[1] ||
-                        eventVal[2] !== TEST_VALUE[2]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -281,16 +203,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
-                    const values: [number, number][] = (<any>eventVal.geometry.coordinates);
-                    /* istanbul ignore if */
-                    if (values[0][0] !== TEST_LINESTRING[0][1] ||
-                        values[0][1] !== TEST_LINESTRING[0][0] ||
-                        values[1][0] !== TEST_LINESTRING[1][1] ||
-                        values[1][1] !== TEST_LINESTRING[1][0] ||
-                        values[2][0] !== TEST_LINESTRING[2][1] ||
-                        values[2][1] !== TEST_LINESTRING[2][0]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_LINESTRING);
                     return done();
                 });
 
@@ -350,28 +263,7 @@ describe('Polyline Directive', () => {
             it('should be changed in Angular when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
 
-                /* istanbul ignore if */
-                if (layer.geoJSON.geometry.type !== 'MultiLineString') {
-                    throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
-                }
-
-                const values: [number, number][][] = (<any>layer.geoJSON.geometry.coordinates);
-                /* istanbul ignore if */
-                if (values[0][0][0] !== TEST_VALUE.geometry.coordinates[0][0][0] ||
-                    values[0][0][1] !== TEST_VALUE.geometry.coordinates[0][0][1] ||
-                    values[0][1][0] !== TEST_VALUE.geometry.coordinates[0][1][0] ||
-                    values[0][1][1] !== TEST_VALUE.geometry.coordinates[0][1][1] ||
-                    values[0][2][0] !== TEST_VALUE.geometry.coordinates[0][2][0] ||
-                    values[0][2][1] !== TEST_VALUE.geometry.coordinates[0][2][1] ||
-
-                    values[1][0][0] !== TEST_VALUE.geometry.coordinates[1][0][0] ||
-                    values[1][0][1] !== TEST_VALUE.geometry.coordinates[1][0][1] ||
-                    values[1][1][0] !== TEST_VALUE.geometry.coordinates[1][1][0] ||
-                    values[1][1][1] !== TEST_VALUE.geometry.coordinates[1][1][1] ||
-                    values[1][2][0] !== TEST_VALUE.geometry.coordinates[1][2][0] ||
-                    values[1][2][1] !== TEST_VALUE.geometry.coordinates[1][2][1]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-                }
+                expect(layer.geoJSON).to.deep.equal(TEST_VALUE);
             });
             it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
@@ -380,24 +272,7 @@ describe('Polyline Directive', () => {
                 if (layer.geoJSON.geometry.type !== 'MultiLineString') {
                     throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
                 }
-
-                const values: [number, number][][] = (<any>layer.geoJSON.geometry.coordinates);
-                /* istanbul ignore if */
-                if (values[0][0][0] !== TEST_MULTILINESTRING[0][0][1] ||
-                    values[0][0][1] !== TEST_MULTILINESTRING[0][0][0] ||
-                    values[0][1][0] !== TEST_MULTILINESTRING[0][1][1] ||
-                    values[0][1][1] !== TEST_MULTILINESTRING[0][1][0] ||
-                    values[0][2][0] !== TEST_MULTILINESTRING[0][2][1] ||
-                    values[0][2][1] !== TEST_MULTILINESTRING[0][2][0] ||
-
-                    values[1][0][0] !== TEST_MULTILINESTRING[1][0][1] ||
-                    values[1][0][1] !== TEST_MULTILINESTRING[1][0][0] ||
-                    values[1][1][0] !== TEST_MULTILINESTRING[1][1][1] ||
-                    values[1][1][1] !== TEST_MULTILINESTRING[1][1][0] ||
-                    values[1][2][0] !== TEST_MULTILINESTRING[1][2][1] ||
-                    values[1][2][1] !== TEST_MULTILINESTRING[1][2][0]) {
-                    throw new Error(`Wrong value setted: ${ TEST_MULTILINESTRING } != ${ layer.geoJSON.geometry.coordinates }`);
-                }
+                expect(lng2lat(layer.geoJSON.geometry.coordinates)).to.deep.equal(TEST_MULTILINESTRING);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
@@ -414,28 +289,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSON.Feature<GeoJSON.MultiLineString>) => {
-                    /* istanbul ignore if */
-                    if (eventVal.geometry.type !== 'MultiLineString') {
-                        return done(new Error('Received wrong geometry type: ' + eventVal.geometry.type));
-                    }
-                    const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
-
-                    /* istanbul ignore if */
-                    if (values[0][0][0] !== TEST_VALUE.geometry.coordinates[0][0][0] ||
-                        values[0][0][1] !== TEST_VALUE.geometry.coordinates[0][0][1] ||
-                        values[0][1][0] !== TEST_VALUE.geometry.coordinates[0][1][0] ||
-                        values[0][1][1] !== TEST_VALUE.geometry.coordinates[0][1][1] ||
-                        values[0][2][0] !== TEST_VALUE.geometry.coordinates[0][2][0] ||
-                        values[0][2][1] !== TEST_VALUE.geometry.coordinates[0][2][1] ||
-
-                        values[1][0][0] !== TEST_VALUE.geometry.coordinates[1][0][0] ||
-                        values[1][0][1] !== TEST_VALUE.geometry.coordinates[1][0][1] ||
-                        values[1][1][0] !== TEST_VALUE.geometry.coordinates[1][1][0] ||
-                        values[1][1][1] !== TEST_VALUE.geometry.coordinates[1][1][1] ||
-                        values[1][2][0] !== TEST_VALUE.geometry.coordinates[1][2][0] ||
-                        values[1][2][1] !== TEST_VALUE.geometry.coordinates[1][2][1]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -443,23 +297,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
-                    const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
-                    /* istanbul ignore if */
-                    if (values[0][0][0] !== TEST_MULTILINESTRING[0][0][1] ||
-                        values[0][0][1] !== TEST_MULTILINESTRING[0][0][0] ||
-                        values[0][1][0] !== TEST_MULTILINESTRING[0][1][1] ||
-                        values[0][1][1] !== TEST_MULTILINESTRING[0][1][0] ||
-                        values[0][2][0] !== TEST_MULTILINESTRING[0][2][1] ||
-                        values[0][2][1] !== TEST_MULTILINESTRING[0][2][0] ||
-
-                        values[1][0][0] !== TEST_MULTILINESTRING[1][0][1] ||
-                        values[1][0][1] !== TEST_MULTILINESTRING[1][0][0] ||
-                        values[1][1][0] !== TEST_MULTILINESTRING[1][1][1] ||
-                        values[1][1][1] !== TEST_MULTILINESTRING[1][1][0] ||
-                        values[1][2][0] !== TEST_MULTILINESTRING[1][2][1] ||
-                        values[1][2][1] !== TEST_MULTILINESTRING[1][2][0]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTILINESTRING);
                     return done();
                 });
 

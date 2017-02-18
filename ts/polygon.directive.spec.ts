@@ -2,7 +2,9 @@ import { PolygonDirective,
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    LatLngExpression, LatLng } from './index';
+    LatLngExpression,
+    LatLng,
+    lng2lat } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
 import { expect } from 'chai';
@@ -143,13 +145,13 @@ describe('Polygon Directive', () => {
         describe('for Polygon', () => {
             const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
-                    coordinates: [[[0, 1], [1, 1], [0, 0]]],
+                    coordinates: [[[0, 1], [1, 1], [0, 0], [0, 1]]],
                     type: 'Polygon'
                 },
                 properties: {},
                 type: 'Feature'
             };
-            const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1]]];
+            const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1], [0, 0]]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
                 /* istanbul ignore if */
@@ -169,15 +171,7 @@ describe('Polygon Directive', () => {
             });
             it('should be changed geoJSON in Angular when changing in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_POLYGON);
-                /* istanbul ignore if */
-                if (layer.geoJSON.geometry.coordinates[0][0][0] !== TEST_POLYGON[0][0][1] ||
-                    layer.geoJSON.geometry.coordinates[0][0][1] !== TEST_POLYGON[0][0][0] ||
-                    layer.geoJSON.geometry.coordinates[0][1][0] !== TEST_POLYGON[0][1][1] ||
-                    layer.geoJSON.geometry.coordinates[0][1][1] !== TEST_POLYGON[0][1][0] ||
-                    layer.geoJSON.geometry.coordinates[0][2][0] !== TEST_POLYGON[0][2][1] ||
-                    layer.geoJSON.geometry.coordinates[0][2][1] !== TEST_POLYGON[0][2][0]) {
-                    throw new Error(`Wrong value setted: ${ TEST_POLYGON } != ${ layer.geoJSON.geometry.coordinates }`);
-                }
+                expect(lng2lat(layer.geoJSON.geometry.coordinates)).to.deep.equal(TEST_POLYGON);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_POLYGON);
@@ -198,16 +192,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
-                    const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
-                    /* istanbul ignore if */
-                    if (values[0][0][0] !== TEST_POLYGON[0][0][1] ||
-                        values[0][0][1] !== TEST_POLYGON[0][0][0] ||
-                        values[0][1][0] !== TEST_POLYGON[0][1][1] ||
-                        values[0][1][1] !== TEST_POLYGON[0][1][0] ||
-                        values[0][2][0] !== TEST_POLYGON[0][2][1] ||
-                        values[0][2][1] !== TEST_POLYGON[0][2][0]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(lng2lat((<any>eventVal.geometry.coordinates))).to.deep.equal(TEST_POLYGON);
                     return done();
                 });
 
@@ -231,8 +216,8 @@ describe('Polygon Directive', () => {
             const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
                 geometry: {
                     coordinates: [
-                        [[[1, 0], [1, 1], [0, 1]]],
-                        [[[0, 1], [1, 1], [0, 0]]],
+                        [[[1, 0], [1, 1], [0, 1], [1, 0]]],
+                        [[[0, 1], [1, 1], [0, 0], [0, 1]]],
                     ],
                     type: 'MultiPolygon'
                 },
@@ -240,8 +225,8 @@ describe('Polygon Directive', () => {
                 type: 'Feature'
             };
             const TEST_MULTIPOLYGON: LatLngExpression[][][] = [
-                [[[0, 0], [1, 0], [1, 1]]],
-                [[[0, 0], [0, 1], [1, 1]]]
+                [[[0, 0], [1, 0], [1, 1], [0, 0]]],
+                [[[0, 0], [0, 1], [1, 1], [0, 0]]]
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
@@ -276,23 +261,7 @@ describe('Polygon Directive', () => {
                     throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
                 }
 
-                const values: [number, number][][][] = (<any>layer.geoJSON.geometry.coordinates);
-                /* istanbul ignore if */
-                if (values[0][0][0][0] !== TEST_MULTIPOLYGON[0][0][0][1] ||
-                    values[0][0][0][1] !== TEST_MULTIPOLYGON[0][0][0][0] ||
-                    values[0][0][1][0] !== TEST_MULTIPOLYGON[0][0][1][1] ||
-                    values[0][0][1][1] !== TEST_MULTIPOLYGON[0][0][1][0] ||
-                    values[0][0][2][0] !== TEST_MULTIPOLYGON[0][0][2][1] ||
-                    values[0][0][2][1] !== TEST_MULTIPOLYGON[0][0][2][0] ||
-
-                    values[1][0][0][0] !== TEST_MULTIPOLYGON[1][0][0][1] ||
-                    values[1][0][0][1] !== TEST_MULTIPOLYGON[1][0][0][0] ||
-                    values[1][0][1][0] !== TEST_MULTIPOLYGON[1][0][1][1] ||
-                    values[1][0][1][1] !== TEST_MULTIPOLYGON[1][0][1][0] ||
-                    values[1][0][2][0] !== TEST_MULTIPOLYGON[1][0][2][1] ||
-                    values[1][0][2][1] !== TEST_MULTIPOLYGON[1][0][2][0]) {
-                    throw new Error(`Wrong value setted: ${ TEST_MULTIPOLYGON } != ${ layer.geoJSON.geometry.coordinates }`);
-                }
+                expect(lng2lat((<any>layer.geoJSON.geometry.coordinates))).to.deep.equal(TEST_MULTIPOLYGON);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
@@ -317,23 +286,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
-                    const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
-                    /* istanbul ignore if */
-                    if (values[0][0][0][0] !== TEST_MULTIPOLYGON[0][0][0][1] ||
-                        values[0][0][0][1] !== TEST_MULTIPOLYGON[0][0][0][0] ||
-                        values[0][0][1][0] !== TEST_MULTIPOLYGON[0][0][1][1] ||
-                        values[0][0][1][1] !== TEST_MULTIPOLYGON[0][0][1][0] ||
-                        values[0][0][2][0] !== TEST_MULTIPOLYGON[0][0][2][1] ||
-                        values[0][0][2][1] !== TEST_MULTIPOLYGON[0][0][2][0] ||
-
-                        values[1][0][0][0] !== TEST_MULTIPOLYGON[1][0][0][1] ||
-                        values[1][0][0][1] !== TEST_MULTIPOLYGON[1][0][0][0] ||
-                        values[1][0][1][0] !== TEST_MULTIPOLYGON[1][0][1][1] ||
-                        values[1][0][1][1] !== TEST_MULTIPOLYGON[1][0][1][0] ||
-                        values[1][0][2][0] !== TEST_MULTIPOLYGON[1][0][2][1] ||
-                        values[1][0][2][1] !== TEST_MULTIPOLYGON[1][0][2][0]) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTIPOLYGON);
                     return done();
                 });
 

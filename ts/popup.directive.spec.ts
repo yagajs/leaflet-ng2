@@ -4,6 +4,7 @@ import { PopupDirective,
     LatLng,
     EXAMPLE_CONTENT } from './index';
 import { point, latLng } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Popup Directive', () => {
     let map: MapComponent,
@@ -43,31 +44,19 @@ describe('Popup Directive', () => {
     describe('[(content)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
-            /* istanbul ignore if */
-            if ((<string>(<any>popup)._content) !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ (<string>(<any>popup)._content) }`);
-            }
+            expect((<string>(<any>popup)._content)).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
-            /* istanbul ignore if */
-            if (popup.content !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ popup.content }`);
-            }
+            expect(popup.content).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             popup.setContent(EXAMPLE_CONTENT);
-            /* istanbul ignore if */
-            if (popup.content !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ popup.content }`);
-            }
+            expect(popup.content).to.equal(EXAMPLE_CONTENT);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             popup.contentChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_CONTENT) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_CONTENT);
                 done();
             });
 
@@ -75,10 +64,7 @@ describe('Popup Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {   popup.content = EXAMPLE_CONTENT;
             popup.contentChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_CONTENT + '?test') {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_CONTENT + '?test');
                 done();
             });
 
@@ -92,35 +78,23 @@ describe('Popup Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             popup.lat = val;
-            /* istanbul ignore if */
-            if (popup.getLatLng().lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng().lat }`);
-            }
+            expect(popup.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             popup.lat = val;
-            /* istanbul ignore if */
-            if (popup.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.lat }`);
-            }
+            expect(popup.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             popup.setLatLng([val, 0]);
-            /* istanbul ignore if */
-            if (popup.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.lat }`);
-            }
+            expect(popup.getLatLng().lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             popup.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 done();
             });
 
@@ -130,13 +104,9 @@ describe('Popup Directive', () => {
             const val: number = Math.random() * 100;
 
             popup.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 done();
             });
-
 
             popup.setLatLng([val, 0]);
         });
@@ -148,35 +118,23 @@ describe('Popup Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             popup.lng = val;
-            /* istanbul ignore if */
-            if (popup.getLatLng().lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng().lng }`);
-            }
+            expect(popup.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             popup.lng = val;
-            /* istanbul ignore if */
-            if (popup.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.lng }`);
-            }
+            expect(popup.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             popup.setLatLng([0, val]);
-            /* istanbul ignore if */
-            if (popup.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.lng }`);
-            }
+            expect(popup.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             popup.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 done();
             });
 
@@ -186,13 +144,9 @@ describe('Popup Directive', () => {
             const val: number = Math.random() * 100;
 
             popup.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 done();
             });
-
 
             popup.setLatLng([0, val]);
         });
@@ -204,35 +158,23 @@ describe('Popup Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             popup.position = val;
-            /* istanbul ignore if */
-            if (popup.getLatLng().lat !== val.lat || popup.getLatLng().lng !== val.lng) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.getLatLng() }`);
-            }
+            expect(popup.getLatLng()).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             popup.position = val;
-            /* istanbul ignore if */
-            if (popup.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.position }`);
-            }
+            expect(popup.position).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             popup.setLatLng(val);
-            /* istanbul ignore if */
-            if (popup.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.position }`);
-            }
+            expect(popup.position).to.deep.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(val);
                 done();
             });
 
@@ -242,10 +184,7 @@ describe('Popup Directive', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(val);
                 done();
             });
 
@@ -260,10 +199,7 @@ describe('Popup Directive', () => {
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             popup.openEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.target !== popup) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.target).to.equal(popup);
                 done();
             });
             popup.openOn(map);
@@ -276,10 +212,7 @@ describe('Popup Directive', () => {
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             popup.closeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.target !== popup) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.target).to.equal(popup);
                 done();
             });
             (<any>popup)._close();
@@ -291,46 +224,36 @@ describe('Popup Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.maxWidth = val;
-            /* istanbul ignore if */
-            if (popup.options.maxWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.maxWidth }`);
-            }
+            expect(popup.options.maxWidth).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.maxWidth = val;
-            /* istanbul ignore if */
-            if (popup.maxWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.minWidth }`);
-            }
+            expect(popup.maxWidth).to.equal(val);
         });
     });
     describe('[minWidth]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.minWidth = val;
-            /* istanbul ignore if */
-            if (popup.options.minWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.minWidth }`);
-            }
+            expect(popup.options.minWidth).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.minWidth = val;
-            /* istanbul ignore if */
-            if (popup.minWidth !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.minWidth }`);
-            }
+            expect(popup.minWidth).to.equal(val);
         });
     });
     describe('[maxHeight]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             popup.maxHeight = val;
-            /* istanbul ignore if */
-            if (popup.options.maxHeight !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.maxHeight }`);
-            }
+            expect(popup.options.maxHeight).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = Math.ceil(Math.random() * 1000);
+            popup.maxHeight = val;
+            expect(popup.maxHeight).to.equal(val);
         });
     });
     describe('[autoPanPaddingTopLeft]', () => {
@@ -338,19 +261,13 @@ describe('Popup Directive', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
-            /* istanbul ignore if */
-            if (popup.options.autoPanPaddingTopLeft !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPaddingTopLeft }`);
-            }
+            expect(popup.options.autoPanPaddingTopLeft).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
-            /* istanbul ignore if */
-            if (popup.autoPanPaddingTopLeft !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPaddingTopLeft }`);
-            }
+            expect(popup.autoPanPaddingTopLeft).to.equal(val);
         });
     });
     describe('[autoPanPaddingBottomRight]', () => {
@@ -358,19 +275,13 @@ describe('Popup Directive', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
-            /* istanbul ignore if */
-            if (popup.options.autoPanPaddingBottomRight !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPaddingBottomRight }`);
-            }
+            expect(popup.options.autoPanPaddingBottomRight).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
-            /* istanbul ignore if */
-            if (popup.autoPanPaddingBottomRight !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPaddingBottomRight }`);
-            }
+            expect(popup.autoPanPaddingBottomRight).to.equal(val);
         });
     });
     describe('[autoPanPadding]', () => {
@@ -378,144 +289,90 @@ describe('Popup Directive', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPadding = val;
-            /* istanbul ignore if */
-            if (popup.options.autoPanPadding !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.autoPanPadding }`);
-            }
+            expect(popup.options.autoPanPadding).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             popup.autoPanPadding = val;
-            /* istanbul ignore if */
-            if (popup.autoPanPadding !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.autoPanPadding }`);
-            }
+            expect(popup.autoPanPadding).to.equal(val);
         });
     });
 
     describe('[autoPan]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoPan = false;
-            /* istanbul ignore if */
-            if (popup.options.autoPan) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.options.autoPan).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             popup.options.autoPan = false;
             popup.autoPan = true;
-            /* istanbul ignore if */
-            if (!popup.options.autoPan) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.options.autoPan).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             popup.autoPan = false;
-            /* istanbul ignore if */
-            if (popup.autoPan) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.autoPan).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             popup.autoPan = true;
-            /* istanbul ignore if */
-            if (!popup.autoPan) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.autoPan).to.equal(true);
         });
     });
     describe('[keepInView]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.keepInView = false;
-            /* istanbul ignore if */
-            if (popup.options.keepInView) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.options.keepInView).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             popup.options.keepInView = false;
             popup.keepInView = true;
-            /* istanbul ignore if */
-            if (!popup.options.keepInView) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.options.keepInView).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             popup.keepInView = false;
-            /* istanbul ignore if */
-            if (popup.keepInView) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.keepInView).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             popup.keepInView = true;
-            /* istanbul ignore if */
-            if (!popup.keepInView) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.keepInView).to.equal(true);
         });
     });
     describe('[closeButton]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.closeButton = false;
-            /* istanbul ignore if */
-            if (popup.options.closeButton) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.options.closeButton).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             popup.options.closeButton = false;
             popup.closeButton = true;
-            /* istanbul ignore if */
-            if (!popup.options.closeButton) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.options.closeButton).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             popup.closeButton = false;
-            /* istanbul ignore if */
-            if (popup.closeButton) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.closeButton).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             popup.closeButton = true;
-            /* istanbul ignore if */
-            if (!popup.closeButton) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.closeButton).to.equal(true);
         });
     });
     describe('[autoClose]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             popup.autoClose = false;
-            /* istanbul ignore if */
-            if (popup.options.autoClose) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.options.autoClose).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             popup.options.autoClose = false;
             popup.autoClose = true;
-            /* istanbul ignore if */
-            if (!popup.options.autoClose) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.options.autoClose).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             popup.autoClose = false;
-            /* istanbul ignore if */
-            if (popup.autoClose) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(popup.autoClose).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             popup.autoClose = true;
-            /* istanbul ignore if */
-            if (!popup.autoClose) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(popup.autoClose).to.equal(true);
         });
     });
 
@@ -523,36 +380,24 @@ describe('Popup Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             popup.className = val;
-            /* istanbul ignore if */
-            if (popup.options.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.className }`);
-            }
+            expect(popup.options.className).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             popup.className = val;
-            /* istanbul ignore if */
-            if (popup.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.className }`);
-            }
+            expect(popup.className).to.equal(val);
         });
     });
     describe('[pane]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             popup.pane = val;
-            /* istanbul ignore if */
-            if (popup.options.pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.options.pane }`);
-            }
+            expect(popup.options.pane).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             popup.pane = val;
-            /* istanbul ignore if */
-            if (popup.pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ popup.pane }`);
-            }
+            expect(popup.pane).to.equal(val);
         });
     });
 });
