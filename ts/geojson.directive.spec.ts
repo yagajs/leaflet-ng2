@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { GeoJSONDirective,
     MapComponent,
     PopupDirective,
@@ -7,7 +5,7 @@ import { GeoJSONDirective,
     LatLng } from './index';
 import { expect } from 'chai';
 import { point, SVG, Layer } from 'leaflet';
-import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 
 describe('GeoJSON Directive', () => {
     let map: MapComponent,
@@ -20,7 +18,7 @@ describe('GeoJSON Directive', () => {
 
         layer = new GeoJSONDirective(map);
     });
-    const TEST_VALUE: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
+    const TEST_VALUE: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
         features: [
             {
                 geometry: {
@@ -64,7 +62,7 @@ describe('GeoJSON Directive', () => {
             layer.data = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -73,7 +71,7 @@ describe('GeoJSON Directive', () => {
         });
         it('should fire an event when adding in Leaflet', (done: MochaDone) => {
             layer.ngAfterViewInit();
-            layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });

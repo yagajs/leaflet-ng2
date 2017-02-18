@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { ZoomControlDirective,
     MapComponent,
     ControlPosition } from './index';

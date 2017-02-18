@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts && mkdir lib && cp -Rf ts/d.ts lib/",
-    "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
+    "init": "npm install",
+    "clean": "rm -Rf coverage browser-test/bundle.js lib node_modules",
     "reinit": "npm run clean; npm run init",
     "transpile": "tsc",
     "lint": "tslint ts/**",
@@ -15,7 +15,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; browserify test/index.js -o browser-test/bundle.js",
     "doc": "typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
-    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js",
+    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js",
     "dependency-check": "npm outdated && (node-dependencies || echo \"There are outdated sub-dependencies!\")"
   },
   "repository": {
@@ -43,12 +43,13 @@
   },
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
+    "@angular/common": "^2.4.7",
+    "@angular/compiler": "^2.4.7",
+    "@angular/forms": "^2.4.7",
+    "@angular/platform-browser": "^2.4.7",
+    "@angular/platform-browser-dynamic": "^2.4.7",
     "@types/chai": "^3.4.34",
-    "@angular/common": "^2.4.2",
-    "@angular/compiler": "^2.4.2",
-    "@angular/forms": "^2.4.2",
-    "@angular/platform-browser": "^2.4.2",
-    "@angular/platform-browser-dynamic": "^2.4.2",
+    "@types/mocha": "^2.2.39",
     "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
     "chai": "^3.5.0",
@@ -65,11 +66,13 @@
     "tslint": "^4.0.1",
     "typedoc": "^0.5.5",
     "typescript": "^2.0.10",
-    "typings": "^2.0.0",
     "zone.js": "^0.7.0"
   },
   "dependencies": {
-    "@angular/core": "^2.2.1",
+    "@angular/core": "^2.4.7",
+    "@types/es6-shim": "^0.31.32",
+    "@types/leaflet": "^1.0.53",
+    "@yaga/generic-geojson": "^1.0.0",
     "leaflet": "^1.0.2"
   }
 }

@@ -42,5 +42,6 @@ typings
 
 examples/**/*.js
 examples/**/*.js.map
+examples/**/*.d.ts
 
 bundle.js

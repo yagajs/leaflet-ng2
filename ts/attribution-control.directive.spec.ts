@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { AttributionControlDirective,
     MapComponent,
     ControlPosition } from './index';
@@ -53,9 +51,9 @@ describe('Attribution-Control Directive', () => {
     });
 
     describe('[(prefix)]', () => {
-        it('should be set to YAGA by default', () => {
+        it('should be set to YAGA | leaflet-ng2 by default', () => {
             const html: string = control.getContainer().innerHTML;
-            expect(html.indexOf('>YAGA<')).to.not.equal(-1);
+            expect(html.indexOf('>YAGA<' + '> | <' + '>leaflet-ng2<')).to.not.equal(-3);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Attribution-Prefix';

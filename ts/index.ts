@@ -18,9 +18,10 @@ export * from './zoom-control.directive';
 export * from './attribution-control.directive';
 export * from './scale-control.directive';
 
-export * from './d.ts/generic-geojson';
 export * from './consts';
 
+export { GenericGeoJSONFeature,
+    GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 export { Control,
     ControlPosition,
     MapOptions,
@@ -30,7 +31,7 @@ export { Control,
     ImageOverlayOptions,
     IconOptions,
     MarkerOptions,
-    CircleOptions,
+    CircleMarkerOptions,
     LatLngBoundsExpression,
     LatLngBounds,
     PointExpression,

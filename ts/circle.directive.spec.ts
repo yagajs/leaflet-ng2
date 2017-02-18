@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import { CircleDirective,
     MapComponent,
     PopupDirective,
@@ -8,8 +6,8 @@ import { CircleDirective,
     LatLng } from './index';
 import { point, SVG, latLng } from 'leaflet';
 import { createPathTests } from './path-directives.spec';
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 import { expect } from 'chai';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 describe('Circle Directive', () => {
     let map: MapComponent,
@@ -187,7 +185,7 @@ describe('Circle Directive', () => {
     });
 
     describe('[(geoJSON)]', () => {
-        const TEST_VALUE: IGenericGeoJSONFeature<GeoJSON.Point, any> = {
+        const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Point, any> = {
             geometry: {
                 coordinates: [1, 3],
                 type: 'Point'
@@ -211,7 +209,7 @@ describe('Circle Directive', () => {
             expect(layer.geoJSON.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -219,7 +217,7 @@ describe('Circle Directive', () => {
             layer.geoJSON = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
                 expect(eventVal.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
                 return done();
@@ -245,7 +243,7 @@ describe('Circle Directive', () => {
             expect(layer.properties).to.equal(TEST_OBJECT);
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(eventVal.properties).to.equal(TEST_OBJECT);
                 return done();
             });
