@@ -1,15 +1,12 @@
 /// <reference path="../typings/index.d.ts" />
 
 import { MapComponent, LatLngBounds } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
 
 describe('Map Component', () => {
     let map: MapComponent;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._zoomAnimated = false;
-        (<any>map)._size = point(100, 100);
     });
 
     describe('[(lat)]', () => {
