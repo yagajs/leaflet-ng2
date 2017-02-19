@@ -1,5 +1,5 @@
 import { MapComponent, LatLngBounds } from './index';
-import { latLngBounds, latLng } from 'leaflet';
+import { latLngBounds, latLng, point } from 'leaflet';
 import { expect } from 'chai';
 
 describe('Map Component', () => {
@@ -242,6 +242,10 @@ describe('Map Component', () => {
         });
     });
     describe('[(maxBounds)]', () => {
+        beforeEach(() => {
+            // Fix for no browser-test
+            (<any>map)._size = point(100, 100);
+        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const lat1: number = Math.random() * 100;
             const lat2: number = Math.random() * 100;
@@ -252,7 +256,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.setMaxBounds(val);
-            expect(map.options.maxBounds).to.equal(val);
+            expect(val.equals(map.options.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const lat1: number = Math.random() * 100;
@@ -264,7 +268,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.maxBounds = val;
-            expect(map.maxBounds).to.equal(val);
+            expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const lat1: number = Math.random() * 100;
@@ -276,7 +280,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.setMaxBounds(val);
-            expect(map.maxBounds).to.equal(val);
+            expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const lat1: number = Math.random() * 100;
@@ -289,7 +293,7 @@ describe('Map Component', () => {
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(eventVal).to.equal(val);
+                expect(val.equals(eventVal)).to.equal(true);
                 return done();
             });
 
@@ -306,7 +310,7 @@ describe('Map Component', () => {
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(eventVal).to.equal(val);
+                expect(val.equals(eventVal)).to.equal(true);
                 return done();
             });
 
