@@ -39,7 +39,7 @@ const template: string = `
         [imperial]="getInputPropertyByName('imperial').value"
         [maxWidth]="getInputPropertyByName('maxWidth').value"
         [position]="getInputPropertyByName('position').value"
-        [opacity]="getDuplexPropertyByName('opacity').value"
+        [opacity]="getInputPropertyByName('opacity').value"
         >
       </yaga-scale-control>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
