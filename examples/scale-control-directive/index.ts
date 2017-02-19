@@ -33,13 +33,13 @@ const template: string = `
         (positionChange)="handleEvent('positionChange', event);"
         (displayChange)="handleEvent('displayChange', event);"
         
-        [position]="getDuplexPropertyByName('position').value"
         [(display)]="getDuplexPropertyByName('display').value"
-        [opacity]="getDuplexPropertyByName('opacity').value"
         
         [metric]="getInputPropertyByName('metric').value"
         [imperial]="getInputPropertyByName('imperial').value"
         [maxWidth]="getInputPropertyByName('maxWidth').value"
+        [position]="getInputPropertyByName('position').value"
+        [opacity]="getDuplexPropertyByName('opacity').value"
         >
       </yaga-scale-control>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
@@ -58,15 +58,14 @@ const template: string = `
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
-            {name: 'display', value: true, type: 'checkbox' },
-            {name: 'opacity', value: 0.8, type: 'relative'},
-            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} }
-
+            {name: 'display', value: true, type: 'checkbox' }
         ],
         input: [
             {name: 'metric', value: true, type: 'checkbox' },
             {name: 'imperial', value: true, type: 'checkbox' },
-            {name: 'maxWidth', value: 150, type: 'number' }
+            {name: 'maxWidth', value: 150, type: 'number' },
+            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
+            {name: 'opacity', value: 0.8, type: 'relative'}
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
