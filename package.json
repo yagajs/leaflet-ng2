@@ -34,9 +34,9 @@
   ],
   "author": "YAGA - Development Team<info@yagajs.org>",
   "contributors": [
-    {name: "Arne Schubert", email: "atd@yagajs.org" url: "https://atd.yagajs.org"},
-    {name: "Stephan Herritsch", email: "s.herritsch@yagajs.org" url: "https://steve.yagajs.org"},
-    {name: "Markus Strauss", email: "markus@yagajs.org" url: "https://markus.yagajs.org"}
+    {"name": "Arne Schubert", "email": "atd@yagajs.org", "url": "https://atd.yagajs.org"},
+    {"name": "Stephan Herritsch", "email": "s.herritsch@yagajs.org", "url": "https://steve.yagajs.org"},
+    {"name": "Markus Strauss", "email": "markus@yagajs.org", "url": "https://markus.yagajs.org"}
   ],
   "license": "ISC",
   "bugs": {
