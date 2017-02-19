@@ -17,11 +17,11 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<example-header [title]="'Scale-Control-Directive'"></example-header>
+<example-header [title]="'Attribution-Control-Directive'"></example-header>
 <div class="container">
   <div class="map">
     <yaga-map>
-      <yaga-scale-control
+      <yaga-attribution-control
       
         (click)="handleEvent('click', $event);"
         (dblclick)="handleEvent('dblclick', event);"
@@ -33,15 +33,13 @@ const template: string = `
         (positionChange)="handleEvent('positionChange', event);"
         (displayChange)="handleEvent('displayChange', event);"
         
-        [(display)]="getDuplexPropertyByName('display').value"
-        
-        [metric]="getInputPropertyByName('metric').value"
-        [imperial]="getInputPropertyByName('imperial').value"
-        [maxWidth]="getInputPropertyByName('maxWidth').value"
+        [prefix]="getInputPropertyByName('prefix').value"
         [position]="getInputPropertyByName('position').value"
         [opacity]="getInputPropertyByName('opacity').value"
+        
+        [(display)]="getDuplexPropertyByName('display').value"
         >
-      </yaga-scale-control>
+      </yaga-attribution-control>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
   </div>
@@ -61,11 +59,9 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'display', value: true, type: 'checkbox' }
         ],
         input: [
-            {name: 'metric', value: true, type: 'checkbox' },
-            {name: 'imperial', value: true, type: 'checkbox' },
-            {name: 'maxWidth', value: 150, type: 'number' },
-            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
-            {name: 'opacity', value: 0.8, type: 'relative'}
+            {name: 'prefix', value: '<a href="https://yagajs.org">YAGA</a> | <a href="https://leaflet-ng2.yagajs.org">leaflet-ng2</a>', type: 'text'},
+            {name: 'opacity', value: 0.8, type: 'relative'},
+            {name: 'position', value: 'bottomright', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} }
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -76,7 +72,9 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mouseout', value: '', type: 'event' },
             {name: 'mousemove', value: '', type: 'event' },
             {name: 'positionChange', value: '', type: 'event' },
-            {name: 'displayChange', value: '', type: 'event' }
+            {name: 'displayChange', value: '', type: 'event' },
+            {name: 'addEvent', value: '', type: 'event' },
+            {name: 'removeEvent', value: '', type: 'event' }
         ]
     };
 }
