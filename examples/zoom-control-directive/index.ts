@@ -2,133 +2,100 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import {YagaModule, MapComponent, ControlPosition} from '../../lib/index'; // @yaga/leflet-ng2
+import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
-import {Component, AfterViewInit, ViewChild, PlatformRef} from '@angular/core';
-import {NgModule}      from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule}   from '@angular/forms';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { Component, PlatformRef } from '@angular/core';
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
+import { ExamplePropertiesModule, PROPERTIES_WRAPPER } from '../property.component';
 
 const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-
-<div class="container">
-    <h3>Zoom-Control Example</h3>
-</div>
-
+<example-header [title]="'Zoom-Control-Directive'"></example-header>
 <div class="container">
   <div class="map">
     <yaga-map>
+      <yaga-zoom-control
       
-      <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'">
-      </yaga-tile-layer>
-      
-      <yaga-zoom-control 
-         [(position)]="position"
-         [zoomInText]="zoomInText"
-         [zoomInTitle]="zoomInTitle"
-         [zoomOutText]="zoomOutText"
-         [zoomOutTitle]="zoomOutTitle"
-      >
+        (click)="handleEvent('click', $event);"
+        (dblclick)="handleEvent('dblclick', event);"
+        (mousedown)="handleEvent('mousedown', event);"
+        (mouseup)="handleEvent('mouseup', event);"
+        (mouseover)="handleEvent('mouseover', event);"
+        (mouseout)="handleEvent('mouseout', event);"
+        (mousemove)="handleEvent('mousemove', event);"
+        (positionChange)="handleEvent('positionChange', event);"
+        (displayChange)="handleEvent('displayChange', event);"
+
+        [zoomInText]="getInputPropertyByName('zoomInText').value"
+        [zoomInTitle]="getInputPropertyByName('zoomInTitle').value"
+        [zoomOutText]="getInputPropertyByName('zoomOutText').value"
+        [zoomOutTitle]="getInputPropertyByName('zoomOutTitle').value"
+        
+        [position]="getDuplexPropertyByName('position').value"
+        [(zIndex)]="getDuplexPropertyByName('zIndex').value"
+        [(display)]="getDuplexPropertyByName('display').value"
+        [opacity]="getDuplexPropertyByName('opacity').value"
+        >
+
       </yaga-zoom-control>
-    
+      <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
   </div>
-      
+  ${ PROPERTIES_WRAPPER }
 </div><!-- /.container -->
-
-<div class="container">
-
-    <h3>Zoom-Control options</h3>
-      
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">zoomInText</span>
-      <input type="text" class="form-control"  [(ngModel)]="zoomInText">
-    </div><!-- /input-group -->
-       
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">zoomInTitle</span>
-      <input type="text" class="form-control"  [(ngModel)]="zoomInTitle">
-    </div><!-- /input-group -->
-        
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">zoomOutText</span>
-      <input type="text" class="form-control"  [(ngModel)]="zoomOutText">
-    </div><!-- /input-group -->
-       
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">zoomOutTitle</span>
-      <input type="text" class="form-control"  [(ngModel)]="zoomOutTitle">
-    </div><!-- /input-group -->
-    
-   
-    <h3>Control options</h3>   
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">Position</span>
-    <select  class="form-control" name="state" [(ngModel)]="position">
-        <option *ngFor="let state of positionStates" [ngValue]="state">
-        {{ state }}
-        </option>
-    </select>
-    </div><!-- /input-group -->
-
-    
-
-    
-</div>
+<example-footer></example-footer>
 
 `;
 /* tslint:enable */
-
-interface ITileLayerOptions {
-    url: string;
-    opacity?: number;
-}
 
 @Component({
     selector: 'app',
     template
 })
-export class AppComponent implements AfterViewInit {
-    public positionStates: ControlPosition[]= [
-        'topleft' , 'topright' , 'bottomleft' , 'bottomright'
-    ];
-    public position: ControlPosition;
+export class AppComponent extends ExampleAppComponentBlueprint {
+    public properties: IExampleProperties = {
+        duplex: [
+            {name: 'display', value: true, type: 'checkbox' },
+            {name: 'opacity', value: 0.8, type: 'relative'},
+            {name: 'position', value: 'topleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
+            {name: 'zIndex', value: 1, type: 'number'}
 
-    public zoomInText: string = '+';
-    public zoomInTitle: string = 'Zoom in';
-    public zoomOutText: string = '-';
-    public zoomOutTitle: string ='Zoom out';
-
-
-
-    @ViewChild(MapComponent) private mapComponent: MapComponent;
-
-    constructor() {
-        (<any>window).app = this;
-        this.position = this.positionStates[0];
-    }
-
-    public handlePositionEvent(event: Event): void {
-        console.log(event);
-    }
-
-    public ngAfterViewInit(): void {
-        (<any>window).map = this.mapComponent;
-    }
+        ],
+        input: [
+            {name: 'zoomInText', value: '+', type: 'text'},
+            {name: 'zoomInTitle', value: 'Zoom in', type: 'text'},
+            {name: 'zoomOutText', value: '-', type: 'text'},
+            {name: 'zoomOutTitle', value: 'Zoom out', type: 'text'}
+        ],
+        output: [
+            {name: 'click', value: '', type: 'event' },
+            {name: 'dblclick', value: '', type: 'event' },
+            {name: 'mousedown', value: '', type: 'event' },
+            {name: 'mouseup', value: '', type: 'event' },
+            {name: 'mouseover', value: '', type: 'event' },
+            {name: 'mouseout', value: '', type: 'event' },
+            {name: 'mousemove', value: '', type: 'event' },
+            {name: 'positionChange', value: '', type: 'event' },
+            {name: 'displayChange', value: '', type: 'event' },
+            {name: 'addEvent', value: '', type: 'event' },
+            {name: 'removeEvent', value: '', type: 'event' }
+        ]
+    };
 }
 
 @NgModule({
-    bootstrap: [AppComponent],
-    declarations: [AppComponent],
-    imports: [BrowserModule, FormsModule, YagaModule]
+    bootstrap:    [ AppComponent ],
+    declarations: [ AppComponent ],
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
 })
-export class AppModule {
-}
+export class AppModule { }
 
 document.addEventListener('DOMContentLoaded', () => {
     platform.bootstrapModule(AppModule);
