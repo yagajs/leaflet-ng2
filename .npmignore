@@ -41,6 +41,7 @@ typedoc/
 
 examples/**/*.js
 examples/**/*.js.map
+examples/**/*.d.ts
 
 bundle.js
 
