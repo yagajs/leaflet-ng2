@@ -64,6 +64,10 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
     {{ state }}
     </option>
   </select>
+</div>
+<div *ngIf="type === 'relative'"  class="input-group input-group-sx">
+  <span class="input-group-addon fixed-space">{{ name }}</span>
+  <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
 </div>`
 })
 export class ExamplePropertyComponent implements AfterViewInit {
@@ -93,8 +97,8 @@ export class ExamplePropertiesComponent implements AfterViewInit {
 <header id="top" class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav">
-            <a class="navbar-brand" href="http://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
-			<li class="nav-item nav-link"><a href="http://leaflet-ng2.yagajs.org" title="Home"><span class="fa fa-home" aria-hidden="true"></span>  leaflet-ng2</a></li>
+            <a class="navbar-brand" href="https://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
+			<li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2"><span class="fa fa-home" aria-hidden="true"></span>  leaflet-ng2</a></li>
 			<li class="nav-item nav-link"><a href="../../" title="Last release"><span class="fa fa-cubes" aria-hidden="true"></span>  Release</a></li>
             <li class="nav-item nav-link"><a href="../" title="YAGA Examples"><span class="fa fa-tv" aria-hidden="true"></span>  Examples</a></li>
             <li class="nav-item nav-link active"><a href="#">{{ title }}</a></li>

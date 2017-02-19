@@ -4,47 +4,36 @@ import { MapComponent,
     FillRule,
     PathOptions } from './index';
 import { point, SVG } from 'leaflet';
+import { expect } from 'chai';
 
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {
-        describe('[(display)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        let map: MapComponent,
+            layer: any;
+        beforeEach(() => {
+            map = new MapComponent({nativeElement: document.createElement('div')});
+            (<any>map)._size = point(100, 100);
+            (<any>map)._pixelOrigin = point(50, 50);
+            (<any>map)._renderer = (<any>map)._renderer || new SVG();
 
-                layer = new Constr(map);
-            });
+            layer = new Constr(map);
+        });
+        describe('[(display)]', () => {
             it('should remove DOM container when not displaying', () => {
                 layer.display = false;
-                /* istanbul ignore if */
-                if (layer.getElement().style.display !== 'none') {
-                    throw new Error('Path is still displayed');
-                }
+                expect(layer.getElement().style.display).to.equal('none');
             });
             it('should re-add DOM container when display is true again', () => {
                 layer.display = false;
                 layer.display = true;
 
-                /* istanbul ignore if */
-                if (layer.getElement().style.display === 'none') {
-                    throw new Error('Path is not displayed again');
-                }
+                expect(layer.getElement().style.display).not.equal('none');
             });
             it('should set to false by removing from map', (done: MochaDone) => {
 
                 layer.displayChange.subscribe((val: boolean) => {
-                    /* istanbul ignore if */
-                    if (val !== false) {
-                        return done(new Error('Wrong value emitted'));
-                    }
-                    /* istanbul ignore if */
-                    if (layer.display) {
-                        return done(new Error('Wrong value from variable call'));
-                    }
+                    expect(val).to.equal(false);
+                    expect(layer.display).to.equal(false);
                     done();
                 });
 
@@ -53,14 +42,8 @@ export function createPathTests(Constr: any): void {
             it('should set to true when adding to map again', (done: MochaDone) => {
                 map.removeLayer(layer);
                 layer.displayChange.subscribe((val: boolean) => {
-                    /* istanbul ignore if */
-                    if (val !== true) {
-                        return done(new Error('Wrong value emitted'));
-                    }
-                    /* istanbul ignore if */
-                    if (!layer.display) {
-                        return done(new Error('Wrong value from variable call'));
-                    }
+                    expect(val).to.equal(true);
+                    expect(layer.display).to.equal(true);
                     done();
                 });
 
@@ -68,44 +51,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(color)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: string = '#123456';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.color = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.color !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.color }`);
-                }
+                expect(layer.options.color).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.color = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.color !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.color }`);
-                }
+                expect(layer.color).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({color: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.color !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.color }`);
-                }
+                expect(layer.color).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.colorChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -113,10 +74,7 @@ export function createPathTests(Constr: any): void {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.colorChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -124,44 +82,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(lineCap)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: LineCapShape = 'butt';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.lineCap = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.lineCap !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.lineCap }`);
-                }
+                expect(layer.options.lineCap).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.lineCap = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.lineCap !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.lineCap }`);
-                }
+                expect(layer.lineCap).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({lineCap: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.lineCap !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.lineCap }`);
-                }
+                expect(layer.lineCap).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.lineCapChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -170,10 +106,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.lineCap = TEST_VALUE;
                 layer.lineCapChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -181,44 +114,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(lineJoin)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: LineJoinShape = 'bevel';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.lineJoin = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.lineJoin !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.lineJoin }`);
-                }
+                expect(layer.options.lineJoin).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.lineJoin = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.lineJoin !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.lineJoin }`);
-                }
+                expect(layer.lineJoin).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({lineJoin: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.lineJoin !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.lineJoin }`);
-                }
+                expect(layer.lineJoin).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.lineJoinChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -227,10 +138,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.lineJoin = TEST_VALUE;
                 layer.lineJoinChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -238,44 +146,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(dashArray)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: string = '1, 2';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.dashArray = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.dashArray !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.dashArray }`);
-                }
+                expect(layer.options.dashArray).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.dashArray = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.dashArray !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.dashArray }`);
-                }
+                expect(layer.dashArray).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({dashArray: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.dashArray !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.dashArray }`);
-                }
+                expect(layer.dashArray).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.dashArrayChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -284,10 +170,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.dashArray = TEST_VALUE;
                 layer.dashArrayChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -295,44 +178,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(dashOffset)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: string = '7px';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.dashOffset = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.dashOffset !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.dashOffset }`);
-                }
+                expect(layer.options.dashOffset).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.dashOffset = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.dashOffset !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.dashOffset }`);
-                }
+                expect(layer.dashOffset).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({dashOffset: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.dashOffset !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.dashOffset }`);
-                }
+                expect(layer.dashOffset).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.dashOffsetChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -341,10 +202,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.dashOffset = TEST_VALUE;
                 layer.dashOffsetChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -352,44 +210,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(fillColor)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: string = '#123456';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.fillColor = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.fillColor !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.fillColor }`);
-                }
+                expect(layer.options.fillColor).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.fillColor = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.fillColor !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.fillColor }`);
-                }
+                expect(layer.fillColor).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({fillColor: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.fillColor !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.fillColor }`);
-                }
+                expect(layer.fillColor).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.fillColorChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -398,10 +234,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.fillColor = TEST_VALUE;
                 layer.fillColorChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -409,44 +242,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(fillRule)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: FillRule = 'nonzero';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.fillRule = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.fillRule !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.fillRule }`);
-                }
+                expect(layer.options.fillRule).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.fillRule = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.fillRule !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.fillRule }`);
-                }
+                expect(layer.fillRule).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({fillRule: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.fillRule !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.fillRule }`);
-                }
+                expect(layer.fillRule).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.fillRuleChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -455,10 +266,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.fillRule = TEST_VALUE;
                 layer.fillRuleChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -466,44 +274,22 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(className)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: string = 'testclass';
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.className = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.className !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options.className }`);
-                }
+                expect(layer.options.className).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.className = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.className !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.className }`);
-                }
+                expect(layer.className).to.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle({className: TEST_VALUE});
-                /* istanbul ignore if */
-                if (layer.className !== TEST_VALUE) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.className }`);
-                }
+                expect(layer.className).to.equal(TEST_VALUE);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.classNameChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -512,10 +298,7 @@ export function createPathTests(Constr: any): void {
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.className = TEST_VALUE;
                 layer.classNameChange.subscribe((eventVal: string) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== TEST_VALUE) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(TEST_VALUE);
                     return done();
                 });
 
@@ -523,60 +306,26 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(opacity)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
-            it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular', () => {
                 const val: number = Math.random();
                 layer.opacity = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.opacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.opacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.options.opacity).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular', () => {
                 const val: number = Math.random();
                 layer.opacity = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.opacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.opacity).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet', () => {
                 const val: number = Math.random();
                 layer.setStyle({opacity: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.opacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.opacity).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.random();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -586,10 +335,7 @@ export function createPathTests(Constr: any): void {
                 const val: number = Math.random();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -597,60 +343,26 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(weight)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
-            it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular', () => {
                 const val: number = Math.ceil(Math.random() * 10);
                 layer.weight = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.weight !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.weight }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.options.weight).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular', () => {
                 const val: number = Math.ceil(Math.random() * 10);
                 layer.weight = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.weight !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.weight }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.weight).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet', () => {
                 const val: number = Math.ceil(Math.random() * 10);
                 layer.setStyle({weight: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.weight !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.weight }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.weight).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.ceil(Math.random() * 10);
 
                 layer.weightChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -660,10 +372,7 @@ export function createPathTests(Constr: any): void {
                 const val: number = Math.ceil(Math.random() * 10);
 
                 layer.weightChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -671,60 +380,26 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(fillOpacity)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
-            it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular', () => {
                 const val: number = Math.random();
                 layer.fillOpacity = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.fillOpacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.fillOpacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.options.fillOpacity).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular', () => {
                 const val: number = Math.random();
                 layer.fillOpacity = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fillOpacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fillOpacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fillOpacity).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet', () => {
                 const val: number = Math.random();
                 layer.setStyle({fillOpacity: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fillOpacity !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fillOpacity }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fillOpacity).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 const val: number = Math.random();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -734,10 +409,7 @@ export function createPathTests(Constr: any): void {
                 const val: number = Math.random();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -746,99 +418,44 @@ export function createPathTests(Constr: any): void {
         });
 
         describe('[(stroke)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
-            it('should be changed in Leaflet when changing in Angular to false', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular to false', () => {
                 const val: boolean = false;
                 layer.stroke = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.options.stroke).to.equal(val);
             });
-            it('should be changed in Leaflet when changing in Angular to true', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular to true', () => {
                 layer.options.stroke = false;
                 const val: boolean = true;
                 layer.stroke = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.stroke).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular to false', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular to false', () => {
                 const val: boolean = false;
                 layer.stroke = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.stroke).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular to true', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular to true', () => {
                 layer.options.stroke = false;
                 const val: boolean = true;
                 layer.stroke = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.stroke).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet to false', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet to false', () => {
                 const val: boolean = false;
                 layer.setStyle({stroke: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.stroke).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet to true', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet to true', () => {
                 layer.options.stroke = false;
                 const val: boolean = true;
                 layer.setStyle({stroke: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.stroke !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.stroke }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.stroke).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 const val: boolean = false;
 
                 layer.strokeChange.subscribe((eventVal: boolean) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -848,10 +465,7 @@ export function createPathTests(Constr: any): void {
                 const val: boolean = false;
 
                 layer.strokeChange.subscribe((eventVal: boolean) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -859,99 +473,44 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe('[(fill)]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
-            it('should be changed in Leaflet when changing in Angular to false', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular to false', () => {
                 const val: boolean = false;
                 layer.fill = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.options.fill).to.equal(val);
             });
-            it('should be changed in Leaflet when changing in Angular to true', (done: MochaDone) => {
+            it('should be changed in Leaflet when changing in Angular to true', () => {
                 layer.options.fill = false;
                 const val: boolean = true;
                 layer.fill = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.options.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fill).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular to false', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular to false', () => {
                 const val: boolean = false;
                 layer.fill = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fill).to.equal(val);
             });
-            it('should be changed in Angular when changing in Angular to true', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Angular to true', () => {
                 layer.options.fill = false;
                 const val: boolean = true;
                 layer.fill = val;
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fill).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet to false', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet to false', () => {
                 const val: boolean = false;
                 layer.setStyle({fill: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fill).to.equal(val);
             });
-            it('should be changed in Angular when changing in Leaflet to true', (done: MochaDone) => {
+            it('should be changed in Angular when changing in Leaflet to true', () => {
                 layer.options.fill = false;
                 const val: boolean = true;
                 layer.setStyle({fill: val});
-                setTimeout(() => {
-                    /* istanbul ignore if */
-                    if (layer.fill !== val) {
-                        return done(new Error(`Wrong value setted: ${ val } != ${ layer.fill }`));
-                    }
-                    return done();
-                }, 0);
-
+                expect(layer.fill).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 const val: boolean = false;
 
                 layer.fillChange.subscribe((eventVal: boolean) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -961,10 +520,7 @@ export function createPathTests(Constr: any): void {
                 const val: boolean = false;
 
                 layer.fillChange.subscribe((eventVal: boolean) => {
-                    /* istanbul ignore if */
-                    if (eventVal !== val) {
-                        return done(new Error('Received wrong value'));
-                    }
+                    expect(eventVal).to.equal(val);
                     return done();
                 });
 
@@ -973,43 +529,18 @@ export function createPathTests(Constr: any): void {
         });
 
         describe('[(style)]', () => {
-            var map: MapComponent,
-                layer: any;
             const TEST_VALUE: PathOptions = {opacity: 0.5, weight: 3, dashArray: '1, 2'};
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.style = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.options.opacity !== TEST_VALUE.opacity ||
-                    layer.options.weight !== TEST_VALUE.weight ||
-                    layer.options.dashArray !== TEST_VALUE.dashArray) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options }`);
-                }
+                expect(layer.options.opacity).to.equal(TEST_VALUE.opacity);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.style = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.style.opacity !== TEST_VALUE.opacity ||
-                    layer.style.weight !== TEST_VALUE.weight ||
-                    layer.style.dashArray !== TEST_VALUE.dashArray) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.style }`);
-                }
+                expect(layer.style.opacity).to.equal(TEST_VALUE.opacity);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
                 layer.setStyle(TEST_VALUE);
-                /* istanbul ignore if */
-                if (layer.style.opacity !== TEST_VALUE.opacity ||
-                    layer.style.weight !== TEST_VALUE.weight ||
-                    layer.style.dashArray !== TEST_VALUE.dashArray) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.options }`);
-                }
+                expect(layer.style.opacity).to.equal(TEST_VALUE.opacity);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 Promise.all([
@@ -1100,288 +631,132 @@ export function createPathTests(Constr: any): void {
 
         // Events
         describe('(add)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.addEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('add', testEvent);
             });
         });
         describe('(remove)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.removeEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('remove', testEvent);
             });
         });
         describe('(popupopen)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.popupopenEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('popupopen', testEvent);
             });
         });
         describe('(popupclose)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.popupcloseEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('popupclose', testEvent);
             });
         });
         describe('(tooltipopen)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.tooltipopenEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('tooltipopen', testEvent);
             });
         });
         describe('(tooltipclose)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.tooltipcloseEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('tooltipclose', testEvent);
             });
         });
         describe('(click)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.clickEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('click', testEvent);
             });
         });
         describe('(dbclick)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.dbclickEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('dbclick', testEvent);
             });
         });
         describe('(mousedown)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.mousedownEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('mousedown', testEvent);
             });
         });
         describe('(mouseover)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.mouseoverEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('mouseover', testEvent);
             });
         });
         describe('(mouseout)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.mouseoutEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('mouseout', testEvent);
             });
         });
         describe('(contextmenu)', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
                 const testHandle: any = {},
                     testEvent: any = { testHandle };
                 layer.contextmenuEvent.subscribe((event: any) => {
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
                 });
                 layer.fire('contextmenu', testEvent);
@@ -1389,44 +764,22 @@ export function createPathTests(Constr: any): void {
         });
 
         describe('[interactive]', () => {
-            var map: MapComponent,
-                layer: any;
-            beforeEach(() => {
-                map = new MapComponent({nativeElement: document.createElement('div')});
-                (<any>map)._size = point(100, 100);
-                (<any>map)._pixelOrigin = point(50, 50);
-                (<any>map)._renderer = (<any>map)._renderer || new SVG();
-
-                layer = new Constr(map);
-            });
             it('should be changed to false in Leaflet when changing in Angular to false', () => {
                 layer.interactive = false;
-                /* istanbul ignore if */
-                if (layer.options.interactive) {
-                    throw new Error(`It is not setted to false`);
-                }
+                expect(layer.options.interactive).to.equal(false);
             });
             it('should be changed to true in Leaflet when changing in Angular to true', () => {
                 layer.options.interactive = false;
                 layer.interactive = true;
-                /* istanbul ignore if */
-                if (!layer.options.interactive) {
-                    throw new Error(`It is not setted to true`);
-                }
+                expect(layer.options.interactive).to.equal(true);
             });
             it('should be changed in Angular to false when changing in Angular to false', () => {
                 layer.interactive = false;
-                /* istanbul ignore if */
-                if (layer.interactive) {
-                    throw new Error(`It is not setted to false`);
-                }
+                expect(layer.interactive).to.equal(false);
             });
             it('should be changed in Angular to true when changing in Angular to true', () => {
                 layer.interactive = true;
-                /* istanbul ignore if */
-                if (!layer.interactive) {
-                    throw new Error(`It is not setted to true`);
-                }
+                expect(layer.interactive).to.equal(true);
             });
         });
     });
