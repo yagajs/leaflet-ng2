@@ -38,10 +38,10 @@ const template: string = `
         [zoomOutText]="getInputPropertyByName('zoomOutText').value"
         [zoomOutTitle]="getInputPropertyByName('zoomOutTitle').value"
         
-        [position]="getDuplexPropertyByName('position').value"
+        [position]="getInputPropertyByName('position').value"
         [(zIndex)]="getDuplexPropertyByName('zIndex').value"
         [(display)]="getDuplexPropertyByName('display').value"
-        [opacity]="getDuplexPropertyByName('opacity').value"
+        [opacity]="getInputPropertyByName('opacity').value"
         >
 
       </yaga-zoom-control>
@@ -63,8 +63,6 @@ export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
             {name: 'display', value: true, type: 'checkbox' },
-            {name: 'opacity', value: 0.8, type: 'relative'},
-            {name: 'position', value: 'topleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
             {name: 'zIndex', value: 1, type: 'number'}
 
         ],
@@ -72,7 +70,9 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'zoomInText', value: '+', type: 'text'},
             {name: 'zoomInTitle', value: 'Zoom in', type: 'text'},
             {name: 'zoomOutText', value: '-', type: 'text'},
-            {name: 'zoomOutTitle', value: 'Zoom out', type: 'text'}
+            {name: 'zoomOutTitle', value: 'Zoom out', type: 'text'},
+            {name: 'position', value: 'topleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
+            {name: 'opacity', value: 0.8, type: 'relative'}
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
