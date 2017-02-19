@@ -17,7 +17,7 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<example-header [title]="'Map-Component'"></example-header>
+<example-header [title]="'Tile-Layer-Directive'"></example-header>
 <div class="container">
   <div class="map">
     <yaga-map>
