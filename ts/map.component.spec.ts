@@ -1,4 +1,5 @@
 import { MapComponent, LatLngBounds } from './index';
+import { latLngBounds, latLng } from 'leaflet';
 import { expect } from 'chai';
 
 describe('Map Component', () => {
@@ -246,49 +247,49 @@ describe('Map Component', () => {
             const lat2: number = Math.random() * 100;
             const lng1: number = Math.random() * 100;
             const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = new LatLngBounds([
-                [lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2],
-                [lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1]
-            ]);
+            const val: LatLngBounds = latLngBounds(
+                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+            );
             map.setMaxBounds(val);
-            expect(map.options.maxBounds).to.equal(val);
+            expect(val.equals(map.options.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const lat1: number = Math.random() * 100;
             const lat2: number = Math.random() * 100;
             const lng1: number = Math.random() * 100;
             const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = new LatLngBounds([
-                [lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2],
-                [lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1]
-            ]);
+            const val: LatLngBounds = latLngBounds(
+                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+            );
             map.maxBounds = val;
-            expect(map.maxBounds).to.equal(val);
+            expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const lat1: number = Math.random() * 100;
             const lat2: number = Math.random() * 100;
             const lng1: number = Math.random() * 100;
             const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = new LatLngBounds([
-                [lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2],
-                [lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1]
-            ]);
+            const val: LatLngBounds = latLngBounds(
+                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+            );
             map.setMaxBounds(val);
-            expect(map.maxBounds).to.equal(val);
+            expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const lat1: number = Math.random() * 100;
             const lat2: number = Math.random() * 100;
             const lng1: number = Math.random() * 100;
             const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = new LatLngBounds([
-                [lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2],
-                [lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1]
-            ]);
+            const val: LatLngBounds = latLngBounds(
+                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+            );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(eventVal).to.equal(val);
+                expect(val.equals(eventVal)).to.equal(true);
                 return done();
             });
 
@@ -299,13 +300,13 @@ describe('Map Component', () => {
             const lat2: number = Math.random() * 100;
             const lng1: number = Math.random() * 100;
             const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = new LatLngBounds([
-                [lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2],
-                [lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1]
-            ]);
+            const val: LatLngBounds = latLngBounds(
+                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+            );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(eventVal).to.equal(val);
+                expect(val.equals(eventVal)).to.equal(true);
                 return done();
             });
 
