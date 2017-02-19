@@ -5,6 +5,8 @@ if (typeof window === 'undefined') {
 
 require('reflect-metadata');
 
+require('../lib/lng2lat.spec');
+
 require('../lib/map.component.spec');
 require('../lib/tile-layer.directive.spec');
 require('../lib/wms-layer.directive.spec');
