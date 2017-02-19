@@ -2,6 +2,7 @@ import { ZoomControlDirective,
     MapComponent,
     ControlPosition } from './index';
 import { point } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Zoom-Control Directive', () => {
     let map: MapComponent,
@@ -16,34 +17,22 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.getPosition() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getPosition() }`);
-            }
+            expect(control.getPosition()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: ControlPosition = 'topright';
             control.setPosition(val);
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
 
             });
@@ -53,10 +42,7 @@ describe('Zoom-Control Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
 
             });
@@ -130,18 +116,12 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.getContainer().style.opacity !== val.toString()) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getContainer().style.opacity }`);
-            }
+            expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.opacity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.opacity }`);
-            }
+            expect(control.opacity).to.equal(val);
         });
     });
 
@@ -149,46 +129,24 @@ describe('Zoom-Control Directive', () => {
         const TEST_VALUE: string = 'test-caption';
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInText = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.options.zoomInText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted in options: ${ TEST_VALUE } != ${ control.options.zoomInText }`);
-            }
-            /* istanbul ignore if */
-            if ((<HTMLElement>(<any>control)._zoomInButton).textContent !== TEST_VALUE) {
-                /* tslint:disable:max-line-length */
-                throw new Error(`Wrong value setted in HTMLElement: ${ TEST_VALUE } != ${ (<HTMLElement>(<any>control)._zoomInButton).textContent }`);
-                /* tslint:enable */
-            }
+            expect(control.options.zoomInText).to.equal(TEST_VALUE);
+            expect((<HTMLElement>(<any>control)._zoomInButton).textContent).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomInText = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.zoomInText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ control.zoomInText }`);
-            }
+            expect(control.zoomInText).to.equal(TEST_VALUE);
         });
     });
     describe('[zoomOutText]', () => {
         const TEST_VALUE: string = 'test-caption';
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutText = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.options.zoomOutText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted in options: ${ TEST_VALUE } != ${ control.options.zoomOutText }`);
-            }
-            /* istanbul ignore if */
-            if ((<HTMLElement>(<any>control)._zoomOutButton).textContent !== TEST_VALUE) {
-                /* tslint:disable:max-line-length */
-                throw new Error(`Wrong value setted in HTMLElement: ${ TEST_VALUE } != ${ (<HTMLElement>(<any>control)._zoomOutButton).textContent }`);
-                /* tslint:enable */
-            }
+            expect(control.options.zoomOutText).to.equal(TEST_VALUE);
+            expect((<HTMLElement>(<any>control)._zoomOutButton).textContent).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomOutText = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.zoomOutText !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ control.zoomOutText }`);
-            }
+            expect(control.zoomOutText).to.equal(TEST_VALUE);
         });
     });
 
@@ -196,46 +154,24 @@ describe('Zoom-Control Directive', () => {
         const TEST_VALUE: string = 'test-caption';
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInTitle = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.options.zoomInTitle !== TEST_VALUE) {
-                throw new Error(`Wrong value setted in options: ${ TEST_VALUE } != ${ control.options.zoomInTitle }`);
-            }
-            /* istanbul ignore if */
-            if ((<HTMLElement>(<any>control)._zoomInButton).getAttribute('title') !== TEST_VALUE) {
-                /* tslint:disable:max-line-length */
-                throw new Error(`Wrong value setted in HTMLElement: ${ TEST_VALUE } != ${ (<HTMLElement>(<any>control)._zoomInButton).getAttribute('title') }`);
-                /* tslint:enable */
-            }
+            expect(control.options.zoomInTitle).to.equal(TEST_VALUE);
+            expect((<HTMLElement>(<any>control)._zoomInButton).getAttribute('title')).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomInTitle = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.zoomInTitle !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ control.zoomInTitle }`);
-            }
+            expect(control.zoomInTitle).to.equal(TEST_VALUE);
         });
     });
     describe('[zoomOutTitle]', () => {
         const TEST_VALUE: string = 'test-caption';
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutTitle = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.options.zoomOutTitle !== TEST_VALUE) {
-                throw new Error(`Wrong value setted in options: ${ TEST_VALUE } != ${ control.options.zoomOutTitle }`);
-            }
-            /* istanbul ignore if */
-            if ((<HTMLElement>(<any>control)._zoomOutButton).getAttribute('title') !== TEST_VALUE) {
-                /* tslint:disable:max-line-length */
-                throw new Error(`Wrong value setted in HTMLElement: ${ TEST_VALUE } != ${ (<HTMLElement>(<any>control)._zoomOutButton).getAttribute('title') }`);
-                /* tslint:enable */
-            }
+            expect(control.options.zoomOutTitle).to.equal(TEST_VALUE);
+            expect((<HTMLElement>(<any>control)._zoomOutButton).getAttribute('title')).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomOutTitle = TEST_VALUE;
-            /* istanbul ignore if */
-            if (control.zoomOutTitle !== TEST_VALUE) {
-                throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ control.zoomOutTitle }`);
-            }
+            expect(control.zoomOutTitle).to.equal(TEST_VALUE);
         });
     });
 

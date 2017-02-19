@@ -5,6 +5,7 @@ import { TooltipDirective,
     LatLng,
     EXAMPLE_CONTENT } from './index';
 import { point, latLng } from 'leaflet';
+import { expect } from 'chai';
 
 describe('Tooltip Directive', () => {
     let map: MapComponent,
@@ -43,31 +44,19 @@ describe('Tooltip Directive', () => {
     describe('[(content)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             tooltip.content = EXAMPLE_CONTENT;
-            /* istanbul ignore if */
-            if ((<string>(<any>tooltip)._content) !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ (<string>(<any>tooltip)._content) }`);
-            }
+            expect((<string>(<any>tooltip)._content)).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             tooltip.content = EXAMPLE_CONTENT;
-            /* istanbul ignore if */
-            if (tooltip.content !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ tooltip.content }`);
-            }
+            expect(tooltip.content).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             tooltip.setContent(EXAMPLE_CONTENT);
-            /* istanbul ignore if */
-            if (tooltip.content !== EXAMPLE_CONTENT) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_CONTENT } != ${ tooltip.content }`);
-            }
+            expect(tooltip.content).to.equal(EXAMPLE_CONTENT);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             tooltip.contentChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_CONTENT) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_CONTENT);
                 return done();
             });
 
@@ -75,10 +64,7 @@ describe('Tooltip Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {   tooltip.content = EXAMPLE_CONTENT;
             tooltip.contentChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_CONTENT + '?test') {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_CONTENT + '?test');
                 return done();
             });
 
@@ -88,47 +74,37 @@ describe('Tooltip Directive', () => {
 
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            tooltip.opacity = 0.123;
-            /* istanbul ignore if */
-            if (tooltip.options.opacity !== 0.123) {
-                throw new Error(`Wrong value setted: ${ 0.123 } != ${ tooltip.options.opacity }`);
-            }
+            const val: number = Math.random();
+            tooltip.opacity = val;
+            expect(tooltip.options.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            tooltip.opacity = 0.123;
-            /* istanbul ignore if */
-            if (tooltip.opacity !== 0.123) {
-                throw new Error(`Wrong value setted: ${ 0.123 } != ${ tooltip.opacity }`);
-            }
+            const val: number = Math.random();
+            tooltip.opacity = val;
+            expect(tooltip.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            tooltip.setOpacity(0.123);
-            /* istanbul ignore if */
-            if (tooltip.opacity !== 0.123) {
-                throw new Error(`Wrong value setted: ${ 0.123 } != ${ tooltip.opacity }`);
-            }
+            const val: number = Math.random();
+            tooltip.setOpacity(val);
+            expect(tooltip.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = Math.random();
             tooltip.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== 0.123) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
-            tooltip.opacity = 0.123;
+            tooltip.opacity = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = Math.random();
             tooltip.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== 0.246) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
-            tooltip.setOpacity(0.246);
+            tooltip.setOpacity(val);
         });
     });
     describe('[(lat)]', () => {
@@ -138,35 +114,23 @@ describe('Tooltip Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             tooltip.lat = val;
-            /* istanbul ignore if */
-            if (tooltip.getLatLng().lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.getLatLng().lat }`);
-            }
+            expect(tooltip.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             tooltip.lat = val;
-            /* istanbul ignore if */
-            if (tooltip.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.lat }`);
-            }
+            expect(tooltip.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             tooltip.setLatLng([val, 0]);
-            /* istanbul ignore if */
-            if (tooltip.lat !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.lat }`);
-            }
+            expect(tooltip.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             tooltip.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -176,10 +140,7 @@ describe('Tooltip Directive', () => {
             const val: number = Math.random() * 100;
 
             tooltip.latChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -194,35 +155,23 @@ describe('Tooltip Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             tooltip.lng = val;
-            /* istanbul ignore if */
-            if (tooltip.getLatLng().lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.getLatLng().lng }`);
-            }
+            expect(tooltip.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             tooltip.lng = val;
-            /* istanbul ignore if */
-            if (tooltip.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.lng }`);
-            }
+            expect(tooltip.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random() * 100;
             tooltip.setLatLng([0, val]);
-            /* istanbul ignore if */
-            if (tooltip.lng !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.lng }`);
-            }
+            expect(tooltip.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random() * 100;
 
             tooltip.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -232,10 +181,7 @@ describe('Tooltip Directive', () => {
             const val: number = Math.random() * 100;
 
             tooltip.lngChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -250,35 +196,23 @@ describe('Tooltip Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             tooltip.position = val;
-            /* istanbul ignore if */
-            if (tooltip.getLatLng().lat !== val.lat || tooltip.getLatLng().lng !== val.lng) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.getLatLng() }`);
-            }
+            expect(tooltip.getLatLng().equals(val)).to.equal(true);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             tooltip.position = val;
-            /* istanbul ignore if */
-            if (tooltip.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.position }`);
-            }
+            expect(tooltip.position.equals(val)).to.equal(true);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
             tooltip.setLatLng(val);
-            /* istanbul ignore if */
-            if (tooltip.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.position }`);
-            }
+            expect(tooltip.position.equals(val)).to.equal(true);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             tooltip.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal.equals(val)).to.equal(true);
                 return done();
             });
 
@@ -288,10 +222,7 @@ describe('Tooltip Directive', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
 
             tooltip.positionChange.subscribe((eventVal: LatLng) => {
-                /* istanbul ignore if */
-                if (eventVal.lat !== val.lat || eventVal.lng !== val.lng) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal.equals(val)).to.equal(true);
                 return done();
             });
 
@@ -306,10 +237,7 @@ describe('Tooltip Directive', () => {
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             tooltip.openEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.target !== tooltip) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.target).to.equal(tooltip);
                 return done();
             });
             map.openTooltip(tooltip);
@@ -322,10 +250,7 @@ describe('Tooltip Directive', () => {
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             tooltip.closeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.target !== tooltip) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.target).to.equal(tooltip);
                 return done();
             });
             (<any>tooltip)._close();
@@ -337,72 +262,48 @@ describe('Tooltip Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             tooltip.className = val;
-            /* istanbul ignore if */
-            if (tooltip.options.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.className }`);
-            }
+            expect(tooltip.options.className).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             tooltip.className = val;
-            /* istanbul ignore if */
-            if (tooltip.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.className }`);
-            }
+            expect(tooltip.className).to.equal(val);
         });
     });
     describe('[pane]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             tooltip.pane = val;
-            /* istanbul ignore if */
-            if (tooltip.options.pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.pane }`);
-            }
+            expect(tooltip.options.pane).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             tooltip.pane = val;
-            /* istanbul ignore if */
-            if (tooltip.pane !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.pane }`);
-            }
+            expect(tooltip.pane).to.equal(val);
         });
     });
     describe('[direction]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Direction = 'top';
             tooltip.direction = val;
-            /* istanbul ignore if */
-            if (tooltip.options.direction !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.direction }`);
-            }
+            expect(tooltip.options.direction).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Direction = 'right';
             tooltip.direction = val;
-            /* istanbul ignore if */
-            if (tooltip.direction !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.direction }`);
-            }
+            expect(tooltip.direction).to.equal(val);
         });
     });
     describe('[offset]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: Point = point(12, 34);
             tooltip.offset = val;
-            /* istanbul ignore if */
-            if (tooltip.options.offset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.options.offset }`);
-            }
+            expect(tooltip.options.offset).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: Point = point(12, 34);
             tooltip.offset = val;
-            /* istanbul ignore if */
-            if (tooltip.offset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ tooltip.offset }`);
-            }
+            expect(tooltip.offset).to.equal(val);
         });
     });
 
@@ -410,94 +311,58 @@ describe('Tooltip Directive', () => {
     describe('[interactive]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.interactive = false;
-            /* istanbul ignore if */
-            if (tooltip.options.interactive) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.options.interactive).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             tooltip.options.interactive = false;
             tooltip.interactive = true;
-            /* istanbul ignore if */
-            if (!tooltip.options.interactive) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.options.interactive).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             tooltip.interactive = false;
-            /* istanbul ignore if */
-            if (tooltip.interactive) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.interactive).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             tooltip.interactive = true;
-            /* istanbul ignore if */
-            if (!tooltip.interactive) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.interactive).to.equal(true);
         });
     });
     describe('[sticky]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.sticky = false;
-            /* istanbul ignore if */
-            if (tooltip.options.sticky) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.options.sticky).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             tooltip.options.sticky = false;
             tooltip.sticky = true;
-            /* istanbul ignore if */
-            if (!tooltip.options.sticky) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.options.sticky).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             tooltip.sticky = false;
-            /* istanbul ignore if */
-            if (tooltip.sticky) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.sticky).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             tooltip.sticky = true;
-            /* istanbul ignore if */
-            if (!tooltip.sticky) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.sticky).to.equal(true);
         });
     });
     describe('[permanent]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             tooltip.permanent = false;
-            /* istanbul ignore if */
-            if (tooltip.options.permanent) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.options.permanent).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             tooltip.options.permanent = false;
             tooltip.permanent = true;
-            /* istanbul ignore if */
-            if (!tooltip.options.permanent) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.options.permanent).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             tooltip.permanent = false;
-            /* istanbul ignore if */
-            if (tooltip.permanent) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(tooltip.permanent).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             tooltip.permanent = true;
-            /* istanbul ignore if */
-            if (!tooltip.permanent) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(tooltip.permanent).to.equal(true);
         });
     });
 });

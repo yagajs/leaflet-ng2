@@ -368,12 +368,7 @@ describe('Marker Directive', () => {
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            if (!(<any>layerWithPopup)._popup) {
-                throw new Error('There is no popup binded');
-            }
-            if ((<any>layerWithPopup)._popup !== popup) {
-                throw new Error('There is a wrong popup binded');
-            }
+            expect((<any>layerWithPopup)._popup).to.equal(popup);
         });
     });
 
@@ -390,12 +385,7 @@ describe('Marker Directive', () => {
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            if (!(<any>layerWithTooltip)._tooltip) {
-                throw new Error('There is no tooltip binded');
-            }
-            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
-                throw new Error('There is a wrong tooltip binded');
-            }
+            expect((<any>layerWithTooltip)._tooltip).to.equal(tooltip);
         });
 
     });

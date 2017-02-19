@@ -6,6 +6,8 @@ import { WmsLayerDirective,
     EXAMPLE_WMS_LAYER_NAMES,
     EXAMPLE_WMS_LAYER_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
+import { expect } from 'chai';
+import LatLngBounds = L.LatLngBounds;
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -32,19 +34,12 @@ describe('WMS-Layer Directive', () => {
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
-            /* istanbul ignore if */
-            if (hasAsChild(layer.getPane(), (<any>layer)._container)) {
-                throw new Error('Map is still parent element of the tile layer');
-            }
+            expect(hasAsChild(layer.getPane(), (<any>layer)._container)).to.equal(false);
         });
         it('should re-add DOM container when display is true again', () => {
             layer.display = false;
             layer.display = true;
-
-            /* istanbul ignore if */
-            if (!hasAsChild(layer.getPane(), (<any>layer)._container)) {
-                throw new Error('Map is not parent element of the tile layer');
-            }
+            expect(hasAsChild(layer.getPane(), (<any>layer)._container)).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
             const moveEvents: {fn: Function}[] = (<any>map)._events.move,
@@ -79,15 +74,9 @@ describe('WMS-Layer Directive', () => {
         });
         it('should set to false by removing from map', (done: MochaDone) => {
 
-            layer.displayChange.subscribe((val: boolean) => {
-                /* istanbul ignore if */
-                if (val !== false) {
-                    return new Error('Wrong value emitted');
-                }
-                /* istanbul ignore if */
-                if (layer.display) {
-                    return new Error('Wrong value from variable call');
-                }
+            layer.displayChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                expect(layer.display).to.equal(false);
                 done();
             });
 
@@ -95,15 +84,9 @@ describe('WMS-Layer Directive', () => {
         });
         it('should set to true when adding to map again', (done: MochaDone) => {
             map.removeLayer(layer);
-            layer.displayChange.subscribe((val: boolean) => {
-                /* istanbul ignore if */
-                if (val !== true) {
-                    return done(new Error('Wrong value emitted'));
-                }
-                /* istanbul ignore if */
-                if (!layer.display) {
-                    return done(new Error('Wrong value from variable call'));
-                }
+            layer.displayChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                expect(layer.display).to.equal(true);
                 done();
             });
 
@@ -113,31 +96,19 @@ describe('WMS-Layer Directive', () => {
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = EXAMPLE_WMS_LAYER_URL;
-            /* istanbul ignore if */
-            if ((<string>(<any>layer)._url) !== EXAMPLE_WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ (<string>(<any>layer)._url) }`);
-            }
+            expect((<string>(<any>layer)._url)).to.equal(EXAMPLE_WMS_LAYER_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.url = EXAMPLE_WMS_LAYER_URL;
-            /* istanbul ignore if */
-            if (layer.url !== EXAMPLE_WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ layer.url }`);
-            }
+            expect(layer.url).to.equal(EXAMPLE_WMS_LAYER_URL);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             layer.setUrl(EXAMPLE_WMS_LAYER_URL);
-            /* istanbul ignore if */
-            if (layer.url !== EXAMPLE_WMS_LAYER_URL) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_URL } != ${ layer.url }`);
-            }
+            expect(layer.url).to.equal(EXAMPLE_WMS_LAYER_URL);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_WMS_LAYER_URL) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_WMS_LAYER_URL);
                 return done();
             });
 
@@ -145,10 +116,7 @@ describe('WMS-Layer Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = EXAMPLE_WMS_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== EXAMPLE_WMS_LAYER_URL + '?test') {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(EXAMPLE_WMS_LAYER_URL + '?test');
                 return done();
             });
 
@@ -167,50 +135,26 @@ describe('WMS-Layer Directive', () => {
         });
     });
     describe('[(opacity)]', () => {
-        it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random();
             layer.opacity = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.options.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.options.opacity).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random();
             layer.opacity = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.opacity).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random();
             layer.setOpacity(val);
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.opacity !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.opacity }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
 
             layer.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -220,10 +164,7 @@ describe('WMS-Layer Directive', () => {
             const val: number = Math.random();
 
             layer.opacityChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -231,50 +172,26 @@ describe('WMS-Layer Directive', () => {
         });
     });
     describe('[(zIndex)]', () => {
-        it('should be changed in Leaflet when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random();
             layer.zIndex = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.options.zIndex !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.options.zIndex }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.options.zIndex).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random();
             layer.zIndex = val;
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.zIndex !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.zIndex }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.zIndex).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', (done: MochaDone) => {
+        it('should be changed in Angular when changing in Leaflet', () => {
             const val: number = Math.random();
             layer.setZIndex(val);
-            setTimeout(() => {
-                /* istanbul ignore if */
-                if (layer.zIndex !== val) {
-                    return done(new Error(`Wrong value setted: ${ val } != ${ layer.zIndex }`));
-                }
-                return done();
-            }, 0);
-
+            expect(layer.zIndex).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: number = Math.random();
 
             layer.zIndexChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -284,10 +201,7 @@ describe('WMS-Layer Directive', () => {
             const val: number = Math.random();
 
             layer.zIndexChange.subscribe((eventVal: number) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -298,31 +212,19 @@ describe('WMS-Layer Directive', () => {
     describe('[(layers)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
-            /* istanbul ignore if */
-            if (layer.wmsParams.layers !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.layers }`);
-            }
+            expect(layer.wmsParams.layers).to.equal(EXAMPLE_WMS_LAYER_NAMES.join(','));
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
-            /* istanbul ignore if */
-            if (layer.layers.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
-            }
+            expect(layer.layers).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             layer.setParams({layers: EXAMPLE_WMS_LAYER_NAMES.join(',')});
-            /* istanbul ignore if */
-            if (layer.layers.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.layers.join(',') }`);
-            }
+            expect(layer.layers).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.layersChange.subscribe((eventVal: string[]) => {
-                /* istanbul ignore if */
-                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
             });
 
@@ -331,10 +233,7 @@ describe('WMS-Layer Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.layersChange.subscribe((eventVal: string[]) => {
-                /* istanbul ignore if */
-                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
             });
 
@@ -344,33 +243,21 @@ describe('WMS-Layer Directive', () => {
     describe('[(styles)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.styles = EXAMPLE_WMS_LAYER_NAMES;
-            /* istanbul ignore if */
-            if (layer.wmsParams.styles !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.wmsParams.styles }`);
-            }
+            expect(layer.wmsParams.styles).to.equal(EXAMPLE_WMS_LAYER_NAMES.join(','));
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.styles = EXAMPLE_WMS_LAYER_NAMES;
-            /* istanbul ignore if */
-            if (layer.styles.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
-            }
+            expect(layer.styles).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
             params.styles = EXAMPLE_WMS_LAYER_NAMES.join(',');
             layer.setParams(params);
-            /* istanbul ignore if */
-            if (layer.styles.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                throw new Error(`Wrong value setted: ${ EXAMPLE_WMS_LAYER_NAMES.join(',') } != ${ layer.styles.join(',') }`);
-            }
+            expect(layer.styles).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
-                /* istanbul ignore if */
-                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
             });
 
@@ -378,10 +265,7 @@ describe('WMS-Layer Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
-                /* istanbul ignore if */
-                if (eventVal.join(',') !== EXAMPLE_WMS_LAYER_NAMES.join(',')) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
             });
             const params: WMSParams = Object.create(layer.wmsParams);
@@ -392,57 +276,36 @@ describe('WMS-Layer Directive', () => {
     describe('[(transparent)]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.transparent = false;
-            /* istanbul ignore if */
-            if (layer.wmsParams.transparent) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.wmsParams.transparent).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.wmsParams.transparent = false;
             layer.transparent = true;
-            /* istanbul ignore if */
-            if (!layer.wmsParams.transparent) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.wmsParams.transparent).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.transparent = false;
-            /* istanbul ignore if */
-            if (layer.transparent) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.transparent).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.transparent = true;
-            /* istanbul ignore if */
-            if (!layer.transparent) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.transparent).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Leaflet to false', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
             params.transparent = false;
             layer.setParams(params);
-            /* istanbul ignore if */
-            if (layer.transparent) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.transparent).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Leaflet to true', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
             params.transparent = true;
             layer.setParams(params);
-            /* istanbul ignore if */
-            if (!layer.transparent) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.transparent).to.equal(true);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.transparentChange.subscribe((eventVal: boolean) => {
-                /* istanbul ignore if */
-                if (!eventVal) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(true);
                 return done();
             });
 
@@ -450,10 +313,7 @@ describe('WMS-Layer Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.transparentChange.subscribe((eventVal: boolean) => {
-                /* istanbul ignore if */
-                if (!eventVal) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(true);
                 return done();
             });
 
@@ -466,33 +326,21 @@ describe('WMS-Layer Directive', () => {
         const FORMAT: string = 'image/png';
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.format = FORMAT;
-            /* istanbul ignore if */
-            if (layer.wmsParams.format !== FORMAT) {
-                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.wmsParams.format }`);
-            }
+            expect(layer.wmsParams.format).to.equal(FORMAT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.format = FORMAT;
-            /* istanbul ignore if */
-            if (layer.format !== FORMAT) {
-                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.format }`);
-            }
+            expect(layer.format).to.equal(FORMAT);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
             params.format = FORMAT;
             layer.setParams(params);
-            /* istanbul ignore if */
-            if (layer.format !== FORMAT) {
-                throw new Error(`Wrong value setted: ${ FORMAT } != ${ layer.format }`);
-            }
+            expect(layer.format).to.equal(FORMAT);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.formatChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== FORMAT) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(FORMAT);
                 return done();
             });
 
@@ -500,10 +348,7 @@ describe('WMS-Layer Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.formatChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== FORMAT) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(FORMAT);
                 return done();
             });
             const params: WMSParams = Object.create(layer.wmsParams);
@@ -515,33 +360,21 @@ describe('WMS-Layer Directive', () => {
         const VERSION: string = '1.0.0';
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.version = VERSION;
-            /* istanbul ignore if */
-            if (layer.wmsParams.version !== VERSION) {
-                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.wmsParams.version }`);
-            }
+            expect(layer.wmsParams.version).to.equal(VERSION);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.version = VERSION;
-            /* istanbul ignore if */
-            if (layer.version !== VERSION) {
-                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.version }`);
-            }
+            expect(layer.version).to.equal(VERSION);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const params: WMSParams = Object.create(layer.wmsParams);
             params.version = VERSION;
             layer.setParams(params);
-            /* istanbul ignore if */
-            if (layer.version !== VERSION) {
-                throw new Error(`Wrong value setted: ${ VERSION } != ${ layer.version }`);
-            }
+            expect(layer.version).to.equal(VERSION);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.versionChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== VERSION) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(VERSION);
                 return done();
             });
 
@@ -549,10 +382,7 @@ describe('WMS-Layer Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.versionChange.subscribe((eventVal: string) => {
-                /* istanbul ignore if */
-                if (eventVal !== VERSION) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(VERSION);
                 return done();
             });
             const params: WMSParams = Object.create(layer.wmsParams);
@@ -567,10 +397,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('add', testEvent);
@@ -581,10 +408,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('remove', testEvent);
@@ -595,10 +419,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('popupopen', testEvent);
@@ -609,10 +430,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('popupclose', testEvent);
@@ -623,10 +441,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('tooltipopen', testEvent);
@@ -637,10 +452,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('tooltipclose', testEvent);
@@ -651,10 +463,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('click', testEvent);
@@ -665,10 +474,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.dbclickEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('dbclick', testEvent);
@@ -679,10 +485,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('mousedown', testEvent);
@@ -693,10 +496,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('mouseover', testEvent);
@@ -707,10 +507,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('mouseout', testEvent);
@@ -721,10 +518,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('contextmenu', testEvent);
@@ -735,10 +529,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.loadingEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('loading', testEvent);
@@ -752,10 +543,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.tileunloadEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('tileunload', testEvent);
@@ -766,10 +554,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.tileloadstartEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('tileloadstart', testEvent);
@@ -780,10 +565,7 @@ describe('WMS-Layer Directive', () => {
             const testHandle: any = {},
                 testEvent: any = { testHandle };
             layer.tileerrorEvent.subscribe((event: any) => {
-                /* istanbul ignore if */
-                if (event.testHandle !== testEvent.testHandle) {
-                    return done(new Error('Wrong event returned'));
-                }
+                expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
             layer.fire('tileerror', testEvent);
@@ -800,10 +582,7 @@ describe('WMS-Layer Directive', () => {
                     if (called) {
                         return;
                     }
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     called = true;
                     return done();
                 });
@@ -822,10 +601,7 @@ describe('WMS-Layer Directive', () => {
                     if (called) {
                         return;
                     }
-                    /* istanbul ignore if */
-                    if (event.testHandle !== testEvent.testHandle) {
-                        return done(new Error('Wrong event returned'));
-                    }
+                    expect(event.testHandle).to.equal(testEvent.testHandle);
                     called = true;
                     return done();
                 });
@@ -840,19 +616,13 @@ describe('WMS-Layer Directive', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             layer.tileSize = val;
-            /* istanbul ignore if */
-            if (layer.options.tileSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.tileSize }`);
-            }
+            expect(layer.options.tileSize).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: Point = point(num, num);
             layer.tileSize = val;
-            /* istanbul ignore if */
-            if (layer.tileSize !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.tileSize }`);
-            }
+            expect(layer.tileSize).to.equal(val);
         });
     });
     describe('[bounds]', () => {
@@ -860,425 +630,266 @@ describe('WMS-Layer Directive', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
             layer.bounds = val;
-            /* istanbul ignore if */
-            if (layer.options.bounds !== val) {
-                throw new Error('Wrong value setted: ' +
-                    JSON.stringify(val) +
-                    ' != ' +
-                    JSON.stringify(layer.options.bounds));
-            }
+            expect(layer.options.bounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const num: number = Math.ceil(Math.random() * 1000),
                 val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
             layer.bounds = val;
-            /* istanbul ignore if */
-            if (layer.bounds !== val) {
-                throw new Error(`Wrong value setted: ${ JSON.stringify(val) } != ${ JSON.stringify(layer.bounds) }`);
-            }
+            expect(layer.bounds).to.equal(val);
         });
     });
     describe('[subdomains]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string[] = ['a', 'b', 'c', 'd'];
             layer.subdomains = val;
-            /* istanbul ignore if */
-            if (layer.options.subdomains !== val) {
-                throw new Error('Wrong value setted: ' +
-                    JSON.stringify(val) +
-                    ' != ' +
-                    JSON.stringify(layer.options.subdomains));
-            }
+            expect(layer.options.subdomains).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string[] = ['a', 'b', 'c', 'd'];
             layer.subdomains = val;
-            /* istanbul ignore if */
-            if (layer.subdomains !== val) {
-                throw new Error(`Wrong value setted: ${ JSON.stringify(val) } != ${ JSON.stringify(layer.subdomains) }`);
-            }
+            expect(layer.subdomains).to.deep.equal(val);
         });
         it('should get an array of strings even if it has a string value', () => {
             const val: string = 'abcdefg';
             layer.options.subdomains = val;
-            /* istanbul ignore if */
-            if (!Array.prototype.isPrototypeOf(layer.subdomains) && layer.subdomains.length !== val.length) {
-                throw new Error(`Wrong value setted: ${ val } != ${ JSON.stringify(layer.subdomains) }`);
-            }
+            expect(layer.subdomains).to.deep.equal(val.split(''));
         });
     });
     describe('[className]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'test-class';
             layer.className = val;
-            /* istanbul ignore if */
-            if (layer.options.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.className }`);
-            }
+            expect(layer.options.className).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             layer.className = val;
-            /* istanbul ignore if */
-            if (layer.className !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.className }`);
-            }
+            expect(layer.className).to.equal(val);
         });
     });
     describe('[errorTileUrl]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'http://test';
             layer.errorTileUrl = val;
-            /* istanbul ignore if */
-            if (layer.options.errorTileUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.errorTileUrl }`);
-            }
+            expect(layer.options.errorTileUrl).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'http://test';
             layer.errorTileUrl = val;
-            /* istanbul ignore if */
-            if (layer.errorTileUrl !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.errorTileUrl }`);
-            }
+            expect(layer.errorTileUrl).to.equal(val);
         });
     });
     describe('[updateInterval]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.updateInterval = val;
-            /* istanbul ignore if */
-            if (layer.options.updateInterval !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.updateInterval }`);
-            }
+            expect(layer.options.updateInterval).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.updateInterval = val;
-            /* istanbul ignore if */
-            if (layer.updateInterval !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.updateInterval }`);
-            }
+            expect(layer.updateInterval).to.equal(val);
         });
     });
     describe('[keepBuffer]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.keepBuffer = val;
-            /* istanbul ignore if */
-            if (layer.options.keepBuffer !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.keepBuffer }`);
-            }
+            expect(layer.options.keepBuffer).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.keepBuffer = val;
-            /* istanbul ignore if */
-            if (layer.keepBuffer !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.keepBuffer }`);
-            }
+            expect(layer.keepBuffer).to.equal(val);
         });
     });
     describe('[maxNativeZoom]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.maxNativeZoom = val;
-            /* istanbul ignore if */
-            if (layer.options.maxNativeZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.maxNativeZoom }`);
-            }
+            expect(layer.options.maxNativeZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.maxNativeZoom = val;
-            /* istanbul ignore if */
-            if (layer.maxNativeZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.maxNativeZoom }`);
-            }
+            expect(layer.maxNativeZoom).to.equal(val);
         });
     });
     describe('[minNativeZoom]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = Math.ceil(Math.random() * 5);
             layer.minNativeZoom = val;
-            /* istanbul ignore if */
-            if (layer.options.minNativeZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.minNativeZoom }`);
-            }
+            expect(layer.options.minNativeZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = Math.ceil(Math.random() * 5);
             layer.minNativeZoom = val;
-            /* istanbul ignore if */
-            if (layer.minNativeZoom !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.minNativeZoom }`);
-            }
+            expect(layer.minNativeZoom).to.equal(val);
         });
     });
     describe('[zoomOffset]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.zoomOffset = val;
-            /* istanbul ignore if */
-            if (layer.options.zoomOffset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.options.zoomOffset }`);
-            }
+            expect(layer.options.zoomOffset).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.ceil(Math.random() * 1000);
             layer.zoomOffset = val;
-            /* istanbul ignore if */
-            if (layer.zoomOffset !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ layer.zoomOffset }`);
-            }
+            expect(layer.zoomOffset).to.equal(val);
         });
     });
     describe('[tms]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.tms = false;
-            /* istanbul ignore if */
-            if (layer.options.tms) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.tms).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.tms = false;
             layer.tms = true;
-            /* istanbul ignore if */
-            if (!layer.options.tms) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.tms).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.tms = false;
-            /* istanbul ignore if */
-            if (layer.tms) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.tms).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.tms = true;
-            /* istanbul ignore if */
-            if (!layer.tms) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.tms).to.equal(true);
         });
     });
     describe('[zoomReverse]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.zoomReverse = false;
-            /* istanbul ignore if */
-            if (layer.options.zoomReverse) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.zoomReverse).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.zoomReverse = false;
             layer.zoomReverse = true;
-            /* istanbul ignore if */
-            if (!layer.options.zoomReverse) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.zoomReverse).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.zoomReverse = false;
-            /* istanbul ignore if */
-            if (layer.zoomReverse) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.zoomReverse).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.zoomReverse = true;
-            /* istanbul ignore if */
-            if (!layer.zoomReverse) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.zoomReverse).to.equal(true);
         });
     });
     describe('[detectRetina]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.detectRetina = false;
-            /* istanbul ignore if */
-            if (layer.options.detectRetina) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.detectRetina).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.detectRetina = false;
             layer.detectRetina = true;
-            /* istanbul ignore if */
-            if (!layer.options.detectRetina) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.detectRetina).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.detectRetina = false;
-            /* istanbul ignore if */
-            if (layer.detectRetina) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.detectRetina).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.detectRetina = true;
-            /* istanbul ignore if */
-            if (!layer.detectRetina) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.detectRetina).to.equal(true);
         });
     });
     describe('[crossOrigin]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.crossOrigin = false;
-            /* istanbul ignore if */
-            if (layer.options.crossOrigin) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.crossOrigin).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.crossOrigin = false;
             layer.crossOrigin = true;
-            /* istanbul ignore if */
-            if (!layer.options.crossOrigin) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.crossOrigin).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.crossOrigin = false;
-            /* istanbul ignore if */
-            if (layer.crossOrigin) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.crossOrigin).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.crossOrigin = true;
-            /* istanbul ignore if */
-            if (!layer.crossOrigin) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.crossOrigin).to.equal(true);
         });
     });
     describe('[updateWhenIdle]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenIdle = false;
-            /* istanbul ignore if */
-            if (layer.options.updateWhenIdle) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.updateWhenIdle).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.updateWhenIdle = false;
             layer.updateWhenIdle = true;
-            /* istanbul ignore if */
-            if (!layer.options.updateWhenIdle) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.updateWhenIdle).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.updateWhenIdle = false;
-            /* istanbul ignore if */
-            if (layer.updateWhenIdle) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.updateWhenIdle).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.updateWhenIdle = true;
-            /* istanbul ignore if */
-            if (!layer.updateWhenIdle) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.updateWhenIdle).to.equal(true);
         });
     });
     describe('[updateWhenZooming]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.updateWhenZooming = false;
-            /* istanbul ignore if */
-            if (layer.options.updateWhenZooming) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.updateWhenZooming).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.updateWhenZooming = false;
             layer.updateWhenZooming = true;
-            /* istanbul ignore if */
-            if (!layer.options.updateWhenZooming) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.updateWhenZooming).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.updateWhenZooming = false;
-            /* istanbul ignore if */
-            if (layer.updateWhenZooming) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.updateWhenZooming).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.updateWhenZooming = true;
-            /* istanbul ignore if */
-            if (!layer.updateWhenZooming) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.updateWhenZooming).to.equal(true);
         });
     });
     describe('[noWrap]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.noWrap = false;
-            /* istanbul ignore if */
-            if (layer.options.noWrap) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.noWrap).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.noWrap = false;
             layer.noWrap = true;
-            /* istanbul ignore if */
-            if (!layer.options.noWrap) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.noWrap).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.noWrap = false;
-            /* istanbul ignore if */
-            if (layer.noWrap) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.noWrap).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.noWrap = true;
-            /* istanbul ignore if */
-            if (!layer.noWrap) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.noWrap).to.equal(true);
         });
     });
     describe('[uppercase]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             layer.uppercase = false;
-            /* istanbul ignore if */
-            if (layer.options.uppercase) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.options.uppercase).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             layer.options.uppercase = false;
             layer.uppercase = true;
-            /* istanbul ignore if */
-            if (!layer.options.uppercase) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.options.uppercase).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             layer.uppercase = false;
-            /* istanbul ignore if */
-            if (layer.uppercase) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(layer.uppercase).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.uppercase = true;
-            /* istanbul ignore if */
-            if (!layer.uppercase) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(layer.uppercase).to.equal(true);
         });
     });
 });
