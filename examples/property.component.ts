@@ -98,8 +98,8 @@ export class ExamplePropertiesComponent implements AfterViewInit {
     <div class="container">
         <ul class="nav navbar-nav">
             <a class="navbar-brand" href="https://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
-            <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="Home"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
-            <li class="nav-item nav-link"><a href="../../" title="Last release"><span class="fa fa-cubes" aria-hidden="true"></span>  Release</a></li>
+            <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
+            <li class="nav-item nav-link"><a href="../../" title="Last release"><span class="fa fa-flag" aria-hidden="true"></span>  Release</a></li>
             <li class="nav-item nav-link"><a href="../" title="YAGA Examples"><span class="fa fa-tv" aria-hidden="true"></span>  Examples</a></li>
             <li class="nav-item nav-link active"><a href="#"><span class="fa fa-stethoscope" aria-hidden="true"></span> {{ title }}</a></li>
         </ul>
@@ -116,7 +116,7 @@ export class ExampleHeaderComponent implements AfterViewInit {
     template: `
 <footer class="footer">
   <div class="container">
-    <p class="text-muted">&copy; <a href="http://yagajs.org">YAGA</a> 2017
+    <p class="text-muted">&copy; <a href="https://yagajs.org">YAGA</a> 2017
       <span>
         <a href="https://github.com/yagajs/">GitHub</a>
       </span>
