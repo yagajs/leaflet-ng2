@@ -2,72 +2,50 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import {YagaModule, MapComponent, ControlPosition} from '../../lib/index'; // @yaga/leflet-ng2
+import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
-import {Component, AfterViewInit, ViewChild, PlatformRef} from '@angular/core';
-import {NgModule}      from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule}   from '@angular/forms';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { Component, PlatformRef } from '@angular/core';
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
+import { ExamplePropertiesModule, PROPERTIES_WRAPPER } from '../property.component';
 
 const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<div class="container">
-    <h3>Scale-Control Example</h3>
-</div>
+<example-header [title]="'Scale-Control-Directive'"></example-header>
 <div class="container">
   <div class="map">
     <yaga-map>
-      <yaga-tile-layer url="http://a.tile.openstreetmap.org/{z}/{x}/{y}.png"></yaga-tile-layer>
-      
       <yaga-scale-control
-         [metric]="metric"
-         [imperial]="imperial"
-         [maxWidth]="maxWidth"
-         [position]="position"
-       >
+      
+        (click)="handleEvent('click', $event);"
+        (dblclick)="handleEvent('dblclick', event);"
+        (mousedown)="handleEvent('mousedown', event);"
+        (mouseup)="handleEvent('mouseup', event);"
+        (mouseover)="handleEvent('mouseover', event);"
+        (mouseout)="handleEvent('mouseout', event);"
+        (mousemove)="handleEvent('mousemove', event);"
+        
+        [position]="getDuplexPropertyByName('position').value"
+        [(display)]="getDuplexPropertyByName('display').value"
+        [opacity]="getDuplexPropertyByName('opacity').value"
+        
+        [metric]="getInputPropertyByName('metric').value"
+        [imperial]="getInputPropertyByName('imperial').value"
+        [maxWidth]="getInputPropertyByName('maxWidth').value"
+        >
       </yaga-scale-control>
-    
+      <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
   </div>
-      
+  ${ PROPERTIES_WRAPPER }
 </div><!-- /.container -->
-
-<div class="container">
-   
-    
-    <h4>Scale Control Options</h4>  
-    
-    <div class="input-group">
-        <span class="input-group-addon fixed-space">Metric</span>
-        <input type="checkbox" class="form-control"  [(ngModel)]="metric">
-    </div><!-- /input-group -->
-
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">Imperial</span>
-      <input type="checkbox" class="form-control"  [(ngModel)]="imperial">
-    </div><!-- /input-group -->
-    
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">maxWidth</span>
-      <input type="number" class="form-control"  [(ngModel)]="maxWidth">
-    </div><!-- /input-group -->
-    
-    <h4>Control Options</h4> 
-    <div class="input-group">
-    <span class="input-group-addon fixed-space">Position</span>
-    <select  class="form-control" name="state" [(ngModel)]="position">
-        <option *ngFor="let state of positionStates" [ngValue]="state">
-        {{ state }}
-        </option>
-    </select>
-    </div><!-- /input-group -->
-    
-</div>
-
+<example-footer></example-footer>
 `;
 /* tslint:enable */
 
@@ -75,40 +53,37 @@ const template: string = `
     selector: 'app',
     template
 })
-export class AppComponent implements AfterViewInit {
-    public metric: boolean = true;
-    public imperial: boolean = true;
-    // todo: public updateWhenIdle: boolean = true;
-    public maxWidth: number = 150;
-    public positionStates: ControlPosition[]= [
-        'bottomleft' , 'bottomright', 'topleft' , 'topright'
-    ];
-    public position: ControlPosition;
+export class AppComponent extends ExampleAppComponentBlueprint {
+    public properties: IExampleProperties = {
+        duplex: [
+            {name: 'display', value: true, type: 'checkbox' },
+            {name: 'opacity', value: 0.8, type: 'relative'},
+            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} }
 
-
-    @ViewChild(MapComponent) private mapComponent: MapComponent;
-
-    constructor() {
-        (<any>window).app = this;
-        this.position = this.positionStates[0];
-    }
-
-    public handlePositionEvent(event: Event): void {
-        console.log(event);
-    }
-
-    public ngAfterViewInit(): void {
-        (<any>window).map = this.mapComponent;
-    }
+        ],
+        input: [
+            {name: 'metric', value: true, type: 'checkbox' },
+            {name: 'imperial', value: true, type: 'checkbox' },
+            {name: 'maxWidth', value: 150, type: 'number' }
+        ],
+        output: [
+            {name: 'click', value: '', type: 'event' },
+            {name: 'dblclick', value: '', type: 'event' },
+            {name: 'mousedown', value: '', type: 'event' },
+            {name: 'mouseup', value: '', type: 'event' },
+            {name: 'mouseover', value: '', type: 'event' },
+            {name: 'mouseout', value: '', type: 'event' },
+            {name: 'mousemove', value: '', type: 'event' }
+        ]
+    };
 }
 
 @NgModule({
-    bootstrap: [AppComponent],
-    declarations: [AppComponent],
-    imports: [BrowserModule, FormsModule, YagaModule]
+    bootstrap:    [ AppComponent ],
+    declarations: [ AppComponent ],
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
 })
-export class AppModule {
-}
+export class AppModule { }
 
 document.addEventListener('DOMContentLoaded', () => {
     platform.bootstrapModule(AppModule);
