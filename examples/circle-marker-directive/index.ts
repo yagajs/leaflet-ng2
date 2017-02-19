@@ -17,7 +17,7 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<example-header [title]="'Circle-Directive'"></example-header>
+<example-header [title]="'Circle-Marker-Directive'"></example-header>
 <div class="container">
   <div class="map">
     <yaga-map>
