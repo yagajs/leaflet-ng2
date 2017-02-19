@@ -132,11 +132,11 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
 
     @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var pane: HTMLElement,
+        let pane: HTMLElement,
             container: HTMLElement,
             map: Map,
             events: any, // Dictionary of functions
@@ -166,7 +166,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         }
     }
     get display(): boolean {
-        var pane: HTMLElement,
+        let pane: HTMLElement,
             container: HTMLElement;
         try {
             pane = this.getPane();

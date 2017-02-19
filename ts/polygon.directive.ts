@@ -310,11 +310,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     }
 
     @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var container: HTMLElement;
+        let container: HTMLElement;
         try {
             container = this.getElement();
         } catch (err) {
@@ -325,7 +325,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         container.style.display = val ? '' : 'none';
     }
     get display(): boolean {
-        var container: HTMLElement;
+        let container: HTMLElement;
         try {
             container = this.getElement();
         } catch (err) {
@@ -336,7 +336,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     }
 
     @Input() set interactive(val: boolean) {
-        var map: MapComponent = (<MapComponent>(<any>this)._map);
+        let map: MapComponent = (<MapComponent>(<any>this)._map);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
