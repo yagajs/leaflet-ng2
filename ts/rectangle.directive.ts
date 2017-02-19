@@ -26,6 +26,7 @@ import { Rectangle,
 import { MapComponent } from './map.component';
 
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { lng2lat } from './lng2lat';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -252,40 +253,11 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
         let geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
 
-        if (geomType === 'Polygon') {
-            const rg: [number, number][][] = [];
-            for (let i: number = 0; i < (<GeoJSON.Polygon>val.geometry).coordinates.length; i += 1) {
-                rg.push([]);
-                for (let n: number = 0; n < (<GeoJSON.Polygon>val.geometry).coordinates[i].length; n += 1) {
-                    rg[i].push([
-                        (<GeoJSON.Polygon>val.geometry).coordinates[i][n][1],
-                        (<GeoJSON.Polygon>val.geometry).coordinates[i][n][0]]
-                    );
-                }
-            }
-            this.setLatLngs((<any>rg));
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'Polygon' && geomType !== 'MultiPolygon') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore else */
-        if (geomType === 'MultiPolygon') {
-            const rg: [number, number][][][] = [];
-            for (let i: number = 0; i < (<GeoJSON.MultiPolygon>val.geometry).coordinates.length; i += 1) {
-                rg.push([]);
-                for (let n: number = 0; n < (<GeoJSON.MultiPolygon>val.geometry).coordinates[i].length; n += 1) {
-                    rg[i].push([]);
-                    for (let m: number = 0; m < (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n].length; m += 1) {
-                        rg[i][n].push([
-                            (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n][m][1],
-                            (<GeoJSON.MultiPolygon>val.geometry).coordinates[i][n][m][0]]
-                        );
-                    }
-                }
-            }
-            this.setLatLngs((<any>rg));
-            return;
-        }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLngs(<any>lng2lat(val.geometry.coordinates));
     }
     get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
         return (<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>>this.toGeoJSON());

@@ -23,6 +23,7 @@ import { Circle,
 import { MapComponent } from './map.component';
 
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { lng2lat } from './lng2lat';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -192,18 +193,13 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
-        let geomType: any = val.geometry.type; // Only 'Point'
+        let geomType: any = val.geometry.type; // Normally 'Point'
 
-        /* istanbul ignore else */
-        if (geomType === 'Point') {
-            this.setLatLng([
-                (<GeoJSON.Point>val.geometry).coordinates[1],
-                (<GeoJSON.Point>val.geometry).coordinates[0]
-            ]);
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'Point') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLng(<any>lng2lat(val.geometry.coordinates));
     }
     get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
         return (<GenericGeoJSONFeature<GeoJSON.Point, T>>this.toGeoJSON());
