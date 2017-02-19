@@ -252,7 +252,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.setMaxBounds(val);
-            expect(val.equals(map.options.maxBounds)).to.equal(true);
+            expect(map.options.maxBounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const lat1: number = Math.random() * 100;
@@ -264,7 +264,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.maxBounds = val;
-            expect(val.equals(map.maxBounds)).to.equal(true);
+            expect(map.maxBounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const lat1: number = Math.random() * 100;
@@ -276,7 +276,7 @@ describe('Map Component', () => {
                 latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
             );
             map.setMaxBounds(val);
-            expect(val.equals(map.maxBounds)).to.equal(true);
+            expect(map.maxBounds).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const lat1: number = Math.random() * 100;
@@ -289,7 +289,7 @@ describe('Map Component', () => {
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(val.equals(eventVal)).to.equal(true);
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
@@ -306,7 +306,7 @@ describe('Map Component', () => {
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
-                expect(val.equals(eventVal)).to.equal(true);
+                expect(eventVal).to.equal(val);
                 return done();
             });
 
