@@ -30,6 +30,8 @@ const template: string = `
         (mouseover)="handleEvent('mouseover', event);"
         (mouseout)="handleEvent('mouseout', event);"
         (mousemove)="handleEvent('mousemove', event);"
+        (positionChange)="handleEvent('positionChange', event);"
+        (displayChange)="handleEvent('displayChange', event);"
         
         [position]="getDuplexPropertyByName('position').value"
         [(display)]="getDuplexPropertyByName('display').value"
@@ -73,7 +75,9 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mouseup', value: '', type: 'event' },
             {name: 'mouseover', value: '', type: 'event' },
             {name: 'mouseout', value: '', type: 'event' },
-            {name: 'mousemove', value: '', type: 'event' }
+            {name: 'mousemove', value: '', type: 'event' },
+            {name: 'positionChange', value: '', type: 'event' },
+            {name: 'displayChange', value: '', type: 'event' }
         ]
     };
 }
