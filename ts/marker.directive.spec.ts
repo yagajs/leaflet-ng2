@@ -405,23 +405,12 @@ describe('Marker Directive', () => {
             layerWithIcon.ngAfterViewInit();
         });
         it('should bind icon', () => {
-            if (!(<any>layerWithIcon)._icon) {
-                throw new Error('There is no icon binded');
-            }
-            if ((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src') !== TRANSPARENT_PIXEL) {
-                throw new Error('There is a wrong icon binded');
-            }
+            expect((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);
         });
         it('should bind icon again on changes in icon directive', () => {
             const TEST_VALUE: string = 'path/to/icon.png';
             icon.iconUrl = TEST_VALUE;
-
-            if (!(<any>layerWithIcon)._icon) {
-                throw new Error('There is no icon binded');
-            }
-            if ((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src') !== TEST_VALUE) {
-                throw new Error('There is a wrong icon binded');
-            }
+            expect((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src')).to.equal(TEST_VALUE);
         });
 
     });
