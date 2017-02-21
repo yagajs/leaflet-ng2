@@ -70,7 +70,7 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
   <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
 </div>`
 })
-export class ExamplePropertyComponent implements AfterViewInit {
+export class ExamplePropertyComponent {
 
     @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
@@ -85,7 +85,7 @@ export class ExamplePropertyComponent implements AfterViewInit {
     template: PROPERTIES_WRAPPER
 })
 
-export class ExamplePropertiesComponent implements AfterViewInit {
+export class ExamplePropertiesComponent {
 
     @Output() propertiesChange: EventEmitter<IExampleProperties> = new EventEmitter();
     @Input() properties: IExampleProperties;
@@ -106,7 +106,7 @@ export class ExamplePropertiesComponent implements AfterViewInit {
     </div>
 </header>`
 })
-export class ExampleHeaderComponent implements AfterViewInit {
+export class ExampleHeaderComponent {
 
     @Input() title: string;
 }
@@ -127,7 +127,7 @@ export class ExampleHeaderComponent implements AfterViewInit {
   </div>
 </footer>`
 })
-export class ExampleFooterComponent implements AfterViewInit {}
+export class ExampleFooterComponent {}
 
 @NgModule({
     declarations: [

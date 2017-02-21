@@ -20,7 +20,7 @@ const template: string = `
 <example-header [title]="'Scale-Control-Directive'"></example-header>
 <div class="container">
   <div class="map">
-    <yaga-map>
+    <yaga-map [zoom]="3">
       <yaga-scale-control
       
         (click)="handleEvent('click', $event);"
