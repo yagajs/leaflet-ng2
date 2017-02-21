@@ -17,12 +17,18 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<example-header [title]="'Scale-Control-Directive'"></example-header>
+<example-header [title]="'Image-Overlay'"></example-header>
 <div class="container">
   <div class="map">
-    <yaga-map [zoom]="3">
-      <yaga-scale-control
-      
+    <yaga-map>
+      <yaga-image-overlay
+        [(north)]="getDuplexPropertyByName('north').value"
+        [(south)]="getDuplexPropertyByName('south').value"
+        [(east)]="getDuplexPropertyByName('east').value"
+        [(west)]="getDuplexPropertyByName('west').value"
+        [(display)]="getDuplexPropertyByName('display').value"
+        [(opacity)]="getDuplexPropertyByName('opacity').value"
+  
         (click)="handleEvent('click', $event);"
         (dblclick)="handleEvent('dblclick', event);"
         (mousedown)="handleEvent('mousedown', event);"
@@ -30,24 +36,26 @@ const template: string = `
         (mouseover)="handleEvent('mouseover', event);"
         (mouseout)="handleEvent('mouseout', event);"
         (mousemove)="handleEvent('mousemove', event);"
-        (positionChange)="handleEvent('positionChange', event);"
-        (displayChange)="handleEvent('displayChange', event);"
-        
-        [(display)]="getDuplexPropertyByName('display').value"
-        
-        [metric]="getInputPropertyByName('metric').value"
-        [imperial]="getInputPropertyByName('imperial').value"
-        [maxWidth]="getInputPropertyByName('maxWidth').value"
-        [position]="getInputPropertyByName('position').value"
-        [opacity]="getInputPropertyByName('opacity').value"
-        >
-      </yaga-scale-control>
+        (contextmenu)="handleEvent('contextmenu', event);"
+        (add)="handleEvent('add', event);"
+        (remove)="handleEvent('remove', event);"
+  
+        [attribution]="getInputPropertyByName('attribution').value"
+        [alt]="getInputPropertyByName('alt').value"
+        [crossOrigin]="getInputPropertyByName('crossOrigin').value"
+        [interactive]="getInputPropertyByName('interactive').value"
+        [url]="getInputPropertyByName('url').value">  
+      </yaga-image-overlay>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
+      <yaga-attribution-control></yaga-attribution-control>
     </yaga-map>
   </div>
   ${ PROPERTIES_WRAPPER }
+  <div>
+  </div>
 </div><!-- /.container -->
 <example-footer></example-footer>
+
 `;
 /* tslint:enable */
 
@@ -58,15 +66,21 @@ const template: string = `
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
-            {name: 'display', value: true, type: 'checkbox' }
-        ],
-        input: [
-            {name: 'metric', value: true, type: 'checkbox' },
-            {name: 'imperial', value: true, type: 'checkbox' },
-            {name: 'maxWidth', value: 150, type: 'number' },
-            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
+
+            {name: 'north', value: 45, type: 'number' },
+            {name: 'south', value: 1, type: 'number' },
+            {name: 'east', value: 180, type: 'number' },
+            {name: 'west', value: 1, type: 'number'},
+            {name: 'display', value: true, type: 'checkbox'},
             {name: 'opacity', value: 0.8, type: 'relative'}
         ],
+        input: [
+            {name: 'attribution', value: 'Leaflet-Logo', type: 'text' },
+            {name: 'interactive', value: true, type: 'checkbox' },
+            {name: 'url', value: 'http://leafletjs.com/docs/images/logo.png', type: 'string' },
+            {name: 'crossOrigin', value: false, type: 'checkbox' },
+            {name: 'alt', value: 'true', type: 'string' }
+            ],
         output: [
             {name: 'click', value: '', type: 'event' },
             {name: 'dblclick', value: '', type: 'event' },
@@ -75,9 +89,10 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mouseover', value: '', type: 'event' },
             {name: 'mouseout', value: '', type: 'event' },
             {name: 'mousemove', value: '', type: 'event' },
-            {name: 'positionChange', value: '', type: 'event' },
-            {name: 'displayChange', value: '', type: 'event' }
-        ]
+            {name: 'contextmenu', value: '', type: 'event' },
+            {name: 'add', value: '', type: 'event' },
+            {name: 'remove', value: '', type: 'event' }
+            ]
     };
 }
 

@@ -400,4 +400,13 @@ describe('Popup Directive', () => {
             expect(popup.pane).to.equal(val);
         });
     });
+
+    describe('Remove from source element on destroy', () => {
+        it('should call unbindPopup on destroy', (done: MochaDone) => {
+            (<any>popup)._source = {
+                unbindPopup: done
+            };
+            popup.ngOnDestroy();
+        });
+    });
 });

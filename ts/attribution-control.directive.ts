@@ -137,7 +137,14 @@ export class AttributionControlDirective extends Control.Attribution implements 
         this.attributionsChange.emit(this.attributions);
     }
     get attributions(): string[] {
-        return Object.keys((<any>this)._attributions);
+        const keys: string[] = Object.keys((<any>this)._attributions);
+        const arr: string[] = [];
+        for (let i: number = 0; i < keys.length; i += 1) {
+            if ((<any>this)._attributions[keys[i]] === 1) {
+                arr.push(keys[i]);
+            }
+        }
+        return arr;
     }
 
     public removeAllAttributions(silent?: boolean): this {

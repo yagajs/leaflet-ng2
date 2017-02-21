@@ -54,9 +54,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public radiusChange: EventEmitter<number> = new EventEmitter();
-    /* tslint:disable:max-line-length */
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
-    /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();

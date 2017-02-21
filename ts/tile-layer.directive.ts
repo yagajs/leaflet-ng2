@@ -473,6 +473,38 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     }
 
     /**
+     * Input for the maxZoom.
+     * Use it with `<yaga-tile-layer [maxZoom]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-maxzoom Original Leaflet documentation
+     */
+    @Input() set maxZoom(val: number) {
+        this.options.maxZoom = val;
+        if ((<any>this)._map) {
+            (<any>(<any>this)._map)._updateZoomLevels();
+        }
+        this.redraw();
+    };
+    get maxZoom(): number {
+        return this.options.maxZoom;
+    }
+
+    /**
+     * Input for the minZoom.
+     * Use it with `<yaga-tile-layer [minZoom]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-minzoom Original Leaflet documentation
+     */
+    @Input() set minZoom(val: number) {
+        this.options.minZoom = val;
+        if ((<any>this)._map) {
+            (<any>(<any>this)._map)._updateZoomLevels();
+        }
+        this.redraw();
+    };
+    get minZoom(): number {
+        return this.options.minZoom;
+    }
+
+    /**
      * Input for the maxNativeZoom.
      * Use it with `<yaga-tile-layer [maxNativeZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-maxnativezoom Original Leaflet documentation

@@ -12,7 +12,8 @@ import { ImageOverlay,
     PopupEvent,
     TooltipEvent,
     LatLngBounds,
-    latLngBounds } from 'leaflet';
+    latLngBounds,
+    Control } from 'leaflet';
 import { MapComponent } from './map.component';
 import { TRANSPARENT_PIXEL } from './consts';
 
@@ -258,7 +259,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
     @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-        (<any>this)._initImage();
+        this.getElement().crossOrigin = val ? '' : undefined;
     }
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
@@ -266,7 +267,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
     @Input() set alt(val: string) {
         this.options.alt = val;
-        (<any>this)._initImage();
+        this.getElement().alt = val;
     }
     get alt(): string {
         return this.getElement().getAttribute('alt');
@@ -278,5 +279,15 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
     get interactive(): boolean {
         return this.options.interactive;
+    }
+    @Input() set attribution(val: string) {
+        if ((<any>this)._map && (<any>this)._map.attributionControl) {
+            (<Control.Attribution>(<any>this)._map.attributionControl).removeAttribution(this.getAttribution());
+            (<Control.Attribution>(<any>this)._map.attributionControl).addAttribution(val);
+        }
+        this.options.attribution = val;
+    }
+    get attribution(): string {
+        return this.getAttribution();
     }
 }
