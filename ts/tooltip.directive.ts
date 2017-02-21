@@ -4,7 +4,8 @@ import { Directive,
     EventEmitter,
     Inject,
     forwardRef,
-    ElementRef } from '@angular/core';
+    ElementRef,
+    OnDestroy } from '@angular/core';
 import { Tooltip,
     Point,
     LatLng,
@@ -18,7 +19,7 @@ import { MapComponent } from './map.component';
 @Directive({
     selector: 'yaga-tooltip'
 })
-export class TooltipDirective extends Tooltip  {
+export class TooltipDirective extends Tooltip implements OnDestroy {
     @Output() public contentChange: EventEmitter<Content> = new EventEmitter();
     @Output() public openedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
@@ -48,6 +49,12 @@ export class TooltipDirective extends Tooltip  {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
+    }
+
+    ngOnDestroy(): void {
+        if ((<any>this)._source) {
+            (<any>this)._source.unbindTooltip();
+        }
     }
 
     setContent(content: any): this { // Content

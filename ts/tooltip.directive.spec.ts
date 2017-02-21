@@ -365,4 +365,13 @@ describe('Tooltip Directive', () => {
             expect(tooltip.permanent).to.equal(true);
         });
     });
+
+    describe('Remove from source element on destroy', () => {
+        it('should call unbindPopup on destroy', (done: MochaDone) => {
+            (<any>tooltip)._source = {
+                unbindTooltip: done
+            };
+            tooltip.ngOnDestroy();
+        });
+    });
 });
