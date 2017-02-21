@@ -79,7 +79,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'interactive', value: true, type: 'checkbox' },
             {name: 'url', value: 'http://leafletjs.com/docs/images/logo.png', type: 'text' },
             {name: 'crossOrigin', value: false, type: 'checkbox' },
-            {name: 'alt', value: 'true', type: 'text' }
+            {name: 'alt', value: 'Leaflet-Logo', type: 'text' }
             ],
         output: [
             {name: 'click', value: '', type: 'event' },
