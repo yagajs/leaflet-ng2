@@ -36,13 +36,14 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-lib
-typings
-.idea/
 typedoc/
+.idea/
 
 examples/**/*.js
 examples/**/*.js.map
 examples/**/*.d.ts
 
 bundle.js
+
+*.sh
+*.yml

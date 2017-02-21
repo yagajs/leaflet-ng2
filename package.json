@@ -15,7 +15,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; browserify test/index.js -o browser-test/bundle.js",
     "doc": "typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
-    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js && browserify attribution-control-directive/index.js -o attribution-control-directive/bundle.js && browserify image-overlay-directive/index.js -o image-overlay-directive/bundle.js",
+    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js && browserify attribution-control-directive/index.js -o attribution-control-directive/bundle.js && browserify circle-marker-directive/index.js -o circle-marker-directive/bundle.js && browserify image-overlay-directive/index.js -o image-overlay-directive/bundle.js",
     "dependency-check": "npm outdated && (node-dependencies || echo \"There are outdated sub-dependencies!\")"
   },
   "repository": {
@@ -32,10 +32,23 @@
     "angular2",
     "webmapping"
   ],
-  "author": [
-    "Arne Schubert <a.schubert@yagajs.org>",
-    "Stephan Herritsch <s.herritsch@yagajs.org>",
-    "Markus Strauss <m.strauss@yagajs.org>"
+  "author": "YAGA - Development Team<info@yagajs.org>",
+  "contributors": [
+    {
+      "name": "Arne Schubert",
+      "email": "atd@yagajs.org",
+      "url": "https://atd.yagajs.org"
+    },
+    {
+      "name": "Stephan Herritsch",
+      "email": "s.herritsch@yagajs.org",
+      "url": "https://steve.yagajs.org"
+    },
+    {
+      "name": "Markus Strauss",
+      "email": "markus@yagajs.org",
+      "url": "https://markus.yagajs.org"
+    }
   ],
   "license": "ISC",
   "bugs": {
@@ -54,6 +67,7 @@
     "browserify": "^13.1.1",
     "chai": "^3.5.0",
     "coveralls": "^2.11.15",
+    "font-awesome": "^4.7.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",
     "jsdom": "^9.8.3",

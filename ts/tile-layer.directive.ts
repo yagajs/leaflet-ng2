@@ -294,11 +294,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var pane: HTMLElement,
+        let pane: HTMLElement,
             container: HTMLElement,
             map: Map,
             events: any, // Dictionary of functions
@@ -333,7 +333,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     get display(): boolean {
-        var pane: HTMLElement,
+        let pane: HTMLElement,
             container: HTMLElement;
         try {
             pane = this.getPane();
