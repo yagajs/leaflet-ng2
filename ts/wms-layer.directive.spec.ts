@@ -1,5 +1,6 @@
 import { WmsLayerDirective,
     MapComponent,
+    AttributionControlDirective,
     LatLngBoundsExpression,
     WMSParams,
     Point,
@@ -890,6 +891,45 @@ describe('WMS-Layer Directive', () => {
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.uppercase = true;
             expect(layer.uppercase).to.equal(true);
+        });
+    });
+    describe('[attribution]', () => {
+        let attributionControl: AttributionControlDirective;
+        beforeEach(() => {
+            attributionControl = new AttributionControlDirective(map);
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.options.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should remove old attribution when changing in Angular', () => {
+            const oldVal: string = 'Old test attribution';
+            const newVal: string = 'Test attribution';
+            layer.attribution = oldVal;
+            layer.attribution = newVal;
+            expect(attributionControl.attributions).to.contain(newVal);
+            expect(attributionControl.attributions).to.not.contain(oldVal);
+        });
+    });
+    describe('Destroying a WMS-Layer Directive', () => {
+        it('should remove WMS-Layer Directive from map on destroy', () => {
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
         });
     });
 });

@@ -6,6 +6,7 @@ import { Directive,
     forwardRef,
     OnDestroy } from '@angular/core';
 import { TileLayer,
+    Control,
     LatLngBoundsExpression,
     Point,
     Map,
@@ -402,5 +403,20 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     };
     get transparent(): boolean {
         return this.wmsParams.transparent;
+    }
+    /**
+     * Input for the attribution.
+     * Use it with `<yaga-wms-layer [attribution]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.2.html#wmslayer-attribution Original Leaflet documentation
+     */
+    @Input() set attribution(val: string) {
+        if ((<any>this)._map && (<any>this)._map.attributionControl) {
+            (<Control.Attribution>(<any>this)._map.attributionControl).removeAttribution(this.getAttribution());
+            (<Control.Attribution>(<any>this)._map.attributionControl).addAttribution(val);
+        }
+        this.options.attribution = val;
+    }
+    get attribution(): string {
+        return this.getAttribution();
     }
 }

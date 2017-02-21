@@ -2,6 +2,7 @@ import { TileLayerDirective,
     MapComponent,
     Point,
     LatLngBoundsExpression,
+    AttributionControlDirective,
     OSM_TILE_LAYER_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
 import { expect } from 'chai';
@@ -716,6 +717,32 @@ describe('Tile-Layer Directive', () => {
         it('should be changed in Angular to true when changing in Angular to true', () => {
             layer.noWrap = true;
             expect(layer.noWrap).to.equal(true);
+        });
+    });
+    describe('[attribution]', () => {
+        let attributionControl: AttributionControlDirective;
+        beforeEach(() => {
+            attributionControl = new AttributionControlDirective(map);
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.options.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should remove old attribution when changing in Angular', () => {
+            const oldVal: string = 'Old test attribution';
+            const newVal: string = 'Test attribution';
+            layer.attribution = oldVal;
+            layer.attribution = newVal;
+            expect(attributionControl.attributions).to.contain(newVal);
+            expect(attributionControl.attributions).to.not.contain(oldVal);
         });
     });
 
