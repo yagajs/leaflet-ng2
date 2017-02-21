@@ -4,7 +4,8 @@ import { Directive,
     EventEmitter,
     Inject,
     forwardRef,
-    ElementRef } from '@angular/core';
+    ElementRef,
+    OnDestroy } from '@angular/core';
 import { Popup,
     Point,
     LatLng,
@@ -17,7 +18,7 @@ import { MapComponent } from './map.component';
 @Directive({
     selector: 'yaga-popup'
 })
-export class PopupDirective extends Popup  {
+export class PopupDirective extends Popup implements OnDestroy {
     @Output() public contentChange: EventEmitter<Content> = new EventEmitter();
     @Output() public openedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
@@ -46,6 +47,12 @@ export class PopupDirective extends Popup  {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
+    }
+
+    ngOnDestroy(): void {
+        if ((<any>this)._source) {
+            (<any>this)._source.unbindPopup();
+        }
     }
 
     setContent(content: any): this { // Content
