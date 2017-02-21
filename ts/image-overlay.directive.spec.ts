@@ -1,10 +1,10 @@
 import { ImageOverlayDirective,
     MapComponent,
-    LatLngBounds } from './index';
+    AttributionControlDirective,
+    LatLngBounds,
+    IMAGE_OVERLAY_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
 import { expect } from 'chai';
-
-const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -93,41 +93,41 @@ describe('Image-Overlay Directive', () => {
     });
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
-            expect((<string>(<any>layer)._url)).to.equal(TILE_LAYER_URL);
+            layer.url = IMAGE_OVERLAY_URL;
+            expect((<string>(<any>layer)._url)).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
-            expect(layer.url).to.equal(TILE_LAYER_URL);
+            layer.url = IMAGE_OVERLAY_URL;
+            expect(layer.url).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setUrl(TILE_LAYER_URL);
-            expect(layer.url).to.equal(TILE_LAYER_URL);
+            layer.setUrl(IMAGE_OVERLAY_URL);
+            expect(layer.url).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
-                expect(eventVal).to.equal(TILE_LAYER_URL);
+                expect(eventVal).to.equal(IMAGE_OVERLAY_URL);
                 return done();
             });
 
-            layer.url = TILE_LAYER_URL;
+            layer.url = IMAGE_OVERLAY_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = TILE_LAYER_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = IMAGE_OVERLAY_URL;
             layer.urlChange.subscribe((eventVal: string) => {
-                expect(eventVal).to.equal(TILE_LAYER_URL + '?test');
+                expect(eventVal).to.equal(IMAGE_OVERLAY_URL + '?test');
                 return done();
             });
 
-            layer.setUrl(TILE_LAYER_URL + '?test');
+            layer.setUrl(IMAGE_OVERLAY_URL + '?test');
         });
         it('should not emit anything when changing into same url', (done: MochaDone) => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(IMAGE_OVERLAY_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
                 layer.urlChange.subscribe(() => {
                     return done(new Error('Event fired'));
                 });
-                layer.setUrl(TILE_LAYER_URL);
+                layer.setUrl(IMAGE_OVERLAY_URL);
                 return done();
             }, 0);
         });
@@ -593,6 +593,33 @@ describe('Image-Overlay Directive', () => {
             const val: string = 'Test alt';
             layer.alt = val;
             expect(layer.alt !== val).to.equal(false);
+        });
+    });
+
+    describe('[attribution]', () => {
+        let attributionControl: AttributionControlDirective;
+        beforeEach(() => {
+            attributionControl = new AttributionControlDirective(map);
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.options.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should remove old attribution when changing in Angular', () => {
+            const oldVal: string = 'Old test attribution';
+            const newVal: string = 'Test attribution';
+            layer.attribution = oldVal;
+            layer.attribution = newVal;
+            expect(attributionControl.attributions).to.contain(newVal);
+            expect(attributionControl.attributions).to.not.contain(oldVal);
         });
     });
 

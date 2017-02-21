@@ -15,7 +15,7 @@
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; browserify test/index.js -o browser-test/bundle.js",
     "doc": "typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
-    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js && browserify attribution-control-directive/index.js -o attribution-control-directive/bundle.js && browserify circle-marker-directive/index.js -o circle-marker-directive/bundle.js",
+    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js && browserify attribution-control-directive/index.js -o attribution-control-directive/bundle.js && browserify circle-marker-directive/index.js -o circle-marker-directive/bundle.js && browserify image-overlay-directive/index.js -o image-overlay-directive/bundle.js",
     "dependency-check": "npm outdated && (node-dependencies || echo \"There are outdated sub-dependencies!\")"
   },
   "repository": {
