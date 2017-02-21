@@ -1,5 +1,6 @@
 import { ImageOverlayDirective,
     MapComponent,
+    AttributionControlDirective,
     LatLngBounds } from './index';
 import { point, latLngBounds } from 'leaflet';
 import { expect } from 'chai';
@@ -593,6 +594,33 @@ describe('Image-Overlay Directive', () => {
             const val: string = 'Test alt';
             layer.alt = val;
             expect(layer.alt !== val).to.equal(false);
+        });
+    });
+
+    describe('[attribution]', () => {
+        let attributionControl: AttributionControlDirective;
+        beforeEach(() => {
+            attributionControl = new AttributionControlDirective(map);
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.options.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'Test attribution';
+            layer.attribution = val;
+            expect(layer.attribution).to.equal(val);
+            expect(attributionControl.attributions).to.contain(val);
+        });
+        it('should remove old attribution when changing in Angular', () => {
+            const oldVal: string = 'Old test attribution';
+            const newVal: string = 'Test attribution';
+            layer.attribution = oldVal;
+            layer.attribution = newVal;
+            expect(attributionControl.attributions).to.contain(newVal);
+            expect(attributionControl.attributions).to.not.contain(oldVal);
         });
     });
 

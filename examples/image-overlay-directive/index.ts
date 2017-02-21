@@ -40,12 +40,14 @@ const template: string = `
         (add)="handleEvent('add', event);"
         (remove)="handleEvent('remove', event);"
   
+        [attribution]="getInputPropertyByName('attribution').value"
         [alt]="getInputPropertyByName('alt').value"
         [crossOrigin]="getInputPropertyByName('crossOrigin').value"
         [interactive]="getInputPropertyByName('interactive').value"
         [url]="getInputPropertyByName('url').value">  
       </yaga-image-overlay>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
+      <yaga-attribution-control></yaga-attribution-control>
     </yaga-map>
   </div>
   ${ PROPERTIES_WRAPPER }
@@ -73,6 +75,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'opacity', value: 0.8, type: 'relative'}
         ],
         input: [
+            {name: 'attribution', value: 'Leaflet-Logo', type: 'text' },
             {name: 'interactive', value: true, type: 'checkbox' },
             {name: 'url', value: 'http://leafletjs.com/docs/images/logo.png', type: 'string' },
             {name: 'crossOrigin', value: false, type: 'checkbox' },
