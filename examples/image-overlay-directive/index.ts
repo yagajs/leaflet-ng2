@@ -46,7 +46,6 @@ const template: string = `
       [url]="getInputPropertyByName('url').value"
       >
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
-    </yaga-image-overlay>
     </yaga-map>
   </div>
   ${ PROPERTIES_WRAPPER }
