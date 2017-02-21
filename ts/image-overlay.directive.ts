@@ -258,7 +258,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
     @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-        (<any>this)._initImage();
+        this.getElement().crossOrigin = val ? '' : undefined;
     }
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
@@ -266,7 +266,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
     @Input() set alt(val: string) {
         this.options.alt = val;
-        (<any>this)._initImage();
+        this.getElement().alt = val;
     }
     get alt(): string {
         return this.getElement().getAttribute('alt');

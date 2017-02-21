@@ -21,30 +21,30 @@ const template: string = `
 <div class="container">
   <div class="map">
     <yaga-map>
-    <yaga-image-overlay
-      [(north)]="getDuplexPropertyByName('north').value"
-      [(south)]="getDuplexPropertyByName('south').value"
-      [(east)]="getDuplexPropertyByName('east').value"
-      [(west)]="getDuplexPropertyByName('west').value"
-      [(display)]="getDuplexPropertyByName('display').value"
-      [(opacity)]="getDuplexPropertyByName('opacity').value"
-
-      (click)="handleEvent('click', $event);"
-      (dblclick)="handleEvent('dblclick', event);"
-      (mousedown)="handleEvent('mousedown', event);"
-      (mouseup)="handleEvent('mouseup', event);"
-      (mouseover)="handleEvent('mouseover', event);"
-      (mouseout)="handleEvent('mouseout', event);"
-      (mousemove)="handleEvent('mousemove', event);"
-      (contextmenu)="handleEvent('contextmenu', event);"
-      (add)="handleEvent('add', event);"
-      (remove)="handleEvent('remove', event);"
-
-      [alt]="getInputPropertyByName('alt').value"
-      [crossOrigin]="getInputPropertyByName('crossOrigin').value"
-      [interactive]="getInputPropertyByName('interactive').value"
-      [url]="getInputPropertyByName('url').value"
-      >
+      <yaga-image-overlay
+        [(north)]="getDuplexPropertyByName('north').value"
+        [(south)]="getDuplexPropertyByName('south').value"
+        [(east)]="getDuplexPropertyByName('east').value"
+        [(west)]="getDuplexPropertyByName('west').value"
+        [(display)]="getDuplexPropertyByName('display').value"
+        [(opacity)]="getDuplexPropertyByName('opacity').value"
+  
+        (click)="handleEvent('click', $event);"
+        (dblclick)="handleEvent('dblclick', event);"
+        (mousedown)="handleEvent('mousedown', event);"
+        (mouseup)="handleEvent('mouseup', event);"
+        (mouseover)="handleEvent('mouseover', event);"
+        (mouseout)="handleEvent('mouseout', event);"
+        (mousemove)="handleEvent('mousemove', event);"
+        (contextmenu)="handleEvent('contextmenu', event);"
+        (add)="handleEvent('add', event);"
+        (remove)="handleEvent('remove', event);"
+  
+        [alt]="getInputPropertyByName('alt').value"
+        [crossOrigin]="getInputPropertyByName('crossOrigin').value"
+        [interactive]="getInputPropertyByName('interactive').value"
+        [url]="getInputPropertyByName('url').value">  
+      </yaga-image-overlay>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
     </yaga-map>
   </div>
