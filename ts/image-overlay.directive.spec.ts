@@ -1,11 +1,10 @@
 import { ImageOverlayDirective,
     MapComponent,
     AttributionControlDirective,
-    LatLngBounds } from './index';
+    LatLngBounds,
+    IMAGE_OVERLAY_URL } from './index';
 import { point, latLngBounds } from 'leaflet';
 import { expect } from 'chai';
-
-const TILE_LAYER_URL: string = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -94,41 +93,41 @@ describe('Image-Overlay Directive', () => {
     });
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
-            expect((<string>(<any>layer)._url)).to.equal(TILE_LAYER_URL);
+            layer.url = IMAGE_OVERLAY_URL;
+            expect((<string>(<any>layer)._url)).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            layer.url = TILE_LAYER_URL;
-            expect(layer.url).to.equal(TILE_LAYER_URL);
+            layer.url = IMAGE_OVERLAY_URL;
+            expect(layer.url).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            layer.setUrl(TILE_LAYER_URL);
-            expect(layer.url).to.equal(TILE_LAYER_URL);
+            layer.setUrl(IMAGE_OVERLAY_URL);
+            expect(layer.url).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             layer.urlChange.subscribe((eventVal: string) => {
-                expect(eventVal).to.equal(TILE_LAYER_URL);
+                expect(eventVal).to.equal(IMAGE_OVERLAY_URL);
                 return done();
             });
 
-            layer.url = TILE_LAYER_URL;
+            layer.url = IMAGE_OVERLAY_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = TILE_LAYER_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = IMAGE_OVERLAY_URL;
             layer.urlChange.subscribe((eventVal: string) => {
-                expect(eventVal).to.equal(TILE_LAYER_URL + '?test');
+                expect(eventVal).to.equal(IMAGE_OVERLAY_URL + '?test');
                 return done();
             });
 
-            layer.setUrl(TILE_LAYER_URL + '?test');
+            layer.setUrl(IMAGE_OVERLAY_URL + '?test');
         });
         it('should not emit anything when changing into same url', (done: MochaDone) => {
-            layer.setUrl(TILE_LAYER_URL);
+            layer.setUrl(IMAGE_OVERLAY_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
                 layer.urlChange.subscribe(() => {
                     return done(new Error('Event fired'));
                 });
-                layer.setUrl(TILE_LAYER_URL);
+                layer.setUrl(IMAGE_OVERLAY_URL);
                 return done();
             }, 0);
         });
