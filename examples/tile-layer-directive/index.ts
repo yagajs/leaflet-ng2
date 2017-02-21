@@ -22,47 +22,49 @@ const template: string = `
   <div class="map">
     <yaga-map>
       <yaga-tile-layer
-      [(url)]="getDuplexPropertyByName('url').value"
-      [(display)]="getDuplexPropertyByName('display').value"
-      [(opacity)]="getDuplexPropertyByName('opacity').value"
-      [(zIndex)]="getDuplexPropertyByName('zIndex').value"
+        [(url)]="getDuplexPropertyByName('url').value"
+        [(display)]="getDuplexPropertyByName('display').value"
+        [(opacity)]="getDuplexPropertyByName('opacity').value"
+        [(zIndex)]="getDuplexPropertyByName('zIndex').value"
 
-      (add)="handleEvent('add', $event);"
-      (remove)="handleEvent('remove', $event);"
-      (popupopen)="handleEvent('popupopen', $event);"
-      (popupclose)="handleEvent('popupclose', event);"
-      (tooltipopen)="handleEvent('tooltipopen', event);"
-      (tooltipclose)="handleEvent('tooltipclose', event);"
-      (click)="handleEvent('click', event);"
-      (dbclick)="handleEvent('dbclick', event);"
-      (mousedown)="handleEvent('mousedown', event);"
-      (mouseover)="handleEvent('mouseover', event);"
-      (mouseout)="handleEvent('mouseout', event);"
-      (contextmenu)="handleEvent('contextmenu', event);"
-      (loading)="handleEvent('loading', $event);"
-      (tileunload)="handleEvent('tileunload', event);"
-      (tileloadstart)="handleEvent('tileloadstart', event);"
-      (tileerror)="handleEvent('tileerror', event);"
-      (tileload)="handleEvent('tileload', event);"
-      (load)="handleEvent('load', event);"
+        (add)="handleEvent('add', $event);"
+        (remove)="handleEvent('remove', $event);"
+        (popupopen)="handleEvent('popupopen', $event);"
+        (popupclose)="handleEvent('popupclose', event);"
+        (tooltipopen)="handleEvent('tooltipopen', event);"
+        (tooltipclose)="handleEvent('tooltipclose', event);"
+        (click)="handleEvent('click', event);"
+        (dbclick)="handleEvent('dbclick', event);"
+        (mousedown)="handleEvent('mousedown', event);"
+        (mouseover)="handleEvent('mouseover', event);"
+        (mouseout)="handleEvent('mouseout', event);"
+        (contextmenu)="handleEvent('contextmenu', event);"
+        (loading)="handleEvent('loading', $event);"
+        (tileunload)="handleEvent('tileunload', event);"
+        (tileloadstart)="handleEvent('tileloadstart', event);"
+        (tileerror)="handleEvent('tileerror', event);"
+        (tileload)="handleEvent('tileload', event);"
+        (load)="handleEvent('load', event);"
       
-      [updateWhenIdle]="getInputPropertyByName('updateWhenIdle').value"
-      [updateWhenZooming]="getInputPropertyByName('updateWhenZooming').value"
-      [updateInterval]="getInputPropertyByName('updateInterval').value"
-      [noWrap]="getInputPropertyByName('noWrap').value"
-      [className]="getInputPropertyByName('className').value"
-      [keepBuffer]="getInputPropertyByName('keepBuffer').value"
-      [maxZoom]="getInputPropertyByName('maxZoom').value"
-      [minZoom]="getInputPropertyByName('minZoom').value"
-      [maxNativeZoom]="getInputPropertyByName('maxNativeZoom').value"
-      [minNativeZoom]="getInputPropertyByName('minNativeZoom').value"
-      [errorTileUrl]="getInputPropertyByName('errorTileUrl').value"
-      [zoomOffset]="getInputPropertyByName('zoomOffset').value"
-      [tms]="getInputPropertyByName('tms').value"
-      [zoomReverse]="getInputPropertyByName('zoomReverse').value"
-      [detectRetina]="getInputPropertyByName('detectRetina').value"
-      [crossOrigin]="getInputPropertyByName('crossOrigin').value"
-      ></yaga-tile-layer>
+        [attribution]="getInputPropertyByName('attribution').value"
+        [updateWhenIdle]="getInputPropertyByName('updateWhenIdle').value"
+        [updateWhenZooming]="getInputPropertyByName('updateWhenZooming').value"
+        [updateInterval]="getInputPropertyByName('updateInterval').value"
+        [noWrap]="getInputPropertyByName('noWrap').value"
+        [className]="getInputPropertyByName('className').value"
+        [keepBuffer]="getInputPropertyByName('keepBuffer').value"
+        [maxZoom]="getInputPropertyByName('maxZoom').value"
+        [minZoom]="getInputPropertyByName('minZoom').value"
+        [maxNativeZoom]="getInputPropertyByName('maxNativeZoom').value"
+        [minNativeZoom]="getInputPropertyByName('minNativeZoom').value"
+        [errorTileUrl]="getInputPropertyByName('errorTileUrl').value"
+        [zoomOffset]="getInputPropertyByName('zoomOffset').value"
+        [tms]="getInputPropertyByName('tms').value"
+        [zoomReverse]="getInputPropertyByName('zoomReverse').value"
+        [detectRetina]="getInputPropertyByName('detectRetina').value"
+        [crossOrigin]="getInputPropertyByName('crossOrigin').value">
+      </yaga-tile-layer>
+      <yaga-attribution-control></yaga-attribution-control>
     </yaga-map>
   </div>
   ${ PROPERTIES_WRAPPER }
@@ -87,6 +89,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'zIndex', value: 5, type: 'number' }
         ],
         input: [
+            {name: 'attribution', value: 'OpenStreetMap', type: 'text' },
             // {name: 'tileSize', value: true, type: 'point' },
             {name: 'updateWhenIdle', value: true, type: 'checkbox' },
             {name: 'updateWhenZooming', value: true, type: 'checkbox' },
