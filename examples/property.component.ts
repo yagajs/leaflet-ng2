@@ -39,12 +39,12 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
     template: `
 <div *ngIf="type === 'text'"  class="input-group">
   <span class="input-group-addon fixed-space">{{ name }}</span>
-  <input type="text" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+  <input type="text" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
 <div *ngIf="type === 'number'"  class="input-group">
   <span class="input-group-addon fixed-space">{{ name }}</span>
-  <input type="number" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+  <input type="number" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
 <div *ngIf="type === 'event'"  class="btn-group btn-group-sm">
@@ -53,7 +53,7 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 
 <div *ngIf="type === 'checkbox'"  class="input-group input-group-sx">
   <span class="input-group-addon fixed-space">{{ name }}</span>
-  <input type="checkbox" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+  <input type="checkbox" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
 
@@ -67,7 +67,36 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 </div>
 <div *ngIf="type === 'relative'"  class="input-group input-group-sx">
   <span class="input-group-addon fixed-space">{{ name }}</span>
-  <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+  <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+</div>
+
+<div *ngIf="type === 'latlng'">
+
+  <div class="input-group input-group-sx">
+    <span class="input-group-addon fixed-space">{{ name }}</span>
+    <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="updateLat($event)" />
+    <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="updateLng($event)" />
+  </div>
+   
+</div>
+
+<div *ngIf="type === 'text[]'">
+
+  <div class="input-group input-group-sx">
+    <span class="input-group-addon">{{ name }}</span>
+  </div>
+  <div *ngFor="let entry of value" class="input-group input-group-sx">
+    <span class="input-group-addon">{{ value.indexOf(entry) + 1 }}</span>
+    <input type="text" class="form-control" [ngModel]="entry" (ngModelChange)="updateInArray($event, entry)" />
+    <span class="input-group-btn"><button class="btn btn-danger" (click)="spliceArray(entry)"><span class="fa fa-minus"></span></button></span>
+  </div>
+  
+  <div class="input-group input-group-sx">
+    <span class="input-group-addon">*</span>
+    <input type="text" class="form-control" placeholder="Add an element to array" [(ngModel)]="addToArrayValue">
+    <span class="input-group-btn"><button class="btn btn-success" (click)="addToArray(addToArrayValue)"><span class="fa fa-plus"></span></button></span>
+  </div>
+   
 </div>`
 })
 export class ExamplePropertyComponent {
@@ -78,6 +107,31 @@ export class ExamplePropertyComponent {
     @Input() type: string;
     @Input() value: any;
     @Input() additional: any;
+
+    addToArrayValue: any;
+
+    addToArray(value: any): void {
+        this.value.push(value);
+        this.valueChange.emit(this.value);
+    }
+    updateInArray(value: any, element: any): void {
+        this.value[(<any[]>this.value).indexOf(element)] = value;
+        this.valueChange.emit(this.value);
+    }
+    spliceArray(element: any): void {
+        this.value.splice(this.value.indexOf(element), 1);
+        this.valueChange.emit(this.value);
+    }
+
+    updateLat(value: number) {
+        this.value.lat = value;
+        this.valueChange.emit(this.value);
+    }
+    updateLng(value: number) {
+        this.value.lng = value;
+        this.valueChange.emit(this.value);
+    }
+
 }
 
 @Component({
