@@ -38,6 +38,7 @@ const template: string = `
         [opacity]="getInputPropertyByName('opacity').value"
         
         [(display)]="getDuplexPropertyByName('display').value"
+        [(attributions)]="getDuplexPropertyByName('attributions').value"
         >
       </yaga-attribution-control>
       <yaga-tile-layer [url]="'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
@@ -56,7 +57,8 @@ const template: string = `
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
-            {name: 'display', value: true, type: 'checkbox' }
+            {name: 'display', value: true, type: 'checkbox' },
+            {name: 'attributions', value: ['first', 'second', 'third'], type: 'text[]' }
         ],
         input: [
             {name: 'prefix', value: '<a href="https://yagajs.org">YAGA</a> | <a href="https://leaflet-ng2.yagajs.org">leaflet-ng2</a>', type: 'text'},
