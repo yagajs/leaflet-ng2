@@ -2,8 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Yaga - LeafletNg2 Unit-Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YAGA | leaflet-ng2 | Unit-Tests</title>
+
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css" />
+
+    <style>
+        #mocha-stats {
+            z-index: 1000;
+            top: auto;
+            bottom: 5px;
+        }
+    </style>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script>
         mocha.setup('bdd');
@@ -11,7 +24,20 @@
     <script src="bundle.js"></script>
 </head>
 <body>
-<div id="mocha"></div>
+<header id="top" class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <a class="navbar-brand" href="https://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
+            <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
+            <li class="nav-item nav-link"><a href="../" title="Last release"><span class="fa fa-cubes" aria-hidden="true"></span>  Release</a></li>
+            <li class="nav-item nav-link active"><a href="#" title="YAGA leaflet-ng2 Unit-Tests"><span class="fa fa-gear" aria-hidden="true"></span>  Browser-Test</a></li>
+        </ul>
+    </div>
+</header>
+<div class="container">
+    <h1>Unit-Tests</h1>
+    <div id="mocha"></div>
+</div>
 </body>
 <script>mocha.run()</script>
 </html>
