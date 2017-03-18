@@ -20,7 +20,7 @@ const template: string = `
   <yaga-attribution-control></yaga-attribution-control>
 
   <yaga-tile-layer [url]="'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'" [attribution]="'© OpenStreetMap-Mitwirkende'"></yaga-tile-layer>
-  <yaga-marker [lat]="48.5768558" [lng]="13.268283">
+  <yaga-marker [lat]="48.5768558" [lng]="13.268283" [(draggable)]="editable">
     <yaga-popup>
       <h3>Hello World</h3>
       <p>
