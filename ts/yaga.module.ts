@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { MapComponent } from './map.component';
 import { TileLayerDirective } from './tile-layer.directive';
+import { WmsLayerDirective } from './wms-layer.directive';
 import { ImageOverlayDirective } from './image-overlay.directive';
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
@@ -13,6 +14,7 @@ import { PolygonDirective } from './polygon.directive';
 import { RectangleDirective } from './rectangle.directive';
 import { CircleDirective } from './circle.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
+import { GeoJSONDirective } from './geojson.directive';
 import { ZoomControlDirective } from './zoom-control.directive';
 import { AttributionControlDirective } from './attribution-control.directive';
 import { ScaleControlDirective }   from './scale-control.directive';
@@ -21,6 +23,7 @@ import { ScaleControlDirective }   from './scale-control.directive';
     declarations: [
         MapComponent,
         TileLayerDirective,
+        WmsLayerDirective,
         ImageOverlayDirective,
         PopupDirective,
         TooltipDirective,
@@ -32,6 +35,7 @@ import { ScaleControlDirective }   from './scale-control.directive';
         RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
+        GeoJSONDirective,
         ZoomControlDirective,
         AttributionControlDirective,
         ScaleControlDirective
@@ -39,6 +43,7 @@ import { ScaleControlDirective }   from './scale-control.directive';
     exports: [
         MapComponent,
         TileLayerDirective,
+        WmsLayerDirective,
         ImageOverlayDirective,
         PopupDirective,
         TooltipDirective,
@@ -50,6 +55,7 @@ import { ScaleControlDirective }   from './scale-control.directive';
         RectangleDirective,
         CircleDirective,
         CircleMarkerDirective,
+        GeoJSONDirective,
         ZoomControlDirective,
         AttributionControlDirective,
         ScaleControlDirective
