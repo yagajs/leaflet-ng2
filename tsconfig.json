@@ -18,6 +18,7 @@
         "coverage",
         "examples",
         "d.ts",
-        "release"
+        "release",
+        "ts/*.ngfactory.ts"
     ]
 }

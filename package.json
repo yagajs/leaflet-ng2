@@ -8,8 +8,8 @@
     "init": "npm install",
     "clean": "rm -Rf coverage browser-test/bundle.js lib node_modules",
     "reinit": "npm run clean; npm run init",
-    "transpile": "tsc",
-    "lint": "tslint ts/**",
+    "transpile": "ngc",
+    "lint": "tslint ts/*.ts",
     "npm-lint": "ts-npm-lint --fix-typings && ts-npm-lint",
     "test": "npm run lint && npm run transpile && istanbul cover _mocha -- -- test/*.js",
     "dist": "npm test && npm run npm-lint",
@@ -56,11 +56,12 @@
   },
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
-    "@angular/common": "^2.4.7",
-    "@angular/compiler": "^2.4.7",
-    "@angular/forms": "^2.4.7",
-    "@angular/platform-browser": "^2.4.7",
-    "@angular/platform-browser-dynamic": "^2.4.7",
+    "@angular/common": "^2.4.8",
+    "@angular/compiler": "^2.4.8",
+    "@angular/compiler-cli": "^2.4.10",
+    "@angular/forms": "^2.4.8",
+    "@angular/platform-browser": "^2.4.8",
+    "@angular/platform-browser-dynamic": "^2.4.8",
     "@types/chai": "^3.4.34",
     "@types/es6-shim": "^0.31.32",
     "@types/mocha": "^2.2.39",
@@ -84,7 +85,7 @@
     "zone.js": "^0.7.0"
   },
   "dependencies": {
-    "@angular/core": "^2.4.7",
+    "@angular/core": "^2.4.8",
     "@types/leaflet": "^1.0.53",
     "@yaga/generic-geojson": "^1.0.0",
     "leaflet": "^1.0.2"
