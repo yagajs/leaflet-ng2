@@ -43,8 +43,8 @@ const template: string = `
     template
 })
 export class AppComponent {
-    public editable: boolean = false;
-    public name: string = 'Passau';
+    editable: boolean = false;
+    name: string = 'Passau';
     lat: number = 48.5768558;
     lng: number = 13.268283;
 }
