@@ -31,133 +31,133 @@ import { TRANSPARENT_PIXEL } from './consts';
 })
 export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
-     * Two-Way binded property for the URL.
+     * Two-Way bound property for the URL.
      * Use it with `<yaga-tile-layer [(url)]="someValue">` or `<yaga-tile-layer (urlChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-seturl Original Leaflet documentation
      */
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     /**
-     * Two-Way binded property for the display status of the layer.
+     * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer (displayChange)="processEvent($event)">`
      */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     /**
-     * Two-Way binded property for the opacity of the layer.
+     * Two-Way bound property for the opacity of the layer.
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer (opacityChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-opacity Original Leaflet documentation
      */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     /**
-     * Two-Way binded property for the zIndex of the layer.
+     * Two-Way bound property for the zIndex of the layer.
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setzindex Original Leaflet documentation
      */
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
 
     /**
-     * Form leaflet fired add event.
+     * From leaflet fired add event.
      * Use it with `<yaga-tile-layer (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-add Original Leaflet documentation
      */
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     /**
-     * Form leaflet fired remove event.
+     * From leaflet fired remove event.
      * Use it with `<yaga-tile-layer (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-remove Original Leaflet documentation
      */
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
     /**
-     * Form leaflet fired popupopen event.
+     * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-popupopen Original Leaflet documentation
      */
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
-     * Form leaflet fired popupclose event.
+     * From leaflet fired popupclose event.
      * Use it with `<yaga-tile-layer (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-popupclose Original Leaflet documentation
      */
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
-     * Form leaflet fired tooltipopen event.
+     * From leaflet fired tooltipopen event.
      * Use it with `<yaga-tile-layer (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tooltipopen Original Leaflet documentation
      */
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
-     * Form leaflet fired tooltipclose event.
+     * From leaflet fired tooltipclose event.
      * Use it with `<yaga-tile-layer (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tooltipclose Original Leaflet documentation
      */
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
-     * Form leaflet fired click event.
+     * From leaflet fired click event.
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-click Original Leaflet documentation
      */
     @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired dbclick event.
+     * From leaflet fired dbclick event.
      * Use it with `<yaga-tile-layer (dbclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-dbclick Original Leaflet documentation
      */
     @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired mousedown event.
+     * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-mousedown Original Leaflet documentation
      */
     @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired mouseover event.
+     * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-mouseover Original Leaflet documentation
      */
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired mouseout event.
+     * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-mouseout Original Leaflet documentation
      */
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired contextmenu event.
+     * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-contextmenu Original Leaflet documentation
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
-     * Form leaflet fired loading event.
+     * From leaflet fired loading event.
      * Use it with `<yaga-tile-layer (loading)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-loading Original Leaflet documentation
      */
     @Output('loading') public loadingEvent: EventEmitter<Event> = new EventEmitter();
     /**
-     * Form leaflet fired tileunload event.
+     * From leaflet fired tileunload event.
      * Use it with `<yaga-tile-layer (tileunload)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tileunload Original Leaflet documentation
      */
     @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
-     * Form leaflet fired tileloadstart event.
+     * From leaflet fired tileloadstart event.
      * Use it with `<yaga-tile-layer (tileloadstart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tileloadstart Original Leaflet documentation
      */
     @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
-     * Form leaflet fired tileerror event.
+     * From leaflet fired tileerror event.
      * Use it with `<yaga-tile-layer (tileerror)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tileerror Original Leaflet documentation
      */
     @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
     /**
-     * Form leaflet fired tileload event.
+     * From leaflet fired tileload event.
      * Use it with `<yaga-tile-layer (tileload)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-tileload Original Leaflet documentation
      */
     @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
-     * Form leaflet fired load event.
+     * From leaflet fired load event.
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-load Original Leaflet documentation
      */
@@ -256,7 +256,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return super.setUrl(url, noRedraw);
     }
     /**
-     * Two-Way binded property for the URL.
+     * Two-Way bound property for the URL.
      * Use it with `<yaga-tile-layer [(url)]="someValue">` or `<yaga-tile-layer [url]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-seturl Original Leaflet documentation
      */
@@ -279,7 +279,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return super.setOpacity(val);
     }
     /**
-     * Two-Way binded property for the opacity.
+     * Two-Way bound property for the opacity.
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setopacity Original Leaflet documentation
      */
@@ -291,7 +291,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     }
 
     /**
-     * Two-Way binded property for the display status of the layer.
+     * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     @Input() set display(val: boolean) {
@@ -330,7 +330,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         }
     }
     /**
-     * Two-Way binded property for the display status of the layer.
+     * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     get display(): boolean {
@@ -362,7 +362,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return this;
     }
     /**
-     * Two-Way binded property for the zIndex.
+     * Two-Way bound property for the zIndex.
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer [zIndex]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setzindex Original Leaflet documentation
      */
