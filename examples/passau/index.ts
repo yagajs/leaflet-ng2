@@ -24,7 +24,13 @@ const template: string = `
     <yaga-popup>
       <h3>Hello World</h3>
       <p>
-        This is <strong>Passau</strong>
+        This is <strong>{{ name }}</strong><br/><br/>
+        <em>Do you wan't to edit me?: <input type="checkbox" [(ngModel)]="editable"/></em><br/>
+        <span *ngIf="editable">
+          Latitude: <input type="number" [(ngModel)]="lat" step="0.001" width="80"/><br/>
+          Longitude: <input type="number" [(ngModel)]="lng" step="0.001" width="80"/><br/>
+          This is: <input type="text" [(ngModel)]="name" width="80"/>
+        </span>
       </p>
     </yaga-popup>
   </yaga-marker>
@@ -36,7 +42,12 @@ const template: string = `
     selector: 'app',
     template
 })
-export class AppComponent {}
+export class AppComponent {
+    public editable: boolean = false;
+    public name: string = 'Passau';
+    lat: number = 48.5768558;
+    lng: number = 13.268283;
+}
 
 @NgModule({
     bootstrap:    [ AppComponent ],
