@@ -62,6 +62,7 @@
     "@angular/platform-browser": "^2.4.7",
     "@angular/platform-browser-dynamic": "^2.4.7",
     "@types/chai": "^3.4.34",
+    "@types/es6-shim": "^0.31.32",
     "@types/mocha": "^2.2.39",
     "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
@@ -77,14 +78,13 @@
     "reflect-metadata": "0.1.8",
     "rxjs": "^5.0.0-rc.4",
     "ts-npm-lint": "^0.1.0",
-    "tslint": "^4.0.1",
-    "typedoc": "^0.5.5",
-    "typescript": "^2.0.10",
+    "tslint": "^4.5.1",
+    "typedoc": "^0.5.7",
+    "typescript": "^2.2.1",
     "zone.js": "^0.7.0"
   },
   "dependencies": {
     "@angular/core": "^2.4.7",
-    "@types/es6-shim": "^0.31.32",
     "@types/leaflet": "^1.0.53",
     "@yaga/generic-geojson": "^1.0.0",
     "leaflet": "^1.0.2"
