@@ -1,28 +1,30 @@
-import { PolylineDirective,
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { expect } from 'chai';
+import { latLng, point, SVG } from 'leaflet';
+import {
+    LatLng,
+    LatLngExpression,
     MapComponent,
+    PolylineDirective,
     PopupDirective,
     TooltipDirective,
-    LatLngExpression,
-    LatLng } from './index';
-import { point, SVG, latLng } from 'leaflet';
-import { createPathTests } from './path-directives.spec';
+} from './index';
 import { lng2lat } from './lng2lat';
-import { expect } from 'chai';
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { createPathTests } from './path-directives.spec';
 
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);
 
-    let map: MapComponent,
-        layer: PolylineDirective<any>;
+    let map: MapComponent;
+    let layer: PolylineDirective<any>;
 
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
+        (<any> map)._renderer = (<any> map)._renderer || new SVG();
 
-        layer = new PolylineDirective<any>(map);
+        layer = new PolylineDirective<any> (map);
     });
 
     describe('[(latlngs)]', () => {
@@ -30,7 +32,7 @@ describe('Polyline Directive', () => {
             const TEST_VALUE: LatLng[] = [latLng(0, 1), latLng(1, 1), latLng(1, 0)];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -44,8 +46,8 @@ describe('Polyline Directive', () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
                 /* istanbul ignore if */
-                if ((<LatLng[]>layer.latLngs)[3].lat !== 3 ||
-                    (<LatLng[]>layer.latLngs)[3].lng !== 3) {
+                if ((<LatLng[]> layer.latLngs)[3].lat !== 3 ||
+                    (<LatLng[]> layer.latLngs)[3].lng !== 3) {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs }`);
                 }
             });
@@ -87,11 +89,11 @@ describe('Polyline Directive', () => {
         describe('for MultiLineStrings', () => {
             const TEST_VALUE: LatLng[][] = [
                 [latLng(1, 0), latLng(1, 1), latLng(0, 1)],
-                [latLng(0, 1), latLng(1, 1), latLng(1, 0)]
+                [latLng(0, 1), latLng(1, 1), latLng(1, 0)],
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -152,22 +154,24 @@ describe('Polyline Directive', () => {
             const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.LineString, any> = {
                 geometry: {
                     coordinates: [[0, 1], [1, 1], [0, 0]],
-                    type: 'LineString'
+                    type: 'LineString',
                 },
                 properties: {},
-                type: 'Feature'
+                type: 'Feature',
             };
             const TEST_LINESTRING: LatLngExpression[] = [[0, 0], [1, 0], [1, 1]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
                 /* istanbul ignore if */
-                if ((<LatLng[]>layer.latLngs)[0].lng !== TEST_VALUE.geometry.coordinates[0][0] ||
-                    (<LatLng[]>layer.latLngs)[0].lat !== TEST_VALUE.geometry.coordinates[0][1] ||
-                    (<LatLng[]>layer.latLngs)[1].lng !== TEST_VALUE.geometry.coordinates[1][0] ||
-                    (<LatLng[]>layer.latLngs)[1].lat !== TEST_VALUE.geometry.coordinates[1][1] ||
-                    (<LatLng[]>layer.latLngs)[2].lng !== TEST_VALUE.geometry.coordinates[2][0] ||
-                    (<LatLng[]>layer.latLngs)[2].lat !== TEST_VALUE.geometry.coordinates[2][1]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any>layer)._latlngs }`);
+                if ((<LatLng[]> layer.latLngs)[0].lng !== TEST_VALUE.geometry.coordinates[0][0] ||
+                    (<LatLng[]> layer.latLngs)[0].lat !== TEST_VALUE.geometry.coordinates[0][1] ||
+                    (<LatLng[]> layer.latLngs)[1].lng !== TEST_VALUE.geometry.coordinates[1][0] ||
+                    (<LatLng[]> layer.latLngs)[1].lat !== TEST_VALUE.geometry.coordinates[1][1] ||
+                    (<LatLng[]> layer.latLngs)[2].lng !== TEST_VALUE.geometry.coordinates[2][0] ||
+                    (<LatLng[]> layer.latLngs)[2].lat !== TEST_VALUE.geometry.coordinates[2][1]) {
+                    throw new Error(
+                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`,
+                    );
                 }
 
             });
@@ -212,7 +216,7 @@ describe('Polyline Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_LINESTRING);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
-                    const values: [number, number][] = (<any>eventVal.geometry.coordinates);
+                    const values: Array<[number, number]> = (<any> eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[3][0] !== 3 ||
                         values[3][1] !== 3) {
@@ -230,33 +234,35 @@ describe('Polyline Directive', () => {
                         [[1, 0], [1, 1], [0, 1]],
                         [[0, 1], [1, 1], [0, 0]],
                     ],
-                    type: 'MultiLineString'
+                    type: 'MultiLineString',
                 },
                 properties: {},
-                type: 'Feature'
+                type: 'Feature',
             };
             const TEST_MULTILINESTRING: LatLngExpression[][] = [
                 [[0, 0], [1, 0], [1, 1]],
-                [[0, 0], [0, 1], [1, 1]]
+                [[0, 0], [0, 1], [1, 1]],
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
 
                 /* istanbul ignore if */
-                if ((<LatLng[][]>layer.latLngs)[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1] ||
+                if ((<LatLng[][]> layer.latLngs)[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1] ||
 
-                    (<LatLng[][]>layer.latLngs)[1][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][0].lat !== TEST_VALUE.geometry.coordinates[1][0][1] ||
-                    (<LatLng[][]>layer.latLngs)[1][1].lng !== TEST_VALUE.geometry.coordinates[1][1][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][1].lat !== TEST_VALUE.geometry.coordinates[1][1][1] ||
-                    (<LatLng[][]>layer.latLngs)[1][2].lng !== TEST_VALUE.geometry.coordinates[1][2][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][2].lat !== TEST_VALUE.geometry.coordinates[1][2][1] ) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any>layer)._latlngs }`);
+                    (<LatLng[][]> layer.latLngs)[1][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][0].lat !== TEST_VALUE.geometry.coordinates[1][0][1] ||
+                    (<LatLng[][]> layer.latLngs)[1][1].lng !== TEST_VALUE.geometry.coordinates[1][1][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][1].lat !== TEST_VALUE.geometry.coordinates[1][1][1] ||
+                    (<LatLng[][]> layer.latLngs)[1][2].lng !== TEST_VALUE.geometry.coordinates[1][2][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][2].lat !== TEST_VALUE.geometry.coordinates[1][2][1] ) {
+                    throw new Error(
+                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`,
+                    );
                 }
 
             });
@@ -306,7 +312,7 @@ describe('Polyline Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
-                    const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
+                    const values: Array<Array<[number, number]>> = (<any> eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
                         values[0][3][1] !== 3) {
@@ -344,16 +350,18 @@ describe('Polyline Directive', () => {
         }
         let layerWithPropertiesInterface: PolylineDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
-            test: 'OK'
+            test: 'OK',
         };
         beforeEach(() => {
-            layerWithPropertiesInterface = new PolylineDirective<ITestProperties>(map);
+            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> (map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithPropertiesInterface.properties = TEST_OBJECT;
             /* istanbul ignore if */
             if (layerWithPropertiesInterface.feature.properties !== TEST_OBJECT) {
+                /* tslint:disable:max-line-length */
                 throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layerWithPropertiesInterface.feature.properties }`);
+                /* tslint:enable */
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -364,13 +372,15 @@ describe('Polyline Directive', () => {
             }
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layerWithPropertiesInterface.geoJSONChange.subscribe((val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
-                /* istanbul ignore if */
-                if (val.properties !== TEST_OBJECT) {
-                    return done(new Error('Wrong value received'));
-                }
-                done();
-            });
+            layerWithPropertiesInterface.geoJSONChange.subscribe(
+                (val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                    /* istanbul ignore if */
+                    if (val.properties !== TEST_OBJECT) {
+                        return done(new Error('Wrong value received'));
+                    }
+                    done();
+                },
+            );
             layerWithPropertiesInterface.properties = TEST_OBJECT;
         });
     });
@@ -408,48 +418,48 @@ describe('Polyline Directive', () => {
     });
 
     describe('Popup in Polyline Directive', () => {
-        let layerWithPopup: PolylineDirective<any>,
-            popup: PopupDirective,
-            testDiv: HTMLElement;
+        let layerWithPopup: PolylineDirective<any>;
+        let popup: PopupDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolylineDirective<any>(map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(new PolylineDirective<any> (map), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
             /* istanbul ignore if */
-            if (!(<any>layerWithPopup)._popup) {
+            if (!(<any> layerWithPopup)._popup) {
                 throw new Error('There is no popup binded');
             }
             /* istanbul ignore if */
-            if ((<any>layerWithPopup)._popup !== popup) {
+            if ((<any> layerWithPopup)._popup !== popup) {
                 throw new Error('There is a wrong popup binded');
             }
         });
     });
 
     describe('Tooltip in Polyline Directive', () => {
-        let layerWithTooltip: PolylineDirective<any>,
-            tooltip: TooltipDirective,
-            testDiv: HTMLElement;
+        let layerWithTooltip: PolylineDirective<any>;
+        let tooltip: TooltipDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolylineDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(new PolylineDirective<any> (map), { tooltipDirective: {value: tooltip} });
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
             /* istanbul ignore if */
-            if (!(<any>layerWithTooltip)._tooltip) {
+            if (!(<any> layerWithTooltip)._tooltip) {
                 throw new Error('There is no tooltip binded');
             }
             /* istanbul ignore if */
-            if ((<any>layerWithTooltip)._tooltip !== tooltip) {
+            if ((<any> layerWithTooltip)._tooltip !== tooltip) {
                 throw new Error('There is a wrong tooltip binded');
             }
         });
@@ -469,4 +479,3 @@ describe('Polyline Directive', () => {
         });
     });
 });
-

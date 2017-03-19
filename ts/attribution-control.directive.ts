@@ -1,18 +1,20 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
 import { Control,
     ControlPosition,
     Event } from 'leaflet';
-import { MapComponent } from './map.component';
 import { ATTRIBUTION_PREFIX } from './consts';
+import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-attribution-control'
+    selector: 'yaga-attribution-control',
 })
 export class AttributionControlDirective extends Control.Attribution implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -30,13 +32,14 @@ export class AttributionControlDirective extends Control.Attribution implements 
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super({prefix: ATTRIBUTION_PREFIX});
         mapComponent.addControl(this);
 
         const self: this = this;
 
+        /* tslint:disable:only-arrow-functions */
         this.onRemove = function (): any {
             self.displayChange.emit(false);
             self.removeEvent.emit({target: self, type: 'remove'});
@@ -48,6 +51,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
             self.addEvent.emit({target: self, type: 'add'});
             return self.getContainer();
         };
+        /* tslint:enable */
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
@@ -67,25 +71,25 @@ export class AttributionControlDirective extends Control.Attribution implements 
         });
     }
 
-    ngOnDestroy(): void {
-        (<MapComponent>(<any>this)._map).removeControl(this);
+    public ngOnDestroy(): void {
+        (<MapComponent> (<any> this)._map).removeControl(this);
     }
 
-    setPosition(val: ControlPosition): this {
+    public setPosition(val: ControlPosition): this {
       super.setPosition(val);
       this.positionChange.emit(val);
       return this;
     }
 
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.getContainer().style.opacity = val.toString();
     }
-    get opacity(): number {
+    public get opacity(): number {
         return parseFloat(this.getContainer().style.opacity);
     }
 
-    @Input() set display(val: boolean) {
-        if (!(<any>this)._map) {
+    @Input() public set display(val: boolean) {
+        if (!(<any> this)._map) {
             // No map available...
             return;
         }
@@ -96,51 +100,51 @@ export class AttributionControlDirective extends Control.Attribution implements 
         this.getContainer().style.display = 'none';
         return;
     }
-    get display(): boolean {
-        return (<any>this)._map && this.getContainer().style.display !== 'none';
+    public get display(): boolean {
+        return (<any> this)._map && this.getContainer().style.display !== 'none';
     }
 
-    @Input() set position(val: ControlPosition) {
+    @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
     }
-    get position (): ControlPosition {
+    public get position (): ControlPosition {
       return this.getPosition();
     }
 
-    setPrefix(prefix: string): this {
+    public setPrefix(prefix: string): this {
         super.setPrefix(prefix);
         this.prefixChange.emit(prefix);
         return this;
     }
-    @Input() set prefix(val: string) {
+    @Input() public set prefix(val: string) {
         this.setPrefix(val);
     }
-    get prefix(): string {
-        return (<string>this.options.prefix);
+    public get prefix(): string {
+        return (<string> this.options.prefix);
     }
 
-    addAttribution(val: string): this {
+    public addAttribution(val: string): this {
         super.addAttribution(val);
         this.attributionsChange.emit(this.attributions);
         return this;
     }
-    removeAttribution(val: string): this {
+    public removeAttribution(val: string): this {
         super.removeAttribution(val);
         this.attributionsChange.emit(this.attributions);
         return this;
     }
-    @Input() set attributions(val: string[]) {
+    @Input() public set attributions(val: string[]) {
         this.removeAllAttributions(true);
         for (let i: number = 0; i < val.length; i += 1) {
             super.addAttribution(val[i]);
         }
         this.attributionsChange.emit(this.attributions);
     }
-    get attributions(): string[] {
-        const keys: string[] = Object.keys((<any>this)._attributions);
+    public get attributions(): string[] {
+        const keys: string[] = Object.keys((<any> this)._attributions);
         const arr: string[] = [];
         for (let i: number = 0; i < keys.length; i += 1) {
-            if ((<any>this)._attributions[keys[i]] === 1) {
+            if ((<any> this)._attributions[keys[i]] === 1) {
                 arr.push(keys[i]);
             }
         }
@@ -148,7 +152,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
 
     public removeAllAttributions(silent?: boolean): this {
-        let keys: string[] = Object.keys((<any>this)._attributions);
+        let keys: string[] = Object.keys((<any> this)._attributions);
         for (let i: number = 0; i < keys.length; i += 1) {
             super.removeAttribution(keys[i]);
         }

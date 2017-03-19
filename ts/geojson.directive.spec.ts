@@ -1,20 +1,22 @@
-import { GeoJSONDirective,
+import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
+import { expect } from 'chai';
+import { point, SVG } from 'leaflet';
+import {
+    GeoJSONDirective,
+    LatLng,
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    LatLng } from './index';
-import { expect } from 'chai';
-import { point, SVG, Layer } from 'leaflet';
-import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
+} from './index';
 
 describe('GeoJSON Directive', () => {
-    let map: MapComponent,
-        layer: GeoJSONDirective<any>;
+    let map: MapComponent;
+    let layer: GeoJSONDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
+        (<any> map)._renderer = (<any> map)._renderer || new SVG();
 
         layer = new GeoJSONDirective(map);
     });
@@ -23,15 +25,15 @@ describe('GeoJSON Directive', () => {
             {
                 geometry: {
                     coordinates: [7, 51],
-                    type: 'Point'
+                    type: 'Point',
                 },
                 properties: {
-                    test: 'OK'
+                    test: 'OK',
                 },
-                type: 'Feature'
-            }
+                type: 'Feature',
+            },
         ],
-        type: 'FeatureCollection'
+        type: 'FeatureCollection',
     };
 
     describe('[(data)]', () => {
@@ -78,7 +80,6 @@ describe('GeoJSON Directive', () => {
             layer.addData(TEST_VALUE.features[0]);
         });
     });
-
 
     const testHandle: any = {};
     const testEvent: any = { testHandle };
@@ -194,37 +195,37 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('Popup in GeoJSON Directive', () => {
-        let popup: PopupDirective,
-            testDiv: HTMLElement,
-            puLayer: GeoJSONDirective<any>;
+        let popup: PopupDirective;
+        let testDiv: HTMLElement;
+        let puLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            puLayer = Object.create(new GeoJSONDirective<any>(map), { popupDirective: {value: popup} });
+            puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
         });
         it('should bind popup', () => {
             puLayer.ngAfterViewInit();
-            expect((<any>puLayer)._popup).to.equal(popup);
+            expect((<any> puLayer)._popup).to.equal(popup);
         });
     });
 
     describe('Tooltip in GeoJSON Directive', () => {
-        let tooltip: TooltipDirective,
-            testDiv: HTMLElement,
-            ttLayer: GeoJSONDirective<any>;
+        let tooltip: TooltipDirective;
+        let testDiv: HTMLElement;
+        let ttLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            ttLayer = Object.create(new GeoJSONDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
         });
         it('should bind tooltip', () => {
             ttLayer.ngAfterViewInit();
             expect(ttLayer.tooltipDirective).to.equal(tooltip);
-            // expect((<any>layer)._tooltip).to.equal(tooltip);
+            // expect((<any> layer)._tooltip).to.equal(tooltip);
         });
     });
 
@@ -243,4 +244,3 @@ describe('GeoJSON Directive', () => {
     });
 
 });
-

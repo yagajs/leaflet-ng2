@@ -1,18 +1,22 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
-import { Control,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
+    Control,
     ControlPosition,
+    Event,
     Map,
-    Event } from 'leaflet';
+} from 'leaflet';
 import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-scale-control'
+    selector: 'yaga-scale-control',
 })
 export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -28,13 +32,14 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super();
         mapComponent.addControl(this);
 
         const self: this = this;
 
+        /* tslint:disable:only-arrow-functions */
         const originalOnRemove: Function = this.onRemove;
         this.onRemove = function (map: Map): any {
             originalOnRemove.call(this, map);
@@ -50,6 +55,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
             self.addEvent.emit({type: 'add', target: self});
             return tmp;
         };
+        /* tslint:enable */
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
@@ -69,25 +75,25 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         });
     }
 
-    ngOnDestroy(): void {
-        (<MapComponent>(<any>this)._map).removeControl(this);
+    public ngOnDestroy(): void {
+        (<MapComponent> (<any> this)._map).removeControl(this);
     }
 
-    setPosition(val: ControlPosition): this {
+    public setPosition(val: ControlPosition): this {
       super.setPosition(val);
       this.positionChange.emit(val);
       return this;
     }
 
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.getContainer().style.opacity = val.toString();
     }
-    get opacity(): number {
+    public get opacity(): number {
         return parseFloat(this.getContainer().style.opacity);
     }
 
-    @Input() set display(val: boolean) {
-        if (!(<any>this)._map) {
+    @Input() public set display(val: boolean) {
+        if (!(<any> this)._map) {
             // No map available...
             return;
         }
@@ -98,58 +104,58 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         this.getContainer().style.display = 'none';
         return;
     }
-    get display(): boolean {
-        return (<any>this)._map && this.getContainer().style.display !== 'none';
+    public get display(): boolean {
+        return (<any> this)._map && this.getContainer().style.display !== 'none';
     }
 
-    @Input() set position(val: ControlPosition) {
+    @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
     }
-    get position (): ControlPosition {
+    public get position (): ControlPosition {
       return this.getPosition();
     }
 
-    @Input() set maxWidth(val: number) {
+    @Input() public set maxWidth(val: number) {
       this.options.maxWidth = val;
-      (<any>this)._update();
+      (<any> this)._update();
     }
-    get maxWidth(): number {
+    public get maxWidth(): number {
       return this.options.maxWidth;
     }
 
-    @Input() set metric(val: boolean) {
+    @Input() public set metric(val: boolean) {
       while (this.getContainer().hasChildNodes()) {
           this.getContainer().removeChild(
-            this.getContainer().lastChild
+            this.getContainer().lastChild,
           );
       }
       this.options.metric = val;
-      (<any>this)._addScales(
+      (<any> this)._addScales(
         this.options,
         'leaflet-control-scale-line',
-        this.getContainer()
+        this.getContainer(),
       );
-      (<any>this)._update();
+      (<any> this)._update();
     }
-    get metric(): boolean {
+    public get metric(): boolean {
       return this.options.metric;
     }
 
-    @Input() set imperial(val: boolean) {
+    @Input() public set imperial(val: boolean) {
       while (this.getContainer().hasChildNodes()) {
           this.getContainer().removeChild(
-            this.getContainer().lastChild
+            this.getContainer().lastChild,
           );
       }
       this.options.imperial = val;
-      (<any>this)._addScales(
+      (<any> this)._addScales(
         this.options,
         'leaflet-control-scale-line',
-        this.getContainer()
+        this.getContainer(),
       );
-      (<any>this)._update();
+      (<any> this)._update();
     }
-    get imperial (): boolean {
+    public get imperial (): boolean {
       return this.options.imperial;
     }
 }

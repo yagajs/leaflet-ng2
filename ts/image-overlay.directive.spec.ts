@@ -1,10 +1,12 @@
-import { ImageOverlayDirective,
-    MapComponent,
-    AttributionControlDirective,
-    LatLngBounds,
-    IMAGE_OVERLAY_URL } from './index';
-import { point, latLngBounds } from 'leaflet';
 import { expect } from 'chai';
+import { latLngBounds, point } from 'leaflet';
+import {
+    AttributionControlDirective,
+    IMAGE_OVERLAY_URL,
+    ImageOverlayDirective,
+    LatLngBounds,
+    MapComponent,
+} from './index';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -19,12 +21,12 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Image-Overlay Directive', () => {
-    let map: MapComponent,
-        layer: ImageOverlayDirective;
+    let map: MapComponent;
+    let layer: ImageOverlayDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         layer = new ImageOverlayDirective(map);
     });
 
@@ -40,9 +42,11 @@ describe('Image-Overlay Directive', () => {
             expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-            const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
-                length: number = zoomEvents.length,
-                originalEventListener: Function = layer.getEvents()['zoom'];
+            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const length: number = zoomEvents.length;
+            /* tslint:disable:no-string-literal */
+            const originalEventListener: Function = layer.getEvents()['zoom'];
+            /* tslint:enable */
 
             layer.display = false;
 
@@ -55,9 +59,11 @@ describe('Image-Overlay Directive', () => {
             }
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-            const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
-                length: number = zoomEvents.length,
-                originalEventListener: Function = layer.getEvents()['zoom'];
+            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const length: number = zoomEvents.length;
+            /* tslint:disable:no-string-literal */
+            const originalEventListener: Function = layer.getEvents()['zoom'];
+            /* tslint:enable */
 
             layer.display = false;
             layer.display = true;
@@ -94,7 +100,7 @@ describe('Image-Overlay Directive', () => {
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = IMAGE_OVERLAY_URL;
-            expect((<string>(<any>layer)._url)).to.equal(IMAGE_OVERLAY_URL);
+            expect((<string> (<any> layer)._url)).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.url = IMAGE_OVERLAY_URL;
@@ -112,7 +118,8 @@ describe('Image-Overlay Directive', () => {
 
             layer.url = IMAGE_OVERLAY_URL;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   layer.url = IMAGE_OVERLAY_URL;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            layer.url = IMAGE_OVERLAY_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(IMAGE_OVERLAY_URL + '?test');
                 return done();
@@ -173,7 +180,7 @@ describe('Image-Overlay Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.bounds = val;
             expect(layer.getBounds()).to.equal(val);
@@ -181,7 +188,7 @@ describe('Image-Overlay Directive', () => {
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.bounds = val;
             expect(layer.bounds).to.equal(val);
@@ -189,7 +196,7 @@ describe('Image-Overlay Directive', () => {
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.setBounds(val);
             expect(layer.bounds).to.equal(val);
@@ -197,7 +204,7 @@ describe('Image-Overlay Directive', () => {
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -210,7 +217,7 @@ describe('Image-Overlay Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -238,7 +245,7 @@ describe('Image-Overlay Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [0, 0],
-                [val, 0]
+                [val, 0],
             ]);
             expect(layer.north).to.equal(val);
         });
@@ -262,7 +269,7 @@ describe('Image-Overlay Directive', () => {
 
             layer.setBounds([
                 [0, 0],
-                [val, 0]
+                [val, 0],
             ]);
         });
     });
@@ -281,7 +288,7 @@ describe('Image-Overlay Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [0, val],
-                [0, 0]
+                [0, 0],
             ]);
             expect(layer.east).to.equal(val);
         });
@@ -305,7 +312,7 @@ describe('Image-Overlay Directive', () => {
 
             layer.setBounds([
                 [0, val],
-                [0, 0]
+                [0, 0],
             ]);
         });
     });
@@ -313,7 +320,7 @@ describe('Image-Overlay Directive', () => {
         beforeEach(() => {
             layer.setBounds(latLngBounds([
                 [0, 0],
-                [1, 1]
+                [1, 1],
             ]));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -330,7 +337,7 @@ describe('Image-Overlay Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [val, 0],
-                [1, 1]
+                [1, 1],
             ]);
             expect(layer.south).to.equal(val);
         });
@@ -354,7 +361,7 @@ describe('Image-Overlay Directive', () => {
 
             layer.setBounds([
                 [val, 0],
-                [1, 1]
+                [1, 1],
             ]);
         });
     });
@@ -362,7 +369,7 @@ describe('Image-Overlay Directive', () => {
         beforeEach(() => {
             layer.setBounds(latLngBounds([
                 [0, 0],
-                [1, 1]
+                [1, 1],
             ]));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -379,7 +386,7 @@ describe('Image-Overlay Directive', () => {
             const val: number = Math.random();
             layer.setBounds(latLngBounds([
                 [0, val],
-                [1, 1]
+                [1, 1],
             ]));
             expect(layer.west).to.equal(val);
         });
@@ -403,7 +410,7 @@ describe('Image-Overlay Directive', () => {
 
             layer.setBounds([
                 [0, val],
-                [1, 1]
+                [1, 1],
             ]);
         });
     });
@@ -411,8 +418,8 @@ describe('Image-Overlay Directive', () => {
     // Events
     describe('(add)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 expect(event.testHandle).to.equal(testEvent.testHandle);
@@ -423,8 +430,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(remove)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -434,8 +441,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(popupopen)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -445,8 +452,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(popupclose)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -456,8 +463,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(tooltipopen)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -467,8 +474,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(tooltipclose)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -478,8 +485,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(click)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -489,8 +496,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(dbclick)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.dbclickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -500,8 +507,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(mousedown)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -511,8 +518,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(mouseover)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -522,8 +529,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(mouseout)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -533,8 +540,8 @@ describe('Image-Overlay Directive', () => {
     });
     describe('(contextmenu)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -542,8 +549,6 @@ describe('Image-Overlay Directive', () => {
             layer.fire('contextmenu', testEvent);
         });
     });
-
-
 
     describe('[crossOrigin]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {

@@ -1,34 +1,36 @@
-import { PopupDirective,
+import { expect } from 'chai';
+import { latLng, point } from 'leaflet';
+import {
+    EXAMPLE_CONTENT,
+    LatLng,
     MapComponent,
     Point,
-    LatLng,
-    EXAMPLE_CONTENT } from './index';
-import { point, latLng } from 'leaflet';
-import { expect } from 'chai';
+    PopupDirective,
+} from './index';
 
 describe('Popup Directive', () => {
-    let map: MapComponent,
-        popup: PopupDirective;
+    let map: MapComponent;
+    let popup: PopupDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
-        (<any>popup)._contentNode = document.createElement('div');
-        (<any>popup)._container = document.createElement('div');
-        (<any>popup)._wrapper = document.createElement('div');
+        (<any> popup)._contentNode = document.createElement('div');
+        (<any> popup)._container = document.createElement('div');
+        (<any> popup)._wrapper = document.createElement('div');
     });
 
     describe('[(opened)]', () => {
         beforeEach(() => {
-            (<any>popup)._wrapper = document.createElement('div');
+            (<any> popup)._wrapper = document.createElement('div');
             popup.setLatLng(latLng(0, 0));
             popup.openOn(map);
         });
         it('should remove DOM container when not opened', () => {
             popup.opened = false;
             /* istanbul ignore if */
-            if ((<HTMLElement>(<any>popup)._container).parentNode) {
+            if ((<HTMLElement> (<any> popup)._container).parentNode) {
                 throw new Error('Map is still parent element of the popup');
             }
         });
@@ -36,7 +38,7 @@ describe('Popup Directive', () => {
             popup.opened = true;
 
             /* istanbul ignore if */
-            if (!(<HTMLElement>(<any>popup)._container).parentNode) {
+            if (!(<HTMLElement> (<any> popup)._container).parentNode) {
                 throw new Error('Map is still parent element of the popup');
             }
         });
@@ -44,7 +46,7 @@ describe('Popup Directive', () => {
     describe('[(content)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
-            expect((<string>(<any>popup)._content)).to.equal(EXAMPLE_CONTENT);
+            expect((<string> (<any> popup)._content)).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
@@ -62,7 +64,8 @@ describe('Popup Directive', () => {
 
             popup.content = EXAMPLE_CONTENT;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {   popup.content = EXAMPLE_CONTENT;
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            popup.content = EXAMPLE_CONTENT;
             popup.contentChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_CONTENT + '?test');
                 done();
@@ -215,7 +218,7 @@ describe('Popup Directive', () => {
                 expect(event.target).to.equal(popup);
                 done();
             });
-            (<any>popup)._close();
+            (<any> popup)._close();
         });
     });
 
@@ -258,42 +261,42 @@ describe('Popup Directive', () => {
     });
     describe('[autoPanPaddingTopLeft]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
             expect(popup.options.autoPanPaddingTopLeft).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
             expect(popup.autoPanPaddingTopLeft).to.equal(val);
         });
     });
     describe('[autoPanPaddingBottomRight]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
             expect(popup.options.autoPanPaddingBottomRight).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
             expect(popup.autoPanPaddingBottomRight).to.equal(val);
         });
     });
     describe('[autoPanPadding]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPadding = val;
             expect(popup.options.autoPanPadding).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000),
-                val: Point = point(num, num);
+            const num: number = Math.ceil(Math.random() * 1000);
+            const val: Point = point(num, num);
             popup.autoPanPadding = val;
             expect(popup.autoPanPadding).to.equal(val);
         });
@@ -403,8 +406,8 @@ describe('Popup Directive', () => {
 
     describe('Remove from source element on destroy', () => {
         it('should call unbindPopup on destroy', (done: MochaDone) => {
-            (<any>popup)._source = {
-                unbindPopup: done
+            (<any> popup)._source = {
+                unbindPopup: done,
             };
             popup.ngOnDestroy();
         });

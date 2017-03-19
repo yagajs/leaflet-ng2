@@ -1,16 +1,19 @@
-import { AttributionControlDirective,
-    MapComponent,
-    ControlPosition } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
+import { point } from 'leaflet';
+
+import {
+    AttributionControlDirective,
+    ControlPosition,
+    MapComponent,
+} from './index';
 
 describe('Attribution-Control Directive', () => {
-    let map: MapComponent,
-        control: AttributionControlDirective;
+    let map: MapComponent;
+    let control: AttributionControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         control = new AttributionControlDirective(map);
     });
 
@@ -169,7 +172,7 @@ describe('Attribution-Control Directive', () => {
     describe('Destroying a Attribution Control Directive', () => {
         it('should remove Tile-Layer Directive from map on destroy', () => {
             expect(
-                control.getContainer().parentElement.parentElement.parentElement
+                control.getContainer().parentElement.parentElement.parentElement,
             ).to.equal(map.getContainer());
 
             control.ngOnDestroy();
@@ -179,7 +182,7 @@ describe('Attribution-Control Directive', () => {
                 control.getContainer().parentElement &&
                 control.getContainer().parentElement.parentElement &&
                 control.getContainer().parentElement.parentElement.parentElement &&
-                control.getContainer().parentElement.parentElement.parentElement
+                control.getContainer().parentElement.parentElement.parentElement,
             ).to.not.equal(map.getContainer());
         });
     });

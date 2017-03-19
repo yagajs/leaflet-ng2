@@ -1,16 +1,18 @@
-import { ScaleControlDirective,
-    MapComponent,
-    ControlPosition } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
+import { point } from 'leaflet';
+import {
+    ControlPosition,
+    MapComponent,
+    ScaleControlDirective,
+} from './index';
 
 describe('Scale-Control Directive', () => {
-    let map: MapComponent,
-        control: ScaleControlDirective;
+    let map: MapComponent;
+    let control: ScaleControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         control = new ScaleControlDirective(map);
     });
 

@@ -1,6 +1,6 @@
-import { MapComponent, LatLngBounds } from './index';
-import { latLngBounds, latLng, point } from 'leaflet';
 import { expect } from 'chai';
+import { latLng, latLngBounds, point } from 'leaflet';
+import { LatLngBounds, MapComponent } from './index';
 
 describe('Map Component', () => {
     let map: MapComponent;
@@ -244,7 +244,7 @@ describe('Map Component', () => {
     describe('[(maxBounds)]', () => {
         beforeEach(() => {
             // Fix for no browser-test
-            (<any>map)._size = point(100, 100);
+            (<any> map)._size = point(100, 100);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const lat1: number = Math.random() * 100;
@@ -253,7 +253,7 @@ describe('Map Component', () => {
             const lng2: number = Math.random() * 100;
             const val: LatLngBounds = latLngBounds(
                 latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
             );
             map.setMaxBounds(val);
             expect(val.equals(map.options.maxBounds)).to.equal(true);
@@ -265,7 +265,7 @@ describe('Map Component', () => {
             const lng2: number = Math.random() * 100;
             const val: LatLngBounds = latLngBounds(
                 latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
             );
             map.maxBounds = val;
             expect(val.equals(map.maxBounds)).to.equal(true);
@@ -277,7 +277,7 @@ describe('Map Component', () => {
             const lng2: number = Math.random() * 100;
             const val: LatLngBounds = latLngBounds(
                 latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
             );
             map.setMaxBounds(val);
             expect(val.equals(map.maxBounds)).to.equal(true);
@@ -289,7 +289,7 @@ describe('Map Component', () => {
             const lng2: number = Math.random() * 100;
             const val: LatLngBounds = latLngBounds(
                 latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -306,7 +306,7 @@ describe('Map Component', () => {
             const lng2: number = Math.random() * 100;
             const val: LatLngBounds = latLngBounds(
                 latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1)
+                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
             );
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -321,8 +321,8 @@ describe('Map Component', () => {
     // Events
     describe('(baselayerchange)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.baselayerchangeEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -332,8 +332,8 @@ describe('Map Component', () => {
     });
     describe('(overlayadd)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.overlayaddEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -343,8 +343,8 @@ describe('Map Component', () => {
     });
     describe('(overlayremove)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.overlayremoveEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -354,8 +354,8 @@ describe('Map Component', () => {
     });
     describe('(layeradd)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.layeraddEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -365,8 +365,8 @@ describe('Map Component', () => {
     });
     describe('(layerremove)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.layerremoveEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -376,8 +376,8 @@ describe('Map Component', () => {
     });
     describe('(zoomlevelschange)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.zoomlevelschangeEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -387,8 +387,8 @@ describe('Map Component', () => {
     });
     describe('(resize)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.resizeEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -398,8 +398,8 @@ describe('Map Component', () => {
     });
     describe('(unload)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.unloadEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -409,8 +409,8 @@ describe('Map Component', () => {
     });
     describe('(viewreset)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.viewresetEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -420,8 +420,8 @@ describe('Map Component', () => {
     });
     describe('(load)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.loadEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -431,8 +431,8 @@ describe('Map Component', () => {
     });
     describe('(zoomstart)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.zoomstartEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -442,8 +442,8 @@ describe('Map Component', () => {
     });
     describe('(movestart)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.movestartEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -453,8 +453,8 @@ describe('Map Component', () => {
     });
     describe('(zoom)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.zoomEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -464,8 +464,8 @@ describe('Map Component', () => {
     });
     describe('(move)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.moveEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -475,8 +475,8 @@ describe('Map Component', () => {
     });
     describe('(zoomend)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.zoomendEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -486,8 +486,8 @@ describe('Map Component', () => {
     });
     describe('(moveend)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.moveendEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -497,8 +497,8 @@ describe('Map Component', () => {
     });
     describe('(popupopen)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.popupopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -508,8 +508,8 @@ describe('Map Component', () => {
     });
     describe('(popupclose)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.popupcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -519,8 +519,8 @@ describe('Map Component', () => {
     });
     describe('(autopanstart)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.autopanstartEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -530,8 +530,8 @@ describe('Map Component', () => {
     });
     describe('(tooltipopen)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.tooltipopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -541,8 +541,8 @@ describe('Map Component', () => {
     });
     describe('(tooltipclose)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.tooltipcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -552,8 +552,8 @@ describe('Map Component', () => {
     });
     describe('(click)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.clickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -564,8 +564,8 @@ describe('Map Component', () => {
     describe('(dblclick)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             map.doubleClickZoom.disable();
-            const testHandle: any = {},
-                testEvent: any = { testHandle, originalEvent: {shiftKey: false }};
+            const testHandle: any = {};
+            const testEvent: any = { testHandle, originalEvent: {shiftKey: false }};
             map.dblclickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -575,8 +575,8 @@ describe('Map Component', () => {
     });
     describe('(mousedown)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.mousedownEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -586,8 +586,8 @@ describe('Map Component', () => {
     });
     describe('(mouseup)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.mouseupEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -597,8 +597,8 @@ describe('Map Component', () => {
     });
     describe('(mouseover)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.mouseoverEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -608,8 +608,8 @@ describe('Map Component', () => {
     });
     describe('(mouseout)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.mouseoutEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -619,8 +619,8 @@ describe('Map Component', () => {
     });
     describe('(mousemove)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.mousemoveEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -630,8 +630,8 @@ describe('Map Component', () => {
     });
     describe('(contextmenu)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.contextmenuEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -641,8 +641,8 @@ describe('Map Component', () => {
     });
     describe('(keypress)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.keypressEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -652,8 +652,8 @@ describe('Map Component', () => {
     });
     describe('(preclick)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             map.preclickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
@@ -663,8 +663,8 @@ describe('Map Component', () => {
     });
     describe('(zoomanim)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle, center: {lat: 1, lng: 1}, zoom: 1 };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle, center: {lat: 1, lng: 1}, zoom: 1 };
             map.zoomanimEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
