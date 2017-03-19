@@ -1,20 +1,22 @@
-import { MapComponent,
+import { expect } from 'chai';
+import { point, SVG } from 'leaflet';
+import {
+    FillRule,
     LineCapShape,
     LineJoinShape,
-    FillRule,
-    PathOptions } from './index';
-import { point, SVG } from 'leaflet';
-import { expect } from 'chai';
+    MapComponent,
+    PathOptions,
+} from './index';
 
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {
-        let map: MapComponent,
-            layer: any;
+        let map: MapComponent;
+        let layer: any;
         beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            (<any>map)._renderer = (<any>map)._renderer || new SVG();
+            (<any> map)._size = point(100, 100);
+            (<any> map)._pixelOrigin = point(50, 50);
+            (<any> map)._renderer = (<any> map)._renderer || new SVG();
 
             layer = new Constr(map);
         });
@@ -544,7 +546,7 @@ export function createPathTests(Constr: any): void {
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 Promise.all([
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.styleChange.subscribe((eventVal: PathOptions) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE) {
@@ -553,7 +555,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.opacityChange.subscribe((eventVal: number) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.opacity) {
@@ -562,7 +564,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.weightChange.subscribe((eventVal: number) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.weight) {
@@ -571,7 +573,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.dashArrayChange.subscribe((eventVal: string) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.dashArray) {
@@ -582,12 +584,11 @@ export function createPathTests(Constr: any): void {
                     }),
                 ]).then(() => { done(); }).catch(done);
 
-
                 layer.style = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 Promise.all([
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.styleChange.subscribe((eventVal: PathOptions) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE) {
@@ -596,7 +597,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.opacityChange.subscribe((eventVal: number) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.opacity) {
@@ -605,7 +606,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.weightChange.subscribe((eventVal: number) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.weight) {
@@ -614,7 +615,7 @@ export function createPathTests(Constr: any): void {
                             return fulfill();
                         });
                     }),
-                    new Promise<void>((fulfill, reject) => {
+                    new Promise<void> ((fulfill, reject) => {
                         layer.dashArrayChange.subscribe((eventVal: string) => {
                             /* istanbul ignore if */
                             if (eventVal !== TEST_VALUE.dashArray) {
@@ -632,8 +633,8 @@ export function createPathTests(Constr: any): void {
         // Events
         describe('(add)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.addEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -643,8 +644,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(remove)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.removeEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -654,8 +655,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(popupopen)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.popupopenEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -665,8 +666,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(popupclose)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.popupcloseEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -676,8 +677,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(tooltipopen)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.tooltipopenEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -687,8 +688,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(tooltipclose)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.tooltipcloseEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -698,8 +699,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(click)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.clickEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -709,8 +710,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(dbclick)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.dbclickEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -720,8 +721,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(mousedown)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.mousedownEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -731,8 +732,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(mouseover)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.mouseoverEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -742,8 +743,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(mouseout)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.mouseoutEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();
@@ -753,8 +754,8 @@ export function createPathTests(Constr: any): void {
         });
         describe('(contextmenu)', () => {
             it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-                const testHandle: any = {},
-                    testEvent: any = { testHandle };
+                const testHandle: any = {};
+                const testEvent: any = { testHandle };
                 layer.contextmenuEvent.subscribe((event: any) => {
                     expect(event.testHandle).to.equal(testEvent.testHandle);
                     return done();

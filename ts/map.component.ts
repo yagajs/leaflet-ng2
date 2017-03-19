@@ -1,26 +1,28 @@
-import { Component,
+import {
     AfterViewInit,
+    Component,
     ElementRef,
+    EventEmitter,
     Inject,
     Input,
     Output,
-    EventEmitter
 } from '@angular/core';
 import {
-    Map,
-    LatLng,
-    LatLngBoundsExpression,
-    LatLngBounds,
-    LatLngBoundsLiteral,
-    LayersControlEvent,
-    LayerEvent,
     Event,
-    ResizeEvent,
-    PopupEvent,
-    TooltipEvent,
-    MouseEvent,
     KeyboardEvent,
-    ZoomAnimEvent } from 'leaflet';
+    LatLng,
+    LatLngBounds,
+    LatLngBoundsExpression,
+    LatLngBoundsLiteral,
+    LayerEvent,
+    LayersControlEvent,
+    Map,
+    MouseEvent,
+    PopupEvent,
+    ResizeEvent,
+    TooltipEvent,
+    ZoomAnimEvent,
+} from 'leaflet';
 import { ANIMATION_DELAY } from './consts';
 
 /**
@@ -33,7 +35,7 @@ import { ANIMATION_DELAY } from './consts';
  */
 @Component({
     selector: 'yaga-map',
-    template: `<span style="display: none"><ng-content></ng-content></span>`
+    template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
 export class MapComponent extends Map implements AfterViewInit {
     /**
@@ -68,7 +70,8 @@ export class MapComponent extends Map implements AfterViewInit {
     @Output() public maxZoomChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the bounds on the map.
-     * Use it with `<yaga-map [(maxBoundsZoom)]="someValue">` or `<yaga-map (maxBoundsZoomChange)="processEvent($event)">`
+     * Use it with `<yaga-map [(maxBoundsZoom)]="someValue">`
+     * or `<yaga-map (maxBoundsZoomChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxbounds Original Leaflet documentation
      */
     @Output() public maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
@@ -291,7 +294,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setView([0, 0], 0);
 
         this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = (<any>this)._container;
+        this.mapDomRoot = (<any> this)._container;
         this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
@@ -414,7 +417,7 @@ export class MapComponent extends Map implements AfterViewInit {
      * This function gets called from Angular after initializing the html-component.
      * @link https://angular.io/docs/ts/latest/api/core/index/AfterViewInit-class.html
      */
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.domRoot.appendChild(this.mapDomRoot);
 
         this.invalidateSize(false);
@@ -436,10 +439,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [(zoom)]="someValue">` or `<yaga-map [zoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setzoom Original Leaflet documentation
      */
-    @Input() set zoom(val: number) {
+    @Input() public set zoom(val: number) {
         this.setZoom(val);
     }
-    get zoom(): number {
+    public get zoom(): number {
         return this.getZoom();
     }
 
@@ -448,11 +451,11 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [(lat)]="someValue">` or `<yaga-map [lat]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
      */
-    @Input() set lat(val: number) {
+    @Input() public set lat(val: number) {
         const coords: LatLng = new LatLng(val, this.getCenter().lng);
         this.setView(coords, this.zoom);
     }
-    get lat(): number {
+    public get lat(): number {
         return this.getCenter().lat;
     }
 
@@ -461,11 +464,11 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [(lng)]="someValue">` or `<yaga-map [lng]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
      */
-    @Input() set lng(val: number) {
+    @Input() public set lng(val: number) {
         const coords: LatLng =  new LatLng(this.getCenter().lat, val);
         this.setView(coords, this.zoom);
     }
-    get lng(): number {
+    public get lng(): number {
         return this.getCenter().lng;
     }
 
@@ -473,7 +476,7 @@ export class MapComponent extends Map implements AfterViewInit {
      * Derived method of the original setMinZoom method.
      * @link http://leafletjs.com/reference-1.0.2.html#map-setminzoom Original Leaflet documentation
      */
-    setMinZoom(val: number): this {
+    public setMinZoom(val: number): this {
         this.minZoomChange.emit(val);
         return super.setMinZoom(val);
     }
@@ -483,10 +486,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [(minZoom)]="someValue">` or `<yaga-map [minZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setminzoom Original Leaflet documentation
      */
-    @Input() set minZoom(val: number) {
+    @Input() public set minZoom(val: number) {
         this.setMinZoom(val);
     }
-    get minZoom(): number {
+    public get minZoom(): number {
         return this.getMinZoom();
     }
 
@@ -494,7 +497,7 @@ export class MapComponent extends Map implements AfterViewInit {
      * Derived method of the original setMaxZoom method.
      * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxzoom Original Leaflet documentation
      */
-    setMaxZoom(val: number): this {
+    public setMaxZoom(val: number): this {
         this.maxZoomChange.emit(val);
         return super.setMaxZoom(val);
     }
@@ -504,242 +507,241 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [(maxZoom)]="someValue">` or `<yaga-map [maxZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxzoom Original Leaflet documentation
      */
-    @Input() set maxZoom(val: number) {
+    @Input() public set maxZoom(val: number) {
         this.setMaxZoom(val);
     }
-    get maxZoom(): number {
+    public get maxZoom(): number {
         return this.getMaxZoom();
     }
 
-    setMaxBounds(bounds: LatLngBoundsExpression): this {
-        super.setMaxBounds((<LatLngBoundsLiteral>bounds));
+    public setMaxBounds(bounds: LatLngBoundsExpression): this {
+        super.setMaxBounds((<LatLngBoundsLiteral> bounds));
         this.maxBoundsChange.emit(this.maxBounds);
         return this;
     }
 
-    @Input() set maxBounds(val: LatLngBounds) {
+    @Input() public set maxBounds(val: LatLngBounds) {
         this.setMaxBounds(val);
     }
-    get maxBounds(): LatLngBounds {
-        return (<LatLngBounds>this.options.maxBounds);
+    public get maxBounds(): LatLngBounds {
+        return (<LatLngBounds> this.options.maxBounds);
     }
 
     // One-way Input
-    @Input() set closePopupOnClick(val: boolean) {
+    @Input() public set closePopupOnClick(val: boolean) {
         this.options.closePopupOnClick = val;
     }
-    get closePopupOnClick(): boolean {
+    public get closePopupOnClick(): boolean {
         return this.options.closePopupOnClick;
     }
 
-    @Input() set zoomSnap(val: number) {
+    @Input() public set zoomSnap(val: number) {
         this.options.zoomSnap = val;
     }
-    get zoomSnap(): number {
+    public get zoomSnap(): number {
         return this.options.zoomSnap;
     }
-    @Input() set zoomDelta(val: number) {
+    @Input() public set zoomDelta(val: number) {
         this.options.zoomDelta = val;
     }
-    get zoomDelta(): number {
+    public get zoomDelta(): number {
         return this.options.zoomDelta;
     }
 
-    @Input() set trackResize(val: boolean) {
+    @Input() public set trackResize(val: boolean) {
         this.options.trackResize = val;
     }
-    get trackResize(): boolean {
+    public get trackResize(): boolean {
         return this.options.trackResize;
     }
 
     // maybe 2way!?!
-    @Input() set boxZoomEnabled(val: boolean) {
+    @Input() public set boxZoomEnabled(val: boolean) {
         if (val) {
             this.boxZoom.enable();
             return;
         }
         this.boxZoom.disable();
     }
-    get boxZoomEnabled(): boolean {
+    public get boxZoomEnabled(): boolean {
         return this.boxZoom.enabled();
     }
 
     // maybe 2way!?!
-    @Input() set doubleClickZoomEnabled(val: boolean) {
+    @Input() public set doubleClickZoomEnabled(val: boolean) {
         if (val) {
             this.doubleClickZoom.enable();
             return;
         }
         this.doubleClickZoom.disable();
     }
-    get doubleClickZoomEnabled(): boolean {
+    public get doubleClickZoomEnabled(): boolean {
         return this.doubleClickZoom.enabled();
     }
 
     // maybe 2way!?!
-    @Input() set draggingEnabled(val: boolean) {
+    @Input() public set draggingEnabled(val: boolean) {
         if (val) {
             this.dragging.enable();
             return;
         }
         this.dragging.disable();
     }
-    get draggingEnabled(): boolean {
+    public get draggingEnabled(): boolean {
         return this.dragging.enabled();
     }
 
-    @Input() set fadeAnimation(val: boolean) {
+    @Input() public set fadeAnimation(val: boolean) {
         this.options.fadeAnimation = val;
     }
-    get fadeAnimation(): boolean {
+    public get fadeAnimation(): boolean {
         return this.options.fadeAnimation;
     }
 
-    @Input() set markerZoomAnimation(val: boolean) {
+    @Input() public set markerZoomAnimation(val: boolean) {
         this.options.markerZoomAnimation = val;
     }
-    get markerZoomAnimation(): boolean {
+    public get markerZoomAnimation(): boolean {
         return this.options.markerZoomAnimation;
     }
 
-    @Input() set transform3DLimit(val: number) {
+    @Input() public set transform3DLimit(val: number) {
         this.options.transform3DLimit = val;
     }
-    get transform3DLimit(): number {
+    public get transform3DLimit(): number {
         return this.options.transform3DLimit;
     }
 
-    @Input() set zoomAnimation(val: boolean) {
+    @Input() public set zoomAnimation(val: boolean) {
         this.options.zoomAnimation = val;
     }
-    get zoomAnimation(): boolean {
+    public get zoomAnimation(): boolean {
         return this.options.zoomAnimation;
     }
 
-    @Input() set zoomAnimationThreshold(val: number) {
+    @Input() public set zoomAnimationThreshold(val: number) {
         this.options.zoomAnimationThreshold = val;
     }
-    get zoomAnimationThreshold(): number {
+    public get zoomAnimationThreshold(): number {
         return this.options.zoomAnimationThreshold;
     }
 
-    @Input() set inertia(val: boolean) {
+    @Input() public set inertia(val: boolean) {
         this.options.inertia = val;
     }
-    get inertia(): boolean {
+    public get inertia(): boolean {
         return this.options.inertia;
     }
 
-    @Input() set inertiaDeceleration(val: number) {
+    @Input() public set inertiaDeceleration(val: number) {
         this.options.inertiaDeceleration = val;
     }
-    get inertiaDeceleration(): number {
+    public get inertiaDeceleration(): number {
         return this.options.inertiaDeceleration;
     }
 
-    @Input() set inertiaMaxSpeed(val: number) {
+    @Input() public set inertiaMaxSpeed(val: number) {
         this.options.inertiaMaxSpeed = val;
     }
-    get inertiaMaxSpeed(): number {
+    public get inertiaMaxSpeed(): number {
         return this.options.inertiaMaxSpeed;
     }
 
-    @Input() set easeLinearity(val: number) {
+    @Input() public set easeLinearity(val: number) {
         this.options.easeLinearity = val;
     }
-    get easeLinearity(): number {
+    public get easeLinearity(): number {
         return this.options.easeLinearity;
     }
 
-    @Input() set worldCopyJump(val: boolean) {
+    @Input() public set worldCopyJump(val: boolean) {
         this.options.worldCopyJump = val;
     }
-    get worldCopyJump(): boolean {
+    public get worldCopyJump(): boolean {
         return this.options.worldCopyJump;
     }
 
-    @Input() set maxBoundsViscosity(val: number) {
+    @Input() public set maxBoundsViscosity(val: number) {
         this.options.maxBoundsViscosity = val;
     }
-    get maxBoundsViscosity(): number {
+    public get maxBoundsViscosity(): number {
         return this.options.maxBoundsViscosity;
     }
 
     // maybe 2way!?!
-    @Input() set keyboardEnabled(val: boolean) {
+    @Input() public set keyboardEnabled(val: boolean) {
         if (val) {
             this.keyboard.enable();
             return;
         }
         this.keyboard.disable();
     }
-    get keyboardEnabled(): boolean {
+    public get keyboardEnabled(): boolean {
         return this.keyboard.enabled();
     }
 
-    @Input() set keyboardPanDelta(val: number) {
+    @Input() public set keyboardPanDelta(val: number) {
         this.options.keyboardPanDelta = val;
     }
-    get keyboardPanDelta(): number {
+    public get keyboardPanDelta(): number {
         return this.options.keyboardPanDelta;
     }
 
     // maybe 2way!?!
-    @Input() set scrollWheelZoomEnabled(val: boolean) {
+    @Input() public set scrollWheelZoomEnabled(val: boolean) {
         if (val) {
             this.scrollWheelZoom.enable();
             return;
         }
         this.scrollWheelZoom.disable();
     }
-    get scrollWheelZoomEnabled(): boolean {
+    public get scrollWheelZoomEnabled(): boolean {
         return this.scrollWheelZoom.enabled();
     }
 
-    @Input() set wheelDebounceTime(val: number) {
+    @Input() public set wheelDebounceTime(val: number) {
         this.options.wheelDebounceTime = val;
     }
-    get wheelDebounceTime(): number {
+    public get wheelDebounceTime(): number {
         return this.options.wheelDebounceTime;
     }
 
-    @Input() set wheelPxPerZoomLevel(val: number) {
+    @Input() public set wheelPxPerZoomLevel(val: number) {
         this.options.wheelPxPerZoomLevel = val;
     }
-    get wheelPxPerZoomLevel(): number {
+    public get wheelPxPerZoomLevel(): number {
         return this.options.wheelPxPerZoomLevel;
     }
 
-
-    @Input() set tapEnabled(val: boolean) {
+    @Input() public set tapEnabled(val: boolean) {
         this.options.tap = val;
     }
-    get tapEnabled(): boolean {
+    public get tapEnabled(): boolean {
         return this.options.tap;
     }
 
-    @Input() set tapTolerance(val: number) {
+    @Input() public set tapTolerance(val: number) {
         this.options.tapTolerance = val;
     }
-    get tapTolerance(): number {
+    public get tapTolerance(): number {
         return this.options.tapTolerance;
     }
 
-    @Input() set bounceAtZoomLimits(val: boolean) {
+    @Input() public set bounceAtZoomLimits(val: boolean) {
         this.options.bounceAtZoomLimits = val;
     }
-    get bounceAtZoomLimits(): boolean {
+    public get bounceAtZoomLimits(): boolean {
         return this.options.bounceAtZoomLimits;
     }
     // maybe 2way!?!
-    @Input() set touchZoomEnabled(val: boolean) {
+    @Input() public set touchZoomEnabled(val: boolean) {
         if (val) {
             this.touchZoom.enable();
             return;
         }
         this.touchZoom.disable();
     }
-    get touchZoomEnabled(): boolean {
+    public get touchZoomEnabled(): boolean {
         return this.touchZoom.enabled();
     }
 }

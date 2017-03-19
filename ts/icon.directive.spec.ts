@@ -1,18 +1,20 @@
-import { IconDirective,
-    MapComponent,
-    TRANSPARENT_PIXEL,
-    Point,
-    Event } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
+import { point } from 'leaflet';
+import {
+    Event,
+    IconDirective,
+    MapComponent,
+    Point,
+    TRANSPARENT_PIXEL,
+} from './index';
 
 describe('Icon Directive', () => {
-    let map: MapComponent,
-        icon: IconDirective;
+    let map: MapComponent;
+    let icon: IconDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         icon = new IconDirective();
     });
 

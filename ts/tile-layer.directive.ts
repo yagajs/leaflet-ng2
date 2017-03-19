@@ -1,22 +1,26 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
-import { TileLayer,
-    LatLngBoundsExpression,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
     Control,
-    Point,
-    Map,
     Event,
+    LatLngBoundsExpression,
+    Map,
+    Point,
     PopupEvent,
-    TooltipEvent,
+    TileErrorEvent,
     TileEvent,
-    TileErrorEvent } from 'leaflet';
-import { MapComponent } from './map.component';
+    TileLayer,
+    TooltipEvent,
+} from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
+import { MapComponent } from './map.component';
 
 /**
  * Directive for Tile-Layers
@@ -27,7 +31,7 @@ import { TRANSPARENT_PIXEL } from './consts';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
-    selector: 'yaga-tile-layer'
+    selector: 'yaga-tile-layer',
 })
 export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
@@ -38,18 +42,21 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the display status of the layer.
-     * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer (displayChange)="processEvent($event)">`
+     * Use it with `<yaga-tile-layer [(display)]="someValue">`
+     * or `<yaga-tile-layer (displayChange)="processEvent($event)">`
      */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     /**
      * Two-Way bound property for the opacity of the layer.
-     * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer (opacityChange)="processEvent($event)">`
+     * Use it with `<yaga-tile-layer [(opacity)]="someValue">`
+     * or `<yaga-tile-layer (opacityChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-opacity Original Leaflet documentation
      */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the zIndex of the layer.
-     * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
+     * Use it with `<yaga-tile-layer [(zIndex)]="someValue">`
+     * or `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setzindex Original Leaflet documentation
      */
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
@@ -164,7 +171,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL);
@@ -239,16 +246,15 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * This function gets called from Angular on destroy of the html-component.
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
-    ngOnDestroy(): void {
-        console.log('Destroy');
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
     /**
      * Derived method of the original setUrl method.
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-seturl Original Leaflet documentation
      */
-    setUrl(url: string, noRedraw?: boolean): this {
+    public setUrl(url: string, noRedraw?: boolean): this {
         if (this.url === url) {
             return;
         }
@@ -264,14 +270,14 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.setUrl(val);
     }
     get url(): string {
-        return (<any>this)._url;
+        return (<any> this)._url;
     }
 
     /**
      * Derived method of the original setOpacity method.
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setopacity Original Leaflet documentation
      */
-    setOpacity(val: number): this {
+    public setOpacity(val: number): this {
         if (this.opacity === val) {
             return;
         }
@@ -299,15 +305,15 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         if (isDisplayed === val) {
             return;
         }
-        let pane: HTMLElement,
-            container: HTMLElement,
-            map: Map,
-            events: any, // Dictionary of functions
-            eventKeys: string[];
+        let pane: HTMLElement;
+        let container: HTMLElement;
+        let map: Map;
+        let events: any; // Dictionary of functions
+        let eventKeys: string[];
         try {
             pane = this.getPane();
             container = this.getContainer();
-            map = (<any>this)._map;
+            map = (<any> this)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -334,8 +340,8 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     get display(): boolean {
-        let pane: HTMLElement,
-            container: HTMLElement;
+        let pane: HTMLElement;
+        let container: HTMLElement;
         try {
             pane = this.getPane();
             container = this.getContainer();
@@ -356,7 +362,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Derived method of the original setZIndexmethod.
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-setzindex Original Leaflet documentation
      */
-    setZIndex(val: number): this {
+    public setZIndex(val: number): this {
         super.setZIndex(val);
         this.zIndexChange.emit(val);
         return this;
@@ -373,7 +379,6 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         return this.options.zIndex;
     }
 
-
     /**
      * Input for the tileSize.
      * Use it with `<yaga-tile-layer [tileSize]="someValue">`
@@ -384,7 +389,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.redraw();
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point>this.options.tileSize);
+        return (<Point> this.options.tileSize);
     }
 
     /**
@@ -480,11 +485,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set maxZoom(val: number) {
         this.options.maxZoom = val;
-        if ((<any>this)._map) {
-            (<any>(<any>this)._map)._updateZoomLevels();
+        if ((<any> this)._map) {
+            (<any> (<any> this)._map)._updateZoomLevels();
         }
         this.redraw();
-    };
+    }
     get maxZoom(): number {
         return this.options.maxZoom;
     }
@@ -496,11 +501,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set minZoom(val: number) {
         this.options.minZoom = val;
-        if ((<any>this)._map) {
-            (<any>(<any>this)._map)._updateZoomLevels();
+        if ((<any> this)._map) {
+            (<any> (<any> this)._map)._updateZoomLevels();
         }
         this.redraw();
-    };
+    }
     get minZoom(): number {
         return this.options.minZoom;
     }
@@ -513,7 +518,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
         this.redraw();
-    };
+    }
     get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
     }
@@ -526,7 +531,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set minNativeZoom(val: number) {
         this.options.minNativeZoom = val;
         this.redraw();
-    };
+    }
     get minNativeZoom(): number {
         return this.options.minNativeZoom;
     }
@@ -538,12 +543,12 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set subdomains(val: string[]) {
         this.options.subdomains = val;
-    };
+    }
     get subdomains(): string[] {
-        if (typeof (<string>this.options.subdomains) === 'string') {
-            this.options.subdomains = (<string>this.options.subdomains).split('');
+        if (typeof (<string> this.options.subdomains) === 'string') {
+            this.options.subdomains = (<string> this.options.subdomains).split('');
         }
-        return (<string[]>this.options.subdomains);
+        return (<string[]> this.options.subdomains);
     }
 
     /**
@@ -554,7 +559,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
         this.redraw();
-    };
+    }
     get errorTileUrl(): string {
         return this.options.errorTileUrl;
     }
@@ -567,7 +572,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set zoomOffset(val: number) {
         this.options.zoomOffset = val;
         this.redraw();
-    };
+    }
     get zoomOffset(): number {
         return this.options.zoomOffset;
     }
@@ -580,7 +585,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set tms(val: boolean) {
         this.options.tms = val;
         this.redraw();
-    };
+    }
     get tms(): boolean {
         return this.options.tms;
     }
@@ -593,7 +598,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
         this.redraw();
-    };
+    }
     get zoomReverse(): boolean {
         return this.options.zoomReverse;
     }
@@ -606,7 +611,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set detectRetina(val: boolean) {
         this.options.detectRetina = val;
         this.redraw();
-    };
+    }
     get detectRetina(): boolean {
         return this.options.detectRetina;
     }
@@ -619,7 +624,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Input() set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
         this.redraw();
-    };
+    }
     get crossOrigin(): boolean {
         return this.options.crossOrigin;
     }
@@ -630,9 +635,9 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-attribution Original Leaflet documentation
      */
     @Input() set attribution(val: string) {
-        if ((<any>this)._map && (<any>this)._map.attributionControl) {
-            (<Control.Attribution>(<any>this)._map.attributionControl).removeAttribution(this.getAttribution());
-            (<Control.Attribution>(<any>this)._map.attributionControl).addAttribution(val);
+        if ((<any> this)._map && (<any> this)._map.attributionControl) {
+            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
+            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
         }
         this.options.attribution = val;
     }

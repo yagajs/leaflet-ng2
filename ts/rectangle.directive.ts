@@ -1,39 +1,42 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    AfterViewInit,
+    ContentChild,
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
+    Inject,
+    Input,
     OnDestroy,
     Optional,
-    ContentChild,
-    AfterViewInit } from '@angular/core';
-import { Rectangle,
-    PolylineOptions,
+    Output,
+} from '@angular/core';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import {
     Event,
-    PopupEvent,
-    TooltipEvent,
-    PathOptions,
     FillRule,
+    LatLng,
+    LatLngBounds,
+    latLngBounds,
+    LatLngBoundsLiteral,
+    LatLngExpression,
+    LatLngTuple,
     LineCapShape,
     LineJoinShape,
-    LatLng,
-    LatLngTuple,
-    LatLngBounds,
-    LatLngExpression,
-    latLngBounds,
-    LatLngBoundsLiteral } from 'leaflet';
-import { MapComponent } from './map.component';
-
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+    PathOptions,
+    PolylineOptions,
+    PopupEvent,
+    Rectangle,
+    TooltipEvent,
+} from 'leaflet';
 import { lng2lat } from './lng2lat';
+import { MapComponent } from './map.component';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
-    selector: 'yaga-rectangle'
+    selector: 'yaga-rectangle',
 })
 export class RectangleDirective<T> extends Rectangle implements OnDestroy, AfterViewInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -82,7 +85,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super(latLngBounds([0, 0], [0, 0]));
 
@@ -137,7 +140,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
@@ -147,12 +150,12 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         }
     }
 
-    ngOnDestroy(): void {
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    setBounds(val: LatLngBounds | LatLngBoundsLiteral): this {
-        super.setBounds((<any>val));
+    public setBounds(val: LatLngBounds | LatLngBoundsLiteral): this {
+        super.setBounds((<any> val));
         if (!this.initialized) {
             return this;
         }
@@ -164,91 +167,93 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         return this;
     }
 
-    @Input() set bounds(val: LatLngBounds) {
+    @Input() public set bounds(val: LatLngBounds) {
         this.setBounds(val);
     }
-    get bounds(): LatLngBounds {
+    public get bounds(): LatLngBounds {
         return this.getBounds();
     }
-    @Input() set north(val: number) {
+    @Input() public set north(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
 
         // super because we call the change listeners ourselves
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), oldBounds.getWest()],
-            [val, oldBounds.getEast()]
+            [val, oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.northChange.emit(val);
     }
-    get north(): number {
+    public get north(): number {
         return this.getBounds().getNorth();
     }
-    @Input() set east(val: number) {
+    @Input() public set east(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), oldBounds.getWest()],
-            [oldBounds.getNorth(), val]
+            [oldBounds.getNorth(), val],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.eastChange.emit(val);
     }
-    get east(): number {
+    public get east(): number {
         return this.getBounds().getEast();
     }
-    @Input() set south(val: number) {
+    @Input() public set south(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [val, oldBounds.getWest()],
-            [oldBounds.getNorth(), oldBounds.getEast()]
+            [oldBounds.getNorth(), oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.southChange.emit(val);
     }
-    get south(): number {
+    public get south(): number {
         return this.getBounds().getSouth();
     }
-    @Input() set west(val: number) {
+    @Input() public set west(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), val],
-            [oldBounds.getNorth(), oldBounds.getEast()]
+            [oldBounds.getNorth(), oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.westChange.emit(val);
     }
-    get west(): number {
+    public get west(): number {
         return this.getBounds().getWest();
     }
 
-    setLatLngs(val: (
-        (LatLng | LatLngTuple | LatLngExpression)[] |
-        (LatLng | LatLngTuple | LatLngExpression)[][] |
-        (LatLng | LatLngTuple | LatLngExpression)[][][])): this {
+    public setLatLngs(val: (
+        Array<(LatLng | LatLngTuple | LatLngExpression)> |
+        Array<Array<(LatLng | LatLngTuple | LatLngExpression)>> |
+        Array<Array<Array<(LatLng | LatLngTuple | LatLngExpression)>>>)): this {
 
-        super.setLatLngs((<any>val));
-        this.latLngsChange.emit((<any>this)._latlngs);
+        super.setLatLngs((<any> val));
+        this.latLngsChange.emit((<any> this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    addLatLng(val: (LatLng | LatLngTuple | LatLngExpression) |(LatLng | LatLngTuple | LatLngExpression)[]): this {
-        super.addLatLng((<any>val));
-        this.latLngsChange.emit((<any>this)._latlngs);
+    public addLatLng(
+        val: (LatLng | LatLngTuple | LatLngExpression) |Array<(LatLng | LatLngTuple | LatLngExpression)>,
+    ): this {
+        super.addLatLng((<any> val));
+        this.latLngsChange.emit((<any> this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    @Input() set latLngs(val: LatLng[] | LatLng[][] | LatLng[][][]) {
+    @Input() public set latLngs(val: LatLng[] | LatLng[][] | LatLng[][][]) {
         this.setLatLngs(val);
     }
-    get latLngs(): LatLng[] | LatLng[][] | LatLng[][][] {
-        return (<any>this)._latlngs;
+    public get latLngs(): LatLng[] | LatLng[][] | LatLng[][][] {
+        return (<any> this)._latlngs;
     }
 
-    @Input() set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         let geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -257,14 +262,13 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         if (geomType !== 'Polygon' && geomType !== 'MultiPolygon') {
             throw new Error('Unsupported geometry type: ' + geomType );
         }
-        this.setLatLngs(<any>lng2lat(val.geometry.coordinates));
+        this.setLatLngs(<any> lng2lat(val.geometry.coordinates));
     }
-    get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>>this.toGeoJSON());
+    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> this.toGeoJSON());
     }
 
-
-    setStyle(style: PathOptions): this {
+    public setStyle(style: PathOptions): this {
         super.setStyle(style);
         if (style.hasOwnProperty('stroke')) {
             this.strokeChange.emit(style.stroke);
@@ -309,92 +313,92 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
         return this;
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setStyle({opacity: val});
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
-    @Input() set stroke(val: boolean) {
+    @Input() public set stroke(val: boolean) {
         this.setStyle({stroke: val});
     }
-    get stroke(): boolean {
+    public get stroke(): boolean {
         return this.options.stroke;
     }
-    @Input() set color(val: string) {
+    @Input() public set color(val: string) {
         this.setStyle({color: val});
     }
-    get color(): string {
+    public get color(): string {
         return this.options.color;
     }
-    @Input() set weight(val: number) {
+    @Input() public set weight(val: number) {
         this.setStyle({weight: val});
     }
-    get weight(): number {
+    public get weight(): number {
         return this.options.weight;
     }
-    @Input() set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape) {
         this.setStyle({lineCap: val});
     }
-    get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape {
         return this.options.lineCap;
     }
-    @Input() set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape) {
         this.setStyle({lineJoin: val});
     }
-    get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape {
         return this.options.lineJoin;
     }
-    @Input() set dashArray(val: string) {
+    @Input() public set dashArray(val: string) {
         this.setStyle({dashArray: val});
     }
-    get dashArray(): string {
+    public get dashArray(): string {
         return this.options.dashArray;
     }
-    @Input() set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string) {
         this.setStyle({dashOffset: val});
     }
-    get dashOffset(): string {
+    public get dashOffset(): string {
         return this.options.dashOffset;
     }
-    @Input() set fill(val: boolean) {
+    @Input() public set fill(val: boolean) {
         this.setStyle({fill: val});
     }
-    get fill(): boolean {
+    public get fill(): boolean {
         return this.options.fill;
     }
-    @Input() set fillColor(val: string) {
+    @Input() public set fillColor(val: string) {
         this.setStyle({fillColor: val});
     }
-    get fillColor(): string {
+    public get fillColor(): string {
         return this.options.fillColor;
     }
-    @Input() set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number) {
         this.setStyle({fillOpacity: val});
     }
-    get fillOpacity(): number {
+    public get fillOpacity(): number {
         return this.options.fillOpacity;
     }
-    @Input() set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule) {
         this.setStyle({fillRule: val});
     }
-    get fillRule(): FillRule {
+    public get fillRule(): FillRule {
         return this.options.fillRule;
     }
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.setStyle({className: val});
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
-    @Input() set style(val: PolylineOptions) {
+    @Input() public set style(val: PolylineOptions) {
         this.setStyle(val);
     }
-    get style(): PolylineOptions {
+    public get style(): PolylineOptions {
         return this.options;
     }
 
-    @Input() set display(val: boolean) {
+    @Input() public set display(val: boolean) {
         let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
@@ -409,7 +413,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         this.displayChange.emit(val);
         container.style.display = val ? '' : 'none';
     }
-    get display(): boolean {
+    public get display(): boolean {
         let container: HTMLElement;
         try {
             container = this.getElement();
@@ -420,36 +424,36 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         return container.style.display !== 'none' && !!container.parentElement;
     }
 
-    @Input() set interactive(val: boolean) {
-        let map: MapComponent = (<MapComponent>(<any>this)._map);
+    @Input() public set interactive(val: boolean) {
+        let map: MapComponent = (<MapComponent> (<any> this)._map);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
     }
-    get interactive(): boolean {
+    public get interactive(): boolean {
         return this.options.interactive;
     }
 
-    @Input() set smoothFactor(val: number) {
+    @Input() public set smoothFactor(val: number) {
         this.options.smoothFactor = val;
         this.redraw();
     }
-    get smoothFactor(): number {
+    public get smoothFactor(): number {
         return this.options.smoothFactor;
     }
-    @Input() set noClip(val: boolean) {
+    @Input() public set noClip(val: boolean) {
         this.options.noClip = val;
         this.redraw();
     }
-    get noClip(): boolean {
+    public get noClip(): boolean {
         return this.options.noClip;
     }
 
-    @Input() set properties(val: T) {
+    @Input() public set properties(val: T) {
         this.feature.properties = val;
         this.geoJSONChange.emit(this.geoJSON);
     }
-    get properties(): T {
-        return (<T>this.feature.properties);
+    public get properties(): T {
+        return (<T> this.feature.properties);
     }
 }

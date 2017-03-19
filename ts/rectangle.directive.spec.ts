@@ -1,28 +1,30 @@
-import { RectangleDirective,
+import { expect } from 'chai';
+import { latLng, latLngBounds, point, SVG } from 'leaflet';
+import {
+    GenericGeoJSONFeature,
+    LatLng,
+    LatLngBounds,
+    LatLngExpression,
+    lng2lat,
     MapComponent,
     PopupDirective,
+    RectangleDirective,
     TooltipDirective,
-    LatLngExpression,
-    LatLngBounds,
-    LatLng,
-    GenericGeoJSONFeature,
-    lng2lat } from './index';
-import { point, SVG, latLng, latLngBounds } from 'leaflet';
-import { expect } from 'chai';
+} from './index';
 import { createPathTests } from './path-directives.spec';
 
 describe('Rectangle Directive', () => {
     createPathTests(RectangleDirective);
 
-    let map: MapComponent,
-        layer: RectangleDirective<any>;
+    let map: MapComponent;
+    let layer: RectangleDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
+        (<any> map)._renderer = (<any> map)._renderer || new SVG();
 
-        layer = new RectangleDirective<any>(map);
+        layer = new RectangleDirective<any> (map);
     });
 
     describe('[(latlngs)]', () => {
@@ -30,7 +32,7 @@ describe('Rectangle Directive', () => {
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -44,8 +46,8 @@ describe('Rectangle Directive', () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
                 /* istanbul ignore if */
-                if ((<LatLng[][]>layer.latLngs)[0][3].lat !== 3 ||
-                    (<LatLng[][]>layer.latLngs)[0][3].lng !== 3) {
+                if ((<LatLng[][]> layer.latLngs)[0][3].lat !== 3 ||
+                    (<LatLng[][]> layer.latLngs)[0][3].lng !== 3) {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs }`);
                 }
             });
@@ -90,11 +92,11 @@ describe('Rectangle Directive', () => {
         describe('for MultiPolygons', () => {
             const TEST_VALUE: LatLng[][][] = [
                 [[latLng(1, 0), latLng(1, 1), latLng(0, 1)]],
-                [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]]
+                [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]],
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any>layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -158,22 +160,24 @@ describe('Rectangle Directive', () => {
             const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
                     coordinates: [[[0, 1], [1, 1], [0, 0], [0, 1]]],
-                    type: 'Polygon'
+                    type: 'Polygon',
                 },
                 properties: {},
-                type: 'Feature'
+                type: 'Feature',
             };
             const TEST_POLYGON: LatLngExpression[][] = [[[0, 0], [1, 0], [1, 1], [0, 0]]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
                 /* istanbul ignore if */
-                if ((<LatLng[][]>layer.latLngs)[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any>layer)._latlngs }`);
+                if ((<LatLng[][]> layer.latLngs)[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1]) {
+                    /* tslint:disable:max-line-length */
+                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`);
+                    /* tslint:enable */
                 }
 
             });
@@ -204,7 +208,7 @@ describe('Rectangle Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
-                    expect(lng2lat((<any>eventVal.geometry.coordinates))).to.deep.equal(TEST_POLYGON);
+                    expect(lng2lat((<any> eventVal.geometry.coordinates))).to.deep.equal(TEST_POLYGON);
                     return done();
                 });
 
@@ -213,7 +217,7 @@ describe('Rectangle Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_POLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
-                    const values: [number, number][][] = (<any>eventVal.geometry.coordinates);
+                    const values: Array<Array<[number, number]>> = (<any> eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
                         values[0][3][1] !== 3) {
@@ -231,33 +235,35 @@ describe('Rectangle Directive', () => {
                         [[[1, 0], [1, 1], [0, 1], [1, 0]]],
                         [[[0, 1], [1, 1], [0, 0], [0, 1]]],
                     ],
-                    type: 'MultiPolygon'
+                    type: 'MultiPolygon',
                 },
                 properties: {},
-                type: 'Feature'
+                type: 'Feature',
             };
             const TEST_MULTIPOLYGON: LatLngExpression[][][] = [
                 [[[0, 0], [1, 0], [1, 1], [0, 0]]],
-                [[[0, 0], [0, 1], [1, 1], [0, 0]]]
+                [[[0, 0], [0, 1], [1, 1], [0, 0]]],
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
 
                 /* istanbul ignore if */
-                if ((<LatLng[][]>layer.latLngs)[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                    (<LatLng[][]>layer.latLngs)[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                    (<LatLng[][]>layer.latLngs)[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
+                if ((<LatLng[][]> layer.latLngs)[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
+                    (<LatLng[][]> layer.latLngs)[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
+                    (<LatLng[][]> layer.latLngs)[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
 
-                    (<LatLng[][]>layer.latLngs)[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                    (<LatLng[][]>layer.latLngs)[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                    (<LatLng[][]>layer.latLngs)[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                    (<LatLng[][]>layer.latLngs)[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any>layer)._latlngs }`);
+                    (<LatLng[][]> layer.latLngs)[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
+                    (<LatLng[][]> layer.latLngs)[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
+                    (<LatLng[][]> layer.latLngs)[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
+                    (<LatLng[][]> layer.latLngs)[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
+                    /* tslint:disable:max-line-length */
+                    throw new Error(`Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`);
+                    /* tslint:enable */
                 }
 
             });
@@ -273,7 +279,7 @@ describe('Rectangle Directive', () => {
                     throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
                 }
 
-                expect(lng2lat((<any>layer.geoJSON.geometry.coordinates))).to.deep.equal(TEST_MULTIPOLYGON);
+                expect(lng2lat((<any> layer.geoJSON.geometry.coordinates))).to.deep.equal(TEST_MULTIPOLYGON);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
@@ -307,7 +313,7 @@ describe('Rectangle Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
-                    const values: [number, number][][][] = (<any>eventVal.geometry.coordinates);
+                    const values: Array<Array<Array<[number, number]>>> = (<any> eventVal.geometry.coordinates);
                     /* istanbul ignore if */
                     if (values[0][0][3][0] !== 3 ||
                         values[0][0][3][1] !== 3) {
@@ -324,7 +330,7 @@ describe('Rectangle Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.bounds = val;
             expect(layer.getBounds().equals(val)).to.equal(true);
@@ -332,7 +338,7 @@ describe('Rectangle Directive', () => {
         it('should be changed in Angular when changing in Angular', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.bounds = val;
             expect(layer.bounds.equals(val)).to.equal(true);
@@ -340,7 +346,7 @@ describe('Rectangle Directive', () => {
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
             layer.setBounds(val);
             expect(layer.bounds.equals(val)).to.equal(true);
@@ -349,7 +355,7 @@ describe('Rectangle Directive', () => {
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -362,7 +368,7 @@ describe('Rectangle Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: LatLngBounds = latLngBounds([
                 [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50]
+                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
             ]);
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -393,7 +399,7 @@ describe('Rectangle Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [0, 0],
-                [val, 0]
+                [val, 0],
             ]);
             expect(layer.north).to.equal(val);
         });
@@ -419,7 +425,7 @@ describe('Rectangle Directive', () => {
             layer.ngAfterViewInit();
             layer.setBounds([
                 [0, 0],
-                [val, 0]
+                [val, 0],
             ]);
         });
     });
@@ -441,7 +447,7 @@ describe('Rectangle Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [0, val],
-                [0, 0]
+                [0, 0],
             ]);
             expect(layer.east).to.equal(val);
         });
@@ -467,14 +473,14 @@ describe('Rectangle Directive', () => {
             layer.ngAfterViewInit();
             layer.setBounds([
                 [0, val],
-                [0, 0]
+                [0, 0],
             ]);
         });
     });
     describe('[(south)]', () => {
-            beforeEach(() => {
-                layer.setBounds([[0, 0], [1, 1]]);
-            });
+        beforeEach(() => {
+            layer.setBounds([[0, 0], [1, 1]]);
+        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random();
             layer.south = val;
@@ -489,7 +495,7 @@ describe('Rectangle Directive', () => {
             const val: number = Math.random();
             layer.setBounds([
                 [val, 0],
-                [1, 1]
+                [1, 1],
             ]);
             expect(layer.south).to.equal(val);
         });
@@ -515,7 +521,7 @@ describe('Rectangle Directive', () => {
             layer.ngAfterViewInit();
             layer.setBounds([
                 [val, 0],
-                [1, 1]
+                [1, 1],
             ]);
         });
     });
@@ -537,7 +543,7 @@ describe('Rectangle Directive', () => {
             const val: number = Math.random();
             layer.setBounds(latLngBounds([
                 [0, val],
-                [1, 1]
+                [1, 1],
             ]));
             expect(layer.west).to.equal(val);
         });
@@ -563,7 +569,7 @@ describe('Rectangle Directive', () => {
             layer.ngAfterViewInit();
             layer.setBounds([
                 [0, val],
-                [1, 1]
+                [1, 1],
             ]);
         });
     });
@@ -587,10 +593,10 @@ describe('Rectangle Directive', () => {
         }
         let layerWithProperties: RectangleDirective<ITestProperties>;
         const TEST_OBJECT: ITestProperties = {
-            test: 'OK'
+            test: 'OK',
         };
         beforeEach(() => {
-            layerWithProperties = new RectangleDirective<ITestProperties>(map);
+            layerWithProperties = new RectangleDirective<ITestProperties> (map);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithProperties.properties = TEST_OBJECT;
@@ -601,10 +607,12 @@ describe('Rectangle Directive', () => {
             expect(layerWithProperties.properties).to.deep.equal(TEST_OBJECT);
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layerWithProperties.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
-                expect(eventVal.properties).to.deep.equal(TEST_OBJECT);
-                done();
-            });
+            layerWithProperties.geoJSONChange.subscribe(
+                (eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                    expect(eventVal.properties).to.deep.equal(TEST_OBJECT);
+                    done();
+                },
+            );
             layerWithProperties.properties = TEST_OBJECT;
         });
     });
@@ -630,36 +638,36 @@ describe('Rectangle Directive', () => {
     });
 
     describe('Popup in Rectangle Directive', () => {
-        let layerWithPopup: RectangleDirective<any>,
-            popup: PopupDirective,
-            testDiv: HTMLElement;
+        let layerWithPopup: RectangleDirective<any>;
+        let popup: PopupDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new RectangleDirective<any>(map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(new RectangleDirective<any> (map), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            expect((<any>layerWithPopup)._popup).to.equal(popup);
+            expect((<any> layerWithPopup)._popup).to.equal(popup);
         });
     });
 
     describe('Tooltip in Rectangle Directive', () => {
-        let layerWithTooltip: RectangleDirective<any>,
-            tooltip: TooltipDirective,
-            testDiv: HTMLElement;
+        let layerWithTooltip: RectangleDirective<any>;
+        let tooltip: TooltipDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new RectangleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(new RectangleDirective<any> (map), { tooltipDirective: {value: tooltip} });
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            expect((<any>layerWithTooltip)._tooltip).to.equal(tooltip);
+            expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
         });
     });
 

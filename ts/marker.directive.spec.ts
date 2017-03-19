@@ -1,12 +1,14 @@
-import { MarkerDirective,
-    MapComponent,
+import { expect } from 'chai';
+import { latLng, point } from 'leaflet';
+import {
+    IconDirective,
     LatLng,
+    MapComponent,
+    MarkerDirective,
     PopupDirective,
     TooltipDirective,
-    IconDirective,
-    TRANSPARENT_PIXEL } from './index';
-import { point, latLng } from 'leaflet';
-import { expect } from 'chai';
+    TRANSPARENT_PIXEL,
+} from './index';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -21,12 +23,12 @@ function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
 }
 
 describe('Marker Directive', () => {
-    let map: MapComponent,
-        layer: MarkerDirective;
+    let map: MapComponent;
+    let layer: MarkerDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         layer = new MarkerDirective(map);
     });
     describe('[(display)]', () => {
@@ -42,9 +44,11 @@ describe('Marker Directive', () => {
             expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-            const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
-                length: number = zoomEvents.length,
-                originalEventListener: Function = layer.getEvents()['zoom'];
+            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const length: number = zoomEvents.length;
+            /* tslint:disable:no-string-literal */
+            const originalEventListener: Function = layer.getEvents()['zoom'];
+            /* tslint:enable */
 
             layer.display = false;
 
@@ -57,9 +61,11 @@ describe('Marker Directive', () => {
             done();
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-            const zoomEvents: {fn: Function}[] = (<any>map)._events.zoom,
-                length: number = zoomEvents.length,
-                originalEventListener: Function = layer.getEvents()['zoom'];
+            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const length: number = zoomEvents.length;
+            /* tslint:disable:no-string-literal */
+            const originalEventListener: Function = layer.getEvents()['zoom'];
+            /* tslint:enable */
 
             layer.display = false;
             layer.display = true;
@@ -166,7 +172,6 @@ describe('Marker Directive', () => {
                 return done();
             });
 
-
             layer.setLatLng([val, 0]);
         });
     });
@@ -206,7 +211,6 @@ describe('Marker Directive', () => {
                 expect(eventVal).to.equal(val);
                 return done();
             });
-
 
             layer.setLatLng([0, val]);
         });
@@ -301,8 +305,8 @@ describe('Marker Directive', () => {
     // Events
     describe('(dragend)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.dragendEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -312,8 +316,8 @@ describe('Marker Directive', () => {
     });
     describe('(dragstart)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.dragstartEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -323,8 +327,8 @@ describe('Marker Directive', () => {
     });
     describe('(movestart)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.movestartEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -334,8 +338,8 @@ describe('Marker Directive', () => {
     });
     describe('(drag)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.dragEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -345,8 +349,8 @@ describe('Marker Directive', () => {
     });
     describe('(moveend)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
-            const testHandle: any = {},
-                testEvent: any = { testHandle };
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
             layer.moveendEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -356,9 +360,9 @@ describe('Marker Directive', () => {
     });
 
     describe('Popup in Marker Directive', () => {
-        let layerWithPopup: MarkerDirective,
-            popup: PopupDirective,
-            testDiv: HTMLElement;
+        let layerWithPopup: MarkerDirective;
+        let popup: PopupDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
@@ -368,14 +372,14 @@ describe('Marker Directive', () => {
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            expect((<any>layerWithPopup)._popup).to.equal(popup);
+            expect((<any> layerWithPopup)._popup).to.equal(popup);
         });
     });
 
     describe('Tooltip in Marker Directive', () => {
-        let layerWithTooltip: MarkerDirective,
-            tooltip: TooltipDirective,
-            testDiv: HTMLElement;
+        let layerWithTooltip: MarkerDirective;
+        let tooltip: TooltipDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
@@ -385,15 +389,15 @@ describe('Marker Directive', () => {
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            expect((<any>layerWithTooltip)._tooltip).to.equal(tooltip);
+            expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
         });
 
     });
 
     describe('Icon in Marker Directive', () => {
-        let layerWithIcon: MarkerDirective,
-            icon: IconDirective,
-            testDiv: HTMLElement;
+        let layerWithIcon: MarkerDirective;
+        let icon: IconDirective;
+        let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
             icon = new IconDirective();
@@ -405,12 +409,12 @@ describe('Marker Directive', () => {
             layerWithIcon.ngAfterViewInit();
         });
         it('should bind icon', () => {
-            expect((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);
+            expect((<HTMLElement> (<any> layerWithIcon)._icon).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);
         });
         it('should bind icon again on changes in icon directive', () => {
             const TEST_VALUE: string = 'path/to/icon.png';
             icon.iconUrl = TEST_VALUE;
-            expect((<HTMLElement>(<any>layerWithIcon)._icon).getAttribute('src')).to.equal(TEST_VALUE);
+            expect((<HTMLElement> (<any> layerWithIcon)._icon).getAttribute('src')).to.equal(TEST_VALUE);
         });
 
     });

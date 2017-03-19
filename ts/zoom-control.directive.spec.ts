@@ -1,16 +1,18 @@
-import { ZoomControlDirective,
-    MapComponent,
-    ControlPosition } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
+import { point } from 'leaflet';
+import {
+    ControlPosition,
+    MapComponent,
+    ZoomControlDirective,
+} from './index';
 
 describe('Zoom-Control Directive', () => {
-    let map: MapComponent,
-        control: ZoomControlDirective;
+    let map: MapComponent;
+    let control: ZoomControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         control = new ZoomControlDirective(map);
     });
     describe('[(position)]', () => {
@@ -130,7 +132,7 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInText = TEST_VALUE;
             expect(control.options.zoomInText).to.equal(TEST_VALUE);
-            expect((<HTMLElement>(<any>control)._zoomInButton).textContent).to.equal(TEST_VALUE);
+            expect((<HTMLElement> (<any> control)._zoomInButton).textContent).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomInText = TEST_VALUE;
@@ -142,7 +144,7 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutText = TEST_VALUE;
             expect(control.options.zoomOutText).to.equal(TEST_VALUE);
-            expect((<HTMLElement>(<any>control)._zoomOutButton).textContent).to.equal(TEST_VALUE);
+            expect((<HTMLElement> (<any> control)._zoomOutButton).textContent).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomOutText = TEST_VALUE;
@@ -155,7 +157,7 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomInTitle = TEST_VALUE;
             expect(control.options.zoomInTitle).to.equal(TEST_VALUE);
-            expect((<HTMLElement>(<any>control)._zoomInButton).getAttribute('title')).to.equal(TEST_VALUE);
+            expect((<HTMLElement> (<any> control)._zoomInButton).getAttribute('title')).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomInTitle = TEST_VALUE;
@@ -167,7 +169,7 @@ describe('Zoom-Control Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             control.zoomOutTitle = TEST_VALUE;
             expect(control.options.zoomOutTitle).to.equal(TEST_VALUE);
-            expect((<HTMLElement>(<any>control)._zoomOutButton).getAttribute('title')).to.equal(TEST_VALUE);
+            expect((<HTMLElement> (<any> control)._zoomOutButton).getAttribute('title')).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             control.zoomOutTitle = TEST_VALUE;
