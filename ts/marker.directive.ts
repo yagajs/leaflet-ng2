@@ -10,6 +10,7 @@ import {
     Output,
 } from '@angular/core';
 import {
+    DivIcon,
     DragEndEvent,
     Event,
     Handler,
@@ -38,7 +39,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public zindexChange: EventEmitter<number> = new EventEmitter();
     @Output() public draggableChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() public iconChange: EventEmitter<Icon> = new EventEmitter();
+    @Output() public iconChange: EventEmitter<Icon | DivIcon> = new EventEmitter();
     @Output() public tooltipOpenedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public popupOpenedChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -220,15 +221,15 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         return this.options.opacity;
     }
 
-    public setIcon(val: Icon): this {
+    public setIcon(val: Icon | DivIcon): this {
         super.setIcon(val);
         this.iconChange.emit(val);
         return this;
     }
-    @Input() public set icon(val: Icon) {
+    @Input() public set icon(val: Icon | DivIcon) {
         this.setIcon(val);
     }
-    public get icon(): Icon {
+    public get icon(): Icon | DivIcon {
         return this.options.icon;
     }
     @Input() public set draggable(val: boolean) {
