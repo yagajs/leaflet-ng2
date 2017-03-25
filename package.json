@@ -56,14 +56,14 @@
   },
   "homepage": "https://github.com/yagajs/leaflet-ng2#readme",
   "devDependencies": {
-    "@angular/common": "^2.4.8",
-    "@angular/compiler": "^2.4.8",
-    "@angular/compiler-cli": "^2.4.10",
-    "@angular/forms": "^2.4.8",
-    "@angular/platform-browser": "^2.4.8",
-    "@angular/platform-browser-dynamic": "^2.4.8",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/compiler-cli": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
     "@types/chai": "^3.4.34",
-    "@types/es6-shim": "^0.31.32",
     "@types/mocha": "^2.2.39",
     "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
@@ -85,9 +85,11 @@
     "zone.js": "^0.7.0"
   },
   "dependencies": {
-    "@angular/core": "^2.4.8",
     "@types/leaflet": "^1.0.53",
     "@yaga/generic-geojson": "^1.0.0",
-    "leaflet": "^1.0.2"
+    "leaflet": "^1.0.3"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0"
   }
 }
