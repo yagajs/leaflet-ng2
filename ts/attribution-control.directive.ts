@@ -19,7 +19,7 @@ import { MapComponent } from './map.component';
 export class AttributionControlDirective extends Control.Attribution implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
-    @Output() public positionChange: EventEmitter<string> = new EventEmitter();
+    @Output() public positionChange: EventEmitter<ControlPosition> = new EventEmitter();
     @Output() public prefixChange: EventEmitter<string> = new EventEmitter();
     @Output() public attributionsChange: EventEmitter<string[]> = new EventEmitter();
 

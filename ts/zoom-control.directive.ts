@@ -20,7 +20,7 @@ import { MapComponent } from './map.component';
 })
 export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() public positionChange: EventEmitter<string> = new EventEmitter();
+    @Output() public positionChange: EventEmitter<ControlPosition> = new EventEmitter();
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
