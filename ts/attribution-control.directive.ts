@@ -13,22 +13,94 @@ import { Control,
 import { ATTRIBUTION_PREFIX } from './consts';
 import { MapComponent } from './map.component';
 
+/**
+ * Directive for the Attribution-Control
+ * @link http://leafletjs.com/reference-1.0.2.html#control-attribution Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Attribution-Control%20Directive Unit-Test
+ * @link TODO: https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
+ * @link TODO: https://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/attribution-control-directive
+ */
 @Directive({
     selector: 'yaga-attribution-control',
 })
 export class AttributionControlDirective extends Control.Attribution implements OnDestroy  {
+    /**
+     * Two-Way bound property for the display state.
+     * Use it with `<yaga-attribution-control [(display)]="someValue">` or
+     * `<yaga-tile-layer (displayChange)="processEvent($event)">`
+     */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
+    /**
+     * Two-Way bound property for the Z-Index.
+     * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or
+     * `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-zindex Original Leaflet documentation
+     */
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the Z-Index.
+     * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or
+     * `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-zindex Original Leaflet documentation
+     */
     @Output() public positionChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the prefix.
+     * Use it with `<yaga-tile-layer [(prefix)]="someValue">` or
+     * `<yaga-tile-layer (prefixChange)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-zindex Original Leaflet documentation
+     */
     @Output() public prefixChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the list of attributions.
+     * Use it with `<yaga-tile-layer [(attributions)]="someValue">` or
+     * `<yaga-tile-layer (attributionsChange)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-zindex Original Leaflet documentation
+     */
     @Output() public attributionsChange: EventEmitter<string[]> = new EventEmitter();
 
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-tile-layer (add)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-add Original Leaflet documentation
+     */
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
+    /**
+     * From leaflet fired remove event.
+     * Use it with `<yaga-tile-layer (remove)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-remove Original Leaflet documentation
+     */
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    /**
+     * From leaflet fired click event.
+     * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-click Original Leaflet documentation
+     */
     @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    /**
+     * From leaflet fired dbclick event.
+     * Use it with `<yaga-tile-layer (dbclick)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-dbclick Original Leaflet documentation
+     */
     @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    /**
+     * From leaflet fired mousedown event.
+     * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-mousedown Original Leaflet documentation
+     */
     @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    /**
+     * From leaflet fired mouseover event.
+     * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-mouseover Original Leaflet documentation
+     */
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    /**
+     * From leaflet fired mouseout event.
+     * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
+     * @link TODO: http://leafletjs.com/reference-1.0.2.html#control-mouseout Original Leaflet documentation
+     */
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor(
