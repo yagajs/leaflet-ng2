@@ -24,6 +24,7 @@ import {
 import { MapComponent } from './map.component';
 
 // Content-Child imports
+import { DivIconDirective } from './div-icon.directive';
 import { IconDirective } from './icon.directive';
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
@@ -52,6 +53,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     @ContentChild(PopupDirective) public popupDirective: PopupDirective;
     @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
     @ContentChild(IconDirective) public iconDirective: IconDirective;
+    @ContentChild(DivIconDirective) public divIconDirective: DivIconDirective;
 
     private initialized: boolean = false;
 
@@ -111,6 +113,12 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
             this.setIcon(this.iconDirective);
             this.iconDirective.updateEvent.subscribe((event: Event) => {
                 this.setIcon(event.target); // TODO: with event.target or with this.iconDirective???
+            });
+        }
+        if (this.divIconDirective) {
+            this.setIcon(this.iconDirective);
+            this.divIconDirective.updateEvent.subscribe((event: Event) => {
+                this.setIcon(event.target);
             });
         }
         if (this.popupDirective) {
