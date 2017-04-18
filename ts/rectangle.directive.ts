@@ -34,6 +34,7 @@ import { MapComponent } from './map.component';
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
+import HTML = Mocha.reporters.HTML;
 
 @Directive({
     selector: 'yaga-rectangle',
@@ -405,7 +406,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         }
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -416,7 +417,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     public get display(): boolean {
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;

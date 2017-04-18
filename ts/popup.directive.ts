@@ -67,7 +67,7 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.setContent(val);
     }
     public get content(): Content {
-        return this.getContent();
+        return this.getContent() as string | HTMLElement;
     }
 
     @Input() public set opened(val: boolean) {

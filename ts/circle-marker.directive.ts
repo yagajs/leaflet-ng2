@@ -346,7 +346,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         }
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -357,7 +357,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     public get display(): boolean {
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
