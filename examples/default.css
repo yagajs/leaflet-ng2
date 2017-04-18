@@ -1,0 +1,11 @@
+
+.yaga-map {
+    min-height: 260px;
+}
+.input-group-addon.fixed-space {
+    min-width: 110px;
+}
+
+.footer {
+    margin-top: 5em;
+}

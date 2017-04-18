@@ -1,35 +1,41 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    AfterViewInit,
+    ContentChild,
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
+    Inject,
+    Input,
     OnDestroy,
     Optional,
-    ContentChild,
-    AfterViewInit } from '@angular/core';
-import { Polyline,
-    PolylineOptions,
+    Output,
+} from '@angular/core';
+import {
     Event,
-    PopupEvent,
-    TooltipEvent,
-    PathOptions,
     FillRule,
+    LatLng,
+    LatLngExpression,
+    LatLngTuple,
     LineCapShape,
     LineJoinShape,
-    LatLng,
-    LatLngTuple,
-    LatLngExpression } from 'leaflet';
+    PathOptions,
+    Polyline,
+    PolylineOptions,
+    PopupEvent,
+    TooltipEvent,
+} from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { lng2lat } from './lng2lat';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
+import HTML = Mocha.reporters.HTML;
 
 @Directive({
-    selector: 'yaga-polyline'
+    selector: 'yaga-polyline',
 })
 export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterViewInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -51,7 +57,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -71,11 +77,12 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super([]);
 
-        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'LineString', coordinates: []}};
+        this.feature = this.feature ||
+            {type: 'Feature', properties: {}, geometry: {type: 'LineString', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
 
         this.on('remove', () => {
@@ -126,7 +133,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
         }
@@ -135,69 +142,52 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         }
     }
 
-    ngOnDestroy(): void {
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    setLatLngs(val: ((LatLng | LatLngTuple | LatLngExpression)[] | (LatLng | LatLngTuple | LatLngExpression)[][])): this {
-        super.setLatLngs((<any>val));
-        this.latLngsChange.emit((<any>this)._latlngs);
+    public setLatLngs(
+        val: (
+            Array<(LatLng | LatLngTuple | LatLngExpression)> |
+                Array<Array<(LatLng | LatLngTuple | LatLngExpression)>>
+            ),
+    ): this {
+        super.setLatLngs((<any> val));
+        this.latLngsChange.emit((<any> this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    addLatLng(val: (LatLng | LatLngTuple | LatLngExpression) |(LatLng | LatLngTuple | LatLngExpression)[]): this {
-        super.addLatLng((<any>val));
-        this.latLngsChange.emit((<any>this)._latlngs);
+    public addLatLng(
+        val: (LatLng | LatLngTuple | LatLngExpression) | Array<(LatLng | LatLngTuple | LatLngExpression)>,
+    ): this {
+        super.addLatLng((<any> val));
+        this.latLngsChange.emit((<any> this)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    @Input() set latLngs(val: LatLng[] | LatLng[][]) {
+    @Input() public set latLngs(val: LatLng[] | LatLng[][]) {
         this.setLatLngs(val);
     }
-    get latLngs(): LatLng[] | LatLng[][] {
-        return (<any>this)._latlngs;
+    public get latLngs(): LatLng[] | LatLng[][] {
+        return (<any> this)._latlngs;
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
+    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
         this.feature.properties = val.properties;
 
         let geomType: any = val.geometry.type; // Normally '(Multi)LineString'
 
-        if (geomType === 'LineString') {
-            const rg: [number, number][] = [];
-            for (let i: number = 0; i < (<GeoJSON.LineString>val.geometry).coordinates.length; i += 1) {
-                rg.push([
-                    (<GeoJSON.LineString>val.geometry).coordinates[i][1],
-                    (<GeoJSON.LineString>val.geometry).coordinates[i][0]]
-                );
-            }
-            this.setLatLngs((<any>rg));
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'LineString' && geomType !== 'MultiLineString') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore else */
-        if (geomType === 'MultiLineString') {
-            const rg: [number, number][][] = [];
-            for (let i: number = 0; i < (<GeoJSON.MultiLineString>val.geometry).coordinates.length; i += 1) {
-                rg.push([]);
-                for (let n: number = 0; n < (<GeoJSON.MultiLineString>val.geometry).coordinates[i].length; n += 1) {
-                    rg[i].push([
-                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][1],
-                        (<GeoJSON.MultiLineString>val.geometry).coordinates[i][n][0]]
-                    );
-                }
-            }
-            this.setLatLngs((<any>rg));
-            return;
-        }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLngs(<any> lng2lat(val.geometry.coordinates));
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>>this.toGeoJSON());
+    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> this.toGeoJSON());
     }
 
-
-    setStyle(style: PathOptions): this {
+    public setStyle(style: PathOptions): this {
         super.setStyle(style);
         if (style.hasOwnProperty('stroke')) {
             this.strokeChange.emit(style.stroke);
@@ -242,99 +232,99 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
 
         return this;
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setStyle({opacity: val});
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
-    @Input() set stroke(val: boolean) {
+    @Input() public set stroke(val: boolean) {
         this.setStyle({stroke: val});
     }
-    get stroke(): boolean {
+    public get stroke(): boolean {
         return this.options.stroke;
     }
-    @Input() set color(val: string) {
+    @Input() public set color(val: string) {
         this.setStyle({color: val});
     }
-    get color(): string {
+    public get color(): string {
         return this.options.color;
     }
-    @Input() set weight(val: number) {
+    @Input() public set weight(val: number) {
         this.setStyle({weight: val});
     }
-    get weight(): number {
+    public get weight(): number {
         return this.options.weight;
     }
-    @Input() set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape) {
         this.setStyle({lineCap: val});
     }
-    get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape {
         return this.options.lineCap;
     }
-    @Input() set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape) {
         this.setStyle({lineJoin: val});
     }
-    get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape {
         return this.options.lineJoin;
     }
-    @Input() set dashArray(val: string) {
+    @Input() public set dashArray(val: string) {
         this.setStyle({dashArray: val});
     }
-    get dashArray(): string {
+    public get dashArray(): string {
         return this.options.dashArray;
     }
-    @Input() set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string) {
         this.setStyle({dashOffset: val});
     }
-    get dashOffset(): string {
+    public get dashOffset(): string {
         return this.options.dashOffset;
     }
-    @Input() set fill(val: boolean) {
+    @Input() public set fill(val: boolean) {
         this.setStyle({fill: val});
     }
-    get fill(): boolean {
+    public get fill(): boolean {
         return this.options.fill;
     }
-    @Input() set fillColor(val: string) {
+    @Input() public set fillColor(val: string) {
         this.setStyle({fillColor: val});
     }
-    get fillColor(): string {
+    public get fillColor(): string {
         return this.options.fillColor;
     }
-    @Input() set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number) {
         this.setStyle({fillOpacity: val});
     }
-    get fillOpacity(): number {
+    public get fillOpacity(): number {
         return this.options.fillOpacity;
     }
-    @Input() set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule) {
         this.setStyle({fillRule: val});
     }
-    get fillRule(): FillRule {
+    public get fillRule(): FillRule {
         return this.options.fillRule;
     }
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.setStyle({className: val});
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
-    @Input() set style(val: PolylineOptions) {
+    @Input() public set style(val: PolylineOptions) {
         this.setStyle(val);
     }
-    get style(): PolylineOptions {
+    public get style(): PolylineOptions {
         return this.options;
     }
 
-    @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+    @Input() public set display(val: boolean) {
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var container: HTMLElement;
+        let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -342,10 +332,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         this.displayChange.emit(val);
         container.style.display = val ? '' : 'none';
     }
-    get display(): boolean {
-        var container: HTMLElement;
+    public get display(): boolean {
+        let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -353,36 +343,36 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         return container.style.display !== 'none' && !!container.parentElement;
     }
 
-    @Input() set interactive(val: boolean) {
-        var map: MapComponent = (<MapComponent>(<any>this)._map);
+    @Input() public set interactive(val: boolean) {
+        let map: MapComponent = (<MapComponent> (<any> this)._map);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
     }
-    get interactive(): boolean {
+    public get interactive(): boolean {
         return this.options.interactive;
     }
 
-    @Input() set smoothFactor(val: number) {
+    @Input() public set smoothFactor(val: number) {
         this.options.smoothFactor = val;
         this.redraw();
     }
-    get smoothFactor(): number {
+    public get smoothFactor(): number {
         return this.options.smoothFactor;
     }
-    @Input() set noClip(val: boolean) {
+    @Input() public set noClip(val: boolean) {
         this.options.noClip = val;
         this.redraw();
     }
-    get noClip(): boolean {
+    public get noClip(): boolean {
         return this.options.noClip;
     }
 
-    @Input() set properties(val: T) {
+    @Input() public set properties(val: T) {
         this.feature.properties = val;
         this.geoJSONChange.emit(this.geoJSON);
     }
-    get properties(): T {
-        return this.feature.properties;
+    public get properties(): T {
+        return (<T> this.feature.properties);
     }
 }

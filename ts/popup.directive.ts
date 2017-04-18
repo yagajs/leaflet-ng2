@@ -1,23 +1,28 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
+    ElementRef,
     EventEmitter,
-    Inject,
     forwardRef,
-    ElementRef } from '@angular/core';
-import { Popup,
-    Point,
-    LatLng,
-    Event,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
     Content,
+    Event,
+    LatLng,
+    latLng,
     LatLngExpression,
-    latLng } from 'leaflet';
+    Point,
+    Popup,
+} from 'leaflet';
 import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-popup'
+    selector: 'yaga-popup',
 })
-export class PopupDirective extends Popup  {
+export class PopupDirective extends Popup implements OnDestroy {
     @Output() public contentChange: EventEmitter<Content> = new EventEmitter();
     @Output() public openedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
@@ -48,139 +53,144 @@ export class PopupDirective extends Popup  {
         });
     }
 
-    setContent(content: any): this { // Content
-        this.contentChange.emit((content));
-        return super.setContent((<HTMLElement>content));
-    }
-    @Input() set content(val: Content) {
-        this.setContent(val);
-    }
-    get content(): Content {
-        return this.getContent();
+    public ngOnDestroy(): void {
+        if ((<any> this)._source) {
+            (<any> this)._source.unbindPopup();
+        }
     }
 
-    @Input() set opened(val: boolean) {
+    public setContent(content: any): this { // Content
+        this.contentChange.emit((content));
+        return super.setContent((<HTMLElement> content));
+    }
+    @Input() public set content(val: Content) {
+        this.setContent(val);
+    }
+    public get content(): Content {
+        return this.getContent() as string | HTMLElement;
+    }
+
+    @Input() public set opened(val: boolean) {
         if (val) {
             this.openOn(this.map);
             return;
         }
-        (<any>this)._close();
+        (<any> this)._close();
     }
-    get opened(): boolean {
-        return !!(<any>this)._map;
+    public get opened(): boolean {
+        return !!(<any> this)._map;
     }
 
-
-    setLatLng(latlng: LatLngExpression): this {
+    public setLatLng(latlng: LatLngExpression): this {
         super.setLatLng(latlng);
         this.latChange.emit(this.lat);
         this.lngChange.emit(this.lng);
         this.positionChange.emit(latLng(this.lat, this.lng));
         return this;
     }
-    @Input() set lat(val: number) {
+    @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
-    get lat(): number {
+    public get lat(): number {
         return this.getLatLng().lat;
     }
 
-    @Input() set lng(val: number) {
+    @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
-    get lng(): number {
+    public get lng(): number {
         return this.getLatLng().lng;
     }
 
-    @Input() set position(val: LatLng) {
+    @Input() public set position(val: LatLng) {
         this.setLatLng(val);
     }
-    get position(): LatLng {
+    public get position(): LatLng {
         return this.getLatLng();
     }
 
-    @Input() set maxWidth(val: number) {
+    @Input() public set maxWidth(val: number) {
         this.options.maxWidth = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get maxWidth(): number {
+    public get maxWidth(): number {
         return this.options.maxWidth;
     }
-    @Input() set minWidth(val: number) {
+    @Input() public set minWidth(val: number) {
         this.options.minWidth = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get minWidth(): number {
+    public get minWidth(): number {
         return this.options.minWidth;
     }
-    @Input() set maxHeight(val: number) {
+    @Input() public set maxHeight(val: number) {
         this.options.maxHeight = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get maxHeight(): number {
+    public get maxHeight(): number {
         return this.options.maxHeight;
     }
-    @Input() set autoPan(val: boolean) {
+    @Input() public set autoPan(val: boolean) {
         this.options.autoPan = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get autoPan(): boolean {
+    public get autoPan(): boolean {
         return this.options.autoPan;
     }
-    @Input() set autoPanPaddingTopLeft(val: Point) {
+    @Input() public set autoPanPaddingTopLeft(val: Point) {
         this.options.autoPanPaddingTopLeft = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get autoPanPaddingTopLeft(): Point {
-        return (<Point>this.options.autoPanPaddingTopLeft);
+    public get autoPanPaddingTopLeft(): Point {
+        return (<Point> this.options.autoPanPaddingTopLeft);
     }
-    @Input() set autoPanPaddingBottomRight(val: Point) {
+    @Input() public set autoPanPaddingBottomRight(val: Point) {
         this.options.autoPanPaddingBottomRight = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get autoPanPaddingBottomRight(): Point {
-        return (<Point>this.options.autoPanPaddingBottomRight);
+    public get autoPanPaddingBottomRight(): Point {
+        return (<Point> this.options.autoPanPaddingBottomRight);
     }
-    @Input() set autoPanPadding(val: Point) {
+    @Input() public set autoPanPadding(val: Point) {
         this.options.autoPanPadding = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get autoPanPadding(): Point {
-        return (<Point>this.options.autoPanPadding);
+    public get autoPanPadding(): Point {
+        return (<Point> this.options.autoPanPadding);
     }
-    @Input() set keepInView(val: boolean) {
+    @Input() public set keepInView(val: boolean) {
         this.options.keepInView = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get keepInView(): boolean {
+    public get keepInView(): boolean {
         return this.options.keepInView;
     }
-    @Input() set closeButton(val: boolean) {
+    @Input() public set closeButton(val: boolean) {
         this.options.closeButton = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get closeButton(): boolean {
+    public get closeButton(): boolean {
         return this.options.closeButton;
     }
-    @Input() set autoClose(val: boolean) {
+    @Input() public set autoClose(val: boolean) {
         this.options.autoClose = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get autoClose(): boolean {
+    public get autoClose(): boolean {
         return this.options.autoClose;
     }
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.options.className = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
-    @Input() set pane(val: string) {
+    @Input() public set pane(val: string) {
         this.options.pane = val;
-        (<any>this)._updateLayout();
+        (<any> this)._updateLayout();
     }
-    get pane(): string {
+    public get pane(): string {
         return this.options.pane;
     }
 }

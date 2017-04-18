@@ -1,18 +1,19 @@
-/// <reference path="../typings/index.d.ts" />
-
-import { AttributionControlDirective,
-    MapComponent,
-    ControlPosition } from './index';
-import { point } from 'leaflet';
 import { expect } from 'chai';
+import { point } from 'leaflet';
+
+import {
+    AttributionControlDirective,
+    ControlPosition,
+    MapComponent,
+} from './index';
 
 describe('Attribution-Control Directive', () => {
-    var map: MapComponent,
-        control: AttributionControlDirective;
+    let map: MapComponent;
+    let control: AttributionControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
         control = new AttributionControlDirective(map);
     });
 
@@ -53,9 +54,9 @@ describe('Attribution-Control Directive', () => {
     });
 
     describe('[(prefix)]', () => {
-        it('should be set to YAGA by default', () => {
+        it('should be set to YAGA | leaflet-ng2 by default', () => {
             const html: string = control.getContainer().innerHTML;
-            expect(html.indexOf('>YAGA<')).to.not.equal(-1);
+            expect(html.indexOf('>YAGA<' + '> | <' + '>leaflet-ng2<')).to.not.equal(-3);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Attribution-Prefix';
@@ -171,7 +172,7 @@ describe('Attribution-Control Directive', () => {
     describe('Destroying a Attribution Control Directive', () => {
         it('should remove Tile-Layer Directive from map on destroy', () => {
             expect(
-                control.getContainer().parentElement.parentElement.parentElement
+                control.getContainer().parentElement.parentElement.parentElement,
             ).to.equal(map.getContainer());
 
             control.ngOnDestroy();
@@ -181,7 +182,7 @@ describe('Attribution-Control Directive', () => {
                 control.getContainer().parentElement &&
                 control.getContainer().parentElement.parentElement &&
                 control.getContainer().parentElement.parentElement.parentElement &&
-                control.getContainer().parentElement.parentElement.parentElement
+                control.getContainer().parentElement.parentElement.parentElement,
             ).to.not.equal(map.getContainer());
         });
     });

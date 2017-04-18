@@ -1,35 +1,39 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    AfterViewInit,
+    ContentChild,
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
+    Inject,
+    Input,
     OnDestroy,
     Optional,
-    ContentChild,
-    AfterViewInit } from '@angular/core';
-import { Circle,
-    CircleOptions,
+    Output,
+} from '@angular/core';
+import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import {
+    Circle,
+    CircleMarkerOptions,
     Event,
-    PopupEvent,
-    TooltipEvent,
-    PathOptions,
     FillRule,
+    LatLng,
+    LatLngLiteral,
+    LatLngTuple,
     LineCapShape,
     LineJoinShape,
-    LatLng,
-    LatLngTuple,
-    LatLngLiteral } from 'leaflet';
+    PathOptions,
+    PopupEvent,
+    TooltipEvent,
+} from 'leaflet';
+import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-import { IGenericGeoJSONFeature } from './d.ts/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
-    selector: 'yaga-circle'
+    selector: 'yaga-circle',
 })
 export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
@@ -53,9 +57,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public radiusChange: EventEmitter<number> = new EventEmitter();
-    /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<IGenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
-    /* tslint:enable */
+    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
@@ -76,11 +78,11 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super([0, 0]);
 
-        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'LineString', coordinates: []}};
+        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
 
         this.on('remove', () => {
@@ -131,7 +133,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
@@ -141,76 +143,70 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         }
     }
 
-    ngOnDestroy(): void {
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    setLatLng(val: LatLng | LatLngTuple | LatLngLiteral): this {
-        super.setLatLng((<any>val));
+    public setLatLng(val: LatLng | LatLngTuple | LatLngLiteral): this {
+        super.setLatLng((<any> val));
         if (!this.initialized) {
             return this;
         }
-        this.positionChange.emit((<any>this)._latlng);
-        this.latChange.emit((<any>this)._latlng.lat);
-        this.lngChange.emit((<any>this)._latlng.lng);
+        this.positionChange.emit((<any> this)._latlng);
+        this.latChange.emit((<any> this)._latlng.lat);
+        this.lngChange.emit((<any> this)._latlng.lng);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
-    @Input() set position(val:  LatLng | LatLngTuple | LatLngLiteral) {
+    @Input() public set position(val: LatLng | LatLngTuple | LatLngLiteral) {
         this.setLatLng(val);
     }
-    get position():  LatLng | LatLngTuple | LatLngLiteral { // it is always a LatLng!
-        return (<any>this)._latlng;
+    public get position(): LatLng | LatLngTuple | LatLngLiteral { // it is always a LatLng!
+        return (<any> this)._latlng;
     }
 
-    @Input() set lat(val: number) {
+    @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
-    get lat(): number {
-        return (<any>this)._latlng.lat;
+    public get lat(): number {
+        return (<any> this)._latlng.lat;
     }
-    @Input() set lng(val: number) {
+    @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
-    get lng(): number {
-        return (<any>this)._latlng.lng;
+    public get lng(): number {
+        return (<any> this)._latlng.lng;
     }
 
-    setRadius(val: number): this {
+    public setRadius(val: number): this {
         super.setRadius(val);
         this.radiusChange.emit(val);
         return this;
     }
 
-    @Input() set radius(val: number) {
+    @Input() public set radius(val: number) {
         this.setRadius(val);
     }
-    get radius(): number {
+    public get radius(): number {
         return this.getRadius();
     }
 
-    @Input() set geoJSON(val: IGenericGeoJSONFeature<GeoJSON.Point, T>) {
+    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
-        let geomType: any = val.geometry.type; // Only 'Point'
+        let geomType: any = val.geometry.type; // Normally 'Point'
 
-        /* istanbul ignore else */
-        if (geomType === 'Point') {
-            this.setLatLng([
-                (<GeoJSON.Point>val.geometry).coordinates[1],
-                (<GeoJSON.Point>val.geometry).coordinates[0]
-            ]);
-            return;
+        /* istanbul ignore if */
+        if (geomType !== 'Point') {
+            throw new Error('Unsupported geometry type: ' + geomType );
         }
-        /* istanbul ignore next */
-        throw new Error('Unsupported geometry type: ' + geomType );
+        this.setLatLng(<any> lng2lat(val.geometry.coordinates));
     }
-    get geoJSON(): IGenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (<IGenericGeoJSONFeature<GeoJSON.Point, T>>this.toGeoJSON());
+    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
+        return (<GenericGeoJSONFeature<GeoJSON.Point, T>> this.toGeoJSON());
     }
 
-
-    setStyle(style: PathOptions): this {
+    public setStyle(style: PathOptions): this {
         super.setStyle(style);
         if (style.hasOwnProperty('stroke')) {
             this.strokeChange.emit(style.stroke);
@@ -255,99 +251,99 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
 
         return this;
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setStyle({opacity: val});
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
-    @Input() set stroke(val: boolean) {
+    @Input() public set stroke(val: boolean) {
         this.setStyle({stroke: val});
     }
-    get stroke(): boolean {
+    public get stroke(): boolean {
         return this.options.stroke;
     }
-    @Input() set color(val: string) {
+    @Input() public set color(val: string) {
         this.setStyle({color: val});
     }
-    get color(): string {
+    public get color(): string {
         return this.options.color;
     }
-    @Input() set weight(val: number) {
+    @Input() public set weight(val: number) {
         this.setStyle({weight: val});
     }
-    get weight(): number {
+    public get weight(): number {
         return this.options.weight;
     }
-    @Input() set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape) {
         this.setStyle({lineCap: val});
     }
-    get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape {
         return this.options.lineCap;
     }
-    @Input() set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape) {
         this.setStyle({lineJoin: val});
     }
-    get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape {
         return this.options.lineJoin;
     }
-    @Input() set dashArray(val: string) {
+    @Input() public set dashArray(val: string) {
         this.setStyle({dashArray: val});
     }
-    get dashArray(): string {
+    public get dashArray(): string {
         return this.options.dashArray;
     }
-    @Input() set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string) {
         this.setStyle({dashOffset: val});
     }
-    get dashOffset(): string {
+    public get dashOffset(): string {
         return this.options.dashOffset;
     }
-    @Input() set fill(val: boolean) {
+    @Input() public set fill(val: boolean) {
         this.setStyle({fill: val});
     }
-    get fill(): boolean {
+    public get fill(): boolean {
         return this.options.fill;
     }
-    @Input() set fillColor(val: string) {
+    @Input() public set fillColor(val: string) {
         this.setStyle({fillColor: val});
     }
-    get fillColor(): string {
+    public get fillColor(): string {
         return this.options.fillColor;
     }
-    @Input() set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number) {
         this.setStyle({fillOpacity: val});
     }
-    get fillOpacity(): number {
+    public get fillOpacity(): number {
         return this.options.fillOpacity;
     }
-    @Input() set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule) {
         this.setStyle({fillRule: val});
     }
-    get fillRule(): FillRule {
+    public get fillRule(): FillRule {
         return this.options.fillRule;
     }
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.setStyle({className: val});
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
-    @Input() set style(val: CircleOptions) {
+    @Input() public set style(val: CircleMarkerOptions) {
         this.setStyle(val);
     }
-    get style(): CircleOptions {
+    public get style(): CircleMarkerOptions {
         return this.options;
     }
 
-    @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+    @Input() public set display(val: boolean) {
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var container: HTMLElement;
+        let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -355,10 +351,10 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         this.displayChange.emit(val);
         container.style.display = val ? '' : 'none';
     }
-    get display(): boolean {
-        var container: HTMLElement;
+    public get display(): boolean {
+        let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -366,21 +362,21 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         return container.style.display !== 'none' && !!container.parentElement;
     }
 
-    @Input() set interactive(val: boolean) {
-        var map: MapComponent = (<MapComponent>(<any>this)._map);
+    @Input() public set interactive(val: boolean) {
+        let map: MapComponent = (<MapComponent> (<any> this)._map);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
     }
-    get interactive(): boolean {
+    public get interactive(): boolean {
         return this.options.interactive;
     }
 
-    @Input() set properties(val: T) {
+    @Input() public set properties(val: T) {
         this.feature.properties = val;
         this.geoJSONChange.emit(this.geoJSON);
     }
-    get properties(): T {
-        return this.feature.properties;
+    public get properties(): T {
+        return (<T> this.feature.properties);
     }
 }

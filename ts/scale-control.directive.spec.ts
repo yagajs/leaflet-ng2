@@ -1,51 +1,41 @@
-/// <reference path="../typings/index.d.ts" />
-
-import { ScaleControlDirective,
-    MapComponent,
-    ControlPosition } from './index';
+import { expect } from 'chai';
 import { point } from 'leaflet';
+import {
+    ControlPosition,
+    MapComponent,
+    ScaleControlDirective,
+} from './index';
 
 describe('Scale-Control Directive', () => {
+    let map: MapComponent;
+    let control: ScaleControlDirective;
+    beforeEach(() => {
+        map = new MapComponent({nativeElement: document.createElement('div')});
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
+        control = new ScaleControlDirective(map);
+    });
+
     describe('[(position)]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.getPosition() !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getPosition() }`);
-            }
+            expect(control.getPosition()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: ControlPosition = 'topright';
             control.position = val;
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
             const val: ControlPosition = 'topright';
             control.setPosition(val);
-            /* istanbul ignore if */
-            if (control.position !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.position }`);
-            }
+            expect(control.position).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
 
             });
@@ -55,10 +45,7 @@ describe('Scale-Control Directive', () => {
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             const val: ControlPosition = 'topleft';
             control.positionChange.subscribe((eventVal: ControlPosition) => {
-                /* istanbul ignore if */
-                if (eventVal !== val) {
-                    return done(new Error('Received wrong value'));
-                }
+                expect(eventVal).to.equal(val);
                 return done();
 
             });
@@ -69,14 +56,6 @@ describe('Scale-Control Directive', () => {
 
     // Events
     describe('(add)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when adding to map', (done: MochaDone) => {
             map.removeControl(control);
 
@@ -87,14 +66,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(remove)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when removing from map', (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
@@ -104,14 +75,6 @@ describe('Scale-Control Directive', () => {
     });
 
     describe('(click)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
@@ -120,14 +83,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(dbclick)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.dbclickEvent.subscribe(() => {
                 done();
@@ -136,14 +91,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mousedown)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
@@ -152,14 +99,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mouseover)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
@@ -168,14 +107,6 @@ describe('Scale-Control Directive', () => {
         });
     });
     describe('(mouseout)', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
@@ -185,134 +116,73 @@ describe('Scale-Control Directive', () => {
     });
 
     describe('[opacity]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.getContainer().style.opacity !== val.toString()) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.getContainer().style.opacity }`);
-            }
+            expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
         it('should be changed in Angular when changing in Angular', () => {
             const val: number = Math.random() * 100;
             control.opacity = val;
-            /* istanbul ignore if */
-            if (control.opacity !== val) {
-                throw new Error(`Wrong value setted: ${ val } != ${ control.opacity }`);
-            }
+            expect(control.opacity).to.equal(val);
         });
     });
 
     describe('[metric]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             control.metric = false;
-            /* istanbul ignore if */
-            if (control.options.metric) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(control.options.metric).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             control.options.metric = false;
             control.metric = true;
-            /* istanbul ignore if */
-            if (!control.options.metric) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(control.options.metric).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             control.metric = false;
-            /* istanbul ignore if */
-            if (control.metric) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(control.metric).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             control.metric = true;
-            /* istanbul ignore if */
-            if (!control.metric) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(control.metric).to.equal(true);
         });
     });
     describe('[imperial]', () => {
-        var map: MapComponent,
-            control: ScaleControlDirective;
-        beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any>map)._size = point(100, 100);
-            (<any>map)._pixelOrigin = point(50, 50);
-            control = new ScaleControlDirective(map);
-        });
         it('should be changed to false in Leaflet when changing in Angular to false', () => {
             control.imperial = false;
-            /* istanbul ignore if */
-            if (control.options.imperial) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(control.options.imperial).to.equal(false);
         });
         it('should be changed to true in Leaflet when changing in Angular to true', () => {
             control.options.imperial = false;
             control.imperial = true;
-            /* istanbul ignore if */
-            if (!control.options.imperial) {
-                throw new Error(`It is not setted to true`);
-            }
+            expect(control.options.imperial).to.equal(true);
         });
         it('should be changed in Angular to false when changing in Angular to false', () => {
             control.imperial = false;
-            /* istanbul ignore if */
-            if (control.imperial) {
-                throw new Error(`It is not setted to false`);
-            }
+            expect(control.imperial).to.equal(false);
         });
         it('should be changed in Angular to true when changing in Angular to true', () => {
             control.imperial = true;
+            expect(control.imperial).to.equal(true);
+        });
+    });
+
+    describe('Destroying a Scale Control Directive', () => {
+        it('should remove Tile-Layer Directive from map on destroy', () => {
             /* istanbul ignore if */
-            if (!control.imperial) {
-                throw new Error(`It is not setted to true`);
+            if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
+                throw new Error('The control is not part of the map before destroying');
+            }
+            control.ngOnDestroy();
+            /* istanbul ignore if */
+            if (control.getContainer() &&
+                control.getContainer().parentElement &&
+                control.getContainer().parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement &&
+                control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
+                throw new Error('The layer is still part of the map after destroying');
             }
         });
     });
-});
 
-describe('Destroying a Scale Control Directive', () => {
-    var map: MapComponent,
-        control: ScaleControlDirective;
-    beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        control = new ScaleControlDirective(map);
-    });
-    it('should remove Tile-Layer Directive from map on destroy', () => {
-        /* istanbul ignore if */
-        if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
-            throw new Error('The control is not part of the map before destroying');
-        }
-        control.ngOnDestroy();
-        /* istanbul ignore if */
-        if (control.getContainer() &&
-            control.getContainer().parentElement &&
-            control.getContainer().parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement &&
-            control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
-            throw new Error('The layer is still part of the map after destroying');
-        }
-    });
 });

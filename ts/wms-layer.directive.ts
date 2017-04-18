@@ -1,24 +1,30 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
-import { TileLayer,
-    LatLngBoundsExpression,
-    Point,
-    Map,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
+    Control,
     Event,
+    LatLngBoundsExpression,
+    Map,
+    Point,
     PopupEvent,
-    TooltipEvent,
-    TileEvent,
     TileErrorEvent,
-    WMSParams} from 'leaflet';
+    TileEvent,
+    TileLayer,
+    TooltipEvent,
+    WMSParams,
+} from 'leaflet';
+import { TRANSPARENT_PIXEL } from './consts';
 import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-wms-layer'
+    selector: 'yaga-wms-layer',
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
@@ -52,11 +58,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         // Transparent 1px image:
-        super('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkY' +
-            'AAAAAYAAjCB0C8AAAAASUVORK5CYII=', {layers: ''});
+        super(TRANSPARENT_PIXEL, {layers: ''});
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -124,54 +129,52 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         });
     }
 
-    ngOnDestroy(): void {
-        console.log('Destroy');
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    setUrl(url: string, noRedraw?: boolean): this {
+    public setUrl(url: string, noRedraw?: boolean): this {
         if (this.url === url) {
             return;
         }
         this.urlChange.emit(url);
         return super.setUrl(url, noRedraw);
     }
-    @Input() set url(val: string) {
+    @Input() public set url(val: string) {
         this.setUrl(val);
     }
-    get url(): string {
-        return (<any>this)._url;
+    public get url(): string {
+        return (<any> this)._url;
     }
 
-
-    setOpacity(val: number): this {
+    public setOpacity(val: number): this {
         if (this.opacity === val) {
             return;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
 
-    @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+    @Input() public set display(val: boolean) {
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var pane: HTMLElement,
-            container: HTMLElement,
-            map: Map,
-            events: any, // Dictionary of functions
-            eventKeys: string[];
+        let pane: HTMLElement;
+        let container: HTMLElement;
+        let map: Map;
+        let events: any; // Dictionary of functions
+        let eventKeys: string[];
         try {
             pane = this.getPane();
             container = this.getContainer();
-            map = (<any>this)._map;
+            map = (<any> this)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -193,9 +196,9 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             }
         }
     }
-    get display(): boolean {
-        var pane: HTMLElement,
-            container: HTMLElement;
+    public get display(): boolean {
+        let pane: HTMLElement;
+        let container: HTMLElement;
         try {
             pane = this.getPane();
             container = this.getContainer();
@@ -212,149 +215,148 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         return false;
     }
 
-    setZIndex(val: number): this {
+    public setZIndex(val: number): this {
         super.setZIndex(val);
         this.zIndexChange.emit(val);
         return this;
     }
-    @Input() set zIndex(val: number) {
+    @Input() public set zIndex(val: number) {
         this.setZIndex(val);
     }
-    get zIndex(): number {
+    public get zIndex(): number {
         return this.options.zIndex;
     }
 
-    @Input() set tileSize(val: Point) {
+    @Input() public set tileSize(val: Point) {
         this.options.tileSize = val;
     }
-    get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point>this.options.tileSize);
+    public get tileSize(): Point { // TODO: is this correct that it is always a Point?
+        return (<Point> this.options.tileSize);
     }
 
-    @Input() set updateWhenIdle(val: boolean) {
+    @Input() public set updateWhenIdle(val: boolean) {
         this.options.updateWhenIdle = val;
     }
-    get updateWhenIdle(): boolean {
+    public get updateWhenIdle(): boolean {
         return this.options.updateWhenIdle;
     }
 
-    @Input() set updateWhenZooming(val: boolean) {
+    @Input() public set updateWhenZooming(val: boolean) {
         this.options.updateWhenZooming = val;
     }
-    get updateWhenZooming(): boolean {
+    public get updateWhenZooming(): boolean {
         return this.options.updateWhenZooming;
     }
 
-    @Input() set updateInterval(val: number) {
+    @Input() public set updateInterval(val: number) {
         this.options.updateInterval = val;
     }
-    get updateInterval(): number {
+    public get updateInterval(): number {
         return this.options.updateInterval;
     }
 
-    @Input() set bounds(val: LatLngBoundsExpression) {
+    @Input() public set bounds(val: LatLngBoundsExpression) {
         this.options.bounds = val;
     }
-    get bounds(): LatLngBoundsExpression {
+    public get bounds(): LatLngBoundsExpression {
         return this.options.bounds;
     }
 
-    @Input() set noWrap(val: boolean) {
+    @Input() public set noWrap(val: boolean) {
         this.options.noWrap = val;
     }
-    get noWrap(): boolean {
+    public get noWrap(): boolean {
         return this.options.noWrap;
     }
 
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.options.className = val;
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
 
-    @Input() set keepBuffer(val: number) {
+    @Input() public set keepBuffer(val: number) {
         this.options.keepBuffer = val;
     }
-    get keepBuffer(): number {
+    public get keepBuffer(): number {
         return this.options.keepBuffer;
     }
 
-    @Input() set maxNativeZoom(val: number) {
+    @Input() public set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
-    };
-    get maxNativeZoom(): number {
+    }
+    public get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
     }
-    @Input() set minNativeZoom(val: number) {
+    @Input() public set minNativeZoom(val: number) {
         this.options.minNativeZoom = val;
-    };
-    get minNativeZoom(): number {
+    }
+    public get minNativeZoom(): number {
         return this.options.minNativeZoom;
     }
 
-    @Input() set subdomains(val: string[]) {
+    @Input() public set subdomains(val: string[]) {
         this.options.subdomains = val;
-    };
-    get subdomains(): string[] {
-        if (typeof (<string>this.options.subdomains) === 'string') {
-            this.options.subdomains = (<string>this.options.subdomains).split('');
+    }
+    public get subdomains(): string[] {
+        if (typeof (<string> this.options.subdomains) === 'string') {
+            this.options.subdomains = (<string> this.options.subdomains).split('');
         }
-        return (<string[]>this.options.subdomains);
+        return (<string[]> this.options.subdomains);
     }
 
-    @Input() set errorTileUrl(val: string) {
+    @Input() public set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
-    };
-    get errorTileUrl(): string {
+    }
+    public get errorTileUrl(): string {
         return this.options.errorTileUrl;
     }
 
-    @Input() set zoomOffset(val: number) {
+    @Input() public set zoomOffset(val: number) {
         this.options.zoomOffset = val;
-    };
-    get zoomOffset(): number {
+    }
+    public get zoomOffset(): number {
         return this.options.zoomOffset;
     }
 
-    @Input() set tms(val: boolean) {
+    @Input() public set tms(val: boolean) {
         this.options.tms = val;
-    };
-    get tms(): boolean {
+    }
+    public get tms(): boolean {
         return this.options.tms;
     }
 
-    @Input() set zoomReverse(val: boolean) {
+    @Input() public set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
-    };
-    get zoomReverse(): boolean {
+    }
+    public get zoomReverse(): boolean {
         return this.options.zoomReverse;
     }
 
-    @Input() set detectRetina(val: boolean) {
+    @Input() public set detectRetina(val: boolean) {
         this.options.detectRetina = val;
-    };
-    get detectRetina(): boolean {
+    }
+    public get detectRetina(): boolean {
         return this.options.detectRetina;
     }
 
-    @Input() set crossOrigin(val: boolean) {
+    @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-    };
-    get crossOrigin(): boolean {
+    }
+    public get crossOrigin(): boolean {
         return this.options.crossOrigin;
     }
 
-    @Input() set uppercase(val: boolean) {
+    @Input() public set uppercase(val: boolean) {
         this.options.uppercase = val;
-    };
-    get uppercase(): boolean {
+    }
+    public get uppercase(): boolean {
         return this.options.uppercase;
     }
 
-
     // WMS Params
-    setParams(params: WMSParams, redraw?: boolean): this {
+    public setParams(params: WMSParams, redraw?: boolean): this {
         super.setParams(params, redraw);
         this.layersChange.emit(this.wmsParams.layers.split(','));
         this.stylesChange.emit(this.wmsParams.styles.split(','));
@@ -363,44 +365,59 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.transparentChange.emit(this.wmsParams.transparent);
         return this;
     }
-    @Input() set layers(val: string[]) {
+    @Input() public set layers(val: string[]) {
         const newParams: WMSParams = Object.create(this.wmsParams);
         newParams.layers = val.join(',');
         this.setParams(newParams);
-    };
-    get layers(): string[] {
+    }
+    public get layers(): string[] {
         return this.wmsParams.layers.split(',');
     }
-    @Input() set styles(val: string[]) {
+    @Input() public set styles(val: string[]) {
         const newParams: WMSParams = Object.create(this.wmsParams);
         newParams.styles = val.join(',');
         this.setParams(newParams);
-    };
-    get styles(): string[] {
+    }
+    public get styles(): string[] {
         return this.wmsParams.styles.split(',');
     }
-    @Input() set format(val: string) {
+    @Input() public set format(val: string) {
         const newParams: WMSParams = Object.create(this.wmsParams);
         newParams.format = val;
         this.setParams(newParams);
-    };
-    get format(): string {
+    }
+    public get format(): string {
         return this.wmsParams.format;
     }
-    @Input() set version(val: string) {
+    @Input() public set version(val: string) {
         const newParams: WMSParams = Object.create(this.wmsParams);
         newParams.version = val;
         this.setParams(newParams);
-    };
-    get version(): string {
+    }
+    public get version(): string {
         return this.wmsParams.version;
     }
-    @Input() set transparent(val: boolean) {
+    @Input() public set transparent(val: boolean) {
         const newParams: WMSParams = Object.create(this.wmsParams);
         newParams.transparent = val;
         this.setParams(newParams);
-    };
-    get transparent(): boolean {
+    }
+    public get transparent(): boolean {
         return this.wmsParams.transparent;
+    }
+    /**
+     * Input for the attribution.
+     * Use it with `<yaga-wms-layer [attribution]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.2.html#wmslayer-attribution Original Leaflet documentation
+     */
+    @Input() public set attribution(val: string) {
+        if ((<any> this)._map && (<any> this)._map.attributionControl) {
+            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
+            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
+        }
+        this.options.attribution = val;
+    }
+    public get attribution(): string {
+        return this.getAttribution();
     }
 }

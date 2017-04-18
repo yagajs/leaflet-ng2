@@ -5,17 +5,17 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "init": "npm install && typings install && cp d.ts/leaflet.d.ts typings/globals/leaflet/index.d.ts && mkdir lib && cp -Rf ts/d.ts lib/",
-    "clean": "rm -Rf coverage browser-test/bundle.js lib typings node_modules",
+    "init": "npm install",
+    "clean": "rm -Rf coverage browser-test/bundle.js lib node_modules",
     "reinit": "npm run clean; npm run init",
-    "transpile": "tsc",
-    "lint": "tslint ts/**",
+    "transpile": "ngc",
+    "lint": "tslint ts/*.ts",
     "npm-lint": "ts-npm-lint --fix-typings && ts-npm-lint",
     "test": "npm run lint && npm run transpile && istanbul cover _mocha -- -- test/*.js",
     "dist": "npm test && npm run npm-lint",
     "browser-test": "npm run transpile; browserify test/index.js -o browser-test/bundle.js",
     "doc": "typedoc --out ./typedoc/ --exclude ts/tile-layer.directive.spec.ts --mode file ts/",
-    "build-examples": "npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js",
+    "build-examples": "set -x && npm run transpile && cd examples && tsc; browserify tile-layer-directive/index.js -o tile-layer-directive/bundle.js && browserify map-component/index.js -o map-component/bundle.js && browserify zoom-control-directive/index.js -o zoom-control-directive/bundle.js && browserify scale-control-directive/index.js -o scale-control-directive/bundle.js && browserify attribution-control-directive/index.js -o attribution-control-directive/bundle.js && browserify circle-marker-directive/index.js -o circle-marker-directive/bundle.js && browserify image-overlay-directive/index.js -o image-overlay-directive/bundle.js && browserify passau/index.js -o passau/bundle.js",
     "dependency-check": "npm outdated && (node-dependencies || echo \"There are outdated sub-dependencies!\")"
   },
   "repository": {
@@ -32,10 +32,23 @@
     "angular2",
     "webmapping"
   ],
-  "author": [
-    "Arne Schubert <a.schubert@yagajs.org>",
-    "Stephan Herritsch <s.herritsch@yagajs.org>",
-    "Markus Strauss <m.strauss@yagajs.org>"
+  "author": "YAGA - Development Team<info@yagajs.org>",
+  "contributors": [
+    {
+      "name": "Arne Schubert",
+      "email": "atd@yagajs.org",
+      "url": "https://atd.yagajs.org"
+    },
+    {
+      "name": "Stephan Herritsch",
+      "email": "s.herritsch@yagajs.org",
+      "url": "https://steve.yagajs.org"
+    },
+    {
+      "name": "Markus Strauss",
+      "email": "markus@yagajs.org",
+      "url": "https://markus.yagajs.org"
+    }
   ],
   "license": "ISC",
   "bugs": {
@@ -50,11 +63,13 @@
     "@angular/forms": "^4.0.2",
     "@angular/platform-browser": "^4.0.2",
     "@angular/platform-browser-dynamic": "^4.0.2",
-    "@types/chai": "^3.4.34",
+    "@types/chai": "^3.5.0",
+    "@types/mocha": "^2.2.41",
     "bootstrap": "^3.3.7",
     "browserify": "^14.0.0",
     "chai": "^3.5.0",
-    "coveralls": "^2.11.15",
+    "coveralls": "^2.13.0",
+    "font-awesome": "^4.7.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",
     "jsdom": "^9.8.3",
@@ -65,13 +80,16 @@
     "rxjs": "^5.0.0-rc.4",
     "ts-npm-lint": "^0.1.0",
     "tslint": "^4.0.1",
-    "typedoc": "^0.5.5",
-    "typescript": "^2.2.0",
-    "typings": "^2.0.0",
+    "typedoc": "^0.5.10",
+    "typescript": "^2.3.0",
     "zone.js": "^0.7.0"
   },
   "dependencies": {
-    "@angular/core": "^2.4.7",
-    "leaflet": "^1.0.2"
+    "@types/leaflet": "^1.0.53",
+    "@yaga/generic-geojson": "^1.0.0",
+    "leaflet": "^1.0.3"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0"
   }
 }

@@ -1,23 +1,28 @@
-import { Directive,
-    Input,
-    Output,
+import {
+    Directive,
     EventEmitter,
-    Inject,
     forwardRef,
-    OnDestroy } from '@angular/core';
-import { ImageOverlay,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
+    Control,
+    Event,
+    ImageOverlay,
+    LatLngBounds,
+    latLngBounds,
     LatLngBoundsExpression,
     Map,
-    Event,
     PopupEvent,
     TooltipEvent,
-    LatLngBounds,
-    latLngBounds } from 'leaflet';
-import { MapComponent } from './map.component';
+} from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
+import { MapComponent } from './map.component';
 
 @Directive({
-    selector: 'yaga-image-overlay'
+    selector: 'yaga-image-overlay',
 })
 export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
@@ -45,7 +50,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, [[0, 0], [1, 1]], {});
@@ -98,53 +103,52 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         });
     }
 
-    ngOnDestroy(): void {
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    setUrl(url: string): this {
+    public setUrl(url: string): this {
         if (this.url === url) {
             return;
         }
         this.urlChange.emit(url);
         return super.setUrl(url);
     }
-    @Input() set url(val: string) {
+    @Input() public set url(val: string) {
         this.setUrl(val);
     }
-    get url(): string {
-        return (<any>this)._url;
+    public get url(): string {
+        return (<any> this)._url;
     }
 
-
-    setOpacity(val: number): this {
+    public setOpacity(val: number): this {
         if (this.opacity === val) {
             return;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
 
-    @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+    @Input() public set display(val: boolean) {
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var pane: HTMLElement,
-            container: HTMLElement,
-            map: Map,
-            events: any, // Dictionary of functions
-            eventKeys: string[];
+        let pane: HTMLElement;
+        let container: HTMLElement;
+        let map: Map;
+        let events: any; // Dictionary of functions
+        let eventKeys: string[];
         try {
             pane = this.getPane();
             container = this.getElement();
-            map = (<any>this)._map;
+            map = (<any> this)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -165,9 +169,9 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
             }
         }
     }
-    get display(): boolean {
-        var pane: HTMLElement,
-            container: HTMLElement;
+    public get display(): boolean {
+        let pane: HTMLElement;
+        let container: HTMLElement;
         try {
             pane = this.getPane();
             container = this.getElement();
@@ -184,8 +188,8 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         return false;
     }
 
-    setBounds(val: LatLngBoundsExpression): this {
-        super.setBounds(latLngBounds((<any>val)));
+    public setBounds(val: LatLngBoundsExpression): this {
+        super.setBounds(latLngBounds((<any> val)));
 
         this.boundsChange.emit(this.bounds);
         this.northChange.emit(this.north);
@@ -195,88 +199,98 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
         return this;
     }
-    @Input() set bounds(val: LatLngBounds) {
+    @Input() public set bounds(val: LatLngBounds) {
         this.setBounds(val);
     }
-    get bounds(): LatLngBounds {
+    public get bounds(): LatLngBounds {
         return this.getBounds();
     }
-    @Input() set north(val: number) {
+    @Input() public set north(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
 
         // super because we call the change listeners ourselves
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), oldBounds.getWest()],
-            [val, oldBounds.getEast()]
+            [val, oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.northChange.emit(val);
     }
-    get north(): number {
+    public get north(): number {
         return this.getBounds().getNorth();
     }
-    @Input() set east(val: number) {
+    @Input() public set east(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), oldBounds.getWest()],
-            [oldBounds.getNorth(), val]
+            [oldBounds.getNorth(), val],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.eastChange.emit(val);
     }
-    get east(): number {
+    public get east(): number {
         return this.getBounds().getEast();
     }
-    @Input() set south(val: number) {
+    @Input() public set south(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [val, oldBounds.getWest()],
-            [oldBounds.getNorth(), oldBounds.getEast()]
+            [oldBounds.getNorth(), oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.southChange.emit(val);
     }
-    get south(): number {
+    public get south(): number {
         return this.getBounds().getSouth();
     }
-    @Input() set west(val: number) {
+    @Input() public set west(val: number) {
         const oldBounds: LatLngBounds = this.getBounds();
         super.setBounds(latLngBounds([
             [oldBounds.getSouth(), val],
-            [oldBounds.getNorth(), oldBounds.getEast()]
+            [oldBounds.getNorth(), oldBounds.getEast()],
         ]));
 
         this.boundsChange.emit(this.bounds);
         this.westChange.emit(val);
     }
-    get west(): number {
+    public get west(): number {
         return this.getBounds().getWest();
     }
 
-    @Input() set crossOrigin(val: boolean) {
+    @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-        (<any>this)._initImage();
+        this.getElement().crossOrigin = val ? '' : undefined;
     }
-    get crossOrigin(): boolean {
+    public get crossOrigin(): boolean {
         return this.options.crossOrigin;
     }
 
-    @Input() set alt(val: string) {
+    @Input() public set alt(val: string) {
         this.options.alt = val;
-        (<any>this)._initImage();
+        this.getElement().alt = val;
     }
-    get alt(): string {
+    public get alt(): string {
         return this.getElement().getAttribute('alt');
     }
-    @Input() set interactive(val: boolean) {
+    @Input() public set interactive(val: boolean) {
         this.options.interactive = val;
-        this.onRemove((<any>(<any>this)._map));
-        this.onAdd((<any>(<any>this)._map));
+        this.onRemove((<any> (<any> this)._map));
+        this.onAdd((<any> (<any> this)._map));
     }
-    get interactive(): boolean {
+    public get interactive(): boolean {
         return this.options.interactive;
+    }
+    @Input() public set attribution(val: string) {
+        if ((<any> this)._map && (<any> this)._map.attributionControl) {
+            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
+            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
+        }
+        this.options.attribution = val;
+    }
+    public get attribution(): string {
+        return this.getAttribution();
     }
 }

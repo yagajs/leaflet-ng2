@@ -1,30 +1,35 @@
-import { Directive,
-    Input,
-    Output,
-    EventEmitter,
-    Inject,
-    forwardRef,
-    ContentChild,
+import {
     AfterViewInit,
-    OnDestroy } from '@angular/core';
-import { Marker,
-    Event,
+    ContentChild,
+    Directive,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    OnDestroy,
+    Output,
+} from '@angular/core';
+import {
+    DivIcon,
     DragEndEvent,
+    Event,
+    Handler,
+    Icon,
     LatLng,
     LatLngLiteral,
     LatLngTuple,
-    Icon,
     Map,
-    Handler } from 'leaflet';
+    Marker,
+} from 'leaflet';
 import { MapComponent } from './map.component';
 
 // Content-Child imports
+import { IconDirective } from './icon.directive';
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
-import { IconDirective } from './icon.directive';
 
 @Directive({
-    selector: 'yaga-marker'
+    selector: 'yaga-marker',
 })
 export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy {
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
@@ -34,7 +39,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public zindexChange: EventEmitter<number> = new EventEmitter();
     @Output() public draggableChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() public iconChange: EventEmitter<Icon> = new EventEmitter();
+    @Output() public iconChange: EventEmitter<Icon | DivIcon> = new EventEmitter();
     @Output() public tooltipOpenedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public popupOpenedChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -51,7 +56,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent
+        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
         super([0, 0]);
         mapComponent.addLayer(this);
@@ -100,7 +105,7 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         // TODO: this.addIcon(IconDirective / DivIconDirective)
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.initialized = true; // Otherwise lng gets overwritten to 0
         if (this.iconDirective) {
             this.setIcon(this.iconDirective);
@@ -116,24 +121,24 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         }
     }
 
-    ngOnDestroy(): void {
-        this.removeFrom((<any>this)._map);
+    public ngOnDestroy(): void {
+        this.removeFrom((<any> this)._map);
     }
 
-    @Input() set display(val: boolean) {
-        var isDisplayed: boolean = this.display;
+    @Input() public set display(val: boolean) {
+        let isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
-        var pane: HTMLElement,
-            container: HTMLElement,
-            map: Map,
-            events: any, // Dictionary of functions
-            eventKeys: string[];
+        let pane: HTMLElement;
+        let container: HTMLElement;
+        let map: Map;
+        let events: any; // Dictionary of functions
+        let eventKeys: string[];
         try {
             pane = this.getPane();
             container = this.getElement();
-            map = (<any>this)._map;
+            map = (<any> this)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -154,9 +159,9 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
             }
         }
     }
-    get display(): boolean {
-        var pane: HTMLElement,
-            container: HTMLElement;
+    public get display(): boolean {
+        let pane: HTMLElement;
+        let container: HTMLElement;
         try {
             pane = this.getPane();
             container = this.getElement();
@@ -173,8 +178,8 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         return false;
     }
 
-    setLatLng(val: LatLng | LatLngLiteral | LatLngTuple): this {
-        super.setLatLng((<any>val));
+    public setLatLng(val: LatLng | LatLngLiteral | LatLngTuple): this {
+        super.setLatLng((<any> val));
         if (this.initialized) {
             this.positionChange.emit(this.getLatLng());
             this.latChange.emit(this.getLatLng().lat);
@@ -182,52 +187,52 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         }
         return this;
     }
-    @Input() set position(val: LatLng) {
+    @Input() public set position(val: LatLng) {
         this.setLatLng(val);
     }
-    get position(): LatLng {
+    public get position(): LatLng {
         return this.getLatLng();
     }
 
-    @Input() set lat(val: number) {
+    @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
-    get lat(): number {
+    public get lat(): number {
         return this.getLatLng().lat;
     }
-    @Input() set lng(val: number) {
+    @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
-    get lng(): number {
+    public get lng(): number {
         return this.getLatLng().lng;
     }
 
-    setOpacity(val: number): this {
+    public setOpacity(val: number): this {
         if (this.opacity === val) {
             return;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
     }
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
 
-    setIcon(val: Icon): this {
+    public setIcon(val: Icon | DivIcon): this {
         super.setIcon(val);
         this.iconChange.emit(val);
         return this;
     }
-    @Input() set icon(val: Icon) {
+    @Input() public set icon(val: Icon | DivIcon) {
         this.setIcon(val);
     }
-    get icon(): Icon {
+    public get icon(): Icon | DivIcon {
         return this.options.icon;
     }
-    @Input() set draggable(val: boolean) {
+    @Input() public set draggable(val: boolean) {
         if (val) {
             this.dragging.enable();
             return;
@@ -235,22 +240,22 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         this.dragging.disable();
         return;
     }
-    get draggable(): boolean {
+    public get draggable(): boolean {
         return this.dragging.enabled();
     }
 
-    @Input() set title(val: string) {
+    @Input() public set title(val: string) {
         this.options.title = val;
         this.getElement().setAttribute('title', val);
     }
-    get title(): string {
+    public get title(): string {
         return this.getElement().getAttribute('title');
     }
-    @Input() set alt(val: string) {
+    @Input() public set alt(val: string) {
         this.options.alt = val;
         this.getElement().setAttribute('alt', val);
     }
-    get alt(): string {
+    public get alt(): string {
         return this.getElement().getAttribute('alt');
     }
 }

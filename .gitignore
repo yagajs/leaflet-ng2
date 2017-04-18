@@ -39,8 +39,13 @@ jspm_packages
 lib
 typings
 .idea/
+typedoc/
 
 examples/**/*.js
 examples/**/*.js.map
+examples/**/*.d.ts
 
 bundle.js
+
+*.ngsummary.json
+*.ngfactory.ts

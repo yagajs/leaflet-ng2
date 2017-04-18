@@ -1,39 +1,39 @@
-/// <reference path="../typings/index.d.ts" />
-
-import { GeoJSONDirective,
+import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
+import { expect } from 'chai';
+import { point, SVG } from 'leaflet';
+import {
+    GeoJSONDirective,
+    LatLng,
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    LatLng } from './index';
-import { expect } from 'chai';
-import { point, SVG, Layer } from 'leaflet';
-import { IGenericGeoJSONFeature, IGenericGeoJSONFeatureCollection } from './d.ts/generic-geojson';
+} from './index';
 
 describe('GeoJSON Directive', () => {
-    var map: MapComponent,
-        layer: GeoJSONDirective<any>;
+    let map: MapComponent;
+    let layer: GeoJSONDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any>map)._size = point(100, 100);
-        (<any>map)._pixelOrigin = point(50, 50);
-        (<any>map)._renderer = (<any>map)._renderer || new SVG();
+        (<any> map)._size = point(100, 100);
+        (<any> map)._pixelOrigin = point(50, 50);
+        (<any> map)._renderer = (<any> map)._renderer || new SVG();
 
         layer = new GeoJSONDirective(map);
     });
-    const TEST_VALUE: IGenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
+    const TEST_VALUE: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
         features: [
             {
                 geometry: {
                     coordinates: [7, 51],
-                    type: 'Point'
+                    type: 'Point',
                 },
                 properties: {
-                    test: 'OK'
+                    test: 'OK',
                 },
-                type: 'Feature'
-            }
+                type: 'Feature',
+            },
         ],
-        type: 'FeatureCollection'
+        type: 'FeatureCollection',
     };
 
     describe('[(data)]', () => {
@@ -64,7 +64,7 @@ describe('GeoJSON Directive', () => {
             layer.data = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -73,14 +73,13 @@ describe('GeoJSON Directive', () => {
         });
         it('should fire an event when adding in Leaflet', (done: MochaDone) => {
             layer.ngAfterViewInit();
-            layer.dataChange.subscribe((eventVal: IGenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
             layer.addData(TEST_VALUE.features[0]);
         });
     });
-
 
     const testHandle: any = {};
     const testEvent: any = { testHandle };
@@ -196,39 +195,37 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('Popup in GeoJSON Directive', () => {
-        var popup: PopupDirective,
-            testDiv: HTMLElement,
-            puLayer: GeoJSONDirective<any>;
-        before((done) => {
+        let popup: PopupDirective;
+        let testDiv: HTMLElement;
+        let puLayer: GeoJSONDirective<any>;
+        before(() => {
             testDiv = document.createElement('div');
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            puLayer = Object.create(new GeoJSONDirective<any>(map), { popupDirective: {value: popup} });
-            return done();
+            puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
         });
         it('should bind popup', () => {
             puLayer.ngAfterViewInit();
-            expect((<any>puLayer)._popup).to.equal(popup);
+            expect((<any> puLayer)._popup).to.equal(popup);
         });
     });
 
     describe('Tooltip in GeoJSON Directive', () => {
-        var tooltip: TooltipDirective,
-            testDiv: HTMLElement,
-            ttLayer: GeoJSONDirective<any>;
-        before((done) => {
+        let tooltip: TooltipDirective;
+        let testDiv: HTMLElement;
+        let ttLayer: GeoJSONDirective<any>;
+        before(() => {
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            ttLayer = Object.create(new GeoJSONDirective<any>(map), { tooltipDirective: {value: tooltip} });
-            return done();
+            ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
         });
         it('should bind tooltip', () => {
             ttLayer.ngAfterViewInit();
             expect(ttLayer.tooltipDirective).to.equal(tooltip);
-            // expect((<any>layer)._tooltip).to.equal(tooltip);
+            // expect((<any> layer)._tooltip).to.equal(tooltip);
         });
     });
 
@@ -247,4 +244,3 @@ describe('GeoJSON Directive', () => {
     });
 
 });
-

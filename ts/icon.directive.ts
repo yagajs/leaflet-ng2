@@ -1,14 +1,18 @@
-import { Directive,
+import {
+    Directive,
+    EventEmitter,
     Input,
     Output,
-    EventEmitter } from '@angular/core';
-import { Icon,
+} from '@angular/core';
+import {
     Event,
-    Point } from 'leaflet';
+    Icon,
+    Point,
+} from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
 
 @Directive({
-    selector: 'yaga-icon'
+    selector: 'yaga-icon',
 })
 export class IconDirective extends Icon  {
 
@@ -16,78 +20,78 @@ export class IconDirective extends Icon  {
 
     constructor() {
         super({
-            iconUrl: TRANSPARENT_PIXEL
+            iconUrl: TRANSPARENT_PIXEL,
         });
     }
 
-    @Input() set iconUrl(val: string) {
+    @Input() public set iconUrl(val: string) {
         this.options.iconUrl = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get iconUrl(): string {
+    public get iconUrl(): string {
         return this.options.iconUrl;
     }
-    @Input() set iconSize(val: Point) {
+    @Input() public set iconSize(val: Point) {
         this.options.iconSize = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get iconSize(): Point {
-        return (<Point>this.options.iconSize);
+    public get iconSize(): Point {
+        return (<Point> this.options.iconSize);
     }
-    @Input() set iconAnchor(val: Point) {
+    @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get iconAnchor(): Point {
-        return (<Point>this.options.iconAnchor);
+    public get iconAnchor(): Point {
+        return (<Point> this.options.iconAnchor);
     }
-    @Input() set popupAnchor(val: Point) {
+    @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get popupAnchor(): Point {
-        return (<Point>this.options.popupAnchor);
+    public get popupAnchor(): Point {
+        return (<Point> this.options.popupAnchor);
     }
-    @Input() set shadowUrl(val: string) {
+    @Input() public set shadowUrl(val: string) {
         this.options.shadowUrl = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get shadowUrl(): string {
+    public get shadowUrl(): string {
         return this.options.shadowUrl;
     }
-    @Input() set shadowSize(val: Point) {
+    @Input() public set shadowSize(val: Point) {
         this.options.shadowSize = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get shadowSize(): Point {
-        return (<Point>this.options.shadowSize);
+    public get shadowSize(): Point {
+        return (<Point> this.options.shadowSize);
     }
-    @Input() set shadowAnchor(val: Point) {
+    @Input() public set shadowAnchor(val: Point) {
         this.options.shadowAnchor = val;
         this.updateEvent.emit({
             target: this,
-            type: 'update'
+            type: 'update',
         });
     }
-    get shadowAnchor(): Point {
-        return (<Point>this.options.shadowAnchor);
+    public get shadowAnchor(): Point {
+        return (<Point> this.options.shadowAnchor);
     }
 }
