@@ -7,8 +7,7 @@ Angular 2 module for Leaflet. This module serves components and
 directives for [Leaflet](http://leafletjs.com/) in
 [Angular2](https://angular.io/).
 
-*Note: This is just a release candidate! Some TypeScript tyings are self written
-and have to be merged to DefinitlyTyped.*
+*Note: This is just a release candidate!*
 
 ## Links
 

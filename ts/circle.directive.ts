@@ -343,7 +343,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         }
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -354,7 +354,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     public get display(): boolean {
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;

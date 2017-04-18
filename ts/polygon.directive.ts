@@ -321,7 +321,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         }
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -332,7 +332,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     public get display(): boolean {
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;

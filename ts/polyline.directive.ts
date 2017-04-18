@@ -32,6 +32,7 @@ import { lng2lat } from './lng2lat';
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
+import HTML = Mocha.reporters.HTML;
 
 @Directive({
     selector: 'yaga-polyline',
@@ -323,7 +324,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         }
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return;
@@ -334,7 +335,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
     public get display(): boolean {
         let container: HTMLElement;
         try {
-            container = this.getElement();
+            container = this.getElement() as HTMLElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
