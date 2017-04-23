@@ -31,7 +31,7 @@ npm install --save @yaga/leaflet-ng2
 This module works like a normal angular 2 module. You should do something like that:
 
 ```typescript
-import { YagaModule, OSM_TILE_LAYER_URL }   from '@yaga/leflet-ng2';
+import { YagaModule, OSM_TILE_LAYER_URL }   from '@yaga/leaflet-ng2';
 import { Component, NgModule, PlatformRef } from '@angular/core';
 import { BrowserModule }                    from '@angular/platform-browser';
 import { platformBrowserDynamic }           from '@angular/platform-browser-dynamic';
