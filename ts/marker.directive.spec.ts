@@ -359,6 +359,139 @@ describe('Marker Directive', () => {
         });
     });
 
+    describe('(add)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.addEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('add', testEvent);
+        });
+    });
+    describe('(remove)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.removeEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('remove', testEvent);
+        });
+    });
+    describe('(popupopen)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.popupopenEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('popupopen', testEvent);
+        });
+    });
+    describe('(popupclose)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.popupcloseEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('popupclose', testEvent);
+        });
+    });
+    describe('(tooltipopen)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.tooltipopenEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('tooltipopen', testEvent);
+        });
+    });
+    describe('(tooltipclose)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.tooltipcloseEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('tooltipclose', testEvent);
+        });
+    });
+    describe('(click)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.clickEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('click', testEvent);
+        });
+    });
+    describe('(dbclick)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.dbclickEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('dbclick', testEvent);
+        });
+    });
+    describe('(mousedown)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.mousedownEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('mousedown', testEvent);
+        });
+    });
+    describe('(mouseover)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.mouseoverEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('mouseover', testEvent);
+        });
+    });
+    describe('(mouseout)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.mouseoutEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('mouseout', testEvent);
+        });
+    });
+    describe('(contextmenu)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.contextmenuEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testHandle);
+                return done();
+            });
+            layer.fire('contextmenu', testEvent);
+        });
+    });
+
     describe('Popup in Marker Directive', () => {
         let layerWithPopup: MarkerDirective;
         let popup: PopupDirective;
