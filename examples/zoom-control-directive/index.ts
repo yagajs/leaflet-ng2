@@ -24,14 +24,14 @@ const template: string = `
       <yaga-zoom-control
       
         (click)="handleEvent('click', $event);"
-        (dblclick)="handleEvent('dblclick', event);"
-        (mousedown)="handleEvent('mousedown', event);"
-        (mouseup)="handleEvent('mouseup', event);"
-        (mouseover)="handleEvent('mouseover', event);"
-        (mouseout)="handleEvent('mouseout', event);"
-        (mousemove)="handleEvent('mousemove', event);"
-        (positionChange)="handleEvent('positionChange', event);"
-        (displayChange)="handleEvent('displayChange', event);"
+        (dblclick)="handleEvent('dblclick', $event);"
+        (mousedown)="handleEvent('mousedown', $event);"
+        (mouseup)="handleEvent('mouseup', $event);"
+        (mouseover)="handleEvent('mouseover', $event);"
+        (mouseout)="handleEvent('mouseout', $event);"
+        (mousemove)="handleEvent('mousemove', $event);"
+        (positionChange)="handleEvent('positionChange', $event);"
+        (displayChange)="handleEvent('displayChange', $event);"
 
         [zoomInText]="getInputPropertyByName('zoomInText').value"
         [zoomInTitle]="getInputPropertyByName('zoomInTitle').value"

@@ -25,7 +25,7 @@ const template: string = `
     <yaga-map>
       <yaga-marker [draggable]="true" [lat]="0" [lng]="0">
         <yaga-icon
-          (update)="handleEvent('update', event)"
+          (update)="handleEvent('update', $event)"
           
           [iconUrl]="getInputPropertyByName('iconUrl').value"
           [iconSize]="getInputPropertyByName('iconSize').value"
