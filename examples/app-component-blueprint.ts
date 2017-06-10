@@ -1,5 +1,5 @@
-import { AfterViewInit, ViewChild, EventEmitter } from '@angular/core';
-import { MapComponent, Event } from '../lib/index'; // @yaga/leflet-ng2
+import { AfterViewInit, EventEmitter, ViewChild } from '@angular/core';
+import { Event, MapComponent } from '../lib/index'; // @yaga/leflet-ng2
 
 export const HIDE_DELAY: number = 500;
 export const EVENT_FIRED_TEXT: string = 'Event fired now...';
