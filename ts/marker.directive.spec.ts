@@ -137,7 +137,7 @@ describe('Marker Directive', () => {
 
     describe('[(lat)]', () => {
         beforeEach(() => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -177,7 +177,7 @@ describe('Marker Directive', () => {
     });
     describe('[(lng)]', () => {
         beforeEach(() => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = Math.random() * 100;
@@ -217,7 +217,7 @@ describe('Marker Directive', () => {
     });
     describe('[(position)]', () => {
         beforeEach(() => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
@@ -502,7 +502,7 @@ describe('Marker Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             expect((<any> layerWithPopup)._popup).to.equal(popup);
@@ -519,7 +519,7 @@ describe('Marker Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
             expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
@@ -539,7 +539,7 @@ describe('Marker Directive', () => {
             // Hack to get write-access to readonly property
             layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
 
-            layerWithIcon.ngAfterViewInit();
+            layerWithIcon.ngAfterContentInit();
         });
         it('should bind icon', () => {
             expect((<HTMLElement> (<any> layerWithIcon)._icon).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);

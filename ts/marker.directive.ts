@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -34,7 +34,7 @@ import { TooltipDirective } from './tooltip.directive';
 @Directive({
     selector: 'yaga-marker',
 })
-export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy {
+export class MarkerDirective extends Marker implements AfterContentInit, OnDestroy {
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
@@ -158,16 +158,15 @@ export class MarkerDirective extends Marker implements AfterViewInit, OnDestroy 
         // TODO: this.addIcon(IconDirective / DivIconDirective)
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         this.initialized = true; // Otherwise lng gets overwritten to 0
         if (this.iconDirective) {
             this.setIcon(this.iconDirective);
             this.iconDirective.updateEvent.subscribe((event: Event) => {
-                this.setIcon(event.target); // TODO: with event.target or with this.iconDirective???
+                this.setIcon(event.target);
             });
-        }
-        if (this.divIconDirective) {
-            this.setIcon(this.iconDirective);
+        } else if (this.divIconDirective) {
+            this.setIcon(this.divIconDirective);
             this.divIconDirective.updateEvent.subscribe((event: Event) => {
                 this.setIcon(event.target);
             });
