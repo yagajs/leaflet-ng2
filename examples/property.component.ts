@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import {
     FormsModule
 } from '@angular/forms';
+import { Point } from 'leaflet';
 import { IExampleProperties } from './app-component-blueprint';
 
 /* tslint:disable:max-line-length */
@@ -72,12 +73,21 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 
 <div *ngIf="type === 'latlng'">
 
-  <div class="input-group input-group-sx">
-    <span class="input-group-addon fixed-space">{{ name }}</span>
-    <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="updateLat($event)" />
-    <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="updateLng($event)" />
-  </div>
-   
+    <div class="input-group input-group-sx">
+        <span class="input-group-addon fixed-space">{{ name }}</span>
+        <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="updateLat($event)" />
+        <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="updateLng($event)" />
+    </div>
+
+</div>
+
+<div *ngIf="type === 'point'">
+    <div class="input-group input-group-sx">
+        <span class="input-group-addon fixed-space">{{ name }}</span>
+        <input type="number" class="form-control" [ngModel]="value.x" (ngModelChange)="valueChange.emit(updatePointX($event))" />
+        <input type="number" class="form-control" [ngModel]="value.y" (ngModelChange)="valueChange.emit(updatePointY($event))" />
+    </div>
+
 </div>
 
 <div *ngIf="type === 'text[]'">
@@ -101,42 +111,55 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 })
 export class ExamplePropertyComponent {
 
-    @Output() valueChange: EventEmitter<any> = new EventEmitter();
+    @Output() public valueChange: EventEmitter<any> = new EventEmitter();
 
-    @Input() name: string;
-    @Input() type: string;
-    @Input() value: any;
-    @Input() additional: any;
+    @Input() public name: string;
+    @Input() public type: string;
+    @Input() public value: any;
+    @Input() public additional: any;
 
-    addToArrayValue: any;
+    public addToArrayValue: any;
 
-    addToArray(value: any): void {
+    public addToArray(value: any): void {
         this.value.push(value);
         this.valueChange.emit(this.value);
     }
-    updateInArray(value: any, element: any): void {
+    public updateInArray(value: any, element: any): void {
         this.value[(<any[]>this.value).indexOf(element)] = value;
         this.valueChange.emit(this.value);
     }
-    spliceArray(element: any): void {
+    public spliceArray(element: any): void {
         this.value.splice(this.value.indexOf(element), 1);
         this.valueChange.emit(this.value);
     }
 
-    updateLat(value: number) {
+    public updateLat(value: number) {
         this.value.lat = value;
+        this.value = this.value.clone();
         this.valueChange.emit(this.value);
     }
-    updateLng(value: number) {
+    public updateLng(value: number) {
         this.value.lng = value;
+        this.value = this.value.clone();
         this.valueChange.emit(this.value);
+    }
+
+    public updatePointX(value: number): Point {
+        this.value.x = value;
+        this.value = this.value.clone();
+        return this.value;
+    }
+    public updatePointY(value: number): Point {
+        this.value.y = value;
+        this.value = this.value.clone();
+        return this.value;
     }
 
 }
 
 @Component({
     selector: 'example-properties',
-    template: PROPERTIES_WRAPPER
+    template: PROPERTIES_WRAPPER,
 })
 
 export class ExamplePropertiesComponent {
