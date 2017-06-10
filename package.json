@@ -64,6 +64,7 @@
     "@angular/platform-browser": "^4.0.2",
     "@angular/platform-browser-dynamic": "^4.0.2",
     "@types/chai": "^3.5.0",
+    "@types/es6-shim": "^0.31.33",
     "@types/mocha": "^2.2.41",
     "bootstrap": "^3.3.7",
     "browserify": "^14.0.0",
@@ -90,6 +91,7 @@
     "leaflet": "^1.0.3"
   },
   "peerDependencies": {
-    "@angular/core": ">=2.0.0"
+    "@angular/core": ">=2.0.0",
+    "@types/es6-shim": "^0.31.33"
   }
 }
