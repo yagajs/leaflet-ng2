@@ -31,28 +31,28 @@ export abstract class ExampleAppComponentBlueprint implements AfterViewInit {
     @ViewChild(MapComponent) private mapComponent: MapComponent;
 
     constructor() {
-        (<any>window).app = this;
+        (window as any).app = this;
     };
 
     public ngAfterViewInit(): void {
-        (<any>window).map = this.mapComponent;
+        (window as any).map = this.mapComponent;
     }
 
-    getOutputPropertyByName(name: string): IExampleOutputProperty {
+    public getOutputPropertyByName(name: string): IExampleOutputProperty {
         for (let i: number = 0; i < this.properties.output.length; i += 1) {
             if (this.properties.output[i].name === name) {
                 return this.properties.output[i];
             }
         }
     }
-    getInputPropertyByName(name: string): IExampleInputProperty {
+    public getInputPropertyByName(name: string): IExampleInputProperty {
         for (let i: number = 0; i < this.properties.input.length; i += 1) {
             if (this.properties.input[i].name === name) {
                 return this.properties.input[i];
             }
         }
     }
-    getDuplexPropertyByName(name: string): IExampleDuplexProperty {
+    public getDuplexPropertyByName(name: string): IExampleDuplexProperty {
         for (let i: number = 0; i < this.properties.duplex.length; i += 1) {
             if (this.properties.duplex[i].name === name) {
                 return this.properties.duplex[i];
@@ -60,7 +60,7 @@ export abstract class ExampleAppComponentBlueprint implements AfterViewInit {
         }
     }
 
-    handleEvent(name: string, event: Event): void {
+    public handleEvent(name: string, event: Event): void {
         const target: IExampleOutputProperty = this.getOutputPropertyByName(name);
         target.value = EVENT_FIRED_TEXT;
         setTimeout(() => {

@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -53,19 +53,24 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
-            {name: 'display', value: true, type: 'checkbox' }
+            {name: 'display', value: true, type: 'checkbox' },
         ],
         input: [
             {name: 'metric', value: true, type: 'checkbox' },
             {name: 'imperial', value: true, type: 'checkbox' },
             {name: 'maxWidth', value: 150, type: 'number' },
-            {name: 'position', value: 'bottomleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
-            {name: 'opacity', value: 0.8, type: 'relative'}
+            {
+                additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']},
+                name: 'position',
+                type: 'select',
+                value: 'bottomleft',
+            },
+            {name: 'opacity', value: 0.8, type: 'relative'},
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -76,15 +81,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mouseout', value: '', type: 'event' },
             {name: 'mousemove', value: '', type: 'event' },
             {name: 'positionChange', value: '', type: 'event' },
-            {name: 'displayChange', value: '', type: 'event' }
-        ]
+            {name: 'displayChange', value: '', type: 'event' },
+        ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 

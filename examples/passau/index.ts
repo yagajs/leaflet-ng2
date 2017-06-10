@@ -4,9 +4,9 @@ import 'zone.js';
 
 import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
-import { Component, PlatformRef, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { Component, NgModule, PlatformRef } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExamplePropertiesModule } from '../property.component'; // this is just for the header
@@ -50,19 +50,20 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent {
-    editable: boolean = false;
-    name: string = 'Passau';
-    lat: number = 48.5768558;
-    lng: number = 13.268283;
+    public editable: boolean = false;
+    public name: string = 'Passau';
+    public lat: number = 48.5768558;
+    public lng: number = 13.268283;
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, /* just for the website -> */ ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, /* just for the website -> */ ExamplePropertiesModule ],
 })
 export class AppModule { }
 

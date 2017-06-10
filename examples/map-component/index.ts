@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -58,7 +58,7 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
@@ -67,12 +67,12 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'lat', value: 51, type: 'number' },
             {name: 'lng', value: 7, type: 'number' },
             {name: 'minZoom', value: 5, type: 'number' },
-            {name: 'maxZoom', value: 15, type: 'number'}
+            {name: 'maxZoom', value: 15, type: 'number'},
         ],
         input: [
             {name: 'scrollWheelZoomEnabled', value: true, type: 'checkbox' },
             {name: 'touchZoomEnabled', value: true, type: 'checkbox' },
-            {name: 'tapEnabled', value: true, type: 'checkbox' }
+            {name: 'tapEnabled', value: true, type: 'checkbox' },
             ],
         output: [
             {name: 'baselayerchange', value: '', type: 'event' },
@@ -86,15 +86,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mousemove', value: '', type: 'event' },
             {name: 'contextmenu', value: '', type: 'event' },
             {name: 'keypress', value: '', type: 'event' },
-            {name: 'preclick', value: '', type: 'event' }
-            ]
+            {name: 'preclick', value: '', type: 'event' },
+            ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 

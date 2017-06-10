@@ -2,12 +2,12 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import { YagaModule, OSM_TILE_LAYER_URL } from '../../lib/index'; // @yaga/leflet-ng2
+import { OSM_TILE_LAYER_URL, YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -78,7 +78,7 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
@@ -86,7 +86,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'url', value: OSM_TILE_LAYER_URL, type: 'text' },
             {name: 'display', value: true, type: 'checkbox' },
             {name: 'opacity', value: 7, type: 'relative' },
-            {name: 'zIndex', value: 5, type: 'number' }
+            {name: 'zIndex', value: 5, type: 'number' },
         ],
         input: [
             {name: 'attribution', value: 'OpenStreetMap', type: 'text' },
@@ -108,7 +108,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'tms', value: false, type: 'checkbox' },
             {name: 'zoomReverse', value: false, type: 'checkbox' },
             {name: 'detectRetina', value: false, type: 'checkbox' },
-            {name: 'crossOrigin', value: false, type: 'checkbox' }
+            {name: 'crossOrigin', value: false, type: 'checkbox' },
         ],
 
         output: [
@@ -129,15 +129,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'tileloadstart', value: '', type: 'event' },
             {name: 'tileerror', value: '', type: 'event' },
             {name: 'tileload', value: '', type: 'event' },
-            {name: 'load', value: '', type: 'event' }
-        ]
+            {name: 'load', value: '', type: 'event' },
+        ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 

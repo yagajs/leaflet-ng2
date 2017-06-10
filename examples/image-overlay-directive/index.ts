@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -61,7 +61,7 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
@@ -72,14 +72,14 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'east', value: 180, type: 'number' },
             {name: 'west', value: 1, type: 'number'},
             {name: 'display', value: true, type: 'checkbox'},
-            {name: 'opacity', value: 0.8, type: 'relative'}
+            {name: 'opacity', value: 0.8, type: 'relative'},
         ],
         input: [
             {name: 'attribution', value: 'Leaflet-Logo', type: 'text' },
             {name: 'interactive', value: true, type: 'checkbox' },
             {name: 'url', value: 'http://leafletjs.com/docs/images/logo.png', type: 'text' },
             {name: 'crossOrigin', value: false, type: 'checkbox' },
-            {name: 'alt', value: 'Leaflet-Logo', type: 'text' }
+            {name: 'alt', value: 'Leaflet-Logo', type: 'text' },
             ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -91,15 +91,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mousemove', value: '', type: 'event' },
             {name: 'contextmenu', value: '', type: 'event' },
             {name: 'add', value: '', type: 'event' },
-            {name: 'remove', value: '', type: 'event' }
-            ]
+            {name: 'remove', value: '', type: 'event' },
+            ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 
