@@ -1,17 +1,17 @@
-import {
-    Component,
-    AfterViewInit,
-    ElementRef,
-    Inject,
-    Input,
-    Output,
-    EventEmitter,
-    ViewChild,
-    NgModule
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    FormsModule
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    NgModule,
+    Output,
+    ViewChild,
+} from '@angular/core';
+import {
+    FormsModule,
 } from '@angular/forms';
 import { Point } from 'leaflet';
 import { IExampleProperties } from './app-component-blueprint';
@@ -35,6 +35,7 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
   </div>`;
 /* tslint:enable */
 
+/* tslint:disable:max-line-length */
 @Component({
     selector: 'example-property',
     template: `
@@ -107,8 +108,9 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
     <span class="input-group-btn"><button class="btn btn-success" (click)="addToArray(addToArrayValue)"><span class="fa fa-plus"></span></button></span>
   </div>
    
-</div>`
+</div>`,
 })
+/* tslint:enable */
 export class ExamplePropertyComponent {
 
     @Output() public valueChange: EventEmitter<any> = new EventEmitter();
@@ -125,7 +127,7 @@ export class ExamplePropertyComponent {
         this.valueChange.emit(this.value);
     }
     public updateInArray(value: any, element: any): void {
-        this.value[(<any[]>this.value).indexOf(element)] = value;
+        this.value[(<any[]> this.value).indexOf(element)] = value;
         this.valueChange.emit(this.value);
     }
     public spliceArray(element: any): void {
@@ -157,17 +159,18 @@ export class ExamplePropertyComponent {
 
 }
 
+/* tslint:disable:max-classes-per-file */
 @Component({
     selector: 'example-properties',
     template: PROPERTIES_WRAPPER,
 })
-
 export class ExamplePropertiesComponent {
 
-    @Output() propertiesChange: EventEmitter<IExampleProperties> = new EventEmitter();
-    @Input() properties: IExampleProperties;
+    @Output() public propertiesChange: EventEmitter<IExampleProperties> = new EventEmitter();
+    @Input() public properties: IExampleProperties;
 }
 
+/* tslint:disable:max-line-length max-classes-per-file */
 @Component({
     selector: 'example-header',
     template: `
@@ -181,13 +184,15 @@ export class ExamplePropertiesComponent {
             <li class="nav-item nav-link active"><a href="#"><span class="fa fa-stethoscope" aria-hidden="true"></span> {{ title }}</a></li>
         </ul>
     </div>
-</header>`
+</header>`,
 })
 export class ExampleHeaderComponent {
 
-    @Input() title: string;
+    @Input() public title: string;
 }
+/* tslint:enable */
 
+/* tslint:disable:max-line-length max-classes-per-file */
 @Component({
     selector: 'example-footer',
     template: `
@@ -202,7 +207,7 @@ export class ExampleHeaderComponent {
       </span>
     </p>
   </div>
-</footer>`
+</footer>`,
 })
 export class ExampleFooterComponent {}
 
@@ -211,17 +216,17 @@ export class ExampleFooterComponent {}
         ExamplePropertyComponent,
         ExamplePropertiesComponent,
         ExampleHeaderComponent,
-        ExampleFooterComponent
+        ExampleFooterComponent,
     ],
     exports: [
         ExamplePropertyComponent,
         ExamplePropertiesComponent,
         ExampleHeaderComponent,
-        ExampleFooterComponent
+        ExampleFooterComponent,
     ],
     imports: [
         CommonModule,
-        FormsModule
-    ]
+        FormsModule,
+    ],
 })
 export class ExamplePropertiesModule { }

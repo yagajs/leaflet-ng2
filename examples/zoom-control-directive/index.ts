@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -24,14 +24,14 @@ const template: string = `
       <yaga-zoom-control
       
         (click)="handleEvent('click', $event);"
-        (dblclick)="handleEvent('dblclick', event);"
-        (mousedown)="handleEvent('mousedown', event);"
-        (mouseup)="handleEvent('mouseup', event);"
-        (mouseover)="handleEvent('mouseover', event);"
-        (mouseout)="handleEvent('mouseout', event);"
-        (mousemove)="handleEvent('mousemove', event);"
-        (positionChange)="handleEvent('positionChange', event);"
-        (displayChange)="handleEvent('displayChange', event);"
+        (dblclick)="handleEvent('dblclick', $event);"
+        (mousedown)="handleEvent('mousedown', $event);"
+        (mouseup)="handleEvent('mouseup', $event);"
+        (mouseover)="handleEvent('mouseover', $event);"
+        (mouseout)="handleEvent('mouseout', $event);"
+        (mousemove)="handleEvent('mousemove', $event);"
+        (positionChange)="handleEvent('positionChange', $event);"
+        (displayChange)="handleEvent('displayChange', $event);"
 
         [zoomInText]="getInputPropertyByName('zoomInText').value"
         [zoomInTitle]="getInputPropertyByName('zoomInTitle').value"
@@ -57,13 +57,13 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
             {name: 'display', value: true, type: 'checkbox' },
-            {name: 'zIndex', value: 1, type: 'number'}
+            {name: 'zIndex', value: 1, type: 'number'},
 
         ],
         input: [
@@ -71,8 +71,13 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'zoomInTitle', value: 'Zoom in', type: 'text'},
             {name: 'zoomOutText', value: '-', type: 'text'},
             {name: 'zoomOutTitle', value: 'Zoom out', type: 'text'},
-            {name: 'position', value: 'topleft', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} },
-            {name: 'opacity', value: 0.8, type: 'relative'}
+            {
+                additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']},
+                name: 'position',
+                type: 'select',
+                value: 'topleft',
+                },
+            {name: 'opacity', value: 0.8, type: 'relative'},
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -85,15 +90,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'positionChange', value: '', type: 'event' },
             {name: 'displayChange', value: '', type: 'event' },
             {name: 'addEvent', value: '', type: 'event' },
-            {name: 'removeEvent', value: '', type: 'event' }
-        ]
+            {name: 'removeEvent', value: '', type: 'event' },
+        ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 

@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -24,14 +24,14 @@ const template: string = `
       <yaga-attribution-control
       
         (click)="handleEvent('click', $event);"
-        (dblclick)="handleEvent('dblclick', event);"
-        (mousedown)="handleEvent('mousedown', event);"
-        (mouseup)="handleEvent('mouseup', event);"
-        (mouseover)="handleEvent('mouseover', event);"
-        (mouseout)="handleEvent('mouseout', event);"
-        (mousemove)="handleEvent('mousemove', event);"
-        (positionChange)="handleEvent('positionChange', event);"
-        (displayChange)="handleEvent('displayChange', event);"
+        (dblclick)="handleEvent('dblclick', $event);"
+        (mousedown)="handleEvent('mousedown', $event);"
+        (mouseup)="handleEvent('mouseup', $event);"
+        (mouseover)="handleEvent('mouseover', $event);"
+        (mouseout)="handleEvent('mouseout', $event);"
+        (mousemove)="handleEvent('mousemove', $event);"
+        (positionChange)="handleEvent('positionChange', $event);"
+        (displayChange)="handleEvent('displayChange', $event);"
         
         [prefix]="getInputPropertyByName('prefix').value"
         [position]="getInputPropertyByName('position').value"
@@ -52,18 +52,25 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
             {name: 'display', value: true, type: 'checkbox' },
-            {name: 'attributions', value: ['first', 'second', 'third'], type: 'text[]' }
+            {name: 'attributions', value: ['first', 'second', 'third'], type: 'text[]' },
         ],
         input: [
+            /* tslint:disable:max-line-length */
             {name: 'prefix', value: '<a href="https://yagajs.org">YAGA</a> | <a href="https://leaflet-ng2.yagajs.org">leaflet-ng2</a>', type: 'text'},
+            /* tslint:enable */
             {name: 'opacity', value: 0.8, type: 'relative'},
-            {name: 'position', value: 'bottomright', type: 'select', additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']} }
+            {
+                additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']},
+                name: 'position',
+                type: 'select',
+                value: 'bottomright',
+            },
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -76,15 +83,15 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'positionChange', value: '', type: 'event' },
             {name: 'displayChange', value: '', type: 'event' },
             {name: 'addEvent', value: '', type: 'event' },
-            {name: 'removeEvent', value: '', type: 'event' }
-        ]
+            {name: 'removeEvent', value: '', type: 'event' },
+        ],
     };
 }
-
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 

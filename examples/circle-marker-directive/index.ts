@@ -6,8 +6,8 @@ import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
@@ -23,15 +23,15 @@ const template: string = `
     <yaga-map>
       <yaga-circle-marker
         (click)="handleEvent('click', $event);"
-        (dblclick)="handleEvent('dblclick', event);"
-        (mousedown)="handleEvent('mousedown', event);"
-        (mouseup)="handleEvent('mouseup', event);"
-        (mouseover)="handleEvent('mouseover', event);"
-        (mouseout)="handleEvent('mouseout', event);"
-        (mousemove)="handleEvent('mousemove', event);"
-        (contextmenu)="handleEvent('contextmenu', event);"
-        (keypress)="handleEvent('keypress', event);"
-        (preclick)="handleEvent('preclick', event);"
+        (dblclick)="handleEvent('dblclick', $event);"
+        (mousedown)="handleEvent('mousedown', $event);"
+        (mouseup)="handleEvent('mouseup', $event);"
+        (mouseover)="handleEvent('mouseover', $event);"
+        (mouseout)="handleEvent('mouseout', $event);"
+        (mousemove)="handleEvent('mousemove', $event);"
+        (contextmenu)="handleEvent('contextmenu', $event);"
+        (keypress)="handleEvent('keypress', $event);"
+        (preclick)="handleEvent('preclick', $event);"
         
         [(display)]="getDuplexPropertyByName('display').value"
         [(stroke)]="getDuplexPropertyByName('stroke').value"
@@ -68,7 +68,7 @@ const template: string = `
 
 @Component({
     selector: 'app',
-    template
+    template,
 })
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
@@ -78,14 +78,29 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'color', value: '#3cf', type: 'text' },
             {name: 'weight', value: 5, type: 'number' },
             {name: 'opacity', value: 0.8, type: 'relative'},
-            {name: 'lineCap', value: 'inherit', type: 'select', additional: { states: ['butt', 'round', 'square', 'inherit']} },
-            {name: 'lineJoin', value: 'inherit', type: 'select', additional: { states: ['miter', 'round', 'bevel', 'inherit']} },
+            {
+                additional: { states: ['butt', 'round', 'square', 'inherit']},
+                name: 'lineCap',
+                type: 'select',
+                value: 'inherit',
+            },
+            {
+                additional: { states: ['miter', 'round', 'bevel', 'inherit']},
+                name: 'lineJoin',
+                type: 'select',
+                value: 'inherit',
+            },
             {name: 'dashArray', value: '1, 2', type: 'text' },
             {name: 'dashOffset', value: '12px', type: 'text' },
             {name: 'fill', value: true, type: 'checkbox'},
             {name: 'fillColor', value: '#9ff', type: 'text' },
             {name: 'fillOpacity', value: 0.3, type: 'relative' },
-            {name: 'fillRule', value: 'inherit', type: 'select', additional: { states: ['nonzero', 'evenodd', 'inherit']} },
+            {
+                additional: { states: ['nonzero', 'evenodd', 'inherit']},
+                name: 'fillRule',
+                type: 'select',
+                value: 'inherit',
+            },
             {name: 'className', value: '', type: 'text' },
             {name: 'lat', value: 51, type: 'number'},
             {name: 'lng', value: 7, type: 'number' },
@@ -96,7 +111,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
         input: [
             {name: 'interactive', value: true, type: 'checkbox' },
             {name: 'tooltip directive', value: 'This is the tooltip content', type: 'text' },
-            {name: 'popup directive', value: 'This is the popup content', type: 'text' }
+            {name: 'popup directive', value: 'This is the popup content', type: 'text' },
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
@@ -108,15 +123,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'mousemove', value: '', type: 'event' },
             {name: 'contextmenu', value: '', type: 'event' },
             {name: 'keypress', value: '', type: 'event' },
-            {name: 'preclick', value: '', type: 'event' }
-        ]
+            {name: 'preclick', value: '', type: 'event' },
+        ],
     };
 }
 
+/* tslint:disable:max-classes-per-file */
 @NgModule({
     bootstrap:    [ AppComponent ],
     declarations: [ AppComponent ],
-    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ]
+    imports:      [ BrowserModule, FormsModule, YagaModule, ExamplePropertiesModule ],
 })
 export class AppModule { }
 
