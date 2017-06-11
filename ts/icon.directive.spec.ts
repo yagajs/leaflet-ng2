@@ -34,6 +34,26 @@ describe('Icon Directive', () => {
     });
 
     // Inputs
+    describe('[className]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = 'any-class';
+            icon.className = val;
+            expect(icon.options.className).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = 'any-class';
+            icon.className = val;
+            expect(icon.className).to.equal(val);
+        });
+        it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
+            const val: string = 'any-class';
+            icon.updateEvent.subscribe((ev: Event) => {
+                expect(ev.target).to.equal(icon);
+                return done();
+            });
+            icon.className = val;
+        });
+    });
     describe('[iconUrl]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
@@ -52,6 +72,26 @@ describe('Icon Directive', () => {
                 return done();
             });
             icon.iconUrl = val;
+        });
+    });
+    describe('[iconRetinaUrl]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.iconRetinaUrl = val;
+            expect(icon.options.iconRetinaUrl).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.iconRetinaUrl = val;
+            expect(icon.iconRetinaUrl).to.equal(val);
+        });
+        it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.updateEvent.subscribe((ev: Event) => {
+                expect(ev.target).to.equal(icon);
+                return done();
+            });
+            icon.iconRetinaUrl = val;
         });
     });
     describe('[iconSize]', () => {
@@ -117,6 +157,32 @@ describe('Icon Directive', () => {
             icon.popupAnchor = val;
         });
     });
+    // We have to wait for adding the definition for tooltipAnchor
+    // see: https://github.com/yagajs/leaflet-ng2/issues/220#issuecomment-307634276
+    //
+    // describe('[tooltipAnchor]', () => {
+    //     it('should be changed in Leaflet when changing in Angular', () => {
+    //         const val: Point = point(Math.random() * 100, Math.random() * 100);
+    //         icon.tooltipAnchor = val;
+    //         /* istanbul ignore if */
+    //         if (icon.options.tooltipAnchor !== val) {
+    //             throw new Error(`Wrong value setted: ${ val } != ${ icon.options.tooltipAnchor }`);
+    //         }
+    //     });
+    //     it('should be changed in Angular when changing in Angular', () => {
+    //         const val: Point = point(Math.random() * 100, Math.random() * 100);
+    //         icon.tooltipAnchor = val;
+    //         expect(icon.tooltipAnchor).to.equal(val);
+    //     });
+    //     it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
+    //         const val: Point = point(Math.random() * 100, Math.random() * 100);
+    //         icon.updateEvent.subscribe((ev: Event) => {
+    //             expect(ev.target).to.equal(icon);
+    //             return done();
+    //         });
+    //         icon.tooltipAnchor = val;
+    //     });
+    // });
     describe('[shadowUrl]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = TRANSPARENT_PIXEL;
@@ -135,6 +201,26 @@ describe('Icon Directive', () => {
                 return done();
             });
             icon.shadowUrl = val;
+        });
+    });
+    describe('[shadowRetinaUrl]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.shadowRetinaUrl = val;
+            expect(icon.options.shadowRetinaUrl).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.shadowRetinaUrl = val;
+            expect(icon.shadowRetinaUrl).to.equal(val);
+        });
+        it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
+            const val: string = TRANSPARENT_PIXEL;
+            icon.updateEvent.subscribe((ev: Event) => {
+                expect(ev.target).to.equal(icon);
+                return done();
+            });
+            icon.shadowRetinaUrl = val;
         });
     });
     describe('[shadowSize]', () => {
