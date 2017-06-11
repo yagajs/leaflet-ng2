@@ -13,7 +13,7 @@ import {
 import {
     FormsModule,
 } from '@angular/forms';
-import { Point } from 'leaflet';
+import { latLng, LatLngBounds, Point } from 'leaflet';
 import { IExampleProperties } from './app-component-blueprint';
 
 /* tslint:disable:max-line-length */
@@ -76,8 +76,20 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 
     <div class="input-group input-group-sx">
         <span class="input-group-addon fixed-space">{{ name }}</span>
-        <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="updateLat($event)" />
-        <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="updateLng($event)" />
+        <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="valueChange.emit(updateLat($event))" />
+        <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="valueChange.emit(updateLng($event))" />
+    </div>
+
+</div>
+
+<div *ngIf="type === 'latlngBounds'">
+
+    <div class="input-group input-group-sx">
+        <span class="input-group-addon fixed-space">{{ name }} (SWNE)</span>
+        <input type="number" class="form-control" [ngModel]="value.getSouth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsSouth($event))" />
+        <input type="number" class="form-control" [ngModel]="value.getWest()" (ngModelChange)="valueChange.emit(updateLatLngBoundsWest($event))" />
+        <input type="number" class="form-control" [ngModel]="value.getNorth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsNorth($event))" />
+        <input type="number" class="form-control" [ngModel]="value.getEast()" (ngModelChange)="valueChange.emit(updateLatLngBoundsEast($event))" />
     </div>
 
 </div>
@@ -157,6 +169,34 @@ export class ExamplePropertyComponent {
         return this.value;
     }
 
+    public updateLatLngBoundsSouth(value: number): LatLngBounds {
+        this.value = new LatLngBounds(
+            latLng(value, (this.value as LatLngBounds).getWest()),
+            latLng((this.value as LatLngBounds).getNorth(), (this.value as LatLngBounds).getEast()),
+        );
+        return this.value;
+    }
+    public updateLatLngBoundsWest(value: number): LatLngBounds {
+        this.value = new LatLngBounds(
+            latLng((this.value as LatLngBounds).getSouth(), value),
+            latLng((this.value as LatLngBounds).getNorth(), (this.value as LatLngBounds).getEast()),
+        );
+        return this.value;
+    }
+    public updateLatLngBoundsNorth(value: number): LatLngBounds {
+        this.value = new LatLngBounds(
+            latLng((this.value as LatLngBounds).getSouth(), (this.value as LatLngBounds).getWest()),
+            latLng(value, (this.value as LatLngBounds).getEast()),
+        );
+        return this.value;
+    }
+    public updateLatLngBoundsEast(value: number): LatLngBounds {
+        this.value = new LatLngBounds(
+            latLng((this.value as LatLngBounds).getSouth(), (this.value as LatLngBounds).getWest()),
+            latLng((this.value as LatLngBounds).getNorth(), value),
+        );
+        return this.value;
+    }
 }
 
 /* tslint:disable:max-classes-per-file */

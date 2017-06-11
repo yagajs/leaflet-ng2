@@ -10,6 +10,8 @@ import { FormsModule }   from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { latLng, LatLngBounds } from 'leaflet';
+
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
 import { ExamplePropertiesModule, PROPERTIES_WRAPPER } from '../property.component';
 
@@ -26,6 +28,7 @@ const template: string = `
       [(lng)]="getDuplexPropertyByName('lng').value"
       [(minZoom)]="getDuplexPropertyByName('minZoom').value"
       [(maxZoom)]="getDuplexPropertyByName('maxZoom').value"
+      [(maxBounds)]="getDuplexPropertyByName('maxBounds').value"
 
       (baselayerchange)="handleEvent('baselayerchange', $event);"
       (move)="handleEvent('move', $event);"
@@ -68,6 +71,11 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'lng', value: 7, type: 'number' },
             {name: 'minZoom', value: 5, type: 'number' },
             {name: 'maxZoom', value: 15, type: 'number'},
+            {
+                name: 'maxBounds',
+                type: 'latlngBounds',
+                value: new LatLngBounds(latLng(-90, -180), latLng(90, 180)),
+            },
         ],
         input: [
             {name: 'scrollWheelZoomEnabled', value: true, type: 'checkbox' },
