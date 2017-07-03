@@ -86,9 +86,9 @@ For further information look at the [examples](https://leaflet-ng2.yagajs.org/1.
 
 ### Use with CLI
 
-For developing we recommend to use a command-line-interface like (`angular-cli`)[https://cli.angular.io/] for
-web-applications or (`ionic`)[http://ionicframework.com/] for smartdevice-like apps. *You can also check out
-our (ionic-starter templates)[https://github.com/yagajs/?q=ionic-starter] on our GitHub account*
+For developing we recommend to use a command-line-interface like [`angular-cli`](https://cli.angular.io/) for
+web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps. *You can also check out
+our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
 
 ## Scripts Tasks
 
