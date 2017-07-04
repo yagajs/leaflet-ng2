@@ -247,7 +247,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     /**
@@ -270,7 +270,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.setUrl(val);
     }
     get url(): string {
-        return (<any> this)._url;
+        return (this as any)._url;
     }
 
     /**
@@ -301,7 +301,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
     @Input() set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -313,7 +313,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         try {
             pane = this.getPane();
             container = this.getContainer();
-            map = (<any> this)._map;
+            map = (this as any)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -323,15 +323,15 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         if (val) {
             // show layer
             pane.appendChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.on(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.on(eventKey, events[eventKey], this);
             }
             this.redraw();
         } else {
             // hide layer
             pane.removeChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.off(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.off(eventKey, events[eventKey], this);
             }
         }
     }
@@ -349,7 +349,9 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             /* istanbul ignore next */
             return false;
         }
+        /* tslint:disable:prefer-for-of */
         for (let i: number = 0; i < pane.children.length; i += 1) {
+            /* tslint:enable */
             /* istanbul ignore else */
             if (pane.children[i] === container) {
                 return true;
@@ -389,7 +391,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.redraw();
     }
     get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point> this.options.tileSize);
+        return (this.options.tileSize as Point);
     }
 
     /**
@@ -485,8 +487,8 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set maxZoom(val: number) {
         this.options.maxZoom = val;
-        if ((<any> this)._map) {
-            (<any> (<any> this)._map)._updateZoomLevels();
+        if ((this as any)._map) {
+            ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
@@ -501,8 +503,8 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() set minZoom(val: number) {
         this.options.minZoom = val;
-        if ((<any> this)._map) {
-            (<any> (<any> this)._map)._updateZoomLevels();
+        if ((this as any)._map) {
+            ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
@@ -545,10 +547,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.options.subdomains = val;
     }
     get subdomains(): string[] {
-        if (typeof (<string> this.options.subdomains) === 'string') {
-            this.options.subdomains = (<string> this.options.subdomains).split('');
+        if (typeof (this.options.subdomains as string) === 'string') {
+            this.options.subdomains = (this.options.subdomains as string).split('');
         }
-        return (<string[]> this.options.subdomains);
+        return (this.options.subdomains as string[]);
     }
 
     /**
@@ -635,9 +637,9 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.0.2.html#tilelayer-attribution Original Leaflet documentation
      */
     @Input() set attribution(val: string) {
-        if ((<any> this)._map && (<any> this)._map.attributionControl) {
-            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
-            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
+        if ((this as any)._map && (this as any)._map.attributionControl) {
+            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }

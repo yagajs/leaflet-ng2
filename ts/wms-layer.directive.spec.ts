@@ -28,26 +28,26 @@ describe('WMS-Layer Directive', () => {
     let layer: WmsLayerDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         layer = new WmsLayerDirective(map);
     });
 
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), (<any> layer)._container)).to.equal(false);
+            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(false);
         });
         it('should re-add DOM container when display is true again', () => {
             layer.display = false;
             layer.display = true;
-            expect(hasAsChild(layer.getPane(), (<any> layer)._container)).to.equal(true);
+            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-            const moveEvents: Array<{fn: Function}> = (<any> map)._events.move;
+            const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['move'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['move'];
             /* tslint:enable */
 
             layer.display = false;
@@ -61,10 +61,10 @@ describe('WMS-Layer Directive', () => {
             done();
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-            const moveEvents: Array<{fn: Function}> = (<any> map)._events.move;
+            const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['move'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['move'];
             /* tslint:enable */
 
             layer.display = false;
@@ -102,7 +102,7 @@ describe('WMS-Layer Directive', () => {
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = EXAMPLE_WMS_LAYER_URL;
-            expect((<string> (<any> layer)._url)).to.equal(EXAMPLE_WMS_LAYER_URL);
+            expect(((layer as any)._url as string)).to.equal(EXAMPLE_WMS_LAYER_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.url = EXAMPLE_WMS_LAYER_URL;
@@ -545,7 +545,7 @@ describe('WMS-Layer Directive', () => {
     });
     describe('(tileunload)', () => {
         beforeEach(() => {
-            layer.off('tileunload', (<any> layer)._onTileRemove); // Hack to disable another listener
+            layer.off('tileunload', (layer as any)._onTileRemove); // Hack to disable another listener
         });
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {};

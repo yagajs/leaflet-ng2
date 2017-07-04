@@ -13,24 +13,24 @@ describe('Popup Directive', () => {
     let popup: PopupDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
-        (<any> popup)._contentNode = document.createElement('div');
-        (<any> popup)._container = document.createElement('div');
-        (<any> popup)._wrapper = document.createElement('div');
+        (popup as any)._contentNode = document.createElement('div');
+        (popup as any)._container = document.createElement('div');
+        (popup as any)._wrapper = document.createElement('div');
     });
 
     describe('[(opened)]', () => {
         beforeEach(() => {
-            (<any> popup)._wrapper = document.createElement('div');
+            (popup as any)._wrapper = document.createElement('div');
             popup.setLatLng(latLng(0, 0));
             popup.openOn(map);
         });
         it('should remove DOM container when not opened', () => {
             popup.opened = false;
             /* istanbul ignore if */
-            if ((<HTMLElement> (<any> popup)._container).parentNode) {
+            if (((popup as any)._container as HTMLElement).parentNode) {
                 throw new Error('Map is still parent element of the popup');
             }
         });
@@ -38,7 +38,7 @@ describe('Popup Directive', () => {
             popup.opened = true;
 
             /* istanbul ignore if */
-            if (!(<HTMLElement> (<any> popup)._container).parentNode) {
+            if (!((popup as any)._container as HTMLElement).parentNode) {
                 throw new Error('Map is still parent element of the popup');
             }
         });
@@ -46,7 +46,7 @@ describe('Popup Directive', () => {
     describe('[(content)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
-            expect((<string> (<any> popup)._content)).to.equal(EXAMPLE_CONTENT);
+            expect(((popup as any)._content as string)).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             popup.content = EXAMPLE_CONTENT;
@@ -218,7 +218,7 @@ describe('Popup Directive', () => {
                 expect(event.target).to.equal(popup);
                 done();
             });
-            (<any> popup)._close();
+            (popup as any)._close();
         });
     });
 
@@ -406,7 +406,7 @@ describe('Popup Directive', () => {
 
     describe('Remove from source element on destroy', () => {
         it('should call unbindPopup on destroy', (done: MochaDone) => {
-            (<any> popup)._source = {
+            (popup as any)._source = {
                 unbindPopup: done,
             };
             popup.ngOnDestroy();

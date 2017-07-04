@@ -25,8 +25,8 @@ describe('Image-Overlay Directive', () => {
     let layer: ImageOverlayDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         layer = new ImageOverlayDirective(map);
     });
 
@@ -42,10 +42,10 @@ describe('Image-Overlay Directive', () => {
             expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['zoom'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['zoom'];
             /* tslint:enable */
 
             layer.display = false;
@@ -59,10 +59,10 @@ describe('Image-Overlay Directive', () => {
             }
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['zoom'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['zoom'];
             /* tslint:enable */
 
             layer.display = false;
@@ -100,7 +100,7 @@ describe('Image-Overlay Directive', () => {
     describe('[(url)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.url = IMAGE_OVERLAY_URL;
-            expect((<string> (<any> layer)._url)).to.equal(IMAGE_OVERLAY_URL);
+            expect(((layer as any)._url as string)).to.equal(IMAGE_OVERLAY_URL);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.url = IMAGE_OVERLAY_URL;

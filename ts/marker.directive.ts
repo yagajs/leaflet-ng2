@@ -142,16 +142,16 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.on('contextmenu', (event: MouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        let oldDraggingEnable: Function = this.dragging.enable;
-        let oldDraggingDisable: Function = this.dragging.disable;
+        const oldDraggingEnable: () => any = this.dragging.enable;
+        const oldDraggingDisable: () => any = this.dragging.disable;
 
         this.dragging.enable = (): Handler => {
-            let val: Handler = oldDraggingEnable.call(this.dragging);
+            const val: Handler = oldDraggingEnable.call(this.dragging);
             this.draggableChange.emit(true);
             return val;
         };
         this.dragging.disable = (): Handler => {
-            let val: Handler = oldDraggingDisable.call(this.dragging);
+            const val: Handler = oldDraggingDisable.call(this.dragging);
             this.draggableChange.emit(false);
             return val;
         };
@@ -180,11 +180,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     @Input() public set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -196,7 +196,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         try {
             pane = this.getPane();
             container = this.getElement();
-            map = (<any> this)._map;
+            map = (this as any)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -206,14 +206,14 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         if (val) {
             // show layer
             pane.appendChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.on(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.on(eventKey, events[eventKey], this);
             }
         } else {
             // hide layer
             pane.removeChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.off(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.off(eventKey, events[eventKey], this);
             }
         }
     }
@@ -227,7 +227,9 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
             /* istanbul ignore next */
             return false;
         }
+        /* tslint:disable:prefer-for-of */
         for (let i: number = 0; i < pane.children.length; i += 1) {
+            /* tslint:enable */
             /* istanbul ignore else */
             if (pane.children[i] === container) {
                 return true;
@@ -237,7 +239,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     }
 
     public setLatLng(val: LatLng | LatLngLiteral | LatLngTuple): this {
-        super.setLatLng((<any> val));
+        super.setLatLng((val as any));
         if (this.initialized) {
             this.positionChange.emit(this.getLatLng());
             this.latChange.emit(this.getLatLng().lat);

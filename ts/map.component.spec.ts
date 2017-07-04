@@ -244,7 +244,7 @@ describe('Map Component', () => {
     describe('[(maxBounds)]', () => {
         beforeEach(() => {
             // Fix for no browser-test
-            (<any> map)._size = point(100, 100);
+            (map as any)._size = point(100, 100);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const lat1: number = Math.random() * 100;

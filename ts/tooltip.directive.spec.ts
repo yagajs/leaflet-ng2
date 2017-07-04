@@ -14,23 +14,23 @@ describe('Tooltip Directive', () => {
     let tooltip: TooltipDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
-        (<any> tooltip)._contentNode = document.createElement('div');
-        (<any> tooltip)._container = document.createElement('div');
+        (tooltip as any)._contentNode = document.createElement('div');
+        (tooltip as any)._container = document.createElement('div');
     });
 
     describe('[(opened)]', () => {
         beforeEach(() => {
-            (<any> tooltip)._wrapper = document.createElement('div');
+            (tooltip as any)._wrapper = document.createElement('div');
             tooltip.setLatLng(latLng(0, 0));
             map.openTooltip(tooltip);
         });
         it('should remove DOM container when not opened', () => {
             tooltip.opened = false;
             /* istanbul ignore if */
-            if ((<HTMLElement> (<any> tooltip)._container).parentNode) {
+            if (((tooltip as any)._container as HTMLElement).parentNode) {
                 throw new Error('Map is still parent element of the tooltip');
             }
         });
@@ -38,7 +38,7 @@ describe('Tooltip Directive', () => {
             tooltip.opened = true;
 
             /* istanbul ignore if */
-            if (!(<HTMLElement> (<any> tooltip)._container).parentNode) {
+            if (!((tooltip as any)._container as HTMLElement).parentNode) {
                 throw new Error('Map is still parent element of the tooltip');
             }
         });
@@ -46,7 +46,7 @@ describe('Tooltip Directive', () => {
     describe('[(content)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             tooltip.content = EXAMPLE_CONTENT;
-            expect((<string> (<any> tooltip)._content)).to.equal(EXAMPLE_CONTENT);
+            expect(((tooltip as any)._content as string)).to.equal(EXAMPLE_CONTENT);
         });
         it('should be changed in Angular when changing in Angular', () => {
             tooltip.content = EXAMPLE_CONTENT;
@@ -254,7 +254,7 @@ describe('Tooltip Directive', () => {
                 expect(event.target).to.equal(tooltip);
                 return done();
             });
-            (<any> tooltip)._close();
+            (tooltip as any)._close();
         });
     });
 
@@ -368,7 +368,7 @@ describe('Tooltip Directive', () => {
 
     describe('Remove from source element on destroy', () => {
         it('should call unbindPopup on destroy', (done: MochaDone) => {
-            (<any> tooltip)._source = {
+            (tooltip as any)._source = {
                 unbindTooltip: done,
             };
             tooltip.ngOnDestroy();

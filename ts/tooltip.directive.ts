@@ -56,14 +56,14 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if ((<any> this)._source) {
-            (<any> this)._source.unbindTooltip();
+        if ((this as any)._source) {
+            (this as any)._source.unbindTooltip();
         }
     }
 
     public setContent(content: any): this { // Content
         this.contentChange.emit((content));
-        return super.setContent((<HTMLElement> content));
+        return super.setContent((content as HTMLElement));
     }
     @Input() public set content(val: Content) {
         this.setContent(val);
@@ -77,10 +77,10 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
             this.map.openTooltip(this);
             return;
         }
-        (<any> this)._close();
+        (this as any)._close();
     }
     public get opened(): boolean {
-        return !!(<any> this)._map;
+        return !!(this as any)._map;
     }
 
     public setLatLng(latlng: LatLngExpression): this {
@@ -124,14 +124,14 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
 
     @Input() public set className(val: string) {
         this.options.className = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get className(): string {
         return this.options.className;
     }
     @Input() public set pane(val: string) {
         this.options.pane = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get pane(): string {
         return this.options.pane;
@@ -139,7 +139,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
 
     @Input() public set interactive(val: boolean) {
         this.options.interactive = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get interactive(): boolean {
         return this.options.interactive;
@@ -170,6 +170,6 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         this.options.offset = val;
     }
     public get offset(): Point {
-        return (<Point> this.options.offset);
+        return (this.options.offset as Point);
     }
 }
