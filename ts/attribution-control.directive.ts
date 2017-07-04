@@ -135,17 +135,17 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
     @Input() public set attributions(val: string[]) {
         this.removeAllAttributions(true);
-        for (const i of val) {
-            super.addAttribution(val[i]);
+        for (const attr of val) {
+            super.addAttribution(attr);
         }
         this.attributionsChange.emit(this.attributions);
     }
     public get attributions(): string[] {
         const keys: string[] = Object.keys((this as any)._attributions);
         const arr: string[] = [];
-        for (const i of keys) {
-            if ((this as any)._attributions[i] === 1) {
-                arr.push(keys[i]);
+        for (const key of keys) {
+            if ((this as any)._attributions[key] === 1) {
+                arr.push(key);
             }
         }
         return arr;
@@ -153,8 +153,8 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
     public removeAllAttributions(silent?: boolean): this {
         const keys: string[] = Object.keys((this as any)._attributions);
-        for (const i of keys) {
-            super.removeAttribution(i);
+        for (const key of keys) {
+            super.removeAttribution(key);
         }
         if (silent) {
             return this;
