@@ -14,7 +14,7 @@ import {
 } from 'leaflet';
 
 @Directive({
-    selector: 'yaga-icon',
+    selector: 'yaga-div-icon',
 })
 export class DivIconDirective extends DivIcon  {
     @Output('update') public updateEvent: EventEmitter<Event> = new EventEmitter();
@@ -25,6 +25,22 @@ export class DivIconDirective extends DivIcon  {
     ) {
         super({});
         this.contentHtml = elementRef.nativeElement;
+
+        const mutationObserver = new MutationObserver(() => {
+            this.updateEvent.emit({
+                target: this,
+                type: 'update',
+            });
+        });
+        mutationObserver.observe(
+            this.contentHtml,
+            {
+                attributes: true,
+                characterData: true,
+                childList: true,
+                subtree: true,
+            },
+        );
     }
 
     @Input() public set iconSize(val: Point) {
@@ -59,9 +75,7 @@ export class DivIconDirective extends DivIcon  {
     }
 
     public createIcon(oldDivIcon: HTMLElement): HTMLElement {
-        const clonedOptions: DivIconOptions = Object.create(this.options);
-        clonedOptions.html = '';
-        oldDivIcon = super.createIcon.call({options: clonedOptions}, oldDivIcon);
+        oldDivIcon = super.createIcon(oldDivIcon);
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
         return oldDivIcon;
     }
