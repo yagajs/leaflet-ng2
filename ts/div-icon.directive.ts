@@ -18,7 +18,7 @@ import {
 })
 export class DivIconDirective extends DivIcon  {
     @Output('update') public updateEvent: EventEmitter<Event> = new EventEmitter();
-    protected contentHtml: HTMLElement;
+    public contentHtml: HTMLElement;
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
@@ -26,21 +26,30 @@ export class DivIconDirective extends DivIcon  {
         super({});
         this.contentHtml = elementRef.nativeElement;
 
-        const mutationObserver = new MutationObserver(() => {
-            this.updateEvent.emit({
-                target: this,
-                type: 'update',
+        if (typeof MutationObserver === 'function') {
+            const mutationObserver = new MutationObserver(() => {
+                this.updateEvent.emit({
+                    target: this,
+                    type: 'update',
+                });
             });
-        });
-        mutationObserver.observe(
-            this.contentHtml,
-            {
-                attributes: true,
-                characterData: true,
-                childList: true,
-                subtree: true,
-            },
-        );
+            mutationObserver.observe(
+                this.contentHtml,
+                {
+                    attributes: true,
+                    characterData: true,
+                    childList: true,
+                    subtree: true,
+                },
+            );
+        } else {
+            this.contentHtml.addEventListener('DOMSubtreeModified', () => {
+                this.updateEvent.emit({
+                    target: this,
+                    type: 'update',
+                });
+            });
+        }
     }
 
     @Input() public set iconSize(val: Point) {
@@ -76,6 +85,9 @@ export class DivIconDirective extends DivIcon  {
 
     public createIcon(oldDivIcon: HTMLElement): HTMLElement {
         oldDivIcon = super.createIcon(oldDivIcon);
+        if (oldDivIcon.getAttribute('class').split(' ').indexOf('yaga-div-icon') === -1) {
+            oldDivIcon.setAttribute('class', oldDivIcon.getAttribute('class') + ' yaga-div-icon');
+        }
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
         return oldDivIcon;
     }
