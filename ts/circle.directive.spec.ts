@@ -16,9 +16,9 @@ describe('Circle Directive', () => {
     let layer: CircleDirective<any>;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
-        (<any> map)._renderer = (<any> map)._renderer || new SVG();
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
+        (map as any)._renderer = (map as any)._renderer || new SVG();
 
         layer = new CircleDirective<any>(map);
         layer.ngAfterViewInit();
@@ -31,7 +31,7 @@ describe('Circle Directive', () => {
 
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.position = TEST_VALUE;
-            expect((<any> layer)._latlng).to.equal(TEST_VALUE);
+            expect((layer as any)._latlng).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.position = TEST_VALUE;
@@ -196,8 +196,8 @@ describe('Circle Directive', () => {
         const TEST_POINT: LatLngExpression = [3, 4];
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.geoJSON = TEST_VALUE;
-            expect((<LatLng> layer.position).lng).to.equal(TEST_VALUE.geometry.coordinates[0]);
-            expect((<LatLng> layer.position).lat).to.equal(TEST_VALUE.geometry.coordinates[1]);
+            expect((layer.position as LatLng).lng).to.equal(TEST_VALUE.geometry.coordinates[0]);
+            expect((layer.position as LatLng).lat).to.equal(TEST_VALUE.geometry.coordinates[1]);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.geoJSON = TEST_VALUE;
@@ -266,7 +266,7 @@ describe('Circle Directive', () => {
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            expect((<any> layerWithPopup)._popup).to.equal(popup);
+            expect((layerWithPopup as any)._popup).to.equal(popup);
         });
     });
 
@@ -276,9 +276,9 @@ describe('Circle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any> map)._size = point(100, 100);
-            (<any> map)._pixelOrigin = point(50, 50);
-            (<any> map)._renderer = (<any> map)._renderer || new SVG();
+            (map as any)._size = point(100, 100);
+            (map as any)._pixelOrigin = point(50, 50);
+            (map as any)._renderer = (map as any)._renderer || new SVG();
             testDiv = document.createElement('div');
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
@@ -287,7 +287,7 @@ describe('Circle Directive', () => {
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
+            expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
         });
     });
 

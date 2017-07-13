@@ -130,7 +130,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     public setUrl(url: string, noRedraw?: boolean): this {
@@ -144,7 +144,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.setUrl(val);
     }
     public get url(): string {
-        return (<any> this)._url;
+        return (this as any)._url;
     }
 
     public setOpacity(val: number): this {
@@ -162,7 +162,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     }
 
     @Input() public set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -174,7 +174,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         try {
             pane = this.getPane();
             container = this.getContainer();
-            map = (<any> this)._map;
+            map = (this as any)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -184,15 +184,15 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         if (val) {
             // show layer
             pane.appendChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.on(eventKeys[i], events[eventKeys[i]], this);
+            for (const oventKey of eventKeys) {
+                map.on(oventKey, events[oventKey], this);
             }
             this.redraw();
         } else {
             // hide layer
             pane.removeChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.off(eventKeys[i], events[eventKeys[i]], this);
+            for (const oventKey of eventKeys) {
+                map.off(oventKey, events[oventKey], this);
             }
         }
     }
@@ -206,7 +206,9 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             /* istanbul ignore next */
             return false;
         }
+        /* tslint:disable:prefer-for-of */
         for (let i: number = 0; i < pane.children.length; i += 1) {
+            /* tslint:enable */
             /* istanbul ignore else */
             if (pane.children[i] === container) {
                 return true;
@@ -231,7 +233,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.tileSize = val;
     }
     public get tileSize(): Point { // TODO: is this correct that it is always a Point?
-        return (<Point> this.options.tileSize);
+        return (this.options.tileSize as Point);
     }
 
     @Input() public set updateWhenIdle(val: boolean) {
@@ -300,10 +302,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.subdomains = val;
     }
     public get subdomains(): string[] {
-        if (typeof (<string> this.options.subdomains) === 'string') {
-            this.options.subdomains = (<string> this.options.subdomains).split('');
+        if (typeof (this.options.subdomains as string) === 'string') {
+            this.options.subdomains = (this.options.subdomains as string).split('');
         }
-        return (<string[]> this.options.subdomains);
+        return (this.options.subdomains as string[]);
     }
 
     @Input() public set errorTileUrl(val: string) {
@@ -411,9 +413,9 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.0.2.html#wmslayer-attribution Original Leaflet documentation
      */
     @Input() public set attribution(val: string) {
-        if ((<any> this)._map && (<any> this)._map.attributionControl) {
-            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
-            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
+        if ((this as any)._map && (this as any)._map.attributionControl) {
+            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }

@@ -104,7 +104,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     public setUrl(url: string): this {
@@ -118,7 +118,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         this.setUrl(val);
     }
     public get url(): string {
-        return (<any> this)._url;
+        return (this as any)._url;
     }
 
     public setOpacity(val: number): this {
@@ -136,7 +136,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
 
     @Input() public set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -148,7 +148,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         try {
             pane = this.getPane();
             container = this.getElement();
-            map = (<any> this)._map;
+            map = (this as any)._map;
             events = this.getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
@@ -158,14 +158,14 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         if (val) {
             // show layer
             pane.appendChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.on(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.on(eventKey, events[eventKey], this);
             }
         } else {
             // hide layer
             pane.removeChild(container);
-            for (let i: number = 0; i < eventKeys.length; i += 1) {
-                map.off(eventKeys[i], events[eventKeys[i]], this);
+            for (const eventKey of eventKeys) {
+                map.off(eventKey, events[eventKey], this);
             }
         }
     }
@@ -179,7 +179,9 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
             /* istanbul ignore next */
             return false;
         }
+        /* tslint:disable:prefer-for-of */
         for (let i: number = 0; i < pane.children.length; i += 1) {
+            /* tslint:enable */
             /* istanbul ignore else */
             if (pane.children[i] === container) {
                 return true;
@@ -189,7 +191,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
 
     public setBounds(val: LatLngBoundsExpression): this {
-        super.setBounds(latLngBounds((<any> val)));
+        super.setBounds(latLngBounds((val as any)));
 
         this.boundsChange.emit(this.bounds);
         this.northChange.emit(this.north);
@@ -277,16 +279,16 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     }
     @Input() public set interactive(val: boolean) {
         this.options.interactive = val;
-        this.onRemove((<any> (<any> this)._map));
-        this.onAdd((<any> (<any> this)._map));
+        this.onRemove(((this as any)._map as any));
+        this.onAdd(((this as any)._map as any));
     }
     public get interactive(): boolean {
         return this.options.interactive;
     }
     @Input() public set attribution(val: string) {
-        if ((<any> this)._map && (<any> this)._map.attributionControl) {
-            (<Control.Attribution> (<any> this)._map.attributionControl).removeAttribution(this.getAttribution());
-            (<Control.Attribution> (<any> this)._map.attributionControl).addAttribution(val);
+        if ((this as any)._map && (this as any)._map.attributionControl) {
+            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }

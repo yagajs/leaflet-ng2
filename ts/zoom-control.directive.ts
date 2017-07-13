@@ -39,16 +39,16 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         const self: this = this;
 
         /* tslint:disable:only-arrow-functions */
-        const originalOnRemove: Function = this.onRemove;
-        this.onRemove = function (map: Map): any {
+        const originalOnRemove: (map: Map) => any = this.onRemove;
+        this.onRemove = function(map: Map): any {
             originalOnRemove.call(this, map);
             self.displayChange.emit(false);
             self.removeEvent.emit({type: 'remove', target: self});
             return self;
         };
 
-        const originalOnAdd: Function = this.onAdd;
-        this.onAdd = function (map: Map): HTMLElement {
+        const originalOnAdd: (Map) => HTMLElement = this.onAdd;
+        this.onAdd = function(map: Map): HTMLElement {
             const tmp: HTMLElement = originalOnAdd.call(this, map);
             self.displayChange.emit(true);
             self.addEvent.emit({type: 'add', target: self});
@@ -75,7 +75,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     }
 
     public ngOnDestroy(): void {
-        (<MapComponent> (<any> this)._map).removeControl(this);
+        ((this as any)._map as MapComponent).removeControl(this);
     }
 
     public setPosition(val: ControlPosition): this {
@@ -92,7 +92,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     }
 
     @Input() public set display(val: boolean) {
-        if (!(<any> this)._map) {
+        if (!(this as any)._map) {
             // No map available...
             return;
         }
@@ -104,19 +104,19 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         return;
     }
     public get display(): boolean {
-        return (<any> this)._map && this.getContainer().style.display !== 'none';
+        return (this as any)._map && this.getContainer().style.display !== 'none';
     }
 
     @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
     }
-    public get position (): ControlPosition {
+    public get position(): ControlPosition {
       return this.getPosition();
     }
 
     @Input() public set zoomInText(val: string) {
       this.options.zoomInText = val;
-      (<HTMLElement> (<any> this)._zoomInButton).textContent = val;
+      ((this as any)._zoomInButton as HTMLElement).textContent = val;
     }
     public get zoomInText(): string {
       return this.options.zoomInText;
@@ -124,7 +124,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     @Input() public set zoomInTitle(val: string) {
         this.options.zoomInTitle = val;
-        (<HTMLElement> (<any> this)._zoomInButton).setAttribute('title', val);
+        ((this as any)._zoomInButton as HTMLElement).setAttribute('title', val);
     }
     public get zoomInTitle(): string {
         return this.options.zoomInTitle;
@@ -132,7 +132,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     @Input() public set zoomOutText(val: string) {
         this.options.zoomOutText = val;
-        (<HTMLElement> (<any> this)._zoomOutButton).textContent = val;
+        ((this as any)._zoomOutButton as HTMLElement).textContent = val;
     }
     public get zoomOutText(): string {
         return this.options.zoomOutText;
@@ -140,7 +140,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     @Input() public set zoomOutTitle(val: string) {
         this.options.zoomOutTitle = val;
-        (<HTMLElement> (<any> this)._zoomOutButton).setAttribute('title', val);
+        ((this as any)._zoomOutButton as HTMLElement).setAttribute('title', val);
     }
     public get zoomOutTitle(): string {
         return this.options.zoomOutTitle;

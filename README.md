@@ -93,9 +93,7 @@ Scripts registered in package.json:
 * `reinit`: Call clean and init
 * `transpile`: Transpile TypeScript Code to JavaScript
 * `lint`: Use the linter for TypeScript Code
-* `npm-lint`: Lint the npm-package
 * `test`: Run software- and coverage-tests in node.
 * `browser-test`: Build the tests for the browser.
 * `build-examples`: Build the examples.
 * `doc`: Build the API documentation.
-* `dependency-check`: Check for outdated dependencies.

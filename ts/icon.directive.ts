@@ -62,7 +62,7 @@ export class IconDirective extends Icon  {
         });
     }
     public get iconSize(): Point {
-        return (<Point> this.options.iconSize);
+        return (this.options.iconSize as Point);
     }
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
@@ -72,7 +72,7 @@ export class IconDirective extends Icon  {
         });
     }
     public get iconAnchor(): Point {
-        return (<Point> this.options.iconAnchor);
+        return (this.options.iconAnchor as Point);
     }
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
@@ -82,7 +82,7 @@ export class IconDirective extends Icon  {
         });
     }
     public get popupAnchor(): Point {
-        return (<Point> this.options.popupAnchor);
+        return (this.options.popupAnchor as Point);
     }
     // We have to wait for adding the definition for tooltipAnchor
     // see: https://github.com/yagajs/leaflet-ng2/issues/220#issuecomment-307634276
@@ -125,7 +125,7 @@ export class IconDirective extends Icon  {
         });
     }
     public get shadowSize(): Point {
-        return (<Point> this.options.shadowSize);
+        return (this.options.shadowSize as Point);
     }
     @Input() public set shadowAnchor(val: Point) {
         this.options.shadowAnchor = val;
@@ -135,6 +135,6 @@ export class IconDirective extends Icon  {
         });
     }
     public get shadowAnchor(): Point {
-        return (<Point> this.options.shadowAnchor);
+        return (this.options.shadowAnchor as Point);
     }
 }

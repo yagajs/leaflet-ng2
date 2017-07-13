@@ -272,7 +272,7 @@ export class MapComponent extends Map implements AfterViewInit {
     protected domRoot: HTMLElement;
     protected mapDomRoot: HTMLElement;
 
-    private moveTimeout: number;
+    private moveTimeout: any;
     private isZooming: boolean = false;
 
     constructor(
@@ -280,7 +280,7 @@ export class MapComponent extends Map implements AfterViewInit {
     ) {
         super(document.createElement('div'), { attributionControl: false, zoomControl: false});
 
-        const moveFn: Function = () => {
+        const moveFn: () => any = () => {
             if (this.isZooming) {
                 this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
                 return;
@@ -294,7 +294,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setView([0, 0], 0);
 
         this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = (<any> this)._container;
+        this.mapDomRoot = (this as any)._container;
         this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
@@ -515,7 +515,7 @@ export class MapComponent extends Map implements AfterViewInit {
     }
 
     public setMaxBounds(bounds: LatLngBoundsExpression): this {
-        super.setMaxBounds((<LatLngBoundsLiteral> bounds));
+        super.setMaxBounds((bounds as LatLngBoundsLiteral));
         this.maxBoundsChange.emit(this.maxBounds);
         return this;
     }
@@ -524,7 +524,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setMaxBounds(val);
     }
     public get maxBounds(): LatLngBounds {
-        return (<LatLngBounds> this.options.maxBounds);
+        return (this.options.maxBounds as LatLngBounds);
     }
 
     // One-way Input

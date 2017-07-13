@@ -35,7 +35,7 @@ export class DivIconDirective extends DivIcon  {
         });
     }
     public get iconSize(): Point {
-        return (<Point> this.options.iconSize);
+        return (this.options.iconSize as Point);
     }
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
@@ -45,7 +45,7 @@ export class DivIconDirective extends DivIcon  {
         });
     }
     public get iconAnchor(): Point {
-        return (<Point> this.options.iconAnchor);
+        return (this.options.iconAnchor as Point);
     }
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
@@ -55,11 +55,11 @@ export class DivIconDirective extends DivIcon  {
         });
     }
     public get popupAnchor(): Point {
-        return (<Point> this.options.popupAnchor);
+        return (this.options.popupAnchor as Point);
     }
 
     public createIcon(oldDivIcon: HTMLElement): HTMLElement {
-        let clonedOptions: DivIconOptions = Object.create(this.options);
+        const clonedOptions: DivIconOptions = Object.create(this.options);
         clonedOptions.html = '';
         oldDivIcon = super.createIcon.call({options: clonedOptions}, oldDivIcon);
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
