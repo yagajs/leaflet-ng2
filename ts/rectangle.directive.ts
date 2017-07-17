@@ -152,11 +152,11 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     public setBounds(val: LatLngBounds | LatLngBoundsLiteral): this {
-        super.setBounds((<any> val));
+        super.setBounds((val as any));
         if (!this.initialized) {
             return this;
         }
@@ -234,16 +234,16 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         Array<Array<(LatLng | LatLngTuple | LatLngExpression)>> |
         Array<Array<Array<(LatLng | LatLngTuple | LatLngExpression)>>>)): this {
 
-        super.setLatLngs((<any> val));
-        this.latLngsChange.emit((<any> this)._latlngs);
+        super.setLatLngs((val as any));
+        this.latLngsChange.emit((this as any)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
     public addLatLng(
         val: (LatLng | LatLngTuple | LatLngExpression) |Array<(LatLng | LatLngTuple | LatLngExpression)>,
     ): this {
-        super.addLatLng((<any> val));
-        this.latLngsChange.emit((<any> this)._latlngs);
+        super.addLatLng((val as any));
+        this.latLngsChange.emit((this as any)._latlngs);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
@@ -251,22 +251,22 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         this.setLatLngs(val);
     }
     public get latLngs(): LatLng[] | LatLng[][] | LatLng[][][] {
-        return (<any> this)._latlngs;
+        return (this as any)._latlngs;
     }
 
     @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
-        let geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
+        const geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
 
         /* istanbul ignore if */
         if (geomType !== 'Polygon' && geomType !== 'MultiPolygon') {
             throw new Error('Unsupported geometry type: ' + geomType );
         }
-        this.setLatLngs(<any> lng2lat(val.geometry.coordinates));
+        this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
     public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> this.toGeoJSON());
+        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
     }
 
     public setStyle(style: PathOptions): this {
@@ -400,7 +400,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     }
 
     @Input() public set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -426,7 +426,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     }
 
     @Input() public set interactive(val: boolean) {
-        let map: MapComponent = (<MapComponent> (<any> this)._map);
+        const map: MapComponent = ((this as any)._map as MapComponent);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
@@ -455,6 +455,6 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         this.geoJSONChange.emit(this.geoJSON);
     }
     public get properties(): T {
-        return (<T> this.feature.properties);
+        return (this.feature.properties as T);
     }
 }

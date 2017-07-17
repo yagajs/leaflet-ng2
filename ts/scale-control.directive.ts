@@ -40,16 +40,16 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         const self: this = this;
 
         /* tslint:disable:only-arrow-functions */
-        const originalOnRemove: Function = this.onRemove;
-        this.onRemove = function (map: Map): any {
+        const originalOnRemove: (map: Map) => any = this.onRemove;
+        this.onRemove = function(map: Map): any {
             originalOnRemove.call(this, map);
             self.displayChange.emit(false);
             self.removeEvent.emit({type: 'remove', target: self});
             return self;
         };
 
-        const originalOnAdd: Function = this.onAdd;
-        this.onAdd = function (map: Map): HTMLElement {
+        const originalOnAdd: (map: Map) => HTMLElement = this.onAdd;
+        this.onAdd = function(map: Map): HTMLElement {
             const tmp: HTMLElement = originalOnAdd.call(this, map);
             self.displayChange.emit(true);
             self.addEvent.emit({type: 'add', target: self});
@@ -76,7 +76,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     }
 
     public ngOnDestroy(): void {
-        (<MapComponent> (<any> this)._map).removeControl(this);
+        ((this as any)._map as MapComponent).removeControl(this);
     }
 
     public setPosition(val: ControlPosition): this {
@@ -93,7 +93,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     }
 
     @Input() public set display(val: boolean) {
-        if (!(<any> this)._map) {
+        if (!(this as any)._map) {
             // No map available...
             return;
         }
@@ -105,19 +105,19 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         return;
     }
     public get display(): boolean {
-        return (<any> this)._map && this.getContainer().style.display !== 'none';
+        return (this as any)._map && this.getContainer().style.display !== 'none';
     }
 
     @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
     }
-    public get position (): ControlPosition {
+    public get position(): ControlPosition {
       return this.getPosition();
     }
 
     @Input() public set maxWidth(val: number) {
       this.options.maxWidth = val;
-      (<any> this)._update();
+      (this as any)._update();
     }
     public get maxWidth(): number {
       return this.options.maxWidth;
@@ -130,12 +130,12 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
           );
       }
       this.options.metric = val;
-      (<any> this)._addScales(
+      (this as any)._addScales(
         this.options,
         'leaflet-control-scale-line',
         this.getContainer(),
       );
-      (<any> this)._update();
+      (this as any)._update();
     }
     public get metric(): boolean {
       return this.options.metric;
@@ -148,14 +148,14 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
           );
       }
       this.options.imperial = val;
-      (<any> this)._addScales(
+      (this as any)._addScales(
         this.options,
         'leaflet-control-scale-line',
         this.getContainer(),
       );
-      (<any> this)._update();
+      (this as any)._update();
     }
-    public get imperial (): boolean {
+    public get imperial(): boolean {
       return this.options.imperial;
     }
 }

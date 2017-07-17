@@ -54,14 +54,14 @@ export class PopupDirective extends Popup implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if ((<any> this)._source) {
-            (<any> this)._source.unbindPopup();
+        if ((this as any)._source) {
+            (this as any)._source.unbindPopup();
         }
     }
 
     public setContent(content: any): this { // Content
         this.contentChange.emit((content));
-        return super.setContent((<HTMLElement> content));
+        return super.setContent((content as HTMLElement));
     }
     @Input() public set content(val: Content) {
         this.setContent(val);
@@ -75,10 +75,10 @@ export class PopupDirective extends Popup implements OnDestroy {
             this.openOn(this.map);
             return;
         }
-        (<any> this)._close();
+        (this as any)._close();
     }
     public get opened(): boolean {
-        return !!(<any> this)._map;
+        return !!(this as any)._map;
     }
 
     public setLatLng(latlng: LatLngExpression): this {
@@ -111,84 +111,84 @@ export class PopupDirective extends Popup implements OnDestroy {
 
     @Input() public set maxWidth(val: number) {
         this.options.maxWidth = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get maxWidth(): number {
         return this.options.maxWidth;
     }
     @Input() public set minWidth(val: number) {
         this.options.minWidth = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get minWidth(): number {
         return this.options.minWidth;
     }
     @Input() public set maxHeight(val: number) {
         this.options.maxHeight = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get maxHeight(): number {
         return this.options.maxHeight;
     }
     @Input() public set autoPan(val: boolean) {
         this.options.autoPan = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get autoPan(): boolean {
         return this.options.autoPan;
     }
     @Input() public set autoPanPaddingTopLeft(val: Point) {
         this.options.autoPanPaddingTopLeft = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get autoPanPaddingTopLeft(): Point {
-        return (<Point> this.options.autoPanPaddingTopLeft);
+        return (this.options.autoPanPaddingTopLeft as Point);
     }
     @Input() public set autoPanPaddingBottomRight(val: Point) {
         this.options.autoPanPaddingBottomRight = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get autoPanPaddingBottomRight(): Point {
-        return (<Point> this.options.autoPanPaddingBottomRight);
+        return (this.options.autoPanPaddingBottomRight as Point);
     }
     @Input() public set autoPanPadding(val: Point) {
         this.options.autoPanPadding = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get autoPanPadding(): Point {
-        return (<Point> this.options.autoPanPadding);
+        return (this.options.autoPanPadding as Point);
     }
     @Input() public set keepInView(val: boolean) {
         this.options.keepInView = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get keepInView(): boolean {
         return this.options.keepInView;
     }
     @Input() public set closeButton(val: boolean) {
         this.options.closeButton = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get closeButton(): boolean {
         return this.options.closeButton;
     }
     @Input() public set autoClose(val: boolean) {
         this.options.autoClose = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get autoClose(): boolean {
         return this.options.autoClose;
     }
     @Input() public set className(val: string) {
         this.options.className = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get className(): string {
         return this.options.className;
     }
     @Input() public set pane(val: string) {
         this.options.pane = val;
-        (<any> this)._updateLayout();
+        (this as any)._updateLayout();
     }
     public get pane(): string {
         return this.options.pane;

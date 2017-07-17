@@ -13,7 +13,7 @@ import { PolygonDirective } from './polygon.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PopupDirective } from './popup.directive';
 import { RectangleDirective } from './rectangle.directive';
-import { ScaleControlDirective }   from './scale-control.directive';
+import { ScaleControlDirective } from './scale-control.directive';
 import { TileLayerDirective } from './tile-layer.directive';
 import { TooltipDirective } from './tooltip.directive';
 import { WmsLayerDirective } from './wms-layer.directive';

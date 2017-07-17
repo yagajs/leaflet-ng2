@@ -10,6 +10,7 @@ import {
     TooltipDirective,
 } from './index';
 import { createPathTests } from './path-directives.spec';
+import Layer = L.Layer;
 
 describe('Circle Directive', () => {
     let map: MapComponent;
@@ -26,9 +27,9 @@ describe('Circle Directive', () => {
     };
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
-        (<any> map)._renderer = (<any> map)._renderer || new SVG();
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
+        (map as any)._renderer = (map as any)._renderer || new SVG();
 
         layer = new CircleMarkerDirective<any>(map);
         layer.ngAfterViewInit();
@@ -39,7 +40,7 @@ describe('Circle Directive', () => {
     describe('[(position)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.position = TEST_VALUE;
-            expect((<any> layer)._latlng).to.equal(TEST_VALUE);
+            expect((layer as any)._latlng).to.equal(TEST_VALUE);
         });
         it('should be changed in Angular when changing in Angular', () => {
             layer.position = TEST_VALUE;
@@ -195,10 +196,10 @@ describe('Circle Directive', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             layer.geoJSON = TEST_GEOJSON;
             expect(
-                (<LatLng> layer.position).lng,
+                (layer.position as LatLng).lng,
             ).to.equal(TEST_GEOJSON.geometry.coordinates[0]);
             expect(
-                (<LatLng> layer.position).lat,
+                (layer.position as LatLng).lat,
             ).to.equal(TEST_GEOJSON.geometry.coordinates[1]);
         });
         it('should be changed in Angular when changing in Angular', () => {
@@ -234,7 +235,7 @@ describe('Circle Directive', () => {
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
             layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
-                const values: [number, number] = (<any> eventVal.geometry.coordinates);
+                const values: [number, number] = (eventVal.geometry.coordinates as any);
 
                 expect(values[0]).to.equal(TEST_POINT[1]);
                 expect(values[1]).to.equal(TEST_POINT[0]);
@@ -422,8 +423,7 @@ describe('Circle Directive', () => {
         });
         it('should bind popup', () => {
             layer.ngAfterViewInit();
-            expect((<any> layer)._popup).to.be.ok;
-            expect((<any> layer)._popup).to.equal(popup);
+            expect((layer as any)._popup).to.equal(popup);
         });
     });
 
@@ -439,8 +439,7 @@ describe('Circle Directive', () => {
         });
         it('should bind tooltip', () => {
             layer.ngAfterViewInit();
-            expect((<any> layer)._tooltip).to.be.ok;
-            expect((<any> layer)._tooltip).to.equal(tooltip);
+            expect((layer as any)._tooltip).to.equal(tooltip);
         });
     });
 
@@ -450,11 +449,11 @@ describe('Circle Directive', () => {
             layer = new CircleMarkerDirective<any>(map);
         });
         it('should remove Circle Directive from map on destroy', () => {
-            expect(map.hasLayer(layer)).to.be.ok;
+            expect(map.hasLayer(layer)).to.equal(true);
 
             layer.ngOnDestroy();
 
-            expect(map.hasLayer(layer)).to.not.be.ok;
+            expect(map.hasLayer(layer)).to.equal(false);
         });
     });
 

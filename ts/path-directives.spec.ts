@@ -14,9 +14,9 @@ export function createPathTests(Constr: any): void {
         let layer: any;
         beforeEach(() => {
             map = new MapComponent({nativeElement: document.createElement('div')});
-            (<any> map)._size = point(100, 100);
-            (<any> map)._pixelOrigin = point(50, 50);
-            (<any> map)._renderer = (<any> map)._renderer || new SVG();
+            (map as any)._size = point(100, 100);
+            (map as any)._pixelOrigin = point(50, 50);
+            (map as any)._renderer = (map as any)._renderer || new SVG();
 
             layer = new Constr(map);
         });

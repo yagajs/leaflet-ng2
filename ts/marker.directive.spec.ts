@@ -27,8 +27,8 @@ describe('Marker Directive', () => {
     let layer: MarkerDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         layer = new MarkerDirective(map);
     });
     describe('[(display)]', () => {
@@ -44,10 +44,10 @@ describe('Marker Directive', () => {
             expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
         });
         it('should remove EventListeners when not displaying', (done: MochaDone) => {
-            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['zoom'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['zoom'];
             /* tslint:enable */
 
             layer.display = false;
@@ -61,10 +61,10 @@ describe('Marker Directive', () => {
             done();
         });
         it('should re-add EventListeners when display is true again', (done: MochaDone) => {
-            const zoomEvents: Array<{fn: Function}> = (<any> map)._events.zoom;
+            const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: Function = layer.getEvents()['zoom'];
+            const originalEventListener: (event: Event) => void = layer.getEvents()['zoom'];
             /* tslint:enable */
 
             layer.display = false;
@@ -505,7 +505,7 @@ describe('Marker Directive', () => {
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
-            expect((<any> layerWithPopup)._popup).to.equal(popup);
+            expect((layerWithPopup as any)._popup).to.equal(popup);
         });
     });
 
@@ -522,7 +522,7 @@ describe('Marker Directive', () => {
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
-            expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
+            expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
         });
 
     });
@@ -542,12 +542,12 @@ describe('Marker Directive', () => {
             layerWithIcon.ngAfterContentInit();
         });
         it('should bind icon', () => {
-            expect((<HTMLElement> (<any> layerWithIcon)._icon).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);
+            expect(((layerWithIcon as any)._icon as HTMLElement).getAttribute('src')).to.equal(TRANSPARENT_PIXEL);
         });
         it('should bind icon again on changes in icon directive', () => {
             const TEST_VALUE: string = 'path/to/icon.png';
             icon.iconUrl = TEST_VALUE;
-            expect((<HTMLElement> (<any> layerWithIcon)._icon).getAttribute('src')).to.equal(TEST_VALUE);
+            expect(((layerWithIcon as any)._icon as HTMLElement).getAttribute('src')).to.equal(TEST_VALUE);
         });
 
     });

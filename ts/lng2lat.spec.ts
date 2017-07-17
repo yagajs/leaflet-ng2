@@ -7,7 +7,7 @@ describe('lng2lat helper', () => {
         const lat: number = Math.floor(Math.random() * 1000000) / 10000;
         const lng: number = Math.floor(Math.random() * 1000000) / 10000;
         let geom: Position = [lat, lng];
-        geom = <Position> lng2lat(geom);
+        geom = lng2lat(geom) as Position;
         expect(geom).to.deep.equal([lng, lat]);
     });
     it('should convert a LineString or Multipoint', () => {
@@ -16,7 +16,7 @@ describe('lng2lat helper', () => {
         const lat2: number = Math.floor(Math.random() * 1000000) / 10000;
         const lng2: number = Math.floor(Math.random() * 1000000) / 10000;
         let geom: Position[] = [[lat1, lng1], [lat2, lng2]];
-        geom = <Position[]> lng2lat(geom);
+        geom = lng2lat(geom) as Position[];
         expect(geom).to.deep.equal([[lng1, lat1], [lng2, lat2]]);
     });
     it('should convert a MultiLineString or Polygon', () => {
@@ -29,7 +29,7 @@ describe('lng2lat helper', () => {
         const lat4: number = Math.floor(Math.random() * 1000000) / 10000;
         const lng4: number = Math.floor(Math.random() * 1000000) / 10000;
         let geom: Position[][] = [[[lat1, lng1], [lat2, lng2]], [[lat3, lng3], [lat4, lng4]]];
-        geom = <Position[][]> lng2lat(geom);
+        geom = lng2lat(geom) as Position[][];
         expect(geom).to.deep.equal([[[lng1, lat1], [lng2, lat2]], [[lng3, lat3], [lng4, lat4]]]);
     });
     it('should convert a MultiPolygon', () => {
@@ -53,7 +53,7 @@ describe('lng2lat helper', () => {
             [[[lat1, lng1], [lat2, lng2]], [[lat3, lng3], [lat4, lng4]]],
             [[[lat5, lng5], [lat6, lng6]], [[lat7, lng7], [lat8, lng8]]],
         ];
-        geom = <Position[][][]> lng2lat(geom);
+        geom = lng2lat(geom) as Position[][][];
         expect(geom).to.deep.equal([
             [[[lng1, lat1], [lng2, lat2]], [[lng3, lat3], [lng4, lat4]]],
             [[[lng5, lat5], [lng6, lat6]], [[lng7, lat7], [lng8, lat8]]],

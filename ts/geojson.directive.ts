@@ -64,7 +64,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
-        super((<GeoJSON.GeoJsonObject> {features: [], type: 'FeatureCollection'}), {
+        super(({features: [], type: 'FeatureCollection'} as GeoJSON.GeoJsonObject), {
             filter: (feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>) => {
                 return this.filterFeatures(feature);
             },
@@ -132,7 +132,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     public pointToLayer(geoJSON: GenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer {
@@ -156,14 +156,14 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
             return returnValue;
         }
 
-        this.dataChange.emit((<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> this.toGeoJSON()));
+        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>));
         return returnValue;
     }
 
     public setData(val: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>): this {
         super.clearLayers();
         super.addData(val);
-        this.dataChange.emit((<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> this.toGeoJSON()));
+        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>));
         return this;
     }
 
@@ -171,6 +171,6 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
         this.setData(val);
     }
     public get data(): GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T> {
-        return (<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> this.toGeoJSON());
+        return (this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>);
     }
 }

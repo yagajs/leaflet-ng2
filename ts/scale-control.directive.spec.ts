@@ -11,8 +11,8 @@ describe('Scale-Control Directive', () => {
     let control: ScaleControlDirective;
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
         control = new ScaleControlDirective(map);
     });
 

@@ -20,9 +20,9 @@ describe('Polygon Directive', () => {
 
     beforeEach(() => {
         map = new MapComponent({nativeElement: document.createElement('div')});
-        (<any> map)._size = point(100, 100);
-        (<any> map)._pixelOrigin = point(50, 50);
-        (<any> map)._renderer = (<any> map)._renderer || new SVG();
+        (map as any)._size = point(100, 100);
+        (map as any)._pixelOrigin = point(50, 50);
+        (map as any)._renderer = (map as any)._renderer || new SVG();
 
         layer = new PolygonDirective<any> (map);
     });
@@ -32,7 +32,7 @@ describe('Polygon Directive', () => {
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((layer as any)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -45,8 +45,8 @@ describe('Polygon Directive', () => {
             it('should be changed in Angular when adding in Leaflet', () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
-                expect((<LatLng[][]> layer.latLngs)[0][3].lat).to.equal(3);
-                expect((<LatLng[][]> layer.latLngs)[0][3].lng).to.equal(3);
+                expect((layer.latLngs as LatLng[][])[0][3].lat).to.equal(3);
+                expect((layer.latLngs as LatLng[][])[0][3].lng).to.equal(3);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
@@ -90,7 +90,7 @@ describe('Polygon Directive', () => {
             ];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
-                expect((<any> layer)._latlngs).to.deep.equal(TEST_VALUE);
+                expect((layer as any)._latlngs).to.deep.equal(TEST_VALUE);
             });
             it('should be changed in Angular when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
@@ -157,14 +157,14 @@ describe('Polygon Directive', () => {
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.geoJSON = TEST_VALUE;
                 /* istanbul ignore if */
-                if ((<LatLng[][]> layer.latLngs)[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
-                    (<LatLng[][]> layer.latLngs)[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
-                    (<LatLng[][]> layer.latLngs)[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1]) {
+                if ((layer.latLngs as LatLng[][])[0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0] ||
+                    (layer.latLngs as LatLng[][])[0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][1] ||
+                    (layer.latLngs as LatLng[][])[0][1].lng !== TEST_VALUE.geometry.coordinates[0][1][0] ||
+                    (layer.latLngs as LatLng[][])[0][1].lat !== TEST_VALUE.geometry.coordinates[0][1][1] ||
+                    (layer.latLngs as LatLng[][])[0][2].lng !== TEST_VALUE.geometry.coordinates[0][2][0] ||
+                    (layer.latLngs as LatLng[][])[0][2].lat !== TEST_VALUE.geometry.coordinates[0][2][1]) {
                     throw new Error(
-                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`,
+                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (layer as any)._latlngs }`,
                     );
                 }
 
@@ -196,7 +196,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
-                    expect(lng2lat((<any> eventVal.geometry.coordinates))).to.deep.equal(TEST_POLYGON);
+                    expect(lng2lat((eventVal.geometry.coordinates as any))).to.deep.equal(TEST_POLYGON);
                     return done();
                 });
 
@@ -205,7 +205,7 @@ describe('Polygon Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_POLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
-                    const values: Array<Array<[number, number]>> = (<any> eventVal.geometry.coordinates);
+                    const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
                         values[0][3][1] !== 3) {
@@ -236,21 +236,21 @@ describe('Polygon Directive', () => {
                 layer.geoJSON = TEST_VALUE;
 
                 /* istanbul ignore if */
-                if ((<LatLng[][]> layer.latLngs)[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                    (<LatLng[][]> layer.latLngs)[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                    (<LatLng[][]> layer.latLngs)[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                    (<LatLng[][]> layer.latLngs)[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
+                if ((layer.latLngs as LatLng[][])[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
+                    (layer.latLngs as LatLng[][])[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
+                    (layer.latLngs as LatLng[][])[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
+                    (layer.latLngs as LatLng[][])[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
+                    (layer.latLngs as LatLng[][])[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
+                    (layer.latLngs as LatLng[][])[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
 
-                    (<LatLng[][]> layer.latLngs)[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                    (<LatLng[][]> layer.latLngs)[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                    (<LatLng[][]> layer.latLngs)[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                    (<LatLng[][]> layer.latLngs)[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                    (<LatLng[][]> layer.latLngs)[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                    (<LatLng[][]> layer.latLngs)[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
+                    (layer.latLngs as LatLng[][])[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
+                    (layer.latLngs as LatLng[][])[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
+                    (layer.latLngs as LatLng[][])[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
+                    (layer.latLngs as LatLng[][])[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
+                    (layer.latLngs as LatLng[][])[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
+                    (layer.latLngs as LatLng[][])[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
                     throw new Error(
-                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (<any> layer)._latlngs }`,
+                        `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (layer as any)._latlngs }`,
                     );
                 }
 
@@ -267,7 +267,7 @@ describe('Polygon Directive', () => {
                     throw new Error('Received wrong geometry type: ' + layer.geoJSON.geometry.type);
                 }
 
-                expect(lng2lat((<any> layer.geoJSON.geometry.coordinates))).to.deep.equal(TEST_MULTIPOLYGON);
+                expect(lng2lat((layer.geoJSON.geometry.coordinates as any))).to.deep.equal(TEST_MULTIPOLYGON);
             });
             it('should be changed geoJSON in Angular when adding in latlngs Leaflet', () => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
@@ -301,7 +301,7 @@ describe('Polygon Directive', () => {
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
-                    const values: Array<Array<Array<[number, number]>>> = (<any> eventVal.geometry.coordinates);
+                    const values: Array<Array<Array<[number, number]>>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][0][3][0] !== 3 ||
                         values[0][0][3][1] !== 3) {
@@ -384,7 +384,7 @@ describe('Polygon Directive', () => {
             layerWithPopup.ngAfterViewInit();
         });
         it('should bind popup', () => {
-            expect((<any> layerWithPopup)._popup).to.equal(popup);
+            expect((layerWithPopup as any)._popup).to.equal(popup);
         });
     });
 
@@ -401,7 +401,7 @@ describe('Polygon Directive', () => {
             layerWithTooltip.ngAfterViewInit();
         });
         it('should bind tooltip', () => {
-            expect((<any> layerWithTooltip)._tooltip).to.equal(tooltip);
+            expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
         });
     });
 

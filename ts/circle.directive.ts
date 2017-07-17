@@ -144,17 +144,17 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     }
 
     public ngOnDestroy(): void {
-        this.removeFrom((<any> this)._map);
+        this.removeFrom((this as any)._map);
     }
 
     public setLatLng(val: LatLng | LatLngTuple | LatLngLiteral): this {
-        super.setLatLng((<any> val));
+        super.setLatLng((val as any));
         if (!this.initialized) {
             return this;
         }
-        this.positionChange.emit((<any> this)._latlng);
-        this.latChange.emit((<any> this)._latlng.lat);
-        this.lngChange.emit((<any> this)._latlng.lng);
+        this.positionChange.emit((this as any)._latlng);
+        this.latChange.emit((this as any)._latlng.lat);
+        this.lngChange.emit((this as any)._latlng.lng);
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
@@ -162,20 +162,20 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         this.setLatLng(val);
     }
     public get position(): LatLng | LatLngTuple | LatLngLiteral { // it is always a LatLng!
-        return (<any> this)._latlng;
+        return (this as any)._latlng;
     }
 
     @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
     public get lat(): number {
-        return (<any> this)._latlng.lat;
+        return (this as any)._latlng.lat;
     }
     @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
     public get lng(): number {
-        return (<any> this)._latlng.lng;
+        return (this as any)._latlng.lng;
     }
 
     public setRadius(val: number): this {
@@ -194,16 +194,16 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
-        let geomType: any = val.geometry.type; // Normally 'Point'
+        const geomType: any = val.geometry.type; // Normally 'Point'
 
         /* istanbul ignore if */
         if (geomType !== 'Point') {
             throw new Error('Unsupported geometry type: ' + geomType );
         }
-        this.setLatLng(<any> lng2lat(val.geometry.coordinates));
+        this.setLatLng(lng2lat(val.geometry.coordinates) as any);
     }
     public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (<GenericGeoJSONFeature<GeoJSON.Point, T>> this.toGeoJSON());
+        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Point, T>);
     }
 
     public setStyle(style: PathOptions): this {
@@ -337,7 +337,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     }
 
     @Input() public set display(val: boolean) {
-        let isDisplayed: boolean = this.display;
+        const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
         }
@@ -363,7 +363,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
     }
 
     @Input() public set interactive(val: boolean) {
-        let map: MapComponent = (<MapComponent> (<any> this)._map);
+        const map: MapComponent = ((this as any)._map as MapComponent);
         this.options.interactive = val;
         this.onRemove(map);
         this.onAdd(map);
@@ -377,6 +377,6 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterViewIn
         this.geoJSONChange.emit(this.geoJSON);
     }
     public get properties(): T {
-        return (<T> this.feature.properties);
+        return (this.feature.properties as T);
     }
 }

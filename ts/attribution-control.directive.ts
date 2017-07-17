@@ -40,13 +40,13 @@ export class AttributionControlDirective extends Control.Attribution implements 
         const self: this = this;
 
         /* tslint:disable:only-arrow-functions */
-        this.onRemove = function (): any {
+        this.onRemove = function(): any {
             self.displayChange.emit(false);
             self.removeEvent.emit({target: self, type: 'remove'});
             return self;
         };
 
-        this.onAdd = function (): HTMLElement {
+        this.onAdd = function(): HTMLElement {
             self.displayChange.emit(true);
             self.addEvent.emit({target: self, type: 'add'});
             return self.getContainer();
@@ -72,7 +72,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
 
     public ngOnDestroy(): void {
-        (<MapComponent> (<any> this)._map).removeControl(this);
+        ((this as any)._map as MapComponent).removeControl(this);
     }
 
     public setPosition(val: ControlPosition): this {
@@ -89,7 +89,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
 
     @Input() public set display(val: boolean) {
-        if (!(<any> this)._map) {
+        if (!(this as any)._map) {
             // No map available...
             return;
         }
@@ -101,13 +101,13 @@ export class AttributionControlDirective extends Control.Attribution implements 
         return;
     }
     public get display(): boolean {
-        return (<any> this)._map && this.getContainer().style.display !== 'none';
+        return (this as any)._map && this.getContainer().style.display !== 'none';
     }
 
     @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
     }
-    public get position (): ControlPosition {
+    public get position(): ControlPosition {
       return this.getPosition();
     }
 
@@ -120,7 +120,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
         this.setPrefix(val);
     }
     public get prefix(): string {
-        return (<string> this.options.prefix);
+        return (this.options.prefix as string);
     }
 
     public addAttribution(val: string): this {
@@ -135,26 +135,26 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
     @Input() public set attributions(val: string[]) {
         this.removeAllAttributions(true);
-        for (let i: number = 0; i < val.length; i += 1) {
-            super.addAttribution(val[i]);
+        for (const attr of val) {
+            super.addAttribution(attr);
         }
         this.attributionsChange.emit(this.attributions);
     }
     public get attributions(): string[] {
-        const keys: string[] = Object.keys((<any> this)._attributions);
+        const keys: string[] = Object.keys((this as any)._attributions);
         const arr: string[] = [];
-        for (let i: number = 0; i < keys.length; i += 1) {
-            if ((<any> this)._attributions[keys[i]] === 1) {
-                arr.push(keys[i]);
+        for (const key of keys) {
+            if ((this as any)._attributions[key] === 1) {
+                arr.push(key);
             }
         }
         return arr;
     }
 
     public removeAllAttributions(silent?: boolean): this {
-        let keys: string[] = Object.keys((<any> this)._attributions);
-        for (let i: number = 0; i < keys.length; i += 1) {
-            super.removeAttribution(keys[i]);
+        const keys: string[] = Object.keys((this as any)._attributions);
+        for (const key of keys) {
+            super.removeAttribution(key);
         }
         if (silent) {
             return this;
