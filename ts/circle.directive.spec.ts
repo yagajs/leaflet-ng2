@@ -21,7 +21,7 @@ describe('Circle Directive', () => {
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
         layer = new CircleDirective<any>(map);
-        layer.ngAfterViewInit();
+        layer.ngAfterContentInit();
     });
 
     createPathTests(CircleDirective);
@@ -263,7 +263,7 @@ describe('Circle Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -284,7 +284,7 @@ describe('Circle Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
