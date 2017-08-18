@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {
     DivIcon,
-    DivIconOptions,
     Event,
     Point,
 } from 'leaflet';
