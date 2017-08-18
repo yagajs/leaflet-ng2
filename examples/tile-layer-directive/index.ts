@@ -5,8 +5,8 @@ import 'zone.js';
 import { OSM_TILE_LAYER_URL, YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
-import { NgModule }      from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -45,7 +45,7 @@ const template: string = `
         (tileerror)="handleEvent('tileerror', $event);"
         (tileload)="handleEvent('tileload', $event);"
         (load)="handleEvent('load', $event);"
-      
+
         [attribution]="getInputPropertyByName('attribution').value"
         [updateWhenIdle]="getInputPropertyByName('updateWhenIdle').value"
         [updateWhenZooming]="getInputPropertyByName('updateWhenZooming').value"

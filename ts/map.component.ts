@@ -26,8 +26,101 @@ import {
 import { ANIMATION_DELAY } from './consts';
 
 /**
- * Root component for the map
- * @link http://leafletjs.com/reference-1.0.2.html#tilelayer Original Leaflet documentation
+ * Angular2 root component for a Leaflet map
+ *
+ * *You can use this directive in an Angular2 template after importing `YagaModule`.*
+ *
+ * How to use in a template:
+ * ```html
+ * <yaga-map
+ *     [(zoom)]="..."
+ *     [(lat)]="..."
+ *     [(lng)]="..."
+ *     [(minZoom)]="..."
+ *     [(maxZoom)]="..."
+ *     [(maxBounds)]="..."
+ *
+ *     (baselayerchange)="..."
+ *     (overlayadd)="..."
+ *     (overlayremove)="..."
+ *     (layeradd)="..."
+ *     (layerremove)="..."
+ *     (zoomlevelschan)="..."
+ *     (resize)="..."
+ *     (unload)="..."
+ *     (viewreset)="..."
+ *     (load)="..."
+ *     (zoomstart)="..."
+ *     (movestart)="..."
+ *     (zoom)="..."
+ *     (move)="..."
+ *     (zoomend)="..."
+ *     (moveend)="..."
+ *     (popupopen)="..."
+ *     (popupclose)="..."
+ *     (autopanstart)="..."
+ *     (tooltipopen)="..."
+ *     (tooltipclose)="..."
+ *     (click)="..."
+ *     (dblclick)="..."
+ *     (mousedown)="..."
+ *     (mouseup)="..."
+ *     (mouseover)="..."
+ *     (mouseout)="..."
+ *     (mousemove)="..."
+ *     (contextmenu)="..."
+ *     (keypress)="..."
+ *     (preclick)="..."
+ *     (zoomanim)="..."
+ *
+ *     [closePopupOnClick]="..."
+ *     [zoomSnap]="..."
+ *     [zoomDelta]="..."
+ *     [trackResize]="..."
+ *     [boxZoomEnabled]="..."
+ *     [doubleClickZoomEnabled]="..."
+ *     [draggingEnabled]="..."
+ *     [fadeAnimation]="..."
+ *     [markerZoomAnimation]="..."
+ *     [transform3DLimit]="..."
+ *     [zoomAnimation]="..."
+ *     [zoomAnimationThreshold]="..."
+ *     [inertia]="..."
+ *     [inertiaDeceleration]="..."
+ *     [inertiaMaxSpeed]="..."
+ *     [easeLinearity]="..."
+ *     [worldCopyJump]="..."
+ *     [maxBoundsViscosity]="..."
+ *     [keyboardEnabled]="..."
+ *     [keyboardPanDelta]="..."
+ *     [scrollWheelZoomEnabled]="..."
+ *     [wheelDebounceTime]="..."
+ *     [wheelPxPerZoomLevel]="..."
+ *     [tapEnabled]="..."
+ *     [tapTolerance]="..."
+ *     [bounceAtZoomLimits]="..."
+ *     [touchZoomEnabled]="...">
+ *     <!-- other yaga directives -->
+ * </yaga-map>
+ * ```
+ *
+ * You can use the following directives as child of this one:
+ *
+ * * yaga-attribution-control
+ * * yaga-circle
+ * * yaga-circle-marker
+ * * yaga-geojson
+ * * yaga-image-overlay
+ * * yaga-marker
+ * * yaga-polygon
+ * * yaga-polyline
+ * * yaga-rectangle
+ * * yaga-scale-control
+ * * yaga-tile-layer
+ * * yaga-wms-layer
+ * * yaga-zoom-control
+ *
+ * @link http://leafletjs.com/reference-1.0.3.html#tilelayer Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
  * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
@@ -41,231 +134,231 @@ export class MapComponent extends Map implements AfterViewInit {
     /**
      * Two-Way bound property for the zoom.
      * Use it with `<yaga-map [(zoom)]="someValue">` or `<yaga-map (zoomChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setzoom Original Leaflet documentation
      */
     @Output() public zoomChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the center latitude.
      * Use it with `<yaga-map [(lat)]="someValue">` or `<yaga-map (latChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setview Original Leaflet documentation
      */
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the center longitude.
      * Use it with `<yaga-map [(lng)]="someValue">` or `<yaga-map (lngChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setview Original Leaflet documentation
      */
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the minimal available zoom.
      * Use it with `<yaga-map [(minZoom)]="someValue">` or `<yaga-map (minZoomChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setminzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setminzoom Original Leaflet documentation
      */
     @Output() public minZoomChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the maximal available zoom.
      * Use it with `<yaga-map [(maxZoom)]="someValue">` or `<yaga-map (maxZoomChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setmaxzoom Original Leaflet documentation
      */
     @Output() public maxZoomChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the bounds on the map.
-     * Use it with `<yaga-map [(maxBoundsZoom)]="someValue">`
-     * or `<yaga-map (maxBoundsZoomChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxbounds Original Leaflet documentation
+     * Use it with `<yaga-map [(maxBounds)]="someValue">`
+     * or `<yaga-map (maxBoundsChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setmaxbounds Original Leaflet documentation
      */
     @Output() public maxBoundsChange: EventEmitter<LatLngBounds> = new EventEmitter();
 
     /**
      * From leaflet fired baselayerchange event.
      * Use it with `<yaga-tile-layer (baselayerchange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-baselayerchange Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-baselayerchange Original Leaflet documentation
      */
     @Output('baselayerchange') public baselayerchangeEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired overlayadd event.
      * Use it with `<yaga-tile-layer (overlayadd)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-overlayadd Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-overlayadd Original Leaflet documentation
      */
     @Output('overlayadd') public overlayaddEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired overlayremove event.
      * Use it with `<yaga-tile-layer (overlayremove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-overlayremove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-overlayremove Original Leaflet documentation
      */
     @Output('overlayremove') public overlayremoveEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired layeradd event.
      * Use it with `<yaga-tile-layer (layeradd)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-layeradd Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-layeradd Original Leaflet documentation
      */
     @Output('layeradd') public layeraddEvent: EventEmitter<LayerEvent> = new EventEmitter();
     /**
      * From leaflet fired layerremove event.
      * Use it with `<yaga-tile-layer (layerremove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-layerremove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-layerremove Original Leaflet documentation
      */
     @Output('layerremove') public layerremoveEvent: EventEmitter<LayerEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomlevelschan event.
      * Use it with `<yaga-tile-layer (zoomlevelschan)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-zoomlevelschan Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomlevelschan Original Leaflet documentation
      */
     @Output('zoomlevelschange') public zoomlevelschangeEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired resize event.
      * Use it with `<yaga-tile-layer (resize)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-resize Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-resize Original Leaflet documentation
      */
     @Output('resize') public resizeEvent: EventEmitter<ResizeEvent> = new EventEmitter();
     /**
      * From leaflet fired unload event.
      * Use it with `<yaga-tile-layer (unload)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-unload Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-unload Original Leaflet documentation
      */
     @Output('unload') public unloadEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired viewreset event.
      * Use it with `<yaga-tile-layer (viewreset)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-viewreset Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-viewreset Original Leaflet documentation
      */
     @Output('viewreset') public viewresetEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired load event.
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-load Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-load Original Leaflet documentation
      */
     @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired zoomstart event.
      * Use it with `<yaga-tile-layer (zoomstart)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-zoomstart Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomstart Original Leaflet documentation
      */
     @Output('zoomstart') public zoomstartEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired movestart event.
      * Use it with `<yaga-tile-layer (movestart)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-movestart Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-movestart Original Leaflet documentation
      */
     @Output('movestart') public movestartEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired zoom event.
      * Use it with `<yaga-tile-layer (zoom)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-zoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoom Original Leaflet documentation
      */
     @Output('zoom') public zoomEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired move event.
      * Use it with `<yaga-tile-layer (move)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-move Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-move Original Leaflet documentation
      */
     @Output('move') public moveEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired zoomend event.
      * Use it with `<yaga-tile-layer (zoomend)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-zoomend Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomend Original Leaflet documentation
      */
     @Output('zoomend') public zoomendEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired moveend event.
      * Use it with `<yaga-tile-layer (moveend)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-moveend Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-moveend Original Leaflet documentation
      */
     @Output('moveend') public moveendEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-popupopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-popupopen Original Leaflet documentation
      */
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-tile-layer (popupclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-popupclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-popupclose Original Leaflet documentation
      */
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired autopanstart event.
      * Use it with `<yaga-tile-layer (autopanstart)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-autopanstart Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-autopanstart Original Leaflet documentation
      */
     @Output('autopanstart') public autopanstartEvent: EventEmitter<Event> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-tile-layer (tooltipopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-tooltipopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-tooltipopen Original Leaflet documentation
      */
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-tile-layer (tooltipclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-tooltipclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-tooltipclose Original Leaflet documentation
      */
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-click Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-click Original Leaflet documentation
      */
     @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dblclick event.
      * Use it with `<yaga-tile-layer (dblclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-dblclick Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-dblclick Original Leaflet documentation
      */
     @Output('dblclick') public dblclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-mousedown Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-mousedown Original Leaflet documentation
      */
     @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseup event.
      * Use it with `<yaga-tile-layer (mouseup)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-mouseup Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-mouseup Original Leaflet documentation
      */
     @Output('mouseup') public mouseupEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-mouseover Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-mouseover Original Leaflet documentation
      */
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-mouseout Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-mouseout Original Leaflet documentation
      */
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousemove event.
      * Use it with `<yaga-tile-layer (mousemove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-mousemove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-mousemove Original Leaflet documentation
      */
     @Output('mousemove') public mousemoveEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-contextmenu Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-contextmenu Original Leaflet documentation
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired keypress event.
      * Use it with `<yaga-tile-layer (keypress)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-keypress Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-keypress Original Leaflet documentation
      */
     @Output('keypress') public keypressEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
     /**
      * From leaflet fired preclick event.
      * Use it with `<yaga-tile-layer (preclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-preclick Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-preclick Original Leaflet documentation
      */
     @Output('preclick') public preclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomanim event.
      * Use it with `<yaga-tile-layer (zoomanim)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-zoomanim Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomanim Original Leaflet documentation
      */
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
@@ -422,7 +515,6 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.invalidateSize(false);
     }
-
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {
      if (this.zoom === zoom) {
      return;
@@ -433,11 +525,10 @@ export class MapComponent extends Map implements AfterViewInit {
 
     // already handled with moveend
     // setView(center: LatLngExpression, zoom: number, options?: ZoomPanOptions): this {
-
     /**
      * Two-Way bound property for the zoom.
      * Use it with `<yaga-map [(zoom)]="someValue">` or `<yaga-map [zoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setzoom Original Leaflet documentation
      */
     @Input() public set zoom(val: number) {
         this.setZoom(val);
@@ -449,7 +540,7 @@ export class MapComponent extends Map implements AfterViewInit {
     /**
      * Two-Way bound property for the latitude.
      * Use it with `<yaga-map [(lat)]="someValue">` or `<yaga-map [lat]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setview Original Leaflet documentation
      */
     @Input() public set lat(val: number) {
         const coords: LatLng = new LatLng(val, this.getCenter().lng);
@@ -462,7 +553,7 @@ export class MapComponent extends Map implements AfterViewInit {
     /**
      * Two-Way bound property for the longitude.
      * Use it with `<yaga-map [(lng)]="someValue">` or `<yaga-map [lng]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setview Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setview Original Leaflet documentation
      */
     @Input() public set lng(val: number) {
         const coords: LatLng =  new LatLng(this.getCenter().lat, val);
@@ -474,7 +565,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
     /**
      * Derived method of the original setMinZoom method.
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setminzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setminzoom Original Leaflet documentation
      */
     public setMinZoom(val: number): this {
         this.minZoomChange.emit(val);
@@ -484,7 +575,7 @@ export class MapComponent extends Map implements AfterViewInit {
     /**
      * Two-Way bound property for the minimal availabe zoom.
      * Use it with `<yaga-map [(minZoom)]="someValue">` or `<yaga-map [minZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setminzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setminzoom Original Leaflet documentation
      */
     @Input() public set minZoom(val: number) {
         this.setMinZoom(val);
@@ -495,7 +586,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
     /**
      * Derived method of the original setMaxZoom method.
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setmaxzoom Original Leaflet documentation
      */
     public setMaxZoom(val: number): this {
         this.maxZoomChange.emit(val);
@@ -505,7 +596,7 @@ export class MapComponent extends Map implements AfterViewInit {
     /**
      * Two-Way bound property for the maximal availabe zoom.
      * Use it with `<yaga-map [(maxZoom)]="someValue">` or `<yaga-map [maxZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.2.html#map-setmaxzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#map-setmaxzoom Original Leaflet documentation
      */
     @Input() public set maxZoom(val: number) {
         this.setMaxZoom(val);
@@ -514,12 +605,20 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.getMaxZoom();
     }
 
+    /**
+     * Inherited function to provide event emitting.
+     */
     public setMaxBounds(bounds: LatLngBoundsExpression): this {
         super.setMaxBounds((bounds as LatLngBoundsLiteral));
         this.maxBoundsChange.emit(this.maxBounds);
         return this;
     }
 
+    /**
+     * Two-Way bound property for the maximal bounds.
+     * Use it with `<yaga-map [(maxBounds)]="someValue">` or `<yaga-map [maxBounds]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-maxbounds Original Leaflet documentation
+     */
     @Input() public set maxBounds(val: LatLngBounds) {
         this.setMaxBounds(val);
     }
@@ -528,6 +627,11 @@ export class MapComponent extends Map implements AfterViewInit {
     }
 
     // One-way Input
+    /**
+     * Input for the closePopupOnClick.
+     * Use it with `<yaga-map [closePopupOnClick]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-closepopuponclick Original Leaflet documentation
+     */
     @Input() public set closePopupOnClick(val: boolean) {
         this.options.closePopupOnClick = val;
     }
@@ -535,12 +639,23 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.closePopupOnClick;
     }
 
+    /**
+     * Input for the zoomSnap.
+     * Use it with `<yaga-map [zoomSnap]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomsnap Original Leaflet documentation
+     */
     @Input() public set zoomSnap(val: number) {
         this.options.zoomSnap = val;
     }
     public get zoomSnap(): number {
         return this.options.zoomSnap;
     }
+
+    /**
+     * Input for the zoomDelta.
+     * Use it with `<yaga-map [zoomDelta]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomdelta Original Leaflet documentation
+     */
     @Input() public set zoomDelta(val: number) {
         this.options.zoomDelta = val;
     }
@@ -548,14 +663,23 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.zoomDelta;
     }
 
+    /**
+     * Input for the trackResize.
+     * Use it with `<yaga-map [trackResize]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-trackresize Original Leaflet documentation
+     */
     @Input() public set trackResize(val: boolean) {
         this.options.trackResize = val;
     }
     public get trackResize(): boolean {
         return this.options.trackResize;
     }
-
     // maybe 2way!?!
+    /**
+     * Input for the boxZoomEnabled.
+     * Use it with `<yaga-map [boxZoomEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-boxzoom Original Leaflet documentation
+     */
     @Input() public set boxZoomEnabled(val: boolean) {
         if (val) {
             this.boxZoom.enable();
@@ -566,8 +690,12 @@ export class MapComponent extends Map implements AfterViewInit {
     public get boxZoomEnabled(): boolean {
         return this.boxZoom.enabled();
     }
-
     // maybe 2way!?!
+    /**
+     * Input for the doubleClickZoomEnabled.
+     * Use it with `<yaga-map [doubleClickZoomEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-doubleclickzoom Original Leaflet documentation
+     */
     @Input() public set doubleClickZoomEnabled(val: boolean) {
         if (val) {
             this.doubleClickZoom.enable();
@@ -578,8 +706,12 @@ export class MapComponent extends Map implements AfterViewInit {
     public get doubleClickZoomEnabled(): boolean {
         return this.doubleClickZoom.enabled();
     }
-
     // maybe 2way!?!
+    /**
+     * Input for the draggingEnabled.
+     * Use it with `<yaga-map [draggingEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-dragging Original Leaflet documentation
+     */
     @Input() public set draggingEnabled(val: boolean) {
         if (val) {
             this.dragging.enable();
@@ -591,6 +723,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.dragging.enabled();
     }
 
+    /**
+     * Input for the fadeAnimation.
+     * Use it with `<yaga-map [fadeAnimation]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-fadeanimation Original Leaflet documentation
+     */
     @Input() public set fadeAnimation(val: boolean) {
         this.options.fadeAnimation = val;
     }
@@ -598,6 +735,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.fadeAnimation;
     }
 
+    /**
+     * Input for the markerZoomAnimation.
+     * Use it with `<yaga-map [markerZoomAnimation]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-markerzoomanimation Original Leaflet documentation
+     */
     @Input() public set markerZoomAnimation(val: boolean) {
         this.options.markerZoomAnimation = val;
     }
@@ -605,6 +747,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.markerZoomAnimation;
     }
 
+    /**
+     * Input for the transform3DLimit.
+     * Use it with `<yaga-map [transform3DLimit]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-transform3dlimit Original Leaflet documentation
+     */
     @Input() public set transform3DLimit(val: number) {
         this.options.transform3DLimit = val;
     }
@@ -612,6 +759,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.transform3DLimit;
     }
 
+    /**
+     * Input for the zoomAnimation.
+     * Use it with `<yaga-map [zoomAnimation]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomanimation Original Leaflet documentation
+     */
     @Input() public set zoomAnimation(val: boolean) {
         this.options.zoomAnimation = val;
     }
@@ -619,6 +771,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.zoomAnimation;
     }
 
+    /**
+     * Input for the zoomAnimationThreshold.
+     * Use it with `<yaga-map [zoomAnimationThreshold]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-zoomanimationthreshold Original Leaflet documentation
+     */
     @Input() public set zoomAnimationThreshold(val: number) {
         this.options.zoomAnimationThreshold = val;
     }
@@ -626,6 +783,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.zoomAnimationThreshold;
     }
 
+    /**
+     * Input for the inertia.
+     * Use it with `<yaga-map [inertia]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-inertia Original Leaflet documentation
+     */
     @Input() public set inertia(val: boolean) {
         this.options.inertia = val;
     }
@@ -633,6 +795,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.inertia;
     }
 
+    /**
+     * Input for the inertiaDeceleration.
+     * Use it with `<yaga-map [inertiaDeceleration]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-inertiadeceleration Original Leaflet documentation
+     */
     @Input() public set inertiaDeceleration(val: number) {
         this.options.inertiaDeceleration = val;
     }
@@ -640,6 +807,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.inertiaDeceleration;
     }
 
+    /**
+     * Input for the inertiaMaxSpeed.
+     * Use it with `<yaga-map [inertiaMaxSpeed]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-inertiamaxspeed Original Leaflet documentation
+     */
     @Input() public set inertiaMaxSpeed(val: number) {
         this.options.inertiaMaxSpeed = val;
     }
@@ -647,6 +819,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.inertiaMaxSpeed;
     }
 
+    /**
+     * Input for the easeLinearity.
+     * Use it with `<yaga-map [easeLinearity]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-easelinearity Original Leaflet documentation
+     */
     @Input() public set easeLinearity(val: number) {
         this.options.easeLinearity = val;
     }
@@ -654,6 +831,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.easeLinearity;
     }
 
+    /**
+     * Input for the worldCopyJump.
+     * Use it with `<yaga-map [worldCopyJump]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-worldcopyjump Original Leaflet documentation
+     */
     @Input() public set worldCopyJump(val: boolean) {
         this.options.worldCopyJump = val;
     }
@@ -661,14 +843,23 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.worldCopyJump;
     }
 
+    /**
+     * Input for the maxBoundsViscosity.
+     * Use it with `<yaga-map [maxBoundsViscosity]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-maxboundsviscosity Original Leaflet documentation
+     */
     @Input() public set maxBoundsViscosity(val: number) {
         this.options.maxBoundsViscosity = val;
     }
     public get maxBoundsViscosity(): number {
         return this.options.maxBoundsViscosity;
     }
-
     // maybe 2way!?!
+    /**
+     * Input for the keyboardEnabled.
+     * Use it with `<yaga-map [keyboardEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-keyboard Original Leaflet documentation
+     */
     @Input() public set keyboardEnabled(val: boolean) {
         if (val) {
             this.keyboard.enable();
@@ -680,14 +871,23 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.keyboard.enabled();
     }
 
+    /**
+     * Input for the keyboardPanDelta.
+     * Use it with `<yaga-map [keyboardPanDelta]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-keyboardpandelta Original Leaflet documentation
+     */
     @Input() public set keyboardPanDelta(val: number) {
         this.options.keyboardPanDelta = val;
     }
     public get keyboardPanDelta(): number {
         return this.options.keyboardPanDelta;
     }
-
     // maybe 2way!?!
+    /**
+     * Input for the scrollWheelZoomEnabled.
+     * Use it with `<yaga-map [scrollWheelZoomEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-scrollwheelzoom Original Leaflet documentation
+     */
     @Input() public set scrollWheelZoomEnabled(val: boolean) {
         if (val) {
             this.scrollWheelZoom.enable();
@@ -699,6 +899,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.scrollWheelZoom.enabled();
     }
 
+    /**
+     * Input for the wheelDebounceTime.
+     * Use it with `<yaga-map [wheelDebounceTime]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-wheeldebouncetime Original Leaflet documentation
+     */
     @Input() public set wheelDebounceTime(val: number) {
         this.options.wheelDebounceTime = val;
     }
@@ -706,6 +911,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.wheelDebounceTime;
     }
 
+    /**
+     * Input for the wheelPxPerZoomLevel.
+     * Use it with `<yaga-map [wheelPxPerZoomLevel]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-wheelpxperzoomlevel Original Leaflet documentation
+     */
     @Input() public set wheelPxPerZoomLevel(val: number) {
         this.options.wheelPxPerZoomLevel = val;
     }
@@ -713,6 +923,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.wheelPxPerZoomLevel;
     }
 
+    /**
+     * Input for the tapEnabled.
+     * Use it with `<yaga-map [tapEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-tap Original Leaflet documentation
+     */
     @Input() public set tapEnabled(val: boolean) {
         this.options.tap = val;
     }
@@ -720,6 +935,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.tap;
     }
 
+    /**
+     * Input for the tapTolerance.
+     * Use it with `<yaga-map [tapTolerance]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-taptolerance Original Leaflet documentation
+     */
     @Input() public set tapTolerance(val: number) {
         this.options.tapTolerance = val;
     }
@@ -727,6 +947,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.tapTolerance;
     }
 
+    /**
+     * Input for the bounceAtZoomLimits.
+     * Use it with `<yaga-map [bounceAtZoomLimits]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-bounceatzoomlimits Original Leaflet documentation
+     */
     @Input() public set bounceAtZoomLimits(val: boolean) {
         this.options.bounceAtZoomLimits = val;
     }
@@ -734,6 +959,11 @@ export class MapComponent extends Map implements AfterViewInit {
         return this.options.bounceAtZoomLimits;
     }
     // maybe 2way!?!
+    /**
+     * Input for the touchZoomEnabled.
+     * Use it with `<yaga-map [touchZoomEnabled]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#map-touchzoom Original Leaflet documentation
+     */
     @Input() public set touchZoomEnabled(val: boolean) {
         if (val) {
             this.touchZoom.enable();
