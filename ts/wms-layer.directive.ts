@@ -11,6 +11,7 @@ import {
     Control,
     LatLngBoundsExpression,
     LeafletEvent,
+    LeafletMouseEvent,
     Map,
     Point,
     PopupEvent,
@@ -44,12 +45,12 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
-    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('loading') public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
@@ -73,10 +74,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.addTo(mapComponent);
 
         // Events
-        this.on('add', (event: Event) => {
+        this.on('add', (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on('remove', (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
         this.on('popupopen', (event: PopupEvent) => {
@@ -91,25 +92,25 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.on('tooltipclose', (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: MouseEvent) => {
+        this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: MouseEvent) => {
+        this.on('dbclick', (event: LeafletMouseEvent) => {
             this.dbclickEvent.emit(event);
         });
-        this.on('mousedown', (event: MouseEvent) => {
+        this.on('mousedown', (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: MouseEvent) => {
+        this.on('mouseover', (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: MouseEvent) => {
+        this.on('mouseout', (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: MouseEvent) => {
+        this.on('contextmenu', (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        this.on('loading', (event: Event) => {
+        this.on('loading', (event: LeafletEvent) => {
             this.loadingEvent.emit(event);
         });
         this.on('tileunload', (event: TileEvent) => {
@@ -124,7 +125,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.on('tileload', (event: TileEvent) => {
             this.tileloadEvent.emit(event);
         });
-        this.on('load', (event: Event) => {
+        this.on('load', (event: LeafletEvent) => {
             this.loadEvent.emit(event);
         });
     }

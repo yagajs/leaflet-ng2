@@ -43,11 +43,11 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.map = mapComponent;
         this.setContent(elementRef.nativeElement);
 
-        this.on('add', (event: Event): void => {
+        this.on('add', (event: LeafletEvent): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
         });
-        this.on('remove', (event: Event): void => {
+        this.on('remove', (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });

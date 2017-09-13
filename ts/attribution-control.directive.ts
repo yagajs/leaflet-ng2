@@ -9,9 +9,13 @@ import {
 } from '@angular/core';
 import { Control,
     ControlPosition,
-    LeafletEvent } from 'leaflet';
+    LeafletEvent,
+    LeafletMouseEvent,
+    Map,
+} from 'leaflet';
 import { ATTRIBUTION_PREFIX } from './consts';
 import { MapComponent } from './map.component';
+import { enhanceMouseEvent } from './mouse-event-helper';
 
 /**
  * Angular2 directive for the attribution-control of Leaflet.
@@ -105,31 +109,31 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Use it with `<yaga-attribution-control (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dbclick event.
      * Use it with `<yaga-attribution-control (dbclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-dbclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-attribution-control (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-attribution-control (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-attribution-control (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
@@ -155,19 +159,19 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
-            this.clickEvent.emit(event);
+            this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('dbclick', (event: MouseEvent) => {
-            this.dbclickEvent.emit(event);
+            this.dbclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mousedown', (event: MouseEvent) => {
-            this.mousedownEvent.emit(event);
+            this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mouseover', (event: MouseEvent) => {
-            this.mouseoverEvent.emit(event);
+            this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mouseout', (event: MouseEvent) => {
-            this.mouseoutEvent.emit(event);
+            this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
 

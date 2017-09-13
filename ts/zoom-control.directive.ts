@@ -11,9 +11,11 @@ import {
     Control,
     ControlPosition,
     LeafletEvent,
+    LeafletMouseEvent,
     Map,
 } from 'leaflet';
 import { MapComponent } from './map.component';
+import { enhanceMouseEvent } from './mouse-event-helper';
 
 @Directive({
     selector: 'yaga-zoom-control',
@@ -24,11 +26,11 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
-    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
@@ -58,19 +60,19 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
-            this.clickEvent.emit(event);
+            this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('dbclick', (event: MouseEvent) => {
-            this.dbclickEvent.emit(event);
+            this.dbclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mousedown', (event: MouseEvent) => {
-            this.mousedownEvent.emit(event);
+            this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mouseover', (event: MouseEvent) => {
-            this.mouseoverEvent.emit(event);
+            this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mouseout', (event: MouseEvent) => {
-            this.mouseoutEvent.emit(event);
+            this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
 
