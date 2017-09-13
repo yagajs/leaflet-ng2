@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { point } from 'leaflet';
 import {
     DivIconDirective,
-    Event,
+    LeafletEvent,
     MapComponent,
     Point,
 } from './index';
@@ -43,7 +43,7 @@ describe('DivIcon Directive', () => {
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
-            icon.updateEvent.subscribe((ev: Event) => {
+            icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();
             });
@@ -63,7 +63,7 @@ describe('DivIcon Directive', () => {
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
-            icon.updateEvent.subscribe((ev: Event) => {
+            icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();
             });
@@ -83,7 +83,7 @@ describe('DivIcon Directive', () => {
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
             const val: Point = point(Math.random() * 100, Math.random() * 100);
-            icon.updateEvent.subscribe((ev: Event) => {
+            icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();
             });

@@ -11,10 +11,10 @@ import {
 import {
     Content,
     Direction,
-    Event,
     LatLng,
     latLng,
     LatLngExpression,
+    LeafletEvent,
     Point,
     Tooltip,
 } from 'leaflet';
@@ -31,8 +31,8 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
 
-    @Output('open') public openEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('close') public closeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     protected map: MapComponent;
 

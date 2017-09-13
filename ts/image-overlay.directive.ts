@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import {
     Control,
-    Event,
     ImageOverlay,
     LatLngBounds,
     latLngBounds,
     LatLngBoundsExpression,
+    LeafletEvent,
     Map,
     PopupEvent,
     TooltipEvent,
@@ -36,8 +36,8 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output() public southChange: EventEmitter<number> = new EventEmitter();
     @Output() public westChange: EventEmitter<number> = new EventEmitter();
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();

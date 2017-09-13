@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import {
-    Event,
     FillRule,
     LatLng,
     LatLngBounds,
@@ -20,6 +19,7 @@ import {
     LatLngBoundsLiteral,
     LatLngExpression,
     LatLngTuple,
+    LeafletEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -67,8 +67,8 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();

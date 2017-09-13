@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import {
     Control,
-    Event,
     LatLngBoundsExpression,
+    LeafletEvent,
     Map,
     Point,
     PopupEvent,
@@ -121,13 +121,13 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-tile-layer (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
@@ -193,7 +193,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer (loading)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-loading Original Leaflet documentation
      */
-    @Output('loading') public loadingEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('loading') public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired tileunload event.
      * Use it with `<yaga-tile-layer (tileunload)="processEvent($event)">`
@@ -223,7 +223,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-load Original Leaflet documentation
      */
-    @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,

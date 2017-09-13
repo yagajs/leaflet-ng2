@@ -5,8 +5,8 @@ import {
     Output,
 } from '@angular/core';
 import {
-    Event,
     Icon,
+    LeafletEvent,
     Point,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
@@ -16,7 +16,7 @@ import { TRANSPARENT_PIXEL } from './consts';
 })
 export class IconDirective extends Icon  {
 
-    @Output('update') public updateEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('update') public updateEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor() {
         super({

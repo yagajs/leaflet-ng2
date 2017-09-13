@@ -12,12 +12,12 @@ import {
 import {
     DivIcon,
     DragEndEvent,
-    Event,
     Handler,
     Icon,
     LatLng,
     LatLngLiteral,
     LatLngTuple,
+    LeafletEvent,
     Map,
     Marker,
     PopupEvent,
@@ -47,13 +47,13 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     @Output() public popupOpenedChange: EventEmitter<boolean> = new EventEmitter();
 
     @Output('dragend') public dragendEvent: EventEmitter<DragEndEvent> = new EventEmitter();
-    @Output('dragstart') public dragstartEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('movestart') public movestartEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('drag') public dragEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('moveend') public moveendEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('dragstart') public dragstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('movestart') public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('drag') public dragEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('moveend') public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
@@ -94,22 +94,22 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.on('dragend', (event: DragEndEvent) => {
             this.dragendEvent.emit(event);
         });
-        this.on('dragstart', (event: Event) => {
+        this.on('dragstart', (event: LeafletEvent) => {
             this.dragstartEvent.emit(event);
         });
-        this.on('movestart', (event: Event) => {
+        this.on('movestart', (event: LeafletEvent) => {
             this.movestartEvent.emit(event);
         });
-        this.on('drag', (event: Event) => {
+        this.on('drag', (event: LeafletEvent) => {
             this.dragEvent.emit(event);
         });
-        this.on('moveend', (event: Event) => {
+        this.on('moveend', (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
-        this.on('add', (event: Event) => {
+        this.on('add', (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on('remove', (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
         this.on('popupopen', (event: PopupEvent) => {
@@ -162,12 +162,12 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.initialized = true; // Otherwise lng gets overwritten to 0
         if (this.iconDirective) {
             this.setIcon(this.iconDirective);
-            this.iconDirective.updateEvent.subscribe((event: Event) => {
+            this.iconDirective.updateEvent.subscribe((event: LeafletEvent) => {
                 this.setIcon(event.target);
             });
         } else if (this.divIconDirective) {
             this.setIcon(this.divIconDirective);
-            this.divIconDirective.updateEvent.subscribe((event: Event) => {
+            this.divIconDirective.updateEvent.subscribe((event: LeafletEvent) => {
                 this.setIcon(event.target);
             });
         }

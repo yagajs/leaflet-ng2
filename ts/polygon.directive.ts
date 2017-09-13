@@ -11,11 +11,11 @@ import {
     Output,
 } from '@angular/core';
 import {
-    Event,
     FillRule,
     LatLng,
     LatLngExpression,
     LatLngTuple,
+    LeafletEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -59,8 +59,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();

@@ -14,11 +14,11 @@ import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import {
     Circle,
     CircleMarkerOptions,
-    Event,
     FillRule,
     LatLng,
     LatLngLiteral,
     LatLngTuple,
+    LeafletEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -120,13 +120,13 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Use it with `<yaga-circle (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#circle-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-circle (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#circle-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-circle (popupopen)="processEvent($event)">`

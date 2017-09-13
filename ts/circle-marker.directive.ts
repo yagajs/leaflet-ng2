@@ -13,11 +13,11 @@ import {
 import {
     CircleMarker,
     CircleMarkerOptions,
-    Event,
     FillRule,
     LatLng,
     LatLngLiteral,
     LatLngTuple,
+    LeafletEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -62,8 +62,8 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
     /* tslint:enable */
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
@@ -98,10 +98,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         mapComponent.addLayer(this);
 
         // Events
-        this.on('add', (event: Event) => {
+        this.on('add', (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on('remove', (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
         this.on('popupopen', (event: PopupEvent) => {

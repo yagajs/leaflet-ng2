@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import {
     Control,
-    Event,
     LatLngBoundsExpression,
+    LeafletEvent,
     Map,
     Point,
     PopupEvent,
@@ -38,8 +38,8 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output() public versionChange: EventEmitter<string> = new EventEmitter();
     @Output() public transparentChange: EventEmitter<boolean> = new EventEmitter();
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
@@ -50,12 +50,12 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('loading') public loadingEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('loading') public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
     @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
     @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
-    @Output('load') public loadEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,

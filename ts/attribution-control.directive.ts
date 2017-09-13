@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Control,
     ControlPosition,
-    Event } from 'leaflet';
+    LeafletEvent } from 'leaflet';
 import { ATTRIBUTION_PREFIX } from './consts';
 import { MapComponent } from './map.component';
 
@@ -93,13 +93,13 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Use it with `<yaga-attribution-control (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-attribution-control (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-attribution-control (click)="processEvent($event)">`
