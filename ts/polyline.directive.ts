@@ -11,11 +11,11 @@ import {
     Output,
 } from '@angular/core';
 import {
-    Event,
     FillRule,
     LatLng,
     LatLngExpression,
     LatLngTuple,
+    LeafletEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -60,8 +60,8 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
     /* tslint:enable */
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();

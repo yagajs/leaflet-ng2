@@ -47,4 +47,4 @@ export { Control,
     LineJoinShape,
     PolylineOptions,
     WMSParams,
-    Event } from 'leaflet';
+    LeafletEvent } from 'leaflet';

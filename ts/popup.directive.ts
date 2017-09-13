@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import {
     Content,
-    Event,
     LatLng,
     latLng,
     LatLngExpression,
+    LeafletEvent,
     Point,
     Popup,
 } from 'leaflet';
@@ -29,8 +29,8 @@ export class PopupDirective extends Popup implements OnDestroy {
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
 
-    @Output('open') public openEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('close') public closeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     protected map: MapComponent;
 

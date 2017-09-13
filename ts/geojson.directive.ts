@@ -11,10 +11,10 @@ import {
     Output,
 } from '@angular/core';
 import {
-    Event,
     GeoJSON,
     LatLng,
     Layer,
+    LeafletEvent,
     PathOptions,
     PopupEvent,
     TooltipEvent,
@@ -36,8 +36,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> = new EventEmitter();
     /* tslint:enable */
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();

@@ -1,6 +1,6 @@
 import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
-import { latLng, point, SVG } from 'leaflet';
+import { latLng, Layer, point, SVG } from 'leaflet';
 import {
     CircleMarkerDirective,
     LatLng,
@@ -10,7 +10,6 @@ import {
     TooltipDirective,
 } from './index';
 import { createPathTests } from './path-directives.spec';
-import Layer = L.Layer;
 
 describe('Circle Directive', () => {
     let map: MapComponent;

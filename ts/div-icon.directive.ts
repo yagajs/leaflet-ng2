@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {
     DivIcon,
-    Event,
+    LeafletEvent,
     Point,
 } from 'leaflet';
 /**
@@ -50,7 +50,7 @@ export class DivIconDirective extends DivIcon  {
      * This is an EventEmitter used to notify on any change in this object. It is mainly created to provide reactions
      * of the marker directive on changes.
      */
-    @Output('update') public updateEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('update') public updateEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     /**
      * The native element from angulars element-ref and blueprint for the icon content.

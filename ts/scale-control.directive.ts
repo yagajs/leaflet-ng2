@@ -10,7 +10,7 @@ import {
 import {
     Control,
     ControlPosition,
-    Event,
+    LeafletEvent,
     Map,
 } from 'leaflet';
 import { MapComponent } from './map.component';
@@ -23,8 +23,8 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
     @Output() public positionChange: EventEmitter<ControlPosition> = new EventEmitter();
 
-    @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
-    @Output('remove') public removeEvent: EventEmitter<Event> = new EventEmitter();
+    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
