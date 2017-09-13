@@ -422,37 +422,37 @@ export class MapComponent extends Map implements AfterViewInit {
         this.on('layerremove', (event: LayerEvent) => {
             this.layerremoveEvent.emit(event);
         });
-        this.on('zoomlevelschange', (event: Event) => {
+        this.on('zoomlevelschange', (event: LeafletEvent) => {
             this.zoomlevelschangeEvent.emit(event);
         });
         this.on('resize', (event: ResizeEvent) => {
             this.resizeEvent.emit(event);
         });
-        this.on('unload', (event: Event) => {
+        this.on('unload', (event: LeafletEvent) => {
             this.unloadEvent.emit(event);
         });
-        this.on('viewreset', (event: Event) => {
+        this.on('viewreset', (event: LeafletEvent) => {
             this.viewresetEvent.emit(event);
         });
-        this.on('load', (event: Event) => {
+        this.on('load', (event: LeafletEvent) => {
             this.loadEvent.emit(event);
         });
-        this.on('zoomstart', (event: Event) => {
+        this.on('zoomstart', (event: LeafletEvent) => {
             this.zoomstartEvent.emit(event);
         });
-        this.on('movestart', (event: Event) => {
+        this.on('movestart', (event: LeafletEvent) => {
             this.movestartEvent.emit(event);
         });
-        this.on('zoom', (event: Event) => {
+        this.on('zoom', (event: LeafletEvent) => {
             this.zoomEvent.emit(event);
         });
-        this.on('move', (event: Event) => {
+        this.on('move', (event: LeafletEvent) => {
             this.moveEvent.emit(event);
         });
-        this.on('zoomend', (event: Event) => {
+        this.on('zoomend', (event: LeafletEvent) => {
             this.zoomendEvent.emit(event);
         });
-        this.on('moveend', (event: Event) => {
+        this.on('moveend', (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
         this.on('popupopen', (event: PopupEvent) => {
@@ -461,7 +461,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.on('popupclose', (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('autopanstart', (event: Event) => {
+        this.on('autopanstart', (event: LeafletEvent) => {
             this.autopanstartEvent.emit(event);
         });
         this.on('tooltipopen', (event: TooltipEvent) => {

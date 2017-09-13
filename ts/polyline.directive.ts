@@ -16,6 +16,7 @@ import {
     LatLngExpression,
     LatLngTuple,
     LeafletEvent,
+    LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
     PathOptions,
@@ -66,12 +67,12 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
-    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
@@ -113,22 +114,22 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         this.on('tooltipclose', (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: MouseEvent) => {
+        this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: MouseEvent) => {
+        this.on('dbclick', (event: LeafletMouseEvent) => {
             this.dbclickEvent.emit(event);
         });
-        this.on('mousedown', (event: MouseEvent) => {
+        this.on('mousedown', (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: MouseEvent) => {
+        this.on('mouseover', (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: MouseEvent) => {
+        this.on('mouseout', (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: MouseEvent) => {
+        this.on('contextmenu', (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
     }

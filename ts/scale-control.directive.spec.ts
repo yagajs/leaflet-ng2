@@ -79,7 +79,12 @@ describe('Scale-Control Directive', () => {
             control.clickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new CustomEvent('click'));
+            control.getContainer().dispatchEvent(new MouseEvent('click', {
+                clientX: 3,
+                clientY: 4,
+                screenX: 1,
+                screenY: 2,
+            }));
         });
     });
     describe('(dbclick)', () => {
@@ -87,7 +92,12 @@ describe('Scale-Control Directive', () => {
             control.dbclickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new CustomEvent('dbclick'));
+            control.getContainer().dispatchEvent(new MouseEvent('dbclick', {
+                clientX: 3,
+                clientY: 4,
+                screenX: 1,
+                screenY: 2,
+            }));
         });
     });
     describe('(mousedown)', () => {
@@ -95,7 +105,12 @@ describe('Scale-Control Directive', () => {
             control.mousedownEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new CustomEvent('mousedown'));
+            control.getContainer().dispatchEvent(new MouseEvent('mousedown', {
+                clientX: 3,
+                clientY: 4,
+                screenX: 1,
+                screenY: 2,
+            }));
         });
     });
     describe('(mouseover)', () => {
@@ -103,7 +118,12 @@ describe('Scale-Control Directive', () => {
             control.mouseoverEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new CustomEvent('mouseover'));
+            control.getContainer().dispatchEvent(new MouseEvent('mouseover', {
+                clientX: 3,
+                clientY: 4,
+                screenX: 1,
+                screenY: 2,
+            }));
         });
     });
     describe('(mouseout)', () => {
@@ -111,7 +131,12 @@ describe('Scale-Control Directive', () => {
             control.mouseoutEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new CustomEvent('mouseout'));
+            control.getContainer().dispatchEvent(new MouseEvent('mouseout', {
+                clientX: 3,
+                clientY: 4,
+                screenX: 1,
+                screenY: 2,
+            }));
         });
     });
 

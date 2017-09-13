@@ -11,6 +11,7 @@ import {
     Control,
     LatLngBoundsExpression,
     LeafletEvent,
+    LeafletMouseEvent,
     Map,
     Point,
     PopupEvent,
@@ -157,37 +158,37 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dbclick event.
      * Use it with `<yaga-tile-layer (dbclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-dbclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired loading event.
      * Use it with `<yaga-tile-layer (loading)="processEvent($event)">`
@@ -259,22 +260,22 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         this.on('tooltipclose', (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: MouseEvent) => {
+        this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: MouseEvent) => {
+        this.on('dbclick', (event: LeafletMouseEvent) => {
             this.dbclickEvent.emit(event);
         });
-        this.on('mousedown', (event: MouseEvent) => {
+        this.on('mousedown', (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: MouseEvent) => {
+        this.on('mouseover', (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: MouseEvent) => {
+        this.on('mouseout', (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: MouseEvent) => {
+        this.on('contextmenu', (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
         this.on('loading', (event: Event) => {
