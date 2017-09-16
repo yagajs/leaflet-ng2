@@ -19,19 +19,6 @@ templates.
 
 *Note: This is just a release candidate!*
 
-## Links
-
-* [YAGA-Website](https://yagajs.org)
-* [Project-Website](https://leaflet-ng2.yagajs.org)
-* [Unit-Tests](https://leaflet-ng2.yagajs.org/latest/browser-test/)
-* [Test-Coverage](https://leaflet-ng2.yagajs.org/latest/coverage/)
-* [API-Documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/)
-* [GitHub](https://github.com/yagajs/leaflet-ng2)
-* [NPM](https://www.npmjs.com/package/@yaga/leaflet-ng2)
-* [Workshop with Ionic 2](https://github.com/atd-schubert/leaflet-ng2-workshop-froscon/tags)
-* [Video-Playlist (YouTube)](https://www.youtube.com/playlist?list=PLbpJoccrLTc00EXHFVIMTpIV_mYwb7IZW)
-
-
 ## How to use
 
 First you have to install this library from npm:
@@ -186,3 +173,19 @@ Scripts registered in package.json:
 * `browser-test`: Build the tests for the browser.
 * `build-examples`: Build the examples.
 * `doc`: Build the API documentation.
+
+## License
+
+This library is released under the [ISC License](LICENSE).
+
+## Links
+
+* [YAGA-Website](https://yagajs.org)
+* [Project-Website](https://leaflet-ng2.yagajs.org)
+* [Unit-Tests](https://leaflet-ng2.yagajs.org/latest/browser-test/)
+* [Test-Coverage](https://leaflet-ng2.yagajs.org/latest/coverage/)
+* [API-Documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/)
+* [GitHub](https://github.com/yagajs/leaflet-ng2)
+* [NPM](https://www.npmjs.com/package/@yaga/leaflet-ng2)
+* [Workshop with Ionic 2](https://github.com/atd-schubert/leaflet-ng2-workshop-froscon/tags)
+* [Video-Playlist (YouTube)](https://www.youtube.com/playlist?list=PLbpJoccrLTc00EXHFVIMTpIV_mYwb7IZW)
