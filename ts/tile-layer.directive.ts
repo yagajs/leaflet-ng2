@@ -322,10 +322,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(url)]="someValue">` or `<yaga-tile-layer [url]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-seturl Original Leaflet documentation
      */
-    @Input() set url(val: string) {
+    @Input() public set url(val: string) {
         this.setUrl(val);
     }
-    get url(): string {
+    public get url(): string {
         return (this as any)._url;
     }
 
@@ -345,10 +345,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setopacity Original Leaflet documentation
      */
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
 
@@ -356,7 +356,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
-    @Input() set display(val: boolean) {
+    @Input() public set display(val: boolean) {
         const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
@@ -395,7 +395,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
-    get display(): boolean {
+    public get display(): boolean {
         let pane: HTMLElement;
         let container: HTMLElement;
         try {
@@ -430,10 +430,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer [zIndex]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setzindex Original Leaflet documentation
      */
-    @Input() set zIndex(val: number) {
+    @Input() public set zIndex(val: number) {
         this.setZIndex(val);
     }
-    get zIndex(): number {
+    public get zIndex(): number {
         return this.options.zIndex;
     }
 
@@ -442,11 +442,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [tileSize]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileSize Original Leaflet documentation
      */
-    @Input() set tileSize(val: Point) {
+    @Input() public set tileSize(val: Point) {
         this.options.tileSize = val;
         this.redraw();
     }
-    get tileSize(): Point { // TODO: is this correct that it is always a Point?
+    public get tileSize(): Point { // TODO: is this correct that it is always a Point?
         return (this.options.tileSize as Point);
     }
 
@@ -455,10 +455,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [updateWhenIdle]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updatewhenidle Original Leaflet documentation
      */
-    @Input() set updateWhenIdle(val: boolean) {
+    @Input() public set updateWhenIdle(val: boolean) {
         this.options.updateWhenIdle = val;
     }
-    get updateWhenIdle(): boolean {
+    public get updateWhenIdle(): boolean {
         return this.options.updateWhenIdle;
     }
 
@@ -467,10 +467,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [updateWhenZooming]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updatewhenzooming Original Leaflet documentation
      */
-    @Input() set updateWhenZooming(val: boolean) {
+    @Input() public set updateWhenZooming(val: boolean) {
         this.options.updateWhenZooming = val;
     }
-    get updateWhenZooming(): boolean {
+    public get updateWhenZooming(): boolean {
         return this.options.updateWhenZooming;
     }
 
@@ -479,10 +479,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [updateInterval]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updateinterval Original Leaflet documentation
      */
-    @Input() set updateInterval(val: number) {
+    @Input() public set updateInterval(val: number) {
         this.options.updateInterval = val;
     }
-    get updateInterval(): number {
+    public get updateInterval(): number {
         return this.options.updateInterval;
     }
 
@@ -491,11 +491,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [bounds]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-bounds Original Leaflet documentation
      */
-    @Input() set bounds(val: LatLngBoundsExpression) {
+    @Input() public set bounds(val: LatLngBoundsExpression) {
         this.options.bounds = val;
         this.redraw();
     }
-    get bounds(): LatLngBoundsExpression {
+    public get bounds(): LatLngBoundsExpression {
         return this.options.bounds;
     }
 
@@ -504,10 +504,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [noWrap]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-nowrap Original Leaflet documentation
      */
-    @Input() set noWrap(val: boolean) {
+    @Input() public set noWrap(val: boolean) {
         this.options.noWrap = val;
     }
-    get noWrap(): boolean {
+    public get noWrap(): boolean {
         return this.options.noWrap;
     }
 
@@ -516,11 +516,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [className]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-classname Original Leaflet documentation
      */
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.options.className = val;
         this.redraw();
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
 
@@ -529,10 +529,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [keepBuffer]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-keepbuffer Original Leaflet documentation
      */
-    @Input() set keepBuffer(val: number) {
+    @Input() public set keepBuffer(val: number) {
         this.options.keepBuffer = val;
     }
-    get keepBuffer(): number {
+    public get keepBuffer(): number {
         return this.options.keepBuffer;
     }
 
@@ -541,14 +541,14 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [maxZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-maxzoom Original Leaflet documentation
      */
-    @Input() set maxZoom(val: number) {
+    @Input() public set maxZoom(val: number) {
         this.options.maxZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    get maxZoom(): number {
+    public get maxZoom(): number {
         return this.options.maxZoom;
     }
 
@@ -557,14 +557,14 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [minZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-minzoom Original Leaflet documentation
      */
-    @Input() set minZoom(val: number) {
+    @Input() public set minZoom(val: number) {
         this.options.minZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    get minZoom(): number {
+    public get minZoom(): number {
         return this.options.minZoom;
     }
 
@@ -573,11 +573,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [maxNativeZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-maxnativezoom Original Leaflet documentation
      */
-    @Input() set maxNativeZoom(val: number) {
+    @Input() public set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
         this.redraw();
     }
-    get maxNativeZoom(): number {
+    public get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
     }
 
@@ -586,11 +586,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [minNativeZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-minnativezoom Original Leaflet documentation
      */
-    @Input() set minNativeZoom(val: number) {
+    @Input() public set minNativeZoom(val: number) {
         this.options.minNativeZoom = val;
         this.redraw();
     }
-    get minNativeZoom(): number {
+    public get minNativeZoom(): number {
         return this.options.minNativeZoom;
     }
 
@@ -599,10 +599,10 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [subdomains]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-subdomains Original Leaflet documentation
      */
-    @Input() set subdomains(val: string[]) {
+    @Input() public set subdomains(val: string[]) {
         this.options.subdomains = val;
     }
-    get subdomains(): string[] {
+    public get subdomains(): string[] {
         if (typeof (this.options.subdomains as string) === 'string') {
             this.options.subdomains = (this.options.subdomains as string).split('');
         }
@@ -614,11 +614,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [errorTileUrl]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-errortileurl Original Leaflet documentation
      */
-    @Input() set errorTileUrl(val: string) {
+    @Input() public set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
         this.redraw();
     }
-    get errorTileUrl(): string {
+    public get errorTileUrl(): string {
         return this.options.errorTileUrl;
     }
 
@@ -627,11 +627,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [zoomOffset]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-zoomoffset Original Leaflet documentation
      */
-    @Input() set zoomOffset(val: number) {
+    @Input() public set zoomOffset(val: number) {
         this.options.zoomOffset = val;
         this.redraw();
     }
-    get zoomOffset(): number {
+    public get zoomOffset(): number {
         return this.options.zoomOffset;
     }
 
@@ -640,11 +640,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [tms]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tms Original Leaflet documentation
      */
-    @Input() set tms(val: boolean) {
+    @Input() public set tms(val: boolean) {
         this.options.tms = val;
         this.redraw();
     }
-    get tms(): boolean {
+    public get tms(): boolean {
         return this.options.tms;
     }
 
@@ -653,11 +653,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [zoomReverse]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-zoomreverse Original Leaflet documentation
      */
-    @Input() set zoomReverse(val: boolean) {
+    @Input() public set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
         this.redraw();
     }
-    get zoomReverse(): boolean {
+    public get zoomReverse(): boolean {
         return this.options.zoomReverse;
     }
 
@@ -666,11 +666,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [detectRetina]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-detectretina Original Leaflet documentation
      */
-    @Input() set detectRetina(val: boolean) {
+    @Input() public set detectRetina(val: boolean) {
         this.options.detectRetina = val;
         this.redraw();
     }
-    get detectRetina(): boolean {
+    public get detectRetina(): boolean {
         return this.options.detectRetina;
     }
 
@@ -679,11 +679,11 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [crossOrigin]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-crossorigin Original Leaflet documentation
      */
-    @Input() set crossOrigin(val: boolean) {
+    @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
         this.redraw();
     }
-    get crossOrigin(): boolean {
+    public get crossOrigin(): boolean {
         return this.options.crossOrigin;
     }
 
@@ -692,14 +692,14 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Use it with `<yaga-tile-layer [attribution]="someValue">`
      * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-attribution Original Leaflet documentation
      */
-    @Input() set attribution(val: string) {
+    @Input() public set attribution(val: string) {
         if ((this as any)._map && (this as any)._map.attributionControl) {
             ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
             ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }
-    get attribution(): string {
+    public get attribution(): string {
         return this.getAttribution();
     }
 }
