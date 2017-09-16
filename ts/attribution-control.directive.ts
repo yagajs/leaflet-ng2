@@ -50,7 +50,7 @@ import { enhanceMouseEvent } from './mouse-event-helper';
  * * The `contentHtml` property is not the child-node in the leaflet div-icon, it is the clone of it and gets cloned
  * again on every change.
  *
- * @link http://leafletjs.com/reference-1.0.3.html#control-attribution Original Leaflet documentation
+ * @link http://leafletjs.com/reference-1.2.0.html#control-attribution Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Attribution-Control%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/attribution-control.directive.js.html
  * Test coverage
@@ -95,43 +95,43 @@ export class AttributionControlDirective extends Control.Attribution implements 
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-attribution-control (add)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-add Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-add Original Leaflet documentation
      */
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-attribution-control (remove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-remove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-remove Original Leaflet documentation
      */
     @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-attribution-control (click)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-click Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-click Original Leaflet documentation
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dbclick event.
      * Use it with `<yaga-attribution-control (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-dbclick Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-dbclick Original Leaflet documentation
      */
     @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-attribution-control (mousedown)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mousedown Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mousedown Original Leaflet documentation
      */
     @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-attribution-control (mouseover)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mouseover Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mouseover Original Leaflet documentation
      */
     @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-attribution-control (mouseout)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-mouseout Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mouseout Original Leaflet documentation
      */
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
@@ -184,7 +184,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
     /**
      * Derived method of the original setPosition.
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-setposition Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-setposition Original Leaflet documentation
      */
     public setPosition(val: ControlPosition): this {
       super.setPosition(val);
@@ -196,7 +196,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Two-Way bound property for the opacity.
      * Use it with `<yaga-attribution-control [(opacity)]="someValue">`
      * or `<yaga-attribution-control [opacity]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-opacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-opacity Original Leaflet documentation
      */
     @Input() public set opacity(val: number) {
         this.getContainer().style.opacity = val.toString();
@@ -230,7 +230,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Two-Way bound property for the position.
      * Use it with `<yaga-attribution-control [(position)]="someValue">`
      * or `<yaga-attribution-control [position]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-position Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-position Original Leaflet documentation
      */
     @Input() public set position(val: ControlPosition) {
       this.setPosition(val);
@@ -241,7 +241,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
     /**
      * Derived method of the original setPrefix.
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-setprefix Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-setprefix Original Leaflet documentation
      */
     public setPrefix(prefix: string): this {
         super.setPrefix(prefix);
@@ -252,7 +252,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Two-Way bound property for the prefix.
      * Use it with `<yaga-attribution-control [(prefix)]="someValue">`
      * or `<yaga-attribution-control [prefix]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-prefix Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-prefix Original Leaflet documentation
      */
     @Input() public set prefix(val: string) {
         this.setPrefix(val);
@@ -263,7 +263,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
 
     /**
      * Derived method of the original addAttribution.
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-addattribution Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-addattribution Original Leaflet documentation
      */
     public addAttribution(val: string): this {
         super.addAttribution(val);
@@ -272,7 +272,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
     /**
      * Derived method of the original removeAttribution.
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-removeattribution
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-removeattribution
      * Original Leaflet documentation
      */
     public removeAttribution(val: string): this {
@@ -284,7 +284,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Two-Way bound property for the attributions.
      * Use it with `<yaga-attribution-control [(attributions)]="someValue">`
      * or `<yaga-attribution-control [attributions]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#control-attribution-attributions Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-attributions Original Leaflet documentation
      */
     @Input() public set attributions(val: string[]) {
         this.removeAllAttributions(true);

@@ -78,7 +78,7 @@ import { TooltipDirective } from './tooltip.directive';
  * </yaga-map>
  * ```
  *
- * @link http://leafletjs.com/reference-1.0.3.html#circlemarker Original Leaflet documentation
+ * @link http://leafletjs.com/reference-1.2.0.html#circlemarker Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Circle-Marker%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/circle-marker.directive.js.html
  * Test coverage
@@ -215,73 +215,73 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-circle-marker (add)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-add Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-add Original Leaflet documentation
      */
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-circle-marker (remove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-remove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-remove Original Leaflet documentation
      */
     @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-circle-marker (popupopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-popupopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-popupopen Original Leaflet documentation
      */
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-circle-marker (popupclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-popupclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-popupclose Original Leaflet documentation
      */
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-circle-marker (tooltipopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-tooltipopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-tooltipopen Original Leaflet documentation
      */
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-circle-marker (tooltipclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-tooltipclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-tooltipclose Original Leaflet documentation
      */
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-circle-marker (click)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-click Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-click Original Leaflet documentation
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dbclick event.
      * Use it with `<yaga-circle-marker (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-dbclick Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dbclick Original Leaflet documentation
      */
     @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-circle-marker (mousedown)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-mousedown Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mousedown Original Leaflet documentation
      */
     @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-circle-marker (mouseover)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-mouseover Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mouseover Original Leaflet documentation
      */
     @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-circle-marker (mouseout)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-mouseout Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mouseout Original Leaflet documentation
      */
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-circle-marker (contextmenu)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-contextmenu Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-contextmenu Original Leaflet documentation
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
@@ -374,7 +374,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
 
     /**
      * Derived method of the original setLatLng.
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-setlatlng Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-setlatlng Original Leaflet documentation
      */
     public setLatLng(val: LatLng | LatLngTuple | LatLngLiteral): this {
         super.setLatLng((val as any));
@@ -390,7 +390,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the position of the circle.
      * Use it with `<yaga-circle-marker [(position)]="someValue">` or `<yaga-circle-marker [position]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-l-circlemarker Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-l-circlemarker Original Leaflet documentation
      */
     @Input() public set position(val: LatLng | LatLngTuple | LatLngLiteral) {
         this.setLatLng(val);
@@ -401,7 +401,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the latitude (position) of the circle.
      * Use it with `<yaga-circle-marker [(lat)]="someValue">` or `<yaga-circle-marker [lat]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-l-circlemarker Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-l-circlemarker Original Leaflet documentation
      */
     @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
@@ -412,7 +412,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the longitude (position) of the circle.
      * Use it with `<yaga-circle-marker [(lng)]="someValue">` or `<yaga-circle-marker [lng]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-l-circlemarker Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-l-circlemarker Original Leaflet documentation
      */
     @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
@@ -422,7 +422,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     }
     /**
      * Derived method of the original setRadius.
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-setradius Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-setradius Original Leaflet documentation
      */
     public setRadius(val: number): this {
         super.setRadius(val);
@@ -433,7 +433,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the radius of the circle.
      * Use it with `<yaga-circle-marker [(radius)]="someValue">` or `<yaga-circle-marker [radius]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-radius Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-radius Original Leaflet documentation
      */
     @Input() public set radius(val: number) {
         this.setRadius(val);
@@ -444,7 +444,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the geoJSON data.
      * Use it with `<yaga-circle-marker [(geoJSON)]="someValue">` or `<yaga-circle-marker [geoJSONChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-togeojson Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-togeojson Original Leaflet documentation
      */
     @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
@@ -463,7 +463,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
 
     /**
      * Derived method of the original setStyle.
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-setstyle Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-setstyle Original Leaflet documentation
      */
     public setStyle(style: PathOptions): this {
         super.setStyle(style);
@@ -513,7 +513,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the opacity.
      * Use it with `<yaga-circle-marker [(opacity)]="someValue">` or `<yaga-circle-marker [opacityChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-opacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-opacity Original Leaflet documentation
      */
     @Input() public set opacity(val: number) {
         this.setStyle({opacity: val});
@@ -524,7 +524,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the stroke.
      * Use it with `<yaga-circle-marker [(stroke)]="someValue">` or `<yaga-circle-marker [strokeChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-stroke Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-stroke Original Leaflet documentation
      */
     @Input() public set stroke(val: boolean) {
         this.setStyle({stroke: val});
@@ -535,7 +535,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the color.
      * Use it with `<yaga-circle-marker [(color)]="someValue">` or `<yaga-circle-marker [colorChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-color Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-color Original Leaflet documentation
      */
     @Input() public set color(val: string) {
         this.setStyle({color: val});
@@ -546,7 +546,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the weight.
      * Use it with `<yaga-circle-marker [(weight)]="someValue">` or `<yaga-circle-marker [weightChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-weight Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-weight Original Leaflet documentation
      */
     @Input() public set weight(val: number) {
         this.setStyle({weight: val});
@@ -557,7 +557,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the lineCap.
      * Use it with `<yaga-circle-marker [(lineCap)]="someValue">` or `<yaga-circle-marker [lineCapChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-linecap Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-linecap Original Leaflet documentation
      */
     @Input() public set lineCap(val: LineCapShape) {
         this.setStyle({lineCap: val});
@@ -569,7 +569,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the lineJoin.
      * Use it with `<yaga-circle-marker [(lineJoin)]="someValue">`
      * or `<yaga-circle-marker [lineJoinChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-linejoin Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-linejoin Original Leaflet documentation
      */
     @Input() public set lineJoin(val: LineJoinShape) {
         this.setStyle({lineJoin: val});
@@ -581,7 +581,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the dashArray.
      * Use it with `<yaga-circle-marker [(dashArray)]="someValue">`
      * or `<yaga-circle-marker [dashArrayChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-dasharray Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dasharray Original Leaflet documentation
      */
     @Input() public set dashArray(val: string) {
         this.setStyle({dashArray: val});
@@ -593,7 +593,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the dashOffset.
      * Use it with `<yaga-circle-marker [(dashOffset)]="someValue">`
      * or `<yaga-circle-marker [dashOffsetChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-dashoffset Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dashoffset Original Leaflet documentation
      */
     @Input() public set dashOffset(val: string) {
         this.setStyle({dashOffset: val});
@@ -604,7 +604,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the fill.
      * Use it with `<yaga-circle-marker [(fill)]="someValue">` or `<yaga-circle-marker [fillChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-fill Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fill Original Leaflet documentation
      */
     @Input() public set fill(val: boolean) {
         this.setStyle({fill: val});
@@ -616,7 +616,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the fillColor.
      * Use it with `<yaga-circle-marker [(fillColor)]="someValue">`
      * or `<yaga-circle-marker [fillColorChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-fillcolor Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillcolor Original Leaflet documentation
      */
     @Input() public set fillColor(val: string) {
         this.setStyle({fillColor: val});
@@ -628,7 +628,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the fillOpacity.
      * Use it with `<yaga-circle-marker [(fillOpacity)]="someValue">`
      * or `<yaga-circle-marker [fillOpacityChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-fillopacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillopacity Original Leaflet documentation
      */
     @Input() public set fillOpacity(val: number) {
         this.setStyle({fillOpacity: val});
@@ -640,7 +640,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the fillRule.
      * Use it with `<yaga-circle-marker [(fillRule)]="someValue">`
      * or `<yaga-circle-marker [fillRuleChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-fillrule Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillrule Original Leaflet documentation
      */
     @Input() public set fillRule(val: FillRule) {
         this.setStyle({fillRule: val});
@@ -652,7 +652,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Two-Way bound property for the className.
      * Use it with `<yaga-circle-marker [(className)]="someValue">`
      * or `<yaga-circle-marker [classNameChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-classname Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-classname Original Leaflet documentation
      */
     @Input() public set className(val: string) {
         this.setStyle({className: val});
@@ -663,7 +663,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Two-Way bound property for the opacity.
      * Use it with `<yaga-circle-marker [(style)]="someValue">` or `<yaga-circle-marker [styleChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circlemarker-style Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-style Original Leaflet documentation
      */
     @Input() public set style(val: CircleMarkerOptions) {
         this.setStyle(val);
@@ -705,7 +705,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Input for the GeoJSON properties.
      * Use it with `<yaga-circle-marker [interactive]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-interactive Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-interactive Original Leaflet documentation
      */
     @Input() public set interactive(val: boolean) {
         const map: MapComponent = ((this as any)._map as MapComponent);
