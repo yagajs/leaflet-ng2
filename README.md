@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 *Do not forget to import the leaflet css!*
 
+
 After that you should be able to use the following directives or components:
 
 * `yaga-map` *This must be the root component!*
@@ -99,12 +100,78 @@ For further information look at the [api documentation](https://leaflet-ng2.yaga
 [examples](https://leaflet-ng2.yagajs.org/latest/examples/).
 
 
-### Use with CLI
+### Use with a CLI
 
 For developing we recommend to use a command-line-interface like [`angular-cli`](https://cli.angular.io/) for
 web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps.
 
 *You can also check out our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
+
+### Preparation with Angular CLI
+
+You have to perform the followings steps to start a project with the [`angular-cli`](https://cli.angular.io/):
+
+```bash
+# Install the angular-cli to your system
+npm install -g angular-cli
+# Create a app with the angular-cli
+ng new my-yaga-app
+# Switch into the created project directory
+cd my-yaga-app
+# Install @yaga/leaflet-ng2 as project dependency
+npm install --save @yaga/leaflet-ng2
+```
+
+Import the YAGA module into your app in `app.module.ts`:
+
+```typescript
+// other imports...
+import { YagaModule } from '@yaga/leaflet-ng2';
+
+// ...
+
+@NgModule({
+  imports: [
+    // other...
+    YagaModule,
+  ],
+  // some other properties...
+)
+export class AppModule { }
+```
+
+### Preparation with Ionic CLI
+
+You have to perform the followings steps to start a project with the [`ionic-cli`](http://ionicframework.com/):
+
+```bash
+# Install the ionic-cli to your system
+npm install -g ionic
+# Create a app with the ionic-cli (select a template unteractive)
+ionic start my-yaga-app
+# Switch into the created project directory
+cd my-yaga-app
+# Install @yaga/leaflet-ng2 as project dependency
+npm install --save @yaga/leaflet-ng2
+```
+
+Import the YAGA module into your app in `app.module.ts`:
+
+```typescript
+// other imports...
+import { YagaModule } from '@yaga/leaflet-ng2';
+
+// ...
+
+@NgModule({
+  imports: [
+    // other...
+    YagaModule,
+  ],
+  // some other properties...
+)
+export class AppModule { }
+```
 
 ## Scripts Tasks
 
