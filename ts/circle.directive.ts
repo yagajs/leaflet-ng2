@@ -79,7 +79,7 @@ import { TooltipDirective } from './tooltip.directive';
  *         [interactive]="..."
  *         [properties]="..."
  *         >
- *     </yaga-tile-layer>
+ *     </yaga-circle>
  * </yaga-map>
  * ```
  *
@@ -291,6 +291,12 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
         this.geoJSONChange.emit(this.geoJSON);
         return this;
     }
+
+    /**
+     * Two-Way bound property for the position of the circle.
+     * Use it with `<yaga-circle [(position)]="someValue">` or `<yaga-circle [position]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#circle-l-circle Original Leaflet documentation
+     */
     @Input() public set position(val: LatLng | LatLngTuple | LatLngLiteral) {
         this.setLatLng(val);
     }
@@ -298,12 +304,22 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
         return (this as any)._latlng;
     }
 
+    /**
+     * Two-Way bound property for the latitude (position) of the circle.
+     * Use it with `<yaga-circle [(lat)]="someValue">` or `<yaga-circle [lat]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#circle-l-circle Original Leaflet documentation
+     */
     @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
     public get lat(): number {
         return (this as any)._latlng.lat;
     }
+    /**
+     * Two-Way bound property for the longitude (position) of the circle.
+     * Use it with `<yaga-circle [(lng)]="someValue">` or `<yaga-circle [lng]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#circle-l-circle Original Leaflet documentation
+     */
     @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
@@ -321,6 +337,11 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
         return this;
     }
 
+    /**
+     * Two-Way bound property for the radius of the circle.
+     * Use it with `<yaga-circle [(radius)]="someValue">` or `<yaga-circle [radius]="someValue">`
+     * @link http://leafletjs.com/reference-1.0.3.html#circle-radius Original Leaflet documentation
+     */
     @Input() public set radius(val: number) {
         this.setRadius(val);
     }
