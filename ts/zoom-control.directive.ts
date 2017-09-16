@@ -17,6 +17,43 @@ import {
 import { MapComponent } from './map.component';
 import { enhanceMouseEvent } from './mouse-event-helper';
 
+/**
+ * Angular2 directive for the attribution-control of Leaflet.
+ *
+ * *You can use this directive in an Angular2 template after importing `YagaModule`.*
+ *
+ * How to use in a template:
+ * ```html
+ * <yaga-map>
+ *     <yaga-zoom-control
+ *         [(display)]="..."
+ *         [(zIndex)]="..."
+ *         [(position)]="..."
+ *
+ *         [zoomInText]="..."
+ *         [zoomInTitle]="..."
+ *         [zoomOutText]="..."
+ *         [zoomOutTitle]="..."
+ *
+ *         (add)="..."
+ *         (remove)="..."
+ *         (click)="..."
+ *         (dbclick)="..."
+ *         (mousedown)="..."
+ *         (mouseover)="..."
+ *         (mouseout)="..."
+ *         >
+ *     </yaga-zoom-control>
+ * </yaga-map>
+ * ```
+ *
+ * @link http://leafletjs.com/reference-1.2.0.html#control-zoom Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Zoom-Control%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/zoom-control.directive.js.html
+ * Test coverage
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/zoomcontroldirective.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/zoom-control-directive/
+ */
 @Directive({
     selector: 'yaga-zoom-control',
 })
@@ -209,7 +246,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     /**
      * Input for the text shown on the zoom in button.
-     * Use it with `<yaga-scale-control [(zoomInText)]="someValue">`
+     * Use it with `<yaga-zoom-control [(zoomInText)]="someValue">`
      * or `<yaga-zoom-control [zoomInText]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomintext Original Leaflet documentation
      */
@@ -223,7 +260,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     /**
      * Input for the title connected to the zoom in button.
-     * Use it with `<yaga-scale-control [(zoomInTitle)]="someValue">`
+     * Use it with `<yaga-zoom-control [(zoomInTitle)]="someValue">`
      * or `<yaga-zoom-control [zoomInTitle]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomintitle Original Leaflet documentation
      */
@@ -237,7 +274,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     /**
      * Input for the text shown on the zoom out button.
-     * Use it with `<yaga-scale-control [(zoomOutText)]="someValue">`
+     * Use it with `<yaga-zoom-control [(zoomOutText)]="someValue">`
      * or `<yaga-zoom-control [zoomOutText]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomouttext Original Leaflet documentation
      */
@@ -251,7 +288,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
 
     /**
      * Input for the title connected to the zoom out button.
-     * Use it with `<yaga-scale-control [(zoomOutTitle)]="someValue">`
+     * Use it with `<yaga-zoom-control [(zoomOutTitle)]="someValue">`
      * or `<yaga-zoom-control [zoomOutTitle]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomouttitle Original Leaflet documentation
      */
