@@ -44,12 +44,6 @@ import { enhanceMouseEvent } from './mouse-event-helper';
  * </yaga-map>
  * ```
  *
- * Notes:
- *
- * * All div-icon-directives have the css-class `yaga-div-icon`.
- * * The `contentHtml` property is not the child-node in the leaflet div-icon, it is the clone of it and gets cloned
- * again on every change.
- *
  * @link http://leafletjs.com/reference-1.2.0.html#control-attribution Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Attribution-Control%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/attribution-control.directive.js.html
@@ -237,6 +231,22 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
     public get position(): ControlPosition {
       return this.getPosition();
+    }
+
+    /**
+     * Two-Way bound property for the zIndex of the control.
+     * Use it with `<yaga-attribution-control [(zIndex)]="someValue">`
+     * or `<yaga-attribution-control (zIndexChange)="processEvent($event)">`
+     */
+    @Input() public set zIndex(zIndex: number) {
+        if ( !zIndex ) {
+            zIndex = 0;
+        }
+
+        this.getContainer().style.zIndex = zIndex.toString();
+    }
+    public get zIndex(): number {
+        return parseInt(this.getContainer().style.zIndex, 10);
     }
 
     /**
