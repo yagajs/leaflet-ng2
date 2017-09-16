@@ -87,14 +87,14 @@ For further information look at the [api documentation](https://leaflet-ng2.yaga
 [examples](https://leaflet-ng2.yagajs.org/latest/examples/).
 
 
-### Use with a CLI
+### Use in combination with a CLI
 
 For developing we recommend to use a command-line-interface like [`angular-cli`](https://cli.angular.io/) for
 web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps.
 
 *You can also check out our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
 
-### Preparation with Angular CLI
+#### Start a project with Angular CLI
 
 You have to perform the followings steps to start a project with the [`angular-cli`](https://cli.angular.io/):
 
@@ -127,7 +127,7 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 export class AppModule { }
 ```
 
-### Preparation with Ionic CLI
+#### Start a project with Ionic CLI
 
 You have to perform the followings steps to start a project with the [`ionic-cli`](http://ionicframework.com/):
 
