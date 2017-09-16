@@ -28,7 +28,6 @@ templates.
 * [API-Documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/)
 * [GitHub](https://github.com/yagajs/leaflet-ng2)
 * [NPM](https://www.npmjs.com/package/@yaga/leaflet-ng2)
-
 * [Workshop with Ionic 2](https://github.com/atd-schubert/leaflet-ng2-workshop-froscon/tags)
 * [Video-Playlist (YouTube)](https://www.youtube.com/playlist?list=PLbpJoccrLTc00EXHFVIMTpIV_mYwb7IZW)
 
@@ -103,8 +102,9 @@ For further information look at the [api documentation](https://leaflet-ng2.yaga
 ### Use with CLI
 
 For developing we recommend to use a command-line-interface like [`angular-cli`](https://cli.angular.io/) for
-web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps. *You can also check out
-our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
+web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps.
+
+*You can also check out our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
 
 ## Scripts Tasks
 
