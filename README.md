@@ -3,9 +3,19 @@
 [![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
 [![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
 
-Angular 2 module for Leaflet. This module serves components and
-directives for [Leaflet](http://leafletjs.com/) in
-[Angular2](https://angular.io/).
+YAGA leaflet-ng2 is a granular implementation of the popular [Leaflet](http://leafletjs.com/) framework into the model
+view view controller (MVVC) of [Angular2](https://angular.io/) and it is fully compatible with the newest version of
+Angular 4. It provides a directive for every Leaflet class that belongs to the user interface by inheriting the original
+Leaflet class and enhancing it with the decorators of Angular and glue-code. With this approach the directives are still
+extensible and it is possible to write the structure of an app in a descriptive way in a well known markup language,
+HTML5. This is why you mainly need HTML skills for creating a template based geo-app with leaflet-ng2.
+
+It is easy to enhance this library with one’s own Angular modules, because of its modular structure. It is
+even possible to use the already existing Leaflet plugins on top, because the implementation also detects changes that
+were made in Leaflet and bind them to Angular’s data model.
+
+The YAGA Development-Team gives a great importance to tests, test-coverage, documentation, examples and getting started
+templates.
 
 *Note: This is just a release candidate!*
 
@@ -13,11 +23,14 @@ directives for [Leaflet](http://leafletjs.com/) in
 
 * [YAGA-Website](https://yagajs.org)
 * [Project-Website](https://leaflet-ng2.yagajs.org)
-* [Unit-Tests](https://leaflet-ng2.yagajs.org/1.0.0-rc2/browser-test/)
-* [Test-Coverage](https://leaflet-ng2.yagajs.org/1.0.0-rc2/coverage/)
-* [API-Documentation](https://leaflet-ng2.yagajs.org/1.0.0-rc2/typedoc/)
+* [Unit-Tests](https://leaflet-ng2.yagajs.org/latest/browser-test/)
+* [Test-Coverage](https://leaflet-ng2.yagajs.org/latest/coverage/)
+* [API-Documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/)
 * [GitHub](https://github.com/yagajs/leaflet-ng2)
 * [NPM](https://www.npmjs.com/package/@yaga/leaflet-ng2)
+
+* [Workshop with Ionic 2](https://github.com/atd-schubert/leaflet-ng2-workshop-froscon/tags)
+* [Video-Playlist (YouTube)](https://www.youtube.com/playlist?list=PLbpJoccrLTc00EXHFVIMTpIV_mYwb7IZW)
 
 
 ## How to use
@@ -28,7 +41,7 @@ First you have to install this library from npm:
 npm install --save @yaga/leaflet-ng2
 ```
 
-This module works like a normal angular 2 module. You should do something like that:
+This module works like a normal Angular 2 module. You should do something like that:
 
 ```typescript
 import { YagaModule, OSM_TILE_LAYER_URL }   from '@yaga/leaflet-ng2';
@@ -81,7 +94,10 @@ After that you should be able to use the following directives or components:
 * `yaga-tooltip`
 * `yaga-zoom-control`
 
-For further information look at the [examples](https://leaflet-ng2.yagajs.org/latest/examples/)
+![Structure of the leaflet-ng2 directives](directive-structure.svg)
+
+For further information look at the [api documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/) or the
+[examples](https://leaflet-ng2.yagajs.org/latest/examples/).
 
 
 ### Use with CLI
