@@ -7,5 +7,5 @@ export function enhanceMouseEvent(originalEvent: MouseEvent, map: Map): LeafletM
         layerPoint: map.mouseEventToLayerPoint(originalEvent),
         ...originalEvent,
         originalEvent,
-    };
+    } as any;
 }
