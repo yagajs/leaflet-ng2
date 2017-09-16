@@ -1,4 +1,4 @@
-# Yaga - leaflet-ng2
+# YAGA - leaflet-ng2
 
 [![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
 [![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
@@ -81,8 +81,14 @@ After that you should be able to use the following directives or components:
 * `yaga-tooltip`
 * `yaga-zoom-control`
 
-For further information look at the [examples](https://leaflet-ng2.yagajs.org/1.0.0-rc2/examples/)
+For further information look at the [examples](https://leaflet-ng2.yagajs.org/latest/examples/)
 
+
+### Use with CLI
+
+For developing we recommend to use a command-line-interface like [`angular-cli`](https://cli.angular.io/) for
+web-applications or [`ionic`](http://ionicframework.com/) for smartdevice-like apps. *You can also check out
+our [ionic-starter templates](https://github.com/yagajs/?q=ionic-starter) on our GitHub account*
 
 ## Scripts Tasks
 
