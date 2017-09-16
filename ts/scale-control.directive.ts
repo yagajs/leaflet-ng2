@@ -281,7 +281,6 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         return this.options.metric;
     }
 
-
     /**
      * Input for state of imperial-scale state.
      * Use it with `<yaga-scale-control [(imperial)]="someValue">`
