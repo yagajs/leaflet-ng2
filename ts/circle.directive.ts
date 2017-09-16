@@ -93,27 +93,127 @@ import { TooltipDirective } from './tooltip.directive';
     selector: 'yaga-circle',
 })
 export class CircleDirective<T> extends Circle implements OnDestroy, AfterContentInit {
+    /**
+     * Two-Way bound property for the display status of the geometry.
+     * Use it with `<yaga-circle [(display)]="someValue">`
+     * or `<yaga-circle (displayChange)="processEvent($event)">`
+     */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
+    /**
+     * Two-Way bound property for the stroke state of the geometry.
+     * Use it with `<yaga-circle [(stroke)]="someValue">`
+     * or `<yaga-circle (strokeChange)="processEvent($event)">`
+     */
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
+    /**
+     * Two-Way bound property for the line-color of the geometry.
+     * Use it with `<yaga-circle [(color)]="someValue">`
+     * or `<yaga-circle (colorChange)="processEvent($event)">`
+     */
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the weight of the geometry.
+     * Use it with `<yaga-circle [(weight)]="someValue">`
+     * or `<yaga-circle (weightChange)="processEvent($event)">`
+     */
     @Output() public weightChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the opacity of the geometry.
+     * Use it with `<yaga-circle [(opacity)]="someValue">`
+     * or `<yaga-circle (opacityChange)="processEvent($event)">`
+     */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the lineCap of the geometry.
+     * Use it with `<yaga-circle [(lineCap)]="someValue">`
+     * or `<yaga-circle (lineCapChange)="processEvent($event)">`
+     */
     @Output() public lineCapChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the lineJoin of the geometry.
+     * Use it with `<yaga-circle [(lineJoin)]="someValue">`
+     * or `<yaga-circle (lineJoinChange)="processEvent($event)">`
+     */
     @Output() public lineJoinChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the dashArray of the geometry.
+     * Use it with `<yaga-circle [(dashArray)]="someValue">`
+     * or `<yaga-circle (dashArrayChange)="processEvent($event)">`
+     */
     @Output() public dashArrayChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the dashOffset of the geometry.
+     * Use it with `<yaga-circle [(dashOffset)]="someValue">`
+     * or `<yaga-circle (dashOffsetChange)="processEvent($event)">`
+     */
     @Output() public dashOffsetChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the fill state of the geometry.
+     * Use it with `<yaga-circle [(fill)]="someValue">`
+     * or `<yaga-circle (fillChange)="processEvent($event)">`
+     */
     @Output() public fillChange: EventEmitter<boolean> = new EventEmitter();
+    /**
+     * Two-Way bound property for the fill-color of the geometry.
+     * Use it with `<yaga-circle [(fillColor)]="someValue">`
+     * or `<yaga-circle (fillColorChange)="processEvent($event)">`
+     */
     @Output() public fillColorChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the fill-opacity of the geometry.
+     * Use it with `<yaga-circle [(fillOpacity)]="someValue">`
+     * or `<yaga-circle (fillOpacityChange)="processEvent($event)">`
+     */
     @Output() public fillOpacityChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the fill-rule of the geometry.
+     * Use it with `<yaga-circle [(fillRule)]="someValue">`
+     * or `<yaga-circle (fillRuleChange)="processEvent($event)">`
+     */
     @Output() public fillRuleChange: EventEmitter<string> = new EventEmitter();
     // @Output() public rendererChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the className of the geometry.
+     * Use it with `<yaga-circle [(className)]="someValue">`
+     * or `<yaga-circle (classNameChange)="processEvent($event)">`
+     */
     @Output() public classNameChange: EventEmitter<string> = new EventEmitter();
+    /**
+     * Two-Way bound property for the css-style of the geometry.
+     * Use it with `<yaga-circle [(style)]="someValue">`
+     * or `<yaga-circle (styleChange)="processEvent($event)">`
+     */
     @Output() public styleChange: EventEmitter<PathOptions> = new EventEmitter();
 
+    /**
+     * Two-Way bound property for the latlng-position of the geometry.
+     * Use it with `<yaga-circle [(position)]="someValue">`
+     * or `<yaga-circle (positionChange)="processEvent($event)">`
+     */
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
+    /**
+     * Two-Way bound property for the latitude of the geometry.
+     * Use it with `<yaga-circle [(lat)]="someValue">`
+     * or `<yaga-circle (latChange)="processEvent($event)">`
+     */
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the longitude of the geometry.
+     * Use it with `<yaga-circle [(lng)]="someValue">`
+     * or `<yaga-circle (lngChange)="processEvent($event)">`
+     */
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the radius of the geometry.
+     * Use it with `<yaga-circle [(radius)]="someValue">`
+     * or `<yaga-circle (radiusChange)="processEvent($event)">`
+     */
     @Output() public radiusChange: EventEmitter<number> = new EventEmitter();
+    /**
+     * Two-Way bound property for the geometry represented as GeoJSON.
+     * Use it with `<yaga-circle [(geoJSON)]="someValue">`
+     * or `<yaga-circle (geoJSONChange)="processEvent($event)">`
+     */
     @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
     /**
@@ -352,7 +452,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
     /**
      * Two-Way bound property for the geoJSON data.
      * Use it with `<yaga-circle [(geoJSON)]="someValue">` or `<yaga-circle [geoJSONChange]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#circle-opacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.0.3.html#circle-togeojson Original Leaflet documentation
      */
     @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
