@@ -1,5 +1,5 @@
 import { AfterViewInit, EventEmitter, ViewChild } from '@angular/core';
-import { Event, MapComponent } from '../lib/index'; // @yaga/leflet-ng2
+import { LeafletEvent, MapComponent } from '../lib/index'; // @yaga/leflet-ng2
 
 export const HIDE_DELAY: number = 500;
 export const EVENT_FIRED_TEXT: string = 'Event fired now...';
@@ -60,7 +60,7 @@ export abstract class ExampleAppComponentBlueprint implements AfterViewInit {
         }
     }
 
-    public handleEvent(name: string, event: Event): void {
+    public handleEvent(name: string, event: LeafletEvent): void {
         const target: IExampleOutputProperty = this.getOutputPropertyByName(name);
         target.value = EVENT_FIRED_TEXT;
         setTimeout(() => {
