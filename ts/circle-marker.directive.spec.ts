@@ -11,7 +11,7 @@ import {
 } from './index';
 import { createPathTests } from './path-directives.spec';
 
-describe('Circle Directive', () => {
+describe('Circle-Marker Directive', () => {
     let map: MapComponent;
     let layer: CircleMarkerDirective<any>;
     const TEST_VALUE: LatLng = latLng(0, 1);

@@ -80,7 +80,7 @@ import { MapComponent } from './map.component';
  * </yaga-map>
  * ```
  *
- * @link http://leafletjs.com/reference-1.0.3.html#tilelayer Original Leaflet documentation
+ * @link http://leafletjs.com/reference-1.2.0.html#tilelayer Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
  * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
@@ -93,7 +93,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
      * Two-Way bound property for the URL.
      * Use it with `<yaga-tile-layer [(url)]="someValue">` or `<yaga-tile-layer (urlChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-seturl Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-seturl Original Leaflet documentation
      */
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
     /**
@@ -106,123 +106,123 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Two-Way bound property for the opacity of the layer.
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">`
      * or `<yaga-tile-layer (opacityChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-opacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-opacity Original Leaflet documentation
      */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the zIndex of the layer.
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">`
      * or `<yaga-tile-layer (zIndexChange)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setzindex Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setzindex Original Leaflet documentation
      */
     @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-tile-layer (add)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-add Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-add Original Leaflet documentation
      */
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-tile-layer (remove)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-remove Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-remove Original Leaflet documentation
      */
     @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-popupopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupopen Original Leaflet documentation
      */
     @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-tile-layer (popupclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-popupclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupclose Original Leaflet documentation
      */
     @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-tile-layer (tooltipopen)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tooltipopen Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipopen Original Leaflet documentation
      */
     @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-tile-layer (tooltipclose)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tooltipclose Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipclose Original Leaflet documentation
      */
     @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-click Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-click Original Leaflet documentation
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dbclick event.
      * Use it with `<yaga-tile-layer (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-dbclick Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-dbclick Original Leaflet documentation
      */
     @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mousedown Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mousedown Original Leaflet documentation
      */
     @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mouseover Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mouseover Original Leaflet documentation
      */
     @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-mouseout Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mouseout Original Leaflet documentation
      */
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-contextmenu Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-contextmenu Original Leaflet documentation
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired loading event.
      * Use it with `<yaga-tile-layer (loading)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-loading Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-loading Original Leaflet documentation
      */
     @Output('loading') public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired tileunload event.
      * Use it with `<yaga-tile-layer (tileunload)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileunload Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileunload Original Leaflet documentation
      */
     @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired tileloadstart event.
      * Use it with `<yaga-tile-layer (tileloadstart)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileloadstart Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileloadstart Original Leaflet documentation
      */
     @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired tileerror event.
      * Use it with `<yaga-tile-layer (tileerror)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileerror Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileerror Original Leaflet documentation
      */
     @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
     /**
      * From leaflet fired tileload event.
      * Use it with `<yaga-tile-layer (tileload)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileload Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileload Original Leaflet documentation
      */
     @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired load event.
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-load Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-load Original Leaflet documentation
      */
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
@@ -308,7 +308,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
 
     /**
      * Derived method of the original setUrl method.
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-seturl Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-seturl Original Leaflet documentation
      */
     public setUrl(url: string, noRedraw?: boolean): this {
         if (this.url === url) {
@@ -320,18 +320,18 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
      * Two-Way bound property for the URL.
      * Use it with `<yaga-tile-layer [(url)]="someValue">` or `<yaga-tile-layer [url]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-seturl Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-seturl Original Leaflet documentation
      */
-    @Input() set url(val: string) {
+    @Input() public set url(val: string) {
         this.setUrl(val);
     }
-    get url(): string {
+    public get url(): string {
         return (this as any)._url;
     }
 
     /**
      * Derived method of the original setOpacity method.
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setopacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setopacity Original Leaflet documentation
      */
     public setOpacity(val: number): this {
         if (this.opacity === val) {
@@ -343,12 +343,12 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
      * Two-Way bound property for the opacity.
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer [opacity]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setopacity Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setopacity Original Leaflet documentation
      */
-    @Input() set opacity(val: number) {
+    @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
-    get opacity(): number {
+    public get opacity(): number {
         return this.options.opacity;
     }
 
@@ -356,7 +356,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
-    @Input() set display(val: boolean) {
+    @Input() public set display(val: boolean) {
         const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
             return;
@@ -395,7 +395,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * Two-Way bound property for the display status of the layer.
      * Use it with `<yaga-tile-layer [(display)]="someValue">` or `<yaga-tile-layer [display]="someValue">`
      */
-    get display(): boolean {
+    public get display(): boolean {
         let pane: HTMLElement;
         let container: HTMLElement;
         try {
@@ -418,7 +418,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
 
     /**
      * Derived method of the original setZIndexmethod.
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setzindex Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setzindex Original Leaflet documentation
      */
     public setZIndex(val: number): this {
         super.setZIndex(val);
@@ -428,181 +428,181 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
      * Two-Way bound property for the zIndex.
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer [zIndex]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-setzindex Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setzindex Original Leaflet documentation
      */
-    @Input() set zIndex(val: number) {
+    @Input() public set zIndex(val: number) {
         this.setZIndex(val);
     }
-    get zIndex(): number {
+    public get zIndex(): number {
         return this.options.zIndex;
     }
 
     /**
      * Input for the tileSize.
      * Use it with `<yaga-tile-layer [tileSize]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tileSize Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileSize Original Leaflet documentation
      */
-    @Input() set tileSize(val: Point) {
+    @Input() public set tileSize(val: Point) {
         this.options.tileSize = val;
         this.redraw();
     }
-    get tileSize(): Point { // TODO: is this correct that it is always a Point?
+    public get tileSize(): Point { // TODO: is this correct that it is always a Point?
         return (this.options.tileSize as Point);
     }
 
     /**
      * Input for the updateWhenIdle.
      * Use it with `<yaga-tile-layer [updateWhenIdle]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updatewhenidle Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-updatewhenidle Original Leaflet documentation
      */
-    @Input() set updateWhenIdle(val: boolean) {
+    @Input() public set updateWhenIdle(val: boolean) {
         this.options.updateWhenIdle = val;
     }
-    get updateWhenIdle(): boolean {
+    public get updateWhenIdle(): boolean {
         return this.options.updateWhenIdle;
     }
 
     /**
      * Input for the updateWhenZooming.
      * Use it with `<yaga-tile-layer [updateWhenZooming]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updatewhenzooming Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-updatewhenzooming Original Leaflet documentation
      */
-    @Input() set updateWhenZooming(val: boolean) {
+    @Input() public set updateWhenZooming(val: boolean) {
         this.options.updateWhenZooming = val;
     }
-    get updateWhenZooming(): boolean {
+    public get updateWhenZooming(): boolean {
         return this.options.updateWhenZooming;
     }
 
     /**
      * Input for the updateInterval.
      * Use it with `<yaga-tile-layer [updateInterval]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-updateinterval Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-updateinterval Original Leaflet documentation
      */
-    @Input() set updateInterval(val: number) {
+    @Input() public set updateInterval(val: number) {
         this.options.updateInterval = val;
     }
-    get updateInterval(): number {
+    public get updateInterval(): number {
         return this.options.updateInterval;
     }
 
     /**
      * Input for the bounds.
      * Use it with `<yaga-tile-layer [bounds]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-bounds Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-bounds Original Leaflet documentation
      */
-    @Input() set bounds(val: LatLngBoundsExpression) {
+    @Input() public set bounds(val: LatLngBoundsExpression) {
         this.options.bounds = val;
         this.redraw();
     }
-    get bounds(): LatLngBoundsExpression {
+    public get bounds(): LatLngBoundsExpression {
         return this.options.bounds;
     }
 
     /**
      * Input for the noWrap.
      * Use it with `<yaga-tile-layer [noWrap]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-nowrap Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-nowrap Original Leaflet documentation
      */
-    @Input() set noWrap(val: boolean) {
+    @Input() public set noWrap(val: boolean) {
         this.options.noWrap = val;
     }
-    get noWrap(): boolean {
+    public get noWrap(): boolean {
         return this.options.noWrap;
     }
 
     /**
      * Input for the className.
      * Use it with `<yaga-tile-layer [className]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-classname Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-classname Original Leaflet documentation
      */
-    @Input() set className(val: string) {
+    @Input() public set className(val: string) {
         this.options.className = val;
         this.redraw();
     }
-    get className(): string {
+    public get className(): string {
         return this.options.className;
     }
 
     /**
      * Input for the keepBuffer.
      * Use it with `<yaga-tile-layer [keepBuffer]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-keepbuffer Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-keepbuffer Original Leaflet documentation
      */
-    @Input() set keepBuffer(val: number) {
+    @Input() public set keepBuffer(val: number) {
         this.options.keepBuffer = val;
     }
-    get keepBuffer(): number {
+    public get keepBuffer(): number {
         return this.options.keepBuffer;
     }
 
     /**
      * Input for the maxZoom.
      * Use it with `<yaga-tile-layer [maxZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-maxzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-maxzoom Original Leaflet documentation
      */
-    @Input() set maxZoom(val: number) {
+    @Input() public set maxZoom(val: number) {
         this.options.maxZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    get maxZoom(): number {
+    public get maxZoom(): number {
         return this.options.maxZoom;
     }
 
     /**
      * Input for the minZoom.
      * Use it with `<yaga-tile-layer [minZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-minzoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-minzoom Original Leaflet documentation
      */
-    @Input() set minZoom(val: number) {
+    @Input() public set minZoom(val: number) {
         this.options.minZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    get minZoom(): number {
+    public get minZoom(): number {
         return this.options.minZoom;
     }
 
     /**
      * Input for the maxNativeZoom.
      * Use it with `<yaga-tile-layer [maxNativeZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-maxnativezoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-maxnativezoom Original Leaflet documentation
      */
-    @Input() set maxNativeZoom(val: number) {
+    @Input() public set maxNativeZoom(val: number) {
         this.options.maxNativeZoom = val;
         this.redraw();
     }
-    get maxNativeZoom(): number {
+    public get maxNativeZoom(): number {
         return this.options.maxNativeZoom;
     }
 
     /**
      * Input for the minNativeZoom.
      * Use it with `<yaga-tile-layer [minNativeZoom]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-minnativezoom Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-minnativezoom Original Leaflet documentation
      */
-    @Input() set minNativeZoom(val: number) {
+    @Input() public set minNativeZoom(val: number) {
         this.options.minNativeZoom = val;
         this.redraw();
     }
-    get minNativeZoom(): number {
+    public get minNativeZoom(): number {
         return this.options.minNativeZoom;
     }
 
     /**
      * Input for the subdomains.
      * Use it with `<yaga-tile-layer [subdomains]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-subdomains Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-subdomains Original Leaflet documentation
      */
-    @Input() set subdomains(val: string[]) {
+    @Input() public set subdomains(val: string[]) {
         this.options.subdomains = val;
     }
-    get subdomains(): string[] {
+    public get subdomains(): string[] {
         if (typeof (this.options.subdomains as string) === 'string') {
             this.options.subdomains = (this.options.subdomains as string).split('');
         }
@@ -612,94 +612,94 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     /**
      * Input for the errorTileUrl.
      * Use it with `<yaga-tile-layer [errorTileUrl]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-errortileurl Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-errortileurl Original Leaflet documentation
      */
-    @Input() set errorTileUrl(val: string) {
+    @Input() public set errorTileUrl(val: string) {
         this.options.errorTileUrl = val;
         this.redraw();
     }
-    get errorTileUrl(): string {
+    public get errorTileUrl(): string {
         return this.options.errorTileUrl;
     }
 
     /**
      * Input for the zoomOffset.
      * Use it with `<yaga-tile-layer [zoomOffset]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-zoomoffset Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-zoomoffset Original Leaflet documentation
      */
-    @Input() set zoomOffset(val: number) {
+    @Input() public set zoomOffset(val: number) {
         this.options.zoomOffset = val;
         this.redraw();
     }
-    get zoomOffset(): number {
+    public get zoomOffset(): number {
         return this.options.zoomOffset;
     }
 
     /**
      * Input for the tms.
      * Use it with `<yaga-tile-layer [tms]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-tms Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tms Original Leaflet documentation
      */
-    @Input() set tms(val: boolean) {
+    @Input() public set tms(val: boolean) {
         this.options.tms = val;
         this.redraw();
     }
-    get tms(): boolean {
+    public get tms(): boolean {
         return this.options.tms;
     }
 
     /**
      * Input for the zoomReverse.
      * Use it with `<yaga-tile-layer [zoomReverse]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-zoomreverse Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-zoomreverse Original Leaflet documentation
      */
-    @Input() set zoomReverse(val: boolean) {
+    @Input() public set zoomReverse(val: boolean) {
         this.options.zoomReverse = val;
         this.redraw();
     }
-    get zoomReverse(): boolean {
+    public get zoomReverse(): boolean {
         return this.options.zoomReverse;
     }
 
     /**
      * Input for the detectRetina.
      * Use it with `<yaga-tile-layer [detectRetina]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-detectretina Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-detectretina Original Leaflet documentation
      */
-    @Input() set detectRetina(val: boolean) {
+    @Input() public set detectRetina(val: boolean) {
         this.options.detectRetina = val;
         this.redraw();
     }
-    get detectRetina(): boolean {
+    public get detectRetina(): boolean {
         return this.options.detectRetina;
     }
 
     /**
      * Input for the crossOrigin.
      * Use it with `<yaga-tile-layer [crossOrigin]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-crossorigin Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-crossorigin Original Leaflet documentation
      */
-    @Input() set crossOrigin(val: boolean) {
+    @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
         this.redraw();
     }
-    get crossOrigin(): boolean {
+    public get crossOrigin(): boolean {
         return this.options.crossOrigin;
     }
 
     /**
      * Input for the attribution.
      * Use it with `<yaga-tile-layer [attribution]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#tilelayer-attribution Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-attribution Original Leaflet documentation
      */
-    @Input() set attribution(val: string) {
+    @Input() public set attribution(val: string) {
         if ((this as any)._map && (this as any)._map.attributionControl) {
             ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
             ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }
-    get attribution(): string {
+    public get attribution(): string {
         return this.getAttribution();
     }
 }

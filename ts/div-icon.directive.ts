@@ -36,7 +36,7 @@ import {
  * * The `contentHtml` property is not the child-node in the leaflet div-icon, it is the clone of it and gets cloned
  * again on every change.
  *
- * @link http://leafletjs.com/reference-1.0.3.html#divicon Original Leaflet documentation
+ * @link http://leafletjs.com/reference-1.2.0.html#divicon Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=DivIcon%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/div-icon.directive.js.html Test coverage
  * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/divicondirective.html API documentation
@@ -92,7 +92,7 @@ export class DivIconDirective extends DivIcon  {
     /**
      * Input for the iconSize.
      * Use it with `<yaga-div-icon [iconSize]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#divicon-iconsize Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#divicon-iconsize Original Leaflet documentation
      */
     @Input() public set iconSize(val: Point) {
         this.options.iconSize = val;
@@ -108,7 +108,7 @@ export class DivIconDirective extends DivIcon  {
     /**
      * Input for the iconAnchor.
      * Use it with `<yaga-div-icon [iconAnchor]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#divicon-iconanchor Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#divicon-iconanchor Original Leaflet documentation
      */
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
@@ -124,7 +124,7 @@ export class DivIconDirective extends DivIcon  {
     /**
      * Input for the popupAnchor.
      * Use it with `<yaga-div-icon [popupAnchor]="someValue">`
-     * @link http://leafletjs.com/reference-1.0.3.html#divicon-popupanchor Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#divicon-popupanchor Original Leaflet documentation
      */
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
