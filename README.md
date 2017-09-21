@@ -160,6 +160,28 @@ import { YagaModule } from '@yaga/leaflet-ng2';
 export class AppModule { }
 ```
 
+### Use standard Leaflet plugins
+
+You are able to integrate other Leaflet plugins (not prepared for the use with Angular) by importing the
+map directive into your parent directive like this:
+
+```typescript
+@Component({
+    selector: 'app',
+    template: `<yaga-map><!-- ... --></yaga-map>`
+})
+export class AppComponent implements AfterViewInit {
+    @ViewChild(MapComponent) private mapComponent: MapComponent;
+    public ngAfterViewInit(): void {
+        const myFancyLeafletPlugin = (L as any).myFancyLeafletPlugin({ /* ... */ });
+        this.mapComponent.addSomething(myFancyLeafletPlugin);
+    }
+}
+```
+
+*For further information, take a look at the
+[according issue on GitHub](https://github.com/yagajs/leaflet-ng2/issues/251)*
+
 ## Scripts Tasks
 
 Scripts registered in package.json:
