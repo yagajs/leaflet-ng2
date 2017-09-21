@@ -35,7 +35,10 @@ const template: string = `
       </yaga-image-overlay>
     </yaga-map>
   </div>
-  <p>Inspiration and the floor map taken from here: <a href="https://codepen.io/zachdunn/pen/VvRXdP">https://codepen.io/zachdunn/pen/VvRXdP</a></p>
+  <p>
+    Inspiration and the floor map taken from here: <a href="https://codepen.io/zachdunn/pen/VvRXdP" target="_blank">
+    https://codepen.io/zachdunn/pen/VvRXdP</a>
+  </p>
   ${ PROPERTIES_WRAPPER }
 </div><!-- /.container -->
 <example-footer></example-footer>
