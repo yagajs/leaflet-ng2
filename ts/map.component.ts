@@ -623,6 +623,12 @@ export class MapComponent extends Map implements AfterViewInit {
      */
     @Input() public set crs(val: CRS) {
         this.options.crs = val;
+        const keys: any[] = Object.keys((this as any)._layers);
+        for (const key of keys) {
+            if (typeof (this as any)._layers[key].redraw === 'function') {
+                (this as any)._layers[key].redraw();
+            }
+        }
     }
     public get crs(): CRS {
         return (this.options.crs as CRS);
