@@ -23,8 +23,10 @@ export * from './consts';
 
 export { GenericGeoJSONFeature,
     GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
-export { Control,
+export {
+    Control,
     ControlPosition,
+    CRS,
     MapOptions,
     TileLayerOptions,
     PopupOptions,
