@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { latLng, latLngBounds, point } from 'leaflet';
+import { CRS, latLng, latLngBounds, point } from 'leaflet';
 import { LatLngBounds, MapComponent } from './index';
 
 describe('Map Component', () => {
@@ -1100,6 +1100,18 @@ describe('Map Component', () => {
         it('should be changed in Angular to true when changing in Angular to true', () => {
             map.touchZoomEnabled = true;
             expect(map.touchZoomEnabled).to.equal(true);
+        });
+    });
+    describe('[crs]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: CRS = CRS.Simple;
+            map.crs = val;
+            expect(map.options.crs).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: CRS = CRS.Simple;
+            map.crs = val;
+            expect(map.crs).to.equal(val);
         });
     });
 });
