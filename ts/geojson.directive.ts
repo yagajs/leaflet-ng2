@@ -11,17 +11,23 @@ import {
     Output,
 } from '@angular/core';
 import {
+    GeoJsonObject,
+    GeometryObject,
+    Point,
+} from 'geojson';
+import {
     GeoJSON,
     LatLng,
     Layer,
     LeafletEvent,
     LeafletMouseEvent,
+    Marker,
     PathOptions,
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { DEFAULT_STYLE } from './consts';
 import { MapComponent } from './map.component';
-import { MarkerDirective } from './marker.directive';
 
 import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 
@@ -29,12 +35,26 @@ import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/ge
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
+export type IGeoJSONStylerFn<T> = (
+    geoJSON: GenericGeoJSONFeature<GeometryObject, T>,
+    defaultStyle: PathOptions,
+) => PathOptions;
+export type IGeoJSONFilterFn<T> = (feature: GenericGeoJSONFeature<GeometryObject, T>) => boolean;
+export type IGeoJSONPointToLayerFn<T> = (geoJSON: GenericGeoJSONFeature<Point, T>, latLng: LatLng) => Layer;
+
+export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
+    styler?: IGeoJSONStylerFn<T>;
+    filter?: IGeoJSONFilterFn<T>;
+    pointToLayer?: IGeoJSONPointToLayerFn<T>;
+    defaultStyle?: PathOptions;
+}
+
 @Directive({
     selector: 'yaga-geojson',
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterViewInit {
     /* tslint:disable:max-line-length */
-    @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> = new EventEmitter();
+    @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeometryObject, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
@@ -51,34 +71,45 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     /* tslint:disable:max-line-length */
-    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer}> = new EventEmitter();
+    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GenericGeoJSONFeature<GeometryObject, T>, layer: Layer}> = new EventEmitter();
     /* tslint:enable */
-
-    public defaultStyle: PathOptions = {};
 
     @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     protected mapComponent: MapComponent;
     protected initialized: boolean = false;
+    protected middleware: IGeoJSONDirectiveMiddlewareDictionary<T> = {};
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
     ) {
-        super(({features: [], type: 'FeatureCollection'} as GeoJSON.GeoJsonObject), {
-            filter: (feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>) => {
-                return this.filterFeatures(feature);
+        super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
+            filter: (feature: GenericGeoJSONFeature<GeometryObject, T>) => {
+                if (this.middleware.filter) {
+                    return this.middleware.filter(feature);
+                }
+                return true;
             },
-            onEachFeature: (feature: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, layer: Layer) => {
+            onEachFeature: (feature: GenericGeoJSONFeature<GeometryObject, T>, layer: Layer) => {
                 this.onEachFeatureEvent.emit({feature, layer});
             },
-            pointToLayer: (geoJSON: GenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer => {
-                return this.pointToLayer(geoJSON, latLng);
+            pointToLayer: (geoJSON: GenericGeoJSONFeature<Point, T>, latLng: LatLng): Layer => {
+                if (this.middleware.pointToLayer) {
+                    return this.middleware.pointToLayer(geoJSON, latLng);
+                }
+                return new Marker(latLng);
             },
-            style: (geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): PathOptions => {
-                return this.styler(geoJSON, this.defaultStyle);
+            style: (geoJSON: GenericGeoJSONFeature<GeometryObject, T>): PathOptions => {
+                const defaultStyle = this.middleware.defaultStyle || DEFAULT_STYLE;
+                if (this.middleware.styler) {
+                    return this.middleware.styler(geoJSON, defaultStyle);
+                }
+                return defaultStyle;
             },
         });
+
+        this.middleware.defaultStyle = DEFAULT_STYLE;
 
         this.mapComponent = mapComponent;
         mapComponent.addLayer(this);
@@ -136,42 +167,56 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
         this.removeFrom((this as any)._map);
     }
 
-    public pointToLayer(geoJSON: GenericGeoJSONFeature<GeoJSON.Point, T>, latLng: LatLng): Layer {
-        const marker: MarkerDirective = new MarkerDirective(this.mapComponent);
-        marker.setLatLng(latLng);
-        return marker;
-    }
-
-    public styler(geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>, defaultStyle: PathOptions): PathOptions {
-        return defaultStyle;
-    }
-
-    public filterFeatures(geoJSON: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): boolean {
-        return true;
-    }
-
-    public addData(data: GenericGeoJSONFeature<GeoJSON.GeometryObject, T>): Layer {
+    public addData(data: GenericGeoJSONFeature<GeometryObject, T>): Layer {
         const returnValue: Layer = super.addData(data);
 
         if (!this.initialized) {
             return returnValue;
         }
 
-        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>));
+        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>));
         return returnValue;
     }
 
-    public setData(val: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>): this {
+    public setData(val: GenericGeoJSONFeatureCollection<GeometryObject, T>): this {
         super.clearLayers();
         super.addData(val);
-        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>));
+        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>));
         return this;
     }
 
-    @Input() public set data(val: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>) {
+    @Input() public set data(val: GenericGeoJSONFeatureCollection<GeometryObject, T>) {
         this.setData(val);
     }
-    public get data(): GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>);
+    public get data(): GenericGeoJSONFeatureCollection<GeometryObject, T> {
+        return (this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>);
+    }
+
+    @Input public set filter(filterFn: IGeoJSONFilterFn<T>) {
+        this.middleware.filter = filterFn;
+    }
+    public get filter(): IGeoJSONFilterFn<T> {
+        return this.middleware.filter;
+    }
+
+    @Input public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
+        this.middleware.pointToLayer = pointToLayerFn;
+    }
+    public get pointToLayer(): IGeoJSONPointToLayerFn<T> {
+        return this.middleware.pointToLayer;
+    }
+
+    @Input public set styler(stylerFn: IGeoJSONStylerFn<T>) {
+        this.middleware.styler = stylerFn;
+    }
+    public get styler(): IGeoJSONStylerFn<T> {
+        return this.middleware.styler;
+    }
+
+    @Input public set defaultStyle(style: PathOptions) {
+        this.middleware.defaultStyle = style;
+    }
+    public get defaultStyle(): PathOptions {
+        return this.middleware.defaultStyle;
     }
 }
