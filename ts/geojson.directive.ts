@@ -174,7 +174,9 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     /**
      * Object that stores the middleware functions and the default style
      */
-    protected middleware: IGeoJSONDirectiveMiddlewareDictionary<T> = {};
+    protected middleware: IGeoJSONDirectiveMiddlewareDictionary<T> = {
+        defaultStyle: DEFAULT_STYLE,
+    };
 
     constructor(
         @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
@@ -196,15 +198,13 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
                 return new Marker(latLng);
             },
             style: (geoJSON: GenericGeoJSONFeature<GeometryObject, T>): PathOptions => {
-                const defaultStyle = this.middleware.defaultStyle || DEFAULT_STYLE;
+                const defaultStyle = this.middleware.defaultStyle;
                 if (this.middleware.styler) {
                     return this.middleware.styler(geoJSON, defaultStyle);
                 }
                 return defaultStyle;
             },
         });
-
-        this.middleware.defaultStyle = DEFAULT_STYLE;
 
         mapComponent.addLayer(this);
 
