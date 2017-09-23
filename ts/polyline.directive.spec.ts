@@ -427,7 +427,7 @@ describe('Polyline Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new PolylineDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             /* istanbul ignore if */
@@ -451,7 +451,7 @@ describe('Polyline Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new PolylineDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
             /* istanbul ignore if */

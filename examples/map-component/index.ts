@@ -5,12 +5,12 @@ import 'zone.js';
 import { YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
-import { NgModule }      from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { latLng, LatLngBounds } from 'leaflet';
+import { CRS, latLng, LatLngBounds } from 'leaflet';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
 import { ExamplePropertiesModule, PROPERTIES_WRAPPER } from '../property.component';
@@ -150,6 +150,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'touchZoomEnabled', value: true, type: 'checkbox' },
             {name: 'tapTolerance', value: 15, type: 'number' },
             {name: 'bounceAtZoomLimits', value: true, type: 'checkbox' },
+            {name: 'crs', value: CRS.EPSG3857, type: 'crs' },
             ],
         output: [
             {name: 'baselayerchange', value: '', type: 'event' },

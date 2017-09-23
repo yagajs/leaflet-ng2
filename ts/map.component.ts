@@ -8,6 +8,7 @@ import {
     Output,
 } from '@angular/core';
 import {
+    CRS,
     LatLng,
     LatLngBounds,
     LatLngBoundsExpression,
@@ -73,6 +74,7 @@ import { ANIMATION_DELAY } from './consts';
  *     (preclick)="..."
  *     (zoomanim)="..."
  *
+ *     [crs]="..."
  *     [closePopupOnClick]="..."
  *     [zoomSnap]="..."
  *     [zoomDelta]="..."
@@ -612,6 +614,24 @@ export class MapComponent extends Map implements AfterViewInit {
         super.setMaxBounds((bounds as LatLngBoundsLiteral));
         this.maxBoundsChange.emit(this.maxBounds);
         return this;
+    }
+
+    /**
+     * One-Way property for the Coordinate Reference System.
+     * Use it with `<yaga-map [crs]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#map-crs Original Leaflet documentation
+     */
+    @Input() public set crs(val: CRS) {
+        this.options.crs = val;
+        const keys: any[] = Object.keys((this as any)._layers);
+        for (const key of keys) {
+            if (typeof (this as any)._layers[key].redraw === 'function') {
+                (this as any)._layers[key].redraw();
+            }
+        }
+    }
+    public get crs(): CRS {
+        return (this.options.crs as CRS);
     }
 
     /**

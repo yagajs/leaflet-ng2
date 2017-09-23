@@ -362,7 +362,7 @@ describe('Rectangle Directive', () => {
                 expect(eventVal.equals(val)).to.equal(true);
                 done();
             });
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.bounds = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
@@ -376,7 +376,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.setBounds(val);
         });
     });
@@ -411,7 +411,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.north = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
@@ -422,7 +422,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.setBounds([
                 [0, 0],
                 [val, 0],
@@ -459,7 +459,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.east = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
@@ -470,7 +470,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.setBounds([
                 [0, val],
                 [0, 0],
@@ -507,7 +507,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.south = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
@@ -518,7 +518,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.setBounds([
                 [val, 0],
                 [1, 1],
@@ -555,7 +555,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.west = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
@@ -566,7 +566,7 @@ describe('Rectangle Directive', () => {
                 done();
             });
 
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.setBounds([
                 [0, val],
                 [1, 1],
@@ -647,7 +647,7 @@ describe('Rectangle Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new RectangleDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -664,7 +664,7 @@ describe('Rectangle Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new RectangleDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
