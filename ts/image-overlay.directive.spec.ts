@@ -7,6 +7,7 @@ import {
     LatLngBounds,
     MapComponent,
 } from './index';
+import { randomLatLngBounds, randomNumber } from './spec';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -141,22 +142,22 @@ describe('Image-Overlay Directive', () => {
     });
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.options.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.setOpacity(val);
             expect(layer.options.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -166,7 +167,7 @@ describe('Image-Overlay Directive', () => {
             layer.opacity = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -178,34 +179,22 @@ describe('Image-Overlay Directive', () => {
     });
     describe('[(bounds)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.bounds = val;
             expect(layer.getBounds()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.bounds = val;
             expect(layer.bounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.setBounds(val);
             expect(layer.bounds).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(eventVal).to.equal(val);
@@ -215,10 +204,7 @@ describe('Image-Overlay Directive', () => {
             layer.bounds = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(eventVal).to.equal(val);
@@ -231,18 +217,18 @@ describe('Image-Overlay Directive', () => {
 
     describe('[(north)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.north = val;
             expect(layer.getBounds().getNorth()).to.equal(val);
 
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.north = val;
             expect(layer.north).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.setBounds([
                 [0, 0],
                 [val, 0],
@@ -250,7 +236,7 @@ describe('Image-Overlay Directive', () => {
             expect(layer.north).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -260,7 +246,7 @@ describe('Image-Overlay Directive', () => {
             layer.north = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -275,17 +261,17 @@ describe('Image-Overlay Directive', () => {
     });
     describe('[(east)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.east = val;
             expect(layer.getBounds().getEast()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.east = val;
             expect(layer.east).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.setBounds([
                 [0, val],
                 [0, 0],
@@ -293,7 +279,7 @@ describe('Image-Overlay Directive', () => {
             expect(layer.east).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -303,7 +289,7 @@ describe('Image-Overlay Directive', () => {
             layer.east = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -324,17 +310,17 @@ describe('Image-Overlay Directive', () => {
             ]));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.south = val;
             expect(layer.getBounds().getSouth()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.south = val;
             expect(layer.south).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.setBounds([
                 [val, 0],
                 [1, 1],
@@ -342,7 +328,7 @@ describe('Image-Overlay Directive', () => {
             expect(layer.south).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -352,7 +338,7 @@ describe('Image-Overlay Directive', () => {
             layer.south = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -373,17 +359,17 @@ describe('Image-Overlay Directive', () => {
             ]));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.west = val;
             expect(layer.getBounds().getWest()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.west = val;
             expect(layer.west).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.setBounds(latLngBounds([
                 [0, val],
                 [1, 1],
@@ -391,7 +377,7 @@ describe('Image-Overlay Directive', () => {
             expect(layer.west).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -401,7 +387,7 @@ describe('Image-Overlay Directive', () => {
             layer.west = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);

@@ -6,6 +6,7 @@ import {
     MapComponent,
     Point,
 } from './index';
+import { randomNumber } from './spec';
 
 describe('DivIcon Directive', () => {
 
@@ -32,17 +33,17 @@ describe('DivIcon Directive', () => {
     // Inputs
     describe('[iconSize]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.iconSize = val;
             expect(icon.options.iconSize).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.iconSize = val;
             expect(icon.iconSize).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();
@@ -52,17 +53,17 @@ describe('DivIcon Directive', () => {
     });
     describe('[iconAnchor]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.iconAnchor = val;
             expect(icon.options.iconAnchor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.iconAnchor = val;
             expect(icon.iconAnchor).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();
@@ -72,17 +73,17 @@ describe('DivIcon Directive', () => {
     });
     describe('[popupAnchor]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.popupAnchor = val;
             expect(icon.options.popupAnchor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.popupAnchor = val;
             expect(icon.popupAnchor).to.equal(val);
         });
         it('should fire an event in Angular when changing in Angular', (done: MochaDone) => {
-            const val: Point = point(Math.random() * 100, Math.random() * 100);
+            const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
                 return done();

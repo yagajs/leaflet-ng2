@@ -125,26 +125,6 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         super();
         mapComponent.addControl(this);
 
-        const self: this = this;
-
-        /* tslint:disable:only-arrow-functions */
-        const originalOnRemove: (map: Map) => any = this.onRemove;
-        this.onRemove = function(map: Map): any {
-            originalOnRemove.call(this, map);
-            self.displayChange.emit(false);
-            self.removeEvent.emit({type: 'remove', target: self});
-            return self;
-        };
-
-        const originalOnAdd: (map: Map) => HTMLElement = this.onAdd;
-        this.onAdd = function(map: Map): HTMLElement {
-            const tmp: HTMLElement = originalOnAdd.call(this, map);
-            self.displayChange.emit(true);
-            self.addEvent.emit({type: 'add', target: self});
-            return tmp;
-        };
-        /* tslint:enable */
-
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
@@ -170,6 +150,26 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         ((this as any)._map as MapComponent).removeControl(this);
     }
 
+    /**
+     * Derived remove function
+     */
+    public remove(): this {
+        /* tslint:disable */
+        super.remove();
+        this.displayChange.emit(false);
+        this.removeEvent.emit({target: this, type: 'remove'});
+        return this;
+    }
+    /**
+     * Derived addTo function
+     */
+    public addTo(map: Map) {
+        /* tslint:disable */
+        super.addTo(map);
+        this.displayChange.emit(true);
+        this.addEvent.emit({target: this, type: 'add'});
+        return this;
+    }
     /**
      * Derived method of the original setPosition.
      * @link http://leafletjs.com/reference-1.2.0.html#control-scale-setposition Original Leaflet documentation
@@ -211,7 +211,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         return;
     }
     public get display(): boolean {
-        return (this as any)._map && this.getContainer().style.display !== 'none';
+        return !!((this as any)._map && this.getContainer().style.display !== 'none');
     }
 
     /**

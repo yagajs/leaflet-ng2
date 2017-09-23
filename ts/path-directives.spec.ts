@@ -7,6 +7,7 @@ import {
     MapComponent,
     PathOptions,
 } from './index';
+import { randomNumber } from './spec';
 
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {
@@ -309,22 +310,22 @@ export function createPathTests(Constr: any): void {
         });
         describe('[(opacity)]', () => {
             it('should be changed in Leaflet when changing in Angular', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.opacity = val;
                 expect(layer.options.opacity).to.equal(val);
             });
             it('should be changed in Angular when changing in Angular', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.opacity = val;
                 expect(layer.opacity).to.equal(val);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.setStyle({opacity: val});
                 expect(layer.opacity).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
@@ -334,7 +335,7 @@ export function createPathTests(Constr: any): void {
                 layer.opacity = val;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
@@ -346,22 +347,22 @@ export function createPathTests(Constr: any): void {
         });
         describe('[(weight)]', () => {
             it('should be changed in Leaflet when changing in Angular', () => {
-                const val: number = Math.ceil(Math.random() * 10);
+                const val: number = randomNumber(10, 0, 0);
                 layer.weight = val;
                 expect(layer.options.weight).to.equal(val);
             });
             it('should be changed in Angular when changing in Angular', () => {
-                const val: number = Math.ceil(Math.random() * 10);
+                const val: number = randomNumber(10, 0, 0);
                 layer.weight = val;
                 expect(layer.weight).to.equal(val);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
-                const val: number = Math.ceil(Math.random() * 10);
+                const val: number = randomNumber(10, 0, 0);
                 layer.setStyle({weight: val});
                 expect(layer.weight).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
-                const val: number = Math.ceil(Math.random() * 10);
+                const val: number = randomNumber(10, 0, 0);
 
                 layer.weightChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
@@ -371,7 +372,7 @@ export function createPathTests(Constr: any): void {
                 layer.weight = val;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                const val: number = Math.ceil(Math.random() * 10);
+                const val: number = randomNumber(10, 0, 0);
 
                 layer.weightChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
@@ -383,22 +384,22 @@ export function createPathTests(Constr: any): void {
         });
         describe('[(fillOpacity)]', () => {
             it('should be changed in Leaflet when changing in Angular', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.fillOpacity = val;
                 expect(layer.options.fillOpacity).to.equal(val);
             });
             it('should be changed in Angular when changing in Angular', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.fillOpacity = val;
                 expect(layer.fillOpacity).to.equal(val);
             });
             it('should be changed in Angular when changing in Leaflet', () => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
                 layer.setStyle({fillOpacity: val});
                 expect(layer.fillOpacity).to.equal(val);
             });
             it('should fire an event when changing in Angular', (done: MochaDone) => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
@@ -408,7 +409,7 @@ export function createPathTests(Constr: any): void {
                 layer.fillOpacity = val;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                const val: number = Math.random();
+                const val: number = randomNumber();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
                     expect(eventVal).to.equal(val);
