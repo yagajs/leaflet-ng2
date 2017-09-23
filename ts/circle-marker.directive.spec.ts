@@ -31,7 +31,7 @@ describe('Circle-Marker Directive', () => {
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
         layer = new CircleMarkerDirective<any>(map);
-        layer.ngAfterViewInit();
+        layer.ngAfterContentInit();
     });
 
     createPathTests(CircleMarkerDirective);
@@ -421,7 +421,7 @@ describe('Circle-Marker Directive', () => {
             layer = Object.create(new CircleMarkerDirective<any>(map), { popupDirective: {value: popup} });
         });
         it('should bind popup', () => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             expect((layer as any)._popup).to.equal(popup);
         });
     });
@@ -437,7 +437,7 @@ describe('Circle-Marker Directive', () => {
             layer = Object.create(new CircleMarkerDirective<any>(map), { tooltipDirective: {value: tooltip} });
         });
         it('should bind tooltip', () => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             expect((layer as any)._tooltip).to.equal(tooltip);
         });
     });

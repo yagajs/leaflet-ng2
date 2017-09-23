@@ -72,7 +72,7 @@ describe('GeoJSON Directive', () => {
             layer.setData(TEST_VALUE);
         });
         it('should fire an event when adding in Leaflet', (done: MochaDone) => {
-            layer.ngAfterViewInit();
+            layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
@@ -206,7 +206,7 @@ describe('GeoJSON Directive', () => {
             puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
         });
         it('should bind popup', () => {
-            puLayer.ngAfterViewInit();
+            puLayer.ngAfterContentInit();
             expect((puLayer as any)._popup).to.equal(popup);
         });
     });
@@ -223,7 +223,7 @@ describe('GeoJSON Directive', () => {
             ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
         });
         it('should bind tooltip', () => {
-            ttLayer.ngAfterViewInit();
+            ttLayer.ngAfterContentInit();
             expect(ttLayer.tooltipDirective).to.equal(tooltip);
             // expect((<any> layer)._tooltip).to.equal(tooltip);
         });
