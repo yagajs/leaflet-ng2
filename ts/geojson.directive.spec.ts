@@ -1,8 +1,10 @@
 import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 import { expect } from 'chai';
-import { point, SVG } from 'leaflet';
+import {Layer, Marker, PathOptions, point, SVG} from 'leaflet';
 import {
+    DEFAULT_STYLE,
     GeoJSONDirective,
+    IGeoJSONDirectiveMiddlewareDictionary,
     LatLng,
     MapComponent,
     PopupDirective,
@@ -80,7 +82,183 @@ describe('GeoJSON Directive', () => {
             layer.addData(TEST_VALUE.features[0]);
         });
     });
+    describe('[filter]', () => {
+        const FILTER_FN: any = (): boolean => {
+            return true;
+        };
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.filter = FILTER_FN;
+            expect(((layer as any).middleware).filter as IGeoJSONDirectiveMiddlewareDictionary<GeoJSON.Point>)
+                .to.equal(FILTER_FN);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.filter = FILTER_FN;
+            expect(layer.filter).to.equal(FILTER_FN);
+        });
+        it('should use the filter function when adding data', (done: MochaDone) => {
+            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+                geometry: {
+                    coordinates: [0, 1],
+                    type: 'Point',
+                },
+                properties: {},
+                type: 'Feature',
+            };
+            /* tslint:disable:max-line-length */
+            layer.filter = (elem: GenericGeoJSONFeature<GeoJSON.Point, any>): boolean => {
+                expect(elem).to.equal(TEST_POINT);
+                done();
+                return true;
+            };
+            /* tslint:enable */
+            layer.data = {
+                features: [TEST_POINT],
+                type: 'FeatureCollection',
+            };
+        });
+    });
 
+    describe('[pointToLayer]', () => {
+        const POINT_TO_LAYER_FN: any = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
+            return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
+        };
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.pointToLayer = POINT_TO_LAYER_FN;
+            expect(((layer as any).middleware).pointToLayer as IGeoJSONDirectiveMiddlewareDictionary<GeoJSON.Point>)
+                .to.equal(POINT_TO_LAYER_FN);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.pointToLayer = POINT_TO_LAYER_FN;
+            expect(layer.pointToLayer).to.equal(POINT_TO_LAYER_FN);
+        });
+        it('should use the filter function when adding data', (done: MochaDone) => {
+            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+                geometry: {
+                    coordinates: [0, 1],
+                    type: 'Point',
+                },
+                properties: {},
+                type: 'Feature',
+            };
+            /* tslint:disable:max-line-length */
+            layer.pointToLayer = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
+                expect(feature).to.equal(TEST_POINT);
+                done();
+                return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
+            };
+            /* tslint:enable */
+            layer.data = {
+                features: [TEST_POINT],
+                type: 'FeatureCollection',
+            };
+        });
+    });
+
+    describe('[styler]', () => {
+        const STYLER_FN: any = (
+            feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+            defaultStyle: PathOptions,
+        ): PathOptions => {
+            return {};
+        };
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.styler = STYLER_FN;
+            expect(((layer as any).middleware).styler as IGeoJSONDirectiveMiddlewareDictionary<GeoJSON.Point>)
+                .to.equal(STYLER_FN);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.styler = STYLER_FN;
+            expect(layer.styler).to.equal(STYLER_FN);
+        });
+        it('should use the filter function when adding data', (done: MochaDone) => {
+            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+                geometry: {
+                    coordinates: [0, 1],
+                    type: 'Point',
+                },
+                properties: {},
+                type: 'Feature',
+            };
+            /* tslint:disable:max-line-length */
+            layer.styler = (
+                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                defaultStyle: PathOptions,
+            ): PathOptions => {
+                expect(feature).to.equal(TEST_POINT);
+                done();
+                return {};
+            };
+            /* tslint:enable */
+            layer.data = {
+                features: [TEST_POINT],
+                type: 'FeatureCollection',
+            };
+        });
+    });
+
+    describe('[defaultStyle]', () => {
+        const NEW_DEFAULT_STYLE = {};
+        it('should have the default style from consts as fallback', () => {
+            expect(layer.defaultStyle)
+                .to.equal(DEFAULT_STYLE);
+            expect(((layer as any).middleware).defaultStyle as PathOptions)
+                .to.equal(DEFAULT_STYLE);
+        });
+        it('should be changed in Leaflet when changing in Angular', () => {
+            layer.defaultStyle = NEW_DEFAULT_STYLE;
+            expect(((layer as any).middleware).defaultStyle as PathOptions)
+                .to.equal(NEW_DEFAULT_STYLE);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.defaultStyle = NEW_DEFAULT_STYLE;
+            expect(layer.defaultStyle).to.equal(NEW_DEFAULT_STYLE);
+        });
+        it('should use the default style from consts as fallback in the styler function', (done: MochaDone) => {
+            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+                geometry: {
+                    coordinates: [0, 1],
+                    type: 'Point',
+                },
+                properties: {},
+                type: 'Feature',
+            };
+            layer.styler = (
+                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                defaultStyle: PathOptions,
+            ): PathOptions => {
+                expect(defaultStyle).to.equal(DEFAULT_STYLE);
+                done();
+                return {};
+            };
+            layer.data = {
+                features: [TEST_POINT],
+                type: 'FeatureCollection',
+            };
+        });
+        it('should use the given default style in the styler function', (done: MochaDone) => {
+            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+                geometry: {
+                    coordinates: [0, 1],
+                    type: 'Point',
+                },
+                properties: {},
+                type: 'Feature',
+            };
+            layer.styler = (
+                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                defaultStyle: PathOptions,
+            ): PathOptions => {
+                expect(defaultStyle).to.equal(NEW_DEFAULT_STYLE);
+                done();
+                return {};
+            };
+            layer.defaultStyle = NEW_DEFAULT_STYLE;
+            layer.data = {
+                features: [TEST_POINT],
+                type: 'FeatureCollection',
+            };
+        });
+    });
     const testHandle: any = {};
     const testEvent: any = { testHandle };
 
