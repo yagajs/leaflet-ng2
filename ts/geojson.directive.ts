@@ -311,7 +311,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson [filter]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-filter Original Leaflet documentation
      */
-    @Input public set filter(filterFn: IGeoJSONFilterFn<T>) {
+    @Input() public set filter(filterFn: IGeoJSONFilterFn<T>) {
         this.middleware.filter = filterFn;
     }
     public get filter(): IGeoJSONFilterFn<T> {
@@ -323,7 +323,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson [pointToLayer]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-pointtolayer Original Leaflet documentation
      */
-    @Input public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
+    @Input() public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
         this.middleware.pointToLayer = pointToLayerFn;
     }
     public get pointToLayer(): IGeoJSONPointToLayerFn<T> {
@@ -338,7 +338,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * style as second parameter*
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-style Original Leaflet documentation
      */
-    @Input public set styler(stylerFn: IGeoJSONStylerFn<T>) {
+    @Input() public set styler(stylerFn: IGeoJSONStylerFn<T>) {
         this.middleware.styler = stylerFn;
     }
     public get styler(): IGeoJSONStylerFn<T> {
@@ -351,7 +351,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      *
      * *Note: Leaflet does not provide a default style, it just provides a style function!*
      */
-    @Input public set defaultStyle(style: PathOptions) {
+    @Input() public set defaultStyle(style: PathOptions) {
         this.middleware.defaultStyle = style;
     }
     public get defaultStyle(): PathOptions {
