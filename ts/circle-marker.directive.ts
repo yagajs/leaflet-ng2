@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -88,7 +88,7 @@ import { TooltipDirective } from './tooltip.directive';
 @Directive({
     selector: 'yaga-circle-marker',
 })
-export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterViewInit {
+export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterContentInit {
     /**
      * Two-Way bound property for the display status of the geometry.
      * Use it with `<yaga-circle-marker [(display)]="someValue">`
@@ -355,7 +355,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Internal method that provides the initialization of the child popup or tooltip
      */
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);

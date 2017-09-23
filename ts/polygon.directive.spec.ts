@@ -381,7 +381,7 @@ describe('Polygon Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new PolygonDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -398,7 +398,7 @@ describe('Polygon Directive', () => {
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(new PolygonDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);

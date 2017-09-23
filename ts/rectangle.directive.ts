@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -40,7 +40,7 @@ import HTML = Mocha.reporters.HTML;
 @Directive({
     selector: 'yaga-rectangle',
 })
-export class RectangleDirective<T> extends Rectangle implements OnDestroy, AfterViewInit {
+export class RectangleDirective<T> extends Rectangle implements OnDestroy, AfterContentInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -142,7 +142,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         });
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);

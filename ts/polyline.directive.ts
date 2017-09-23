@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -38,7 +38,7 @@ import HTML = Mocha.reporters.HTML;
 @Directive({
     selector: 'yaga-polyline',
 })
-export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterViewInit {
+export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterContentInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -134,7 +134,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterVi
         });
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
         }

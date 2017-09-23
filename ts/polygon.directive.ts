@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -37,7 +37,7 @@ import { TooltipDirective } from './tooltip.directive';
 @Directive({
     selector: 'yaga-polygon',
 })
-export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterViewInit {
+export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterContentInit {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -132,7 +132,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         });
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
         }

@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterContentInit,
     ContentChild,
     Directive,
     EventEmitter,
@@ -32,7 +32,7 @@ import { TooltipDirective } from './tooltip.directive';
 @Directive({
     selector: 'yaga-geojson',
 })
-export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterViewInit {
+export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterContentInit {
     /* tslint:disable:max-line-length */
     @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, T>> = new EventEmitter();
     /* tslint:enable */
@@ -122,7 +122,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterView
         });
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         this.initialized = true;
         if (this.popupDirective) {
             this.bindPopup(this.popupDirective);
