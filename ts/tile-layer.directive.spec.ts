@@ -8,8 +8,7 @@ import {
     Point,
     TileLayerDirective,
 } from './index';
-import { hasAsChild } from './spec';
-import { randomNumber } from './spec';
+import { hasAsChild, randomNumber } from './spec';
 
 describe('Tile-Layer Directive', () => {
     let map: MapComponent;
