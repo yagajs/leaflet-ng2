@@ -690,7 +690,15 @@ describe('Rectangle Directive', () => {
 
     describe('Destroying a Rectangle Directive', () => {
         it('should remove Rectangle Directive from map on destroy', () => {
-            expect(map.hasLayer(layer)).to.equal(true);
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
         });
     });
 });

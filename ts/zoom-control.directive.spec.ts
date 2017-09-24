@@ -87,6 +87,80 @@ describe('Zoom-Control Directive', () => {
             control.setPosition(val);
         });
     });
+    describe('[opacity]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber();
+            control.opacity = val;
+            expect(control.getContainer().style.opacity).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber();
+            control.opacity = val;
+            expect(control.opacity).to.equal(val);
+        });
+    });
+    describe('[zIndex]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.getContainer().style.zIndex).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.zIndex).to.equal(val);
+        });
+    });
+
+    describe('[zoomInText]', () => {
+        const TEST_VALUE: string = 'test-caption';
+        it('should be changed in Leaflet when changing in Angular', () => {
+            control.zoomInText = TEST_VALUE;
+            expect(control.options.zoomInText).to.equal(TEST_VALUE);
+            expect(((control as any)._zoomInButton as HTMLElement).textContent).to.equal(TEST_VALUE);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            control.zoomInText = TEST_VALUE;
+            expect(control.zoomInText).to.equal(TEST_VALUE);
+        });
+    });
+    describe('[zoomOutText]', () => {
+        const TEST_VALUE: string = 'test-caption';
+        it('should be changed in Leaflet when changing in Angular', () => {
+            control.zoomOutText = TEST_VALUE;
+            expect(control.options.zoomOutText).to.equal(TEST_VALUE);
+            expect(((control as any)._zoomOutButton as HTMLElement).textContent).to.equal(TEST_VALUE);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            control.zoomOutText = TEST_VALUE;
+            expect(control.zoomOutText).to.equal(TEST_VALUE);
+        });
+    });
+
+    describe('[zoomInTitle]', () => {
+        const TEST_VALUE: string = 'test-caption';
+        it('should be changed in Leaflet when changing in Angular', () => {
+            control.zoomInTitle = TEST_VALUE;
+            expect(control.options.zoomInTitle).to.equal(TEST_VALUE);
+            expect(((control as any)._zoomInButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            control.zoomInTitle = TEST_VALUE;
+            expect(control.zoomInTitle).to.equal(TEST_VALUE);
+        });
+    });
+    describe('[zoomOutTitle]', () => {
+        const TEST_VALUE: string = 'test-caption';
+        it('should be changed in Leaflet when changing in Angular', () => {
+            control.zoomOutTitle = TEST_VALUE;
+            expect(control.options.zoomOutTitle).to.equal(TEST_VALUE);
+            expect(((control as any)._zoomOutButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            control.zoomOutTitle = TEST_VALUE;
+            expect(control.zoomOutTitle).to.equal(TEST_VALUE);
+        });
+    });
 
     // Events
     describe('(add)', () => {
@@ -171,69 +245,6 @@ describe('Zoom-Control Directive', () => {
                 screenX: 1,
                 screenY: 2,
             }));
-        });
-    });
-
-    describe('[opacity]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = randomNumber();
-            control.opacity = val;
-            expect(control.getContainer().style.opacity).to.equal(val.toString());
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: number = randomNumber();
-            control.opacity = val;
-            expect(control.opacity).to.equal(val);
-        });
-    });
-
-    describe('[zoomInText]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            expect(control.options.zoomInText).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomInButton as HTMLElement).textContent).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            expect(control.zoomInText).to.equal(TEST_VALUE);
-        });
-    });
-    describe('[zoomOutText]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomOutText = TEST_VALUE;
-            expect(control.options.zoomOutText).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomOutButton as HTMLElement).textContent).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomOutText = TEST_VALUE;
-            expect(control.zoomOutText).to.equal(TEST_VALUE);
-        });
-    });
-
-    describe('[zoomInTitle]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomInTitle = TEST_VALUE;
-            expect(control.options.zoomInTitle).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomInButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomInTitle = TEST_VALUE;
-            expect(control.zoomInTitle).to.equal(TEST_VALUE);
-        });
-    });
-    describe('[zoomOutTitle]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomOutTitle = TEST_VALUE;
-            expect(control.options.zoomOutTitle).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomOutButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomOutTitle = TEST_VALUE;
-            expect(control.zoomOutTitle).to.equal(TEST_VALUE);
         });
     });
 

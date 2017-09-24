@@ -62,12 +62,6 @@ export class AttributionControlDirective extends Control.Attribution implements 
      */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     /**
-     * Two-Way bound property for the zIndex of the control.
-     * Use it with `<yaga-attribution-control [(zIndex)]="someValue">`
-     * or `<yaga-attribution-control (zIndexChange)="processEvent($event)">`
-     */
-    @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
-    /**
      * Two-Way bound property for the position of the control.
      * Use it with `<yaga-attribution-control [(position)]="someValue">`
      * or `<yaga-attribution-control (positionChange)="processEvent($event)">`
@@ -238,9 +232,8 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
 
     /**
-     * Two-Way bound property for the zIndex of the control.
-     * Use it with `<yaga-attribution-control [(zIndex)]="someValue">`
-     * or `<yaga-attribution-control (zIndexChange)="processEvent($event)">`
+     * Input for the zIndex of the control.
+     * Use it with `<yaga-attribution-control [zIndex]="someValue">`
      */
     @Input() public set zIndex(zIndex: number) {
         if ( !zIndex ) {

@@ -83,6 +83,7 @@ describe('GeoJSON Directive', () => {
         });
     });
     describe('[filter]', () => {
+        /* istanbul ignore next */
         const FILTER_FN: any = (): boolean => {
             return true;
         };
@@ -119,6 +120,7 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('[pointToLayer]', () => {
+        /* istanbul ignore next */
         const POINT_TO_LAYER_FN: any = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
             return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
         };
@@ -140,13 +142,11 @@ describe('GeoJSON Directive', () => {
                 properties: {},
                 type: 'Feature',
             };
-            /* tslint:disable:max-line-length */
             layer.pointToLayer = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
                 expect(feature).to.equal(TEST_POINT);
                 done();
                 return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
             };
-            /* tslint:enable */
             layer.data = {
                 features: [TEST_POINT],
                 type: 'FeatureCollection',
@@ -155,6 +155,7 @@ describe('GeoJSON Directive', () => {
     });
 
     describe('[styler]', () => {
+        /* istanbul ignore next */
         const STYLER_FN: any = (
             feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
             defaultStyle: PathOptions,

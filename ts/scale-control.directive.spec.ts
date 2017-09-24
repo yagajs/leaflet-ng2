@@ -88,6 +88,30 @@ describe('Scale-Control Directive', () => {
             control.setPosition(val);
         });
     });
+    describe('[maxWidth]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.maxWidth = val;
+            expect(control.options.maxWidth).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.maxWidth = val;
+            expect(control.maxWidth).to.equal(val);
+        });
+    });
+    describe('[zIndex]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.getContainer().style.zIndex).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.zIndex).to.equal(val);
+        });
+    });
 
     // Events
     describe('(add)', () => {

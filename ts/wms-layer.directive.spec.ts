@@ -713,6 +713,30 @@ describe('WMS-Layer Directive', () => {
             expect(layer.keepBuffer).to.equal(val);
         });
     });
+    describe('[maxZoom]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(20, 0, 0);
+            layer.maxZoom = val;
+            expect(layer.options.maxZoom).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(20, 0, 0);
+            layer.maxZoom = val;
+            expect(layer.maxZoom).to.equal(val);
+        });
+    });
+    describe('[minZoom]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(5, 0, 0);
+            layer.minZoom = val;
+            expect(layer.options.minZoom).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(5, 0, 0);
+            layer.minZoom = val;
+            expect(layer.minZoom).to.equal(val);
+        });
+    });
     describe('[maxNativeZoom]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = randomNumber(100, 1, 0);
