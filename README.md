@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
 [![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2?ref=badge_shield)
 
 YAGA leaflet-ng2 is a granular implementation of the popular [Leaflet](http://leafletjs.com/) framework into the model
 view view controller (MVVC) of [Angular2](https://angular.io/) and it is fully compatible with the newest version of
@@ -199,6 +200,9 @@ Scripts registered in package.json:
 ## License
 
 This library is released under the [ISC License](LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2?ref=badge_large)
 
 ## Links
 
