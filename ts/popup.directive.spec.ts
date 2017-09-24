@@ -7,6 +7,7 @@ import {
     Point,
     PopupDirective,
 } from './index';
+import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
 describe('Popup Directive', () => {
     let map: MapComponent;
@@ -79,22 +80,22 @@ describe('Popup Directive', () => {
             popup.setLatLng(latLng(0, 0));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             popup.lat = val;
             expect(popup.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             popup.lat = val;
             expect(popup.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             popup.setLatLng([val, 0]);
             expect(popup.getLatLng().lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             popup.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -104,7 +105,7 @@ describe('Popup Directive', () => {
             popup.lat = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             popup.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -119,22 +120,22 @@ describe('Popup Directive', () => {
             popup.setLatLng(latLng(0, 0));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             popup.lng = val;
             expect(popup.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             popup.lng = val;
             expect(popup.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             popup.setLatLng([0, val]);
             expect(popup.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             popup.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -144,7 +145,7 @@ describe('Popup Directive', () => {
             popup.lng = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             popup.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -159,22 +160,22 @@ describe('Popup Directive', () => {
             popup.setLatLng(latLng(0, 0));
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             popup.position = val;
             expect(popup.getLatLng()).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             popup.position = val;
             expect(popup.position).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             popup.setLatLng(val);
             expect(popup.position).to.deep.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.deep.equal(val);
@@ -184,7 +185,7 @@ describe('Popup Directive', () => {
             popup.position = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.deep.equal(val);
@@ -225,49 +226,49 @@ describe('Popup Directive', () => {
     // Inputs
     describe('[maxWidth]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.maxWidth = val;
             expect(popup.options.maxWidth).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.maxWidth = val;
             expect(popup.maxWidth).to.equal(val);
         });
     });
     describe('[minWidth]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.minWidth = val;
             expect(popup.options.minWidth).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.minWidth = val;
             expect(popup.minWidth).to.equal(val);
         });
     });
     describe('[maxHeight]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.maxHeight = val;
             expect(popup.options.maxHeight).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(1000, 0, 0);
             popup.maxHeight = val;
             expect(popup.maxHeight).to.equal(val);
         });
     });
     describe('[autoPanPaddingTopLeft]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
             expect(popup.options.autoPanPaddingTopLeft).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPaddingTopLeft = val;
             expect(popup.autoPanPaddingTopLeft).to.equal(val);
@@ -275,13 +276,13 @@ describe('Popup Directive', () => {
     });
     describe('[autoPanPaddingBottomRight]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
             expect(popup.options.autoPanPaddingBottomRight).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPaddingBottomRight = val;
             expect(popup.autoPanPaddingBottomRight).to.equal(val);
@@ -289,13 +290,13 @@ describe('Popup Directive', () => {
     });
     describe('[autoPanPadding]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPadding = val;
             expect(popup.options.autoPanPadding).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 0, 0);
             const val: Point = point(num, num);
             popup.autoPanPadding = val;
             expect(popup.autoPanPadding).to.equal(val);

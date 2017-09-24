@@ -11,6 +11,7 @@ import {
     TooltipDirective,
 } from './index';
 import { createPathTests } from './path-directives.spec';
+import { randomNumber } from './spec';
 
 describe('Polygon Directive', () => {
     createPathTests(PolygonDirective);
@@ -27,6 +28,37 @@ describe('Polygon Directive', () => {
         layer = new PolygonDirective<any> (map);
     });
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            layer.display = false;
+            expect((layer.getElement() as HTMLElement).style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            layer.display = false;
+            layer.display = true;
+            expect((layer.getElement() as HTMLElement).style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(layer.display).to.equal(false);
+                done();
+            });
+
+            map.removeLayer(layer);
+        });
+        it('should set to true when adding to map again', (done: MochaDone) => {
+            map.removeLayer(layer);
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(true);
+                expect(layer.display).to.equal(true);
+                done();
+            });
+
+            map.addLayer(layer);
+        });
+    });
     describe('[(latlngs)]', () => {
         describe('for Polygons', () => {
             const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
@@ -316,12 +348,12 @@ describe('Polygon Directive', () => {
 
     describe('[smoothFactor]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 0, 0);
             layer.smoothFactor = val;
             expect(layer.options.smoothFactor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 0, 0);
             layer.smoothFactor = val;
             expect(layer.smoothFactor).to.equal(val);
         });

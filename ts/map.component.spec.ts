@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { CRS, latLng, latLngBounds, point } from 'leaflet';
+import { CRS, point } from 'leaflet';
 import { LatLngBounds, MapComponent } from './index';
+import { randomLat, randomLatLngBounds, randomLng, randomNumber } from './spec';
 
 describe('Map Component', () => {
     let map: MapComponent;
@@ -10,22 +11,22 @@ describe('Map Component', () => {
 
     describe('[(lat)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             map.lat = val;
             expect(map.getCenter().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             map.lat = val;
             expect(map.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             map.setView([val, 0], 0);
             expect(map.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             map.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -35,7 +36,7 @@ describe('Map Component', () => {
             map.lat = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             map.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -55,30 +56,30 @@ describe('Map Component', () => {
                 alreadyFired = true;
                 return done();
             });
-            map.setView([Math.random() * 100, 0], 0);
+            map.setView([randomLat(), 0], 0);
             setTimeout(() => {
-                map.setView([Math.random() * 100, 0], 0);
+                map.setView([randomLat(), 0], 0);
             }, 10);
         });
     });
     describe('[(lng)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             map.lng = val;
             expect(map.getCenter().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             map.lng = val;
             expect(map.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             map.setView([0, val], 0);
             expect(map.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             map.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -88,7 +89,7 @@ describe('Map Component', () => {
             map.lng = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             map.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -108,30 +109,30 @@ describe('Map Component', () => {
                 alreadyFired = true;
                 return done();
             });
-            map.setView([0, Math.random() * 100], 0);
+            map.setView([0, randomLng()], 0);
             setTimeout(() => {
-                map.setView([0, Math.random() * 100], 0);
+                map.setView([0, randomLng()], 0);
             }, 10);
         });
     });
     describe('[(zoom)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.zoom = val;
             expect(map.getZoom()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.zoom = val;
             expect(map.zoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.setView([0, 0], val);
             expect(map.zoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.zoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -141,7 +142,7 @@ describe('Map Component', () => {
             map.zoom = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.zoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -161,30 +162,30 @@ describe('Map Component', () => {
                 alreadyFired = true;
                 return done();
             });
-            map.setView([0, 0], Math.random() * 15);
+            map.setView([0, 0], randomNumber(15, 1, 0));
             setTimeout(() => {
-                map.setView([0, 0], Math.random() * 15);
+                map.setView([0, 0], randomNumber(15, 1, 0));
             }, 10);
         });
     });
     describe('[(minZoom)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.minZoom = val;
             expect(map.getMinZoom()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.minZoom = val;
             expect(map.minZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.setMinZoom(val);
             expect(map.minZoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.minZoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -194,7 +195,7 @@ describe('Map Component', () => {
             map.minZoom = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.minZoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -206,22 +207,22 @@ describe('Map Component', () => {
     });
     describe('[(maxZoom)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.maxZoom = val;
             expect(map.getMaxZoom()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.maxZoom = val;
             expect(map.maxZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
             map.setMaxZoom(val);
             expect(map.maxZoom).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.maxZoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -231,7 +232,7 @@ describe('Map Component', () => {
             map.maxZoom = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.ceil(Math.random() * 15);
+            const val: number = randomNumber(15, 1, 0);
 
             map.maxZoomChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -247,50 +248,22 @@ describe('Map Component', () => {
             (map as any)._size = point(100, 100);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const lat1: number = Math.random() * 100;
-            const lat2: number = Math.random() * 100;
-            const lng1: number = Math.random() * 100;
-            const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = latLngBounds(
-                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
-            );
+            const val: LatLngBounds = randomLatLngBounds();
             map.setMaxBounds(val);
             expect(val.equals(map.options.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const lat1: number = Math.random() * 100;
-            const lat2: number = Math.random() * 100;
-            const lng1: number = Math.random() * 100;
-            const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = latLngBounds(
-                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
-            );
+            const val: LatLngBounds = randomLatLngBounds();
             map.maxBounds = val;
             expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const lat1: number = Math.random() * 100;
-            const lat2: number = Math.random() * 100;
-            const lng1: number = Math.random() * 100;
-            const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = latLngBounds(
-                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
-            );
+            const val: LatLngBounds = randomLatLngBounds();
             map.setMaxBounds(val);
             expect(val.equals(map.maxBounds)).to.equal(true);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const lat1: number = Math.random() * 100;
-            const lat2: number = Math.random() * 100;
-            const lng1: number = Math.random() * 100;
-            const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = latLngBounds(
-                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
-            );
+            const val: LatLngBounds = randomLatLngBounds();
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(val.equals(eventVal)).to.equal(true);
@@ -300,14 +273,7 @@ describe('Map Component', () => {
             map.maxBounds = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const lat1: number = Math.random() * 100;
-            const lat2: number = Math.random() * 100;
-            const lng1: number = Math.random() * 100;
-            const lng2: number = Math.random() * 100;
-            const val: LatLngBounds = latLngBounds(
-                latLng(lat1 < lat2 ? lat1 : lat2, lng1 < lng2 ? lng1 : lng2),
-                latLng(lat1 < lat2 ? lat2 : lat1, lng1 < lng2 ? lng2 : lng1),
-            );
+            const val: LatLngBounds = randomLatLngBounds();
 
             map.maxBoundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(val.equals(eventVal)).to.equal(true);
@@ -694,24 +660,24 @@ describe('Map Component', () => {
     });
     describe('[zoomSnap]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10) / 10;
+            const val: number = randomNumber(10, 0, 1);
             map.zoomSnap = val;
             expect(map.options.zoomSnap !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10) / 10;
+            const val: number = randomNumber(10, 0, 1);
             map.zoomSnap = val;
             expect(map.zoomSnap !== val).to.equal(false);
         });
     });
     describe('[zoomDelta]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10) / 10;
+            const val: number = randomNumber(10, 0, 1);
             map.zoomDelta = val;
             expect(map.options.zoomDelta !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10) / 10;
+            const val: number = randomNumber(10, 0, 1);
             map.zoomDelta = val;
             expect(map.zoomDelta !== val).to.equal(false);
         });
@@ -832,12 +798,12 @@ describe('Map Component', () => {
     });
     describe('[transform3DLimit]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.transform3DLimit = val;
             expect(map.options.transform3DLimit !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.transform3DLimit = val;
             expect(map.transform3DLimit !== val).to.equal(false);
         });
@@ -863,12 +829,12 @@ describe('Map Component', () => {
     });
     describe('[zoomAnimationThreshold]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.zoomAnimationThreshold = val;
             expect(map.options.zoomAnimationThreshold !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.zoomAnimationThreshold = val;
             expect(map.zoomAnimationThreshold !== val).to.equal(false);
         });
@@ -894,36 +860,36 @@ describe('Map Component', () => {
     });
     describe('[inertiaDeceleration]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.inertiaDeceleration = val;
             expect(map.options.inertiaDeceleration !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.inertiaDeceleration = val;
             expect(map.inertiaDeceleration !== val).to.equal(false);
         });
     });
     describe('[inertiaMaxSpeed]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.inertiaMaxSpeed = val;
             expect(map.options.inertiaMaxSpeed !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.inertiaMaxSpeed = val;
             expect(map.inertiaMaxSpeed !== val).to.equal(false);
         });
     });
     describe('[easeLinearity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.easeLinearity = val;
             expect(map.options.easeLinearity !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.easeLinearity = val;
             expect(map.easeLinearity !== val).to.equal(false);
         });
@@ -949,12 +915,12 @@ describe('Map Component', () => {
     });
     describe('[maxBoundsViscosity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.maxBoundsViscosity = val;
             expect(map.options.maxBoundsViscosity !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.maxBoundsViscosity = val;
             expect(map.maxBoundsViscosity !== val).to.equal(false);
         });
@@ -980,12 +946,12 @@ describe('Map Component', () => {
     });
     describe('[keyboardPanDelta]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.keyboardPanDelta = val;
             expect(map.options.keyboardPanDelta !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.keyboardPanDelta = val;
             expect(map.keyboardPanDelta !== val).to.equal(false);
         });
@@ -1011,36 +977,36 @@ describe('Map Component', () => {
     });
     describe('[wheelDebounceTime]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.wheelDebounceTime = val;
             expect(map.options.wheelDebounceTime !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.wheelDebounceTime = val;
             expect(map.wheelDebounceTime !== val).to.equal(false);
         });
     });
     describe('[wheelPxPerZoomLevel]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.wheelPxPerZoomLevel = val;
             expect(map.options.wheelPxPerZoomLevel !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.wheelPxPerZoomLevel = val;
             expect(map.wheelPxPerZoomLevel !== val).to.equal(false);
         });
     });
     describe('[tapTolerance]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.tapTolerance = val;
             expect(map.options.tapTolerance !== val).to.equal(false);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             map.tapTolerance = val;
             expect(map.tapTolerance !== val).to.equal(false);
         });

@@ -12,6 +12,7 @@ import {
     TooltipDirective,
 } from './index';
 import { createPathTests } from './path-directives.spec';
+import { randomLatLng, randomLatLngBounds, randomNumber } from './spec';
 
 describe('Rectangle Directive', () => {
     createPathTests(RectangleDirective);
@@ -27,9 +28,40 @@ describe('Rectangle Directive', () => {
         layer = new RectangleDirective<any> (map);
     });
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            layer.display = false;
+            expect((layer.getElement() as HTMLElement).style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            layer.display = false;
+            layer.display = true;
+            expect((layer.getElement() as HTMLElement).style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(layer.display).to.equal(false);
+                done();
+            });
+
+            map.removeLayer(layer);
+        });
+        it('should set to true when adding to map again', (done: MochaDone) => {
+            map.removeLayer(layer);
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(true);
+                expect(layer.display).to.equal(true);
+                done();
+            });
+
+            map.addLayer(layer);
+        });
+    });
     describe('[(latlngs)]', () => {
         describe('for Polygons', () => {
-            const TEST_VALUE: LatLng[][] = [[latLng(0, 1), latLng(1, 1), latLng(1, 0)]];
+            const TEST_VALUE: LatLng[][] = [[randomLatLng(), randomLatLng(), randomLatLng()]];
             it('should be changed in Leaflet when changing in Angular', () => {
                 layer.latLngs = TEST_VALUE;
                 expect((layer as any)._latlngs).to.deep.equal(TEST_VALUE);
@@ -328,35 +360,23 @@ describe('Rectangle Directive', () => {
 
     describe('[(bounds)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.bounds = val;
             expect(layer.getBounds().equals(val)).to.equal(true);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.bounds = val;
             expect(layer.bounds.equals(val)).to.equal(true);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
             layer.setBounds(val);
             expect(layer.bounds.equals(val)).to.equal(true);
 
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(eventVal.equals(val)).to.equal(true);
@@ -366,10 +386,7 @@ describe('Rectangle Directive', () => {
             layer.bounds = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: LatLngBounds = latLngBounds([
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-                [(Math.random() * 100) - 50, (Math.random() * 100) - 50],
-            ]);
+            const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
                 expect(eventVal.equals(val)).to.equal(true);
@@ -386,17 +403,17 @@ describe('Rectangle Directive', () => {
             layer.setBounds([[0, 0], [1, 1]]);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.north = val;
             expect(layer.getBounds().getNorth()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.north = val;
             expect(layer.north).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
             layer.setBounds([
                 [0, 0],
                 [val, 0],
@@ -404,7 +421,7 @@ describe('Rectangle Directive', () => {
             expect(layer.north).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -415,7 +432,7 @@ describe('Rectangle Directive', () => {
             layer.north = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -434,17 +451,17 @@ describe('Rectangle Directive', () => {
             layer.setBounds([[0, 0], [1, 1]]);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.east = val;
             expect(layer.getBounds().getEast()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.east = val;
             expect(layer.east).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
             layer.setBounds([
                 [0, val],
                 [0, 0],
@@ -452,7 +469,7 @@ describe('Rectangle Directive', () => {
             expect(layer.east).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -463,7 +480,7 @@ describe('Rectangle Directive', () => {
             layer.east = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -482,17 +499,17 @@ describe('Rectangle Directive', () => {
             layer.setBounds([[0, 0], [1, 1]]);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.south = val;
             expect(layer.getBounds().getSouth()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.south = val;
             expect(layer.south).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
             layer.setBounds([
                 [val, 0],
                 [1, 1],
@@ -500,7 +517,7 @@ describe('Rectangle Directive', () => {
             expect(layer.south).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -511,7 +528,7 @@ describe('Rectangle Directive', () => {
             layer.south = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -530,17 +547,17 @@ describe('Rectangle Directive', () => {
             layer.setBounds([[0, 0], [1, 1]]);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.west = val;
             expect(layer.getBounds().getWest()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.west = val;
             expect(layer.west).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
             layer.setBounds(latLngBounds([
                 [0, val],
                 [1, 1],
@@ -548,7 +565,7 @@ describe('Rectangle Directive', () => {
             expect(layer.west).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -559,7 +576,7 @@ describe('Rectangle Directive', () => {
             layer.west = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -576,12 +593,12 @@ describe('Rectangle Directive', () => {
 
     describe('[smoothFactor]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             layer.smoothFactor = val;
             expect(layer.options.smoothFactor).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 1, 0);
             layer.smoothFactor = val;
             expect(layer.smoothFactor).to.equal(val);
         });
@@ -673,7 +690,15 @@ describe('Rectangle Directive', () => {
 
     describe('Destroying a Rectangle Directive', () => {
         it('should remove Rectangle Directive from map on destroy', () => {
-            expect(map.hasLayer(layer)).to.equal(true);
+            /* istanbul ignore if */
+            if (!map.hasLayer(layer)) {
+                throw new Error('The layer is not part of the map before destroying');
+            }
+            layer.ngOnDestroy();
+            /* istanbul ignore if */
+            if (map.hasLayer(layer)) {
+                throw new Error('The layer is still part of the map after destroying');
+            }
         });
     });
 });
