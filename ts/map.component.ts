@@ -130,6 +130,7 @@ import { ANIMATION_DELAY } from './consts';
  */
 @Component({
     selector: 'yaga-map',
+    styles: [`:host { display: block; }`],
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
 export class MapComponent extends Map implements AfterViewInit {
@@ -373,7 +374,7 @@ export class MapComponent extends Map implements AfterViewInit {
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
     ) {
-        super(document.createElement('div'), { attributionControl: false, zoomControl: false});
+        super(elementRef.nativeElement, { attributionControl: false, zoomControl: false});
 
         const moveFn: () => any = () => {
             if (this.isZooming) {
@@ -389,7 +390,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.setView([0, 0], 0);
 
         this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = (this as any)._container;
+        this.mapDomRoot = this.domRoot;
         this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
@@ -513,8 +514,6 @@ export class MapComponent extends Map implements AfterViewInit {
      * @link https://angular.io/docs/ts/latest/api/core/index/AfterViewInit-class.html
      */
     public ngAfterViewInit(): void {
-        this.domRoot.appendChild(this.mapDomRoot);
-
         this.invalidateSize(false);
     }
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {
