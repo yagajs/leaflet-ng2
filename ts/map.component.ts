@@ -365,9 +365,6 @@ export class MapComponent extends Map implements AfterViewInit {
      */
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
-    protected domRoot: HTMLElement;
-    protected mapDomRoot: HTMLElement;
-
     private moveTimeout: any;
     private isZooming: boolean = false;
 
@@ -389,9 +386,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.setView([0, 0], 0);
 
-        this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = this.domRoot;
-        this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
+        elementRef.nativeElement.setAttribute('class', elementRef.nativeElement.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
             if (this.moveTimeout) {
