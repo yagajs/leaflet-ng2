@@ -8,7 +8,7 @@ import {
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 import { createPathTests } from './path-directives.spec';
 import { randomLat, randomLng, randomNumber } from './spec';
@@ -27,7 +27,7 @@ describe('Circle-Marker Directive', () => {
         type: 'Feature',
     };
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();

@@ -7,7 +7,7 @@ import {
     OSM_TILE_LAYER_URL,
     Point,
     TileLayerDirective,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 import { hasAsChild, randomNumber } from './spec';
 
@@ -15,10 +15,10 @@ describe('Tile-Layer Directive', () => {
     let map: MapComponent;
     let layer: TileLayerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new TileLayerDirective(map);
+        layer = new TileLayerDirective({handle: map});
     });
 
     describe('[(display)]', () => {

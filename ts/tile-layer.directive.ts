@@ -1,11 +1,10 @@
 import {
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
+    SkipSelf,
 } from '@angular/core';
 import {
     Control,
@@ -21,7 +20,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
-import { MapComponent } from './map.component';
+import { YagaLayerGroup } from './layer-group.provider';
 
 /**
  * Angular2 directive for Leaflet tile-layers.
@@ -227,7 +226,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        groupLayer: YagaLayerGroup,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL);
@@ -239,7 +238,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(mapComponent);
+        this.addTo(groupLayer.handle);
 
         // Events
         this.on('add', (event: Event) => {

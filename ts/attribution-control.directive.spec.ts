@@ -5,7 +5,7 @@ import {
     AttributionControlDirective,
     ControlPosition,
     MapComponent,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 import { randomNumber } from './spec';
 
@@ -13,7 +13,7 @@ describe('Attribution-Control Directive', () => {
     let map: MapComponent;
     let control: AttributionControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         control = new AttributionControlDirective(map);

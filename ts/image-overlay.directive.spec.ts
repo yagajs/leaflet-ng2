@@ -6,7 +6,7 @@ import {
     ImageOverlayDirective,
     LatLngBounds,
     MapComponent,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 import { randomLatLngBounds, randomNumber } from './spec';
 
@@ -26,7 +26,7 @@ describe('Image-Overlay Directive', () => {
     let map: MapComponent;
     let layer: ImageOverlayDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         layer = new ImageOverlayDirective(map);

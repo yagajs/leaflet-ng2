@@ -1,6 +1,6 @@
 import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 import { expect } from 'chai';
-import {Layer, Marker, PathOptions, point, SVG} from 'leaflet';
+import { Layer, Marker, PathOptions, point, SVG } from 'leaflet';
 import {
     DEFAULT_STYLE,
     GeoJSONDirective,
@@ -9,19 +9,19 @@ import {
     MapComponent,
     PopupDirective,
     TooltipDirective,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 
 describe('GeoJSON Directive', () => {
     let map: MapComponent;
     let layer: GeoJSONDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new GeoJSONDirective(map);
+        layer = new GeoJSONDirective({handle: map}, new YagaLayerGroup());
     });
     const TEST_VALUE: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
         features: [
@@ -383,7 +383,10 @@ describe('GeoJSON Directive', () => {
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
+            puLayer = Object.create(
+                new GeoJSONDirective<any> ({ handle: map }, new YagaLayerGroup()),
+                { popupDirective: {value: popup} },
+            );
         });
         it('should bind popup', () => {
             puLayer.ngAfterContentInit();
@@ -400,7 +403,10 @@ describe('GeoJSON Directive', () => {
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
+            ttLayer = Object.create(
+                new GeoJSONDirective<any> ({ handle: map }, new YagaLayerGroup()),
+                { tooltipDirective: {value: tooltip} },
+            );
         });
         it('should bind tooltip', () => {
             ttLayer.ngAfterContentInit();

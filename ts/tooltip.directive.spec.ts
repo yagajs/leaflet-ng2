@@ -7,7 +7,7 @@ import {
     MapComponent,
     Point,
     TooltipDirective,
-    YagaLayer,
+    YagaLayerGroup,
 } from './index';
 import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
@@ -15,7 +15,7 @@ describe('Tooltip Directive', () => {
     let map: MapComponent;
     let tooltip: TooltipDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});

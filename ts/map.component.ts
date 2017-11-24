@@ -26,7 +26,7 @@ import {
     ZoomAnimEvent,
 } from 'leaflet';
 import { ANIMATION_DELAY } from './consts';
-import { YagaLayer } from './layer.provider';
+import { YagaLayerGroup } from './layer-group.provider';
 
 /**
  * Angular2 root component for a Leaflet map
@@ -131,7 +131,7 @@ import { YagaLayer } from './layer.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Component({
-    providers: [ YagaLayer ],
+    providers: [ YagaLayerGroup ],
     selector: 'yaga-map',
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
@@ -375,7 +375,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
-        @Host() layer: YagaLayer,
+        @Host() layer: YagaLayerGroup,
     ) {
         super(document.createElement('div'), { attributionControl: false, zoomControl: false});
 

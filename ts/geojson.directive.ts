@@ -3,12 +3,11 @@ import {
     ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Optional,
     Output,
+    SkipSelf,
 } from '@angular/core';
 import {
     GeoJsonObject,
@@ -27,7 +26,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { DEFAULT_STYLE } from './consts';
-import { MapComponent } from './map.component';
+import { YagaLayerGroup } from './layer-group.provider';
 
 import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 
@@ -74,6 +73,7 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
 }
 
 @Directive({
+    providers: [ YagaLayerGroup ],
     selector: 'yaga-geojson',
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterContentInit {
@@ -179,7 +179,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     };
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        @SkipSelf() parentLayerGroup: YagaLayerGroup,
+        layerGroup: YagaLayerGroup,
     ) {
         super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
             filter: (feature: GenericGeoJSONFeature<GeometryObject, T>) => {
@@ -206,7 +207,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
             },
         });
 
-        mapComponent.addLayer(this);
+        layerGroup.handle = this;
+        parentLayerGroup.handle.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {

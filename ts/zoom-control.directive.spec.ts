@@ -3,7 +3,7 @@ import { point } from 'leaflet';
 import {
     ControlPosition,
     MapComponent,
-    YagaLayer,
+    YagaLayerGroup,
     ZoomControlDirective,
 } from './index';
 import { randomNumber } from './spec';
@@ -12,7 +12,7 @@ describe('Zoom-Control Directive', () => {
     let map: MapComponent;
     let control: ZoomControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         control = new ZoomControlDirective(map);
