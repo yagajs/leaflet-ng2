@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { AttributionControlDirective } from './attribution-control.directive';
+import { BaseLayerDirective } from './base-layer.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
 import { CircleDirective } from './circle.directive';
 import { DivIconDirective } from './div-icon.directive';
@@ -54,6 +55,7 @@ import { ZoomControlDirective } from './zoom-control.directive';
         TooltipDirective,
         WmsLayerDirective,
         ZoomControlDirective,
+        BaseLayerDirective,
     ],
     exports: [
         AttributionControlDirective,
@@ -74,6 +76,7 @@ import { ZoomControlDirective } from './zoom-control.directive';
         TooltipDirective,
         WmsLayerDirective,
         ZoomControlDirective,
+        BaseLayerDirective,
     ],
 })
 export class YagaModule { }
