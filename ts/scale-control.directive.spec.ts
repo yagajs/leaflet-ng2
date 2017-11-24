@@ -4,6 +4,7 @@ import {
     ControlPosition,
     MapComponent,
     ScaleControlDirective,
+    YagaLayer,
 } from './index';
 import { randomNumber } from './spec';
 
@@ -11,7 +12,7 @@ describe('Scale-Control Directive', () => {
     let map: MapComponent;
     let control: ScaleControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         control = new ScaleControlDirective(map);

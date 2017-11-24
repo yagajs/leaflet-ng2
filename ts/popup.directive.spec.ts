@@ -6,6 +6,7 @@ import {
     MapComponent,
     Point,
     PopupDirective,
+    YagaLayer,
 } from './index';
 import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
@@ -13,7 +14,7 @@ describe('Popup Directive', () => {
     let map: MapComponent;
     let popup: PopupDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         popup = new PopupDirective(map, {nativeElement: document.createElement('div')});

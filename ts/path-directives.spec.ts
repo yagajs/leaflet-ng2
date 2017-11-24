@@ -6,6 +6,7 @@ import {
     LineJoinShape,
     MapComponent,
     PathOptions,
+    YagaLayer,
 } from './index';
 import { randomNumber } from './spec';
 
@@ -14,7 +15,7 @@ export function createPathTests(Constr: any): void {
         let map: MapComponent;
         let layer: any;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
+            map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
             (map as any)._size = point(100, 100);
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();

@@ -8,6 +8,7 @@ import {
     PopupDirective,
     TooltipDirective,
     TRANSPARENT_PIXEL,
+    YagaLayer,
 } from './index';
 import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
@@ -27,7 +28,7 @@ describe('Marker Directive', () => {
     let map: MapComponent;
     let layer: MarkerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         layer = new MarkerDirective(map);

@@ -9,13 +9,14 @@ import {
     MapComponent,
     PopupDirective,
     TooltipDirective,
+    YagaLayer,
 } from './index';
 
 describe('GeoJSON Directive', () => {
     let map: MapComponent;
     let layer: GeoJSONDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();

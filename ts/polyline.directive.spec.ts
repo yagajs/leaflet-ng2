@@ -8,6 +8,7 @@ import {
     PolylineDirective,
     PopupDirective,
     TooltipDirective,
+    YagaLayer,
 } from './index';
 import { lng2lat } from './lng2lat';
 import { createPathTests } from './path-directives.spec';
@@ -20,7 +21,7 @@ describe('Polyline Directive', () => {
     let layer: PolylineDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();

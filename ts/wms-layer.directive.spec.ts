@@ -9,6 +9,7 @@ import {
     Point,
     WmsLayerDirective,
     WMSParams,
+    YagaLayer,
 } from './index';
 import { randomNumber } from './spec';
 
@@ -28,7 +29,7 @@ describe('WMS-Layer Directive', () => {
     let map: MapComponent;
     let layer: WmsLayerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayer());
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         layer = new WmsLayerDirective(map);
