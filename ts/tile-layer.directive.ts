@@ -21,6 +21,7 @@ import {
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 /**
  * Angular2 directive for Leaflet tile-layers.
@@ -86,6 +87,7 @@ import { LayerGroupProvider } from './layer-group.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-tile-layer',
 })
 export class TileLayerDirective extends TileLayer implements OnDestroy  {
@@ -227,9 +229,12 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL);
+
+        layerProvider.ref = this;
 
         this.on('remove', () => {
             this.displayChange.emit(false);

@@ -23,7 +23,7 @@ describe('Tile-Layer Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new TileLayerDirective({ ref: map });
+        layer = new TileLayerDirective({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {

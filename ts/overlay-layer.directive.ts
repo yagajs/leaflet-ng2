@@ -34,7 +34,7 @@ import { LayersControlProvider } from './layers-control.provider';
 export class OverlayLayerDirective implements OnDestroy  {
     constructor(
         protected layer: LayerProvider,
-        @Attribute('yaga-base-layer') public readonly name: string,
+        @Attribute('yaga-overlay-layer') public readonly name: string,
         public layersControlProvider: LayersControlProvider,
     ) {
         this.layersControlProvider.ref.addOverlay(this.layer.ref, name);
