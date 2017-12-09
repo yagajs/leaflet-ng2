@@ -92,7 +92,7 @@ import { LayerProvider } from './layer.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
-    providers: [ LayerProvider],
+    providers: [ LayerProvider ],
     selector: 'yaga-wms-layer',
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
@@ -243,7 +243,9 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
-        super(TRANSPARENT_PIXEL, {layers: ''});
+        super(TRANSPARENT_PIXEL, { layers: '', errorTileUrl: TRANSPARENT_PIXEL });
+
+        layerProvider.ref = this;
 
         this.on('remove', () => {
             this.displayChange.emit(false);

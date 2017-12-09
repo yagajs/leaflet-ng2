@@ -232,7 +232,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
-        super(TRANSPARENT_PIXEL);
+        super(TRANSPARENT_PIXEL, { errorTileUrl: TRANSPARENT_PIXEL });
 
         layerProvider.ref = this;
 
