@@ -31,10 +31,6 @@ import { DEFAULT_STYLE } from './consts';
 import { LayerGroupProvider } from './layer-group.provider';
 import { LayerProvider } from './layer.provider';
 
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
-
 /**
  * Interface for the styler function of the GeoJSON directive.
  *
@@ -160,15 +156,6 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     /* tslint:enable */
 
     /**
-     * Imports a child popup directive if there is one defined
-     */
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    /**
-     * Imports a child tooltip directive if there is one defined
-     */
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
-    /**
      * Property to prevent changes before directive is initialized
      */
     protected initialized: boolean = false;
@@ -257,12 +244,6 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     /**

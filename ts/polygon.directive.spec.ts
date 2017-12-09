@@ -417,8 +417,6 @@ describe('Polygon Directive', () => {
             testDiv = document.createElement('div');
             layerWithPopup = new PolygonDirective<any> ({ ref: map }, {} as any);
             popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
-
-            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);

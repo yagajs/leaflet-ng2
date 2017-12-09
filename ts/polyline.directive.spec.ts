@@ -463,8 +463,6 @@ describe('Polyline Directive', () => {
             testDiv = document.createElement('div');
             layerWithPopup = new PolylineDirective<any> ({ ref: map }, {} as any);
             popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
-
-            layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
             /* istanbul ignore if */

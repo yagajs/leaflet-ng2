@@ -1,11 +1,8 @@
 import {
-    AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
 import { Feature as GeoJSONFeature } from 'geojson';
@@ -28,16 +25,12 @@ import { LayerGroupProvider } from './layer-group.provider';
 import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
-import HTML = Mocha.reporters.HTML;
 
 @Directive({
     providers: [ LayerProvider ],
     selector: 'yaga-polyline',
 })
-export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterContentInit {
+export class PolylineDirective<T> extends Polyline implements OnDestroy {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -72,9 +65,6 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
     @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
-
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
@@ -134,15 +124,6 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
         this.on('contextmenu', (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-    }
-
-    public ngAfterContentInit(): void {
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     public ngOnDestroy(): void {

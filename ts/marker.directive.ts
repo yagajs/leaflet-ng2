@@ -27,8 +27,6 @@ import { LayerProvider } from './layer.provider';
 // Content-Child imports
 import { DivIconDirective } from './div-icon.directive';
 import { IconDirective } from './icon.directive';
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
     providers: [ LayerProvider ],
@@ -65,8 +63,6 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
-    @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
     @ContentChild(IconDirective) public iconDirective: IconDirective;
     @ContentChild(DivIconDirective) public divIconDirective: DivIconDirective;
 
@@ -172,12 +168,6 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
             this.divIconDirective.updateEvent.subscribe((event: LeafletEvent) => {
                 this.setIcon(event.target);
             });
-        }
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
         }
     }
 

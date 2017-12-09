@@ -1,11 +1,9 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
 import { Feature as GeoJSONFeature } from 'geojson';
@@ -29,9 +27,6 @@ import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
 /**
  * Angular2 directive for circle-markers of Leaflet.
  *
@@ -285,15 +280,6 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    /**
-     * Imports a child popup directive if there is one defined
-     */
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    /**
-     * Imports a child tooltip directive if there is one defined
-     */
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     private initialized: boolean = false;
 
     constructor(
@@ -360,12 +346,6 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      */
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     /**
