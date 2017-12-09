@@ -8,8 +8,10 @@ import { DivIconDirective } from './div-icon.directive';
 import { GeoJSONDirective } from './geojson.directive';
 import { IconDirective } from './icon.directive';
 import { ImageOverlayDirective } from './image-overlay.directive';
+import { LayersControlDirective } from './layers-control.directive';
 import { MapComponent } from './map.component';
 import { MarkerDirective } from './marker.directive';
+import { OverlayLayerDirective } from './overlay-layer.directive';
 import { PolygonDirective } from './polygon.directive';
 import { PolylineDirective } from './polyline.directive';
 import { PopupDirective } from './popup.directive';
@@ -44,8 +46,10 @@ import { ZoomControlDirective } from './zoom-control.directive';
         GeoJSONDirective,
         IconDirective,
         ImageOverlayDirective,
+        LayersControlDirective,
         MapComponent,
         MarkerDirective,
+        OverlayLayerDirective,
         PolygonDirective,
         PolylineDirective,
         PopupDirective,
@@ -65,8 +69,10 @@ import { ZoomControlDirective } from './zoom-control.directive';
         GeoJSONDirective,
         IconDirective,
         ImageOverlayDirective,
+        LayersControlDirective,
         MapComponent,
         MarkerDirective,
+        OverlayLayerDirective,
         PolygonDirective,
         PolylineDirective,
         PopupDirective,

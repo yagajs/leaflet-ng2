@@ -16,29 +16,28 @@ import { LayersControlProvider } from './layers-control.provider';
  * <yaga-map>
  *     <yaga-layers-control>
  *         <!-- This can be any other layer... -->
- *         <yaga-tile-layer yaga-base-layer="OSM"></yaga-tile-layer>
+ *         <yaga-tile-layer yaga-overlay-layer="Transparent OSM"></yaga-tile-layer>
  *     </yaga-attribution-control>
  * </yaga-map>
  * ```
  *
- * @link http://leafletjs.com/reference-1.2.0.html#control-layers-addbaselayer Original Leaflet documentation
- * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Base-Layer%20Directive Unit-Test
- * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/base-layer.directive.js.html
+ * @link http://leafletjs.com/reference-1.2.0.html#control-layers-addoverlay Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Overlay-Layer%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/overlay-layer.directive.js.html
  * Test coverage
- * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/baselayerdirective.html API documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/overlaylayerdirective.html API documentation
  * @example https://leaflet-ng2.yagajs.org/latest/examples/layers-control-directive/
  */
 @Directive({
-    selector: '[yaga-base-layer]',
+    selector: '[yaga-overlay-layer]',
 })
-export class BaseLayerDirective implements OnDestroy  {
+export class OverlayLayerDirective implements OnDestroy  {
     constructor(
-        // TODO: Inject LayersControl @Inject(forwardRef(() => LayersControl)) protected layersControl: LayersControl,
         protected layer: LayerProvider,
         @Attribute('yaga-base-layer') public readonly name: string,
         public layersControlProvider: LayersControlProvider,
     ) {
-        this.layersControlProvider.ref.addBaseLayer(this.layer.ref, name);
+        this.layersControlProvider.ref.addOverlay(this.layer.ref, name);
     }
 
     /**
