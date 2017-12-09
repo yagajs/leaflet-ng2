@@ -134,6 +134,7 @@ import { MapProvider } from './map.provider';
 @Component({
     providers: [ LayerGroupProvider, MapProvider ],
     selector: 'yaga-map',
+    styles: [`:host { display: block; }`],
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
 export class MapComponent extends Map implements AfterViewInit {
@@ -368,9 +369,6 @@ export class MapComponent extends Map implements AfterViewInit {
      */
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
-    protected domRoot: HTMLElement;
-    protected mapDomRoot: HTMLElement;
-
     private moveTimeout: any;
     private isZooming: boolean = false;
 
@@ -379,7 +377,7 @@ export class MapComponent extends Map implements AfterViewInit {
         @Host() layerProvider: LayerGroupProvider,
         mapProvider: MapProvider,
     ) {
-        super(document.createElement('div'), { attributionControl: false, zoomControl: false});
+        super(elementRef.nativeElement, { attributionControl: false, zoomControl: false});
 
         mapProvider.ref = this;
         layerProvider.ref = this;
@@ -397,9 +395,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.setView([0, 0], 0);
 
-        this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = (this as any)._container;
-        this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
+        elementRef.nativeElement.setAttribute('class', elementRef.nativeElement.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
             if (this.moveTimeout) {
@@ -522,8 +518,6 @@ export class MapComponent extends Map implements AfterViewInit {
      * @link https://angular.io/docs/ts/latest/api/core/index/AfterViewInit-class.html
      */
     public ngAfterViewInit(): void {
-        this.domRoot.appendChild(this.mapDomRoot);
-
         this.invalidateSize(false);
     }
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {
