@@ -31,7 +31,7 @@ describe('Rectangle Directive', () => {
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new RectangleDirective<any> (map);
+        layer = new RectangleDirective<any> ({ ref: map });
     });
 
     describe('[(display)]', () => {
@@ -619,7 +619,7 @@ describe('Rectangle Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithProperties = new RectangleDirective<ITestProperties> (map);
+            layerWithProperties = new RectangleDirective<ITestProperties> ({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithProperties.properties = TEST_OBJECT;
@@ -666,10 +666,13 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new RectangleDirective<any> (map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(
+                new RectangleDirective<any> ({ ref: map }),
+                { popupDirective: {value: popup} },
+            );
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -683,10 +686,13 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new RectangleDirective<any> (map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(
+                new RectangleDirective<any> ({ ref: map }),
+                { tooltipDirective: {value: tooltip} },
+            );
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {

@@ -453,7 +453,7 @@ describe('Circle-Marker Directive', () => {
 
         beforeEach(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             layer = Object.create(new CircleMarkerDirective<any>({ ref: map }), { popupDirective: {value: popup} });
@@ -469,7 +469,7 @@ describe('Circle-Marker Directive', () => {
         let testDiv: HTMLElement;
         beforeEach(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             layer = Object.create(new CircleMarkerDirective<any>({ ref: map }), { tooltipDirective: {value: tooltip} });

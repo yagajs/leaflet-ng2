@@ -179,7 +179,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     };
 
     constructor(
-        @SkipSelf() parentLayerGroupProdiver: LayerGroupProvider,
+        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
     ) {
         super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
@@ -208,7 +208,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         });
 
         layerGroupProvider.ref = this;
-        parentLayerGroupProdiver.ref.addLayer(this);
+        parentLayerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {

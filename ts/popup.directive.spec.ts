@@ -22,7 +22,7 @@ describe('Popup Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        popup = new PopupDirective(map, {nativeElement: document.createElement('div')});
+        popup = new PopupDirective({ ref: map }, {nativeElement: document.createElement('div')});
         (popup as any)._contentNode = document.createElement('div');
         (popup as any)._container = document.createElement('div');
         (popup as any)._wrapper = document.createElement('div');

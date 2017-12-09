@@ -34,7 +34,7 @@ describe('Image-Overlay Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new ImageOverlayDirective(map);
+        layer = new ImageOverlayDirective({ ref: map });
     });
 
     describe('[(display)]', () => {

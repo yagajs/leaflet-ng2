@@ -3,8 +3,6 @@ import {
     ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Optional,
@@ -26,6 +24,7 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
@@ -76,7 +75,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
     @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super([]);
 
@@ -90,7 +89,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {

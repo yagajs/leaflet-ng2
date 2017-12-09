@@ -31,7 +31,7 @@ describe('Polyline Directive', () => {
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolylineDirective<any> (map);
+        layer = new PolylineDirective<any> ({ ref: map });
     });
 
     describe('[(display)]', () => {
@@ -391,7 +391,7 @@ describe('Polyline Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> (map);
+            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> ({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithPropertiesInterface.properties = TEST_OBJECT;
@@ -461,10 +461,13 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolylineDirective<any> (map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(
+                new PolylineDirective<any> ({ ref: map }),
+                { popupDirective: {value: popup} },
+            );
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -485,10 +488,13 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolylineDirective<any> (map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(
+                new PolylineDirective<any> ({ ref: map }),
+                { tooltipDirective: {value: tooltip} },
+            );
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {

@@ -296,7 +296,7 @@ describe('Circle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             layerWithPopup = Object.create(new CircleDirective<any>({ ref: map }), { popupDirective: {value: popup} });
@@ -321,7 +321,7 @@ describe('Circle Directive', () => {
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             layerWithTooltip = Object.create(

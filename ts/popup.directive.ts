@@ -2,7 +2,6 @@ import {
     Directive,
     ElementRef,
     EventEmitter,
-    forwardRef,
     Inject,
     Input,
     OnDestroy,
@@ -14,10 +13,12 @@ import {
     latLng,
     LatLngExpression,
     LeafletEvent,
+    Map,
     Point,
     Popup,
 } from 'leaflet';
 import { MapComponent } from './map.component';
+import { MapProvider } from './map.provider';
 
 @Directive({
     selector: 'yaga-popup',
@@ -32,15 +33,15 @@ export class PopupDirective extends Popup implements OnDestroy {
     @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
-    protected map: MapComponent;
+    protected map: Map;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        mapProvider: MapProvider,
         @Inject(ElementRef) elementRef: ElementRef,
     ) {
         super();
 
-        this.map = mapComponent;
+        this.map = mapProvider.ref;
         this.setContent(elementRef.nativeElement);
 
         this.on('add', (event: LeafletEvent): void => {

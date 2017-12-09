@@ -23,7 +23,7 @@ describe('Tooltip Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
+        tooltip = new TooltipDirective({ ref: map }, {nativeElement: document.createElement('div')});
         (tooltip as any)._contentNode = document.createElement('div');
         (tooltip as any)._container = document.createElement('div');
     });

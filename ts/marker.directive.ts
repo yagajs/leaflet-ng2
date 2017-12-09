@@ -3,8 +3,6 @@ import {
     ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
@@ -23,7 +21,7 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
-import { MapComponent } from './map.component';
+import { LayerGroupProvider } from './layer-group.provider';
 
 // Content-Child imports
 import { DivIconDirective } from './div-icon.directive';
@@ -73,10 +71,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super([0, 0]);
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         this.on('remove', () => {
             this.displayChange.emit(false);

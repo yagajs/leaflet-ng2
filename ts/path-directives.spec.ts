@@ -25,7 +25,7 @@ export function createPathTests(Constr: any): void {
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
 
-            layer = new Constr(map);
+            layer = new Constr({ ref: map });
         });
         describe('[(display)]', () => {
             it('should remove DOM container when not displaying', () => {

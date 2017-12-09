@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Layer as LeafletLayerInterface } from 'leaflet';
+import { Layer } from 'leaflet';
 
 @Injectable()
-export class YagaLayer {
-    public handle: LeafletLayerInterface;
+export class LayerProvider {
+    public ref: Layer;
 }

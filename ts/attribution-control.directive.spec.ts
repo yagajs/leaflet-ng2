@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { point } from 'leaflet';
-
 import {
     AttributionControlDirective,
     ControlPosition,

@@ -3,7 +3,7 @@ import {
     Directive,
     OnDestroy,
 } from '@angular/core';
-import { YagaLayer } from './layer.provider';
+import { LayerProvider } from './layer.provider';
 
 /**
  * Angular2 directive for adding layers to the layers-control of Leaflet as base-layer.
@@ -33,7 +33,7 @@ import { YagaLayer } from './layer.provider';
 export class BaseLayerDirective implements OnDestroy  {
     constructor(
         // TODO: Inject LayersControl @Inject(forwardRef(() => LayersControl)) protected layersControl: LayersControl,
-        protected layer: YagaLayer,
+        protected layer: LayerProvider,
         @Attribute('yaga-base-layer') public readonly name: string,
     ) {
         // this.layersControl.addBaseLayer(this.layer.ref, name);

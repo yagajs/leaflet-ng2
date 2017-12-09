@@ -385,7 +385,7 @@ describe('GeoJSON Directive', () => {
         let puLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             puLayer = Object.create(
@@ -405,7 +405,7 @@ describe('GeoJSON Directive', () => {
         let ttLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
             ttLayer = Object.create(

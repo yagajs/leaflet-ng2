@@ -36,7 +36,7 @@ describe('Marker Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective(map);
+        layer = new MarkerDirective({ ref: map });
     });
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
@@ -505,10 +505,10 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(new MarkerDirective({ ref: map }), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -522,10 +522,10 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
+            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(new MarkerDirective({ ref: map }), { tooltipDirective: {value: tooltip} });
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {
@@ -544,7 +544,7 @@ describe('Marker Directive', () => {
             icon.iconUrl = TRANSPARENT_PIXEL;
 
             // Hack to get write-access to readonly property
-            layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
+            layerWithIcon = Object.create(new MarkerDirective({ ref: map }), { iconDirective: {value: icon} });
 
             layerWithIcon.ngAfterContentInit();
         });
