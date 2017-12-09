@@ -1,7 +1,7 @@
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, latLngBounds, point, SVG } from 'leaflet';
 import {
-    GenericGeoJSONFeature,
     LatLng,
     LatLngBounds,
     LatLngExpression,
@@ -190,7 +190,7 @@ describe('Rectangle Directive', () => {
 
     describe('[(geoJSON)]', () => {
         describe('for Polygon', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Polygon, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
                     coordinates: [[[0, 1], [1, 1], [0, 0], [0, 1]]],
                     type: 'Polygon',
@@ -240,7 +240,7 @@ describe('Rectangle Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     expect(lng2lat((eventVal.geometry.coordinates as any))).to.deep.equal(TEST_POLYGON);
                     return done();
                 });
@@ -249,7 +249,7 @@ describe('Rectangle Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_POLYGON);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
@@ -262,7 +262,7 @@ describe('Rectangle Directive', () => {
             });
         });
         describe('for MultiPolygon', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.MultiPolygon, any> = {
                 geometry: {
                     coordinates: [
                         [[[1, 0], [1, 1], [0, 1], [1, 0]]],
@@ -336,7 +336,7 @@ describe('Rectangle Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTIPOLYGON);
                     return done();
                 });
@@ -345,7 +345,7 @@ describe('Rectangle Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: Array<Array<Array<[number, number]>>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][0][3][0] !== 3 ||
@@ -626,7 +626,7 @@ describe('Rectangle Directive', () => {
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             layerWithProperties.geoJSONChange.subscribe(
-                (eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                (eventVal: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     expect(eventVal.properties).to.deep.equal(TEST_OBJECT);
                     done();
                 },

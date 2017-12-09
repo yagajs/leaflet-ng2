@@ -10,6 +10,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     FillRule,
     LatLng,
@@ -27,7 +28,6 @@ import {
 } from 'leaflet';
 import { MapComponent } from './map.component';
 
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { lng2lat } from './lng2lat';
 
 // Content-Child imports
@@ -58,7 +58,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
@@ -173,7 +173,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
         return (this as any)._latlngs;
     }
 
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally '(Multi)LineString'
@@ -184,8 +184,8 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
         }
         this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.LineString | GeoJSON.MultiLineString, T>);
     }
 
     public setStyle(style: PathOptions): this {

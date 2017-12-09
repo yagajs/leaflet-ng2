@@ -1,5 +1,6 @@
 export * from './yaga.module';
 export * from './map.component';
+export * from './map.provider';
 export * from './tile-layer.directive';
 export * from './image-overlay.directive';
 export * from './popup.directive';
@@ -23,8 +24,6 @@ export * from './lng2lat'; // helper
 
 export * from './consts';
 
-export { GenericGeoJSONFeature,
-    GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 export {
     Control,
     ControlPosition,

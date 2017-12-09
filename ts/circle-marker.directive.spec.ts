@@ -1,5 +1,5 @@
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, point, SVG } from 'leaflet';
 import {
     CircleMarkerDirective,
@@ -18,7 +18,7 @@ describe('Circle-Marker Directive', () => {
     let layer: CircleMarkerDirective<any>;
     const TEST_VALUE: LatLng = latLng(0, 1);
     const TEST_POINT: LatLngExpression = [3, 4];
-    const TEST_GEOJSON: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+    const TEST_GEOJSON: GeoJSONFeature<GeoJSON.Point, any> = {
         geometry: {
             coordinates: [1, 3],
             type: 'Point',
@@ -253,7 +253,7 @@ describe('Circle-Marker Directive', () => {
             ).to.equal(TEST_POINT[0]);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(
                     eventVal.geometry.coordinates[0],
                 ).to.equal(TEST_GEOJSON.geometry.coordinates[0]);
@@ -266,7 +266,7 @@ describe('Circle-Marker Directive', () => {
             layer.geoJSON = TEST_GEOJSON;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 const values: [number, number] = (eventVal.geometry.coordinates as any);
 
                 expect(values[0]).to.equal(TEST_POINT[1]);
@@ -299,7 +299,7 @@ describe('Circle-Marker Directive', () => {
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             layerWithProps.geoJSONChange.subscribe(
-                (val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                (val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     expect(val.properties).to.equal(TEST_OBJECT);
                     done();
                 },

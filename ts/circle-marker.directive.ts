@@ -10,6 +10,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     CircleMarker,
     CircleMarkerOptions,
@@ -27,8 +28,6 @@ import {
 } from 'leaflet';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -210,7 +209,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(geoJSON)]="someValue">`
      * or `<yaga-circle-marker (geoJSONChange)="processEvent($event)">`
      */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
@@ -446,7 +445,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(geoJSON)]="someValue">` or `<yaga-circle-marker [geoJSONChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-togeojson Original Leaflet documentation
      */
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally 'Point'
@@ -457,8 +456,8 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         }
         this.setLatLng(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Point, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Point, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Point, T>);
     }
 
     /**
