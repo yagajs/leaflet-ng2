@@ -24,12 +24,12 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-import { MapProvider } from './map.provider';
 
 // Content-Child imports
-import {LayerGroupProvider} from './layer-group.provider';
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
@@ -90,6 +90,7 @@ import { TooltipDirective } from './tooltip.directive';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-circle',
 })
 export class CircleDirective<T> extends Circle implements OnDestroy, AfterContentInit {
@@ -302,8 +303,11 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([0, 0]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};

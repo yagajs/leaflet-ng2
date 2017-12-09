@@ -31,7 +31,7 @@ describe('Polygon Directive', () => {
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolygonDirective<any> ({ ref: map });
+        layer = new PolygonDirective<any> ({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -415,13 +415,9 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
+            layerWithPopup = new PolygonDirective<any> ({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
 
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(
-                new PolygonDirective<any> ({ ref: map }),
-                { popupDirective: {value: popup} },
-                );
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -435,14 +431,8 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(
-                new PolygonDirective<any> ({ ref: map }),
-                { tooltipDirective: {value: tooltip} },
-            );
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new PolygonDirective<any> ({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);

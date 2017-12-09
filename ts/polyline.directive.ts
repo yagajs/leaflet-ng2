@@ -25,6 +25,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 // Content-Child imports
@@ -33,6 +34,7 @@ import { TooltipDirective } from './tooltip.directive';
 import HTML = Mocha.reporters.HTML;
 
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-polyline',
 })
 export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterContentInit {
@@ -76,8 +78,11 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy, AfterCo
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature ||
             {type: 'Feature', properties: {}, geometry: {type: 'LineString', coordinates: []}};

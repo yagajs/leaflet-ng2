@@ -21,6 +21,7 @@ import {
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 /**
  * Angular2 directive for Leaflet WMS-layers.
@@ -91,6 +92,7 @@ import { LayerGroupProvider } from './layer-group.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
+    providers: [ LayerProvider],
     selector: 'yaga-wms-layer',
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
@@ -238,6 +240,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, {layers: ''});

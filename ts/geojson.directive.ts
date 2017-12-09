@@ -29,6 +29,7 @@ import {
 } from 'leaflet';
 import { DEFAULT_STYLE } from './consts';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -73,7 +74,7 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
 }
 
 @Directive({
-    providers: [ LayerGroupProvider ],
+    providers: [ LayerGroupProvider, LayerProvider ],
     selector: 'yaga-geojson',
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterContentInit {
@@ -181,6 +182,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     constructor(
         @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
             filter: (feature: GeoJSONFeature<GeometryObject, T>) => {
@@ -207,6 +209,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
             },
         });
 
+        layerProvider.ref = this;
         layerGroupProvider.ref = this;
         parentLayerGroupProvider.ref.addLayer(this);
 

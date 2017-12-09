@@ -17,6 +17,7 @@ import {
     Point,
     Popup,
 } from 'leaflet';
+import { LayerProvider } from './layer.provider';
 import { MapComponent } from './map.component';
 import { MapProvider } from './map.provider';
 
@@ -33,15 +34,12 @@ export class PopupDirective extends Popup implements OnDestroy {
     @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
-    protected map: Map;
-
     constructor(
-        mapProvider: MapProvider,
         @Inject(ElementRef) elementRef: ElementRef,
+        public layerProvider: LayerProvider,
     ) {
         super();
 
-        this.map = mapProvider.ref;
         this.setContent(elementRef.nativeElement);
 
         this.on('add', (event: LeafletEvent): void => {
@@ -52,6 +50,8 @@ export class PopupDirective extends Popup implements OnDestroy {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
+
+        this.layerProvider.ref.bindPopup(this);
     }
 
     public ngOnDestroy(): void {
@@ -73,10 +73,10 @@ export class PopupDirective extends Popup implements OnDestroy {
 
     @Input() public set opened(val: boolean) {
         if (val) {
-            this.openOn(this.map);
+            this.layerProvider.ref.openPopup();
             return;
         }
-        (this as any)._close();
+        this.layerProvider.ref.closePopup();
     }
     public get opened(): boolean {
         return !!(this as any)._map;

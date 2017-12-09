@@ -25,6 +25,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
@@ -84,6 +85,7 @@ import { TooltipDirective } from './tooltip.directive';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/circle-marker-directive/
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-circle-marker',
 })
 export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterContentInit {
@@ -296,8 +298,11 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([0, 0]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};

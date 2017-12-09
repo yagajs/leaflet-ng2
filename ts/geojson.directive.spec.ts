@@ -26,7 +26,7 @@ describe('GeoJSON Directive', () => {
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new GeoJSONDirective({ ref: map }, new LayerGroupProvider());
+        layer = new GeoJSONDirective({ ref: map }, new LayerGroupProvider(), {} as any);
     });
     const TEST_VALUE: GeoJSONFeatureCollection<GeoJSON.Point, any> = {
         features: [
@@ -385,16 +385,10 @@ describe('GeoJSON Directive', () => {
         let puLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            puLayer = Object.create(
-                new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider()),
-                { popupDirective: {value: popup} },
-            );
+            puLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: puLayer });
         });
         it('should bind popup', () => {
-            puLayer.ngAfterContentInit();
             expect((puLayer as any)._popup).to.equal(popup);
         });
     });
@@ -405,18 +399,11 @@ describe('GeoJSON Directive', () => {
         let ttLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            ttLayer = Object.create(
-                new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider()),
-                { tooltipDirective: {value: tooltip} },
-            );
+            ttLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            tooltip = new TooltipDirective({ ref: ttLayer }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
-            ttLayer.ngAfterContentInit();
-            expect(ttLayer.tooltipDirective).to.equal(tooltip);
-            // expect((<any> layer)._tooltip).to.equal(tooltip);
+            expect((ttLayer as any)._tooltip).to.equal(tooltip);
         });
     });
 

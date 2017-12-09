@@ -22,6 +22,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 // Content-Child imports
 import { DivIconDirective } from './div-icon.directive';
@@ -30,6 +31,7 @@ import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-marker',
 })
 export class MarkerDirective extends Marker implements AfterContentInit, OnDestroy {
@@ -72,8 +74,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([0, 0]);
+        layerProvider.ref = this;
         layerGroupProvider.ref.addLayer(this);
 
         this.on('remove', () => {

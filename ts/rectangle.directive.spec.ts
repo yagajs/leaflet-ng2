@@ -666,13 +666,9 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective({ ref: map }, { nativeElement: testDiv });
+            layerWithPopup = new RectangleDirective<any> ({ ref: map });
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
 
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(
-                new RectangleDirective<any> ({ ref: map }),
-                { popupDirective: {value: popup} },
-            );
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -686,14 +682,8 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective({ ref: map }, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(
-                new RectangleDirective<any> ({ ref: map }),
-                { tooltipDirective: {value: tooltip} },
-            );
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new RectangleDirective<any> ({ ref: map });
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);

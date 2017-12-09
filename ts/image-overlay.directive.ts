@@ -19,6 +19,7 @@ import {
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 @Directive({
     selector: 'yaga-image-overlay',
@@ -50,9 +51,12 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, [[0, 0], [1, 1]], {});
+
+        layerProvider.ref = this;
 
         this.on('remove', () => {
             this.displayChange.emit(false);

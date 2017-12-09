@@ -25,6 +25,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
@@ -33,6 +34,7 @@ import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-polygon',
 })
 export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterContentInit {
@@ -76,8 +78,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Polygon', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
