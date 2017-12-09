@@ -10,7 +10,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     Circle,
     CircleMarkerOptions,
@@ -214,7 +214,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Use it with `<yaga-circle [(geoJSON)]="someValue">`
      * or `<yaga-circle (geoJSONChange)="processEvent($event)">`
      */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
@@ -454,7 +454,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Use it with `<yaga-circle [(geoJSON)]="someValue">` or `<yaga-circle [geoJSONChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circle-togeojson Original Leaflet documentation
      */
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally 'Point'
@@ -465,8 +465,8 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
         }
         this.setLatLng(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Point, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Point, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Point, T>);
     }
     /**
      * Derived method of the original setStyle.

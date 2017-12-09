@@ -10,7 +10,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     FillRule,
     LatLng,
@@ -65,7 +65,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     @Output() public southChange: EventEmitter<number> = new EventEmitter();
     @Output() public westChange: EventEmitter<number> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -255,7 +255,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         return (this as any)._latlngs;
     }
 
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -266,8 +266,8 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         }
         this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
     }
 
     public setStyle(style: PathOptions): this {

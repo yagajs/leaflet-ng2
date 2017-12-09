@@ -10,6 +10,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     FillRule,
     LatLng,
@@ -27,8 +28,6 @@ import {
 } from 'leaflet';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 
 // Content-Child imports
 import { PopupDirective } from './popup.directive';
@@ -57,7 +56,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
@@ -170,7 +169,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
         return (this as any)._latlngs;
     }
 
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -181,8 +180,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterCont
         }
         this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
     }
 
     public setStyle(style: PathOptions): this {

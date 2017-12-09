@@ -21,8 +21,6 @@ export * from './lng2lat'; // helper
 
 export * from './consts';
 
-export { GenericGeoJSONFeature,
-    GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 export {
     Control,
     ControlPosition,
