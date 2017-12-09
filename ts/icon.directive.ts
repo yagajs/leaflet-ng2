@@ -10,6 +10,7 @@ import {
     Point,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
+import { MarkerProvider } from './marker.provider';
 
 /**
  * Angular2 directive for Leaflet icons.
@@ -56,10 +57,11 @@ export class IconDirective extends Icon  {
      */
     @Output('update') public updateEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
-    constructor() {
+    constructor(public markerProvider: MarkerProvider) {
         super({
             iconUrl: TRANSPARENT_PIXEL,
         });
+        this.markerProvider.ref.setIcon(this);
     }
 
     /**
@@ -69,6 +71,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set className(val: string) {
         this.options.className = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -84,6 +87,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set iconUrl(val: string) {
         this.options.iconUrl = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -99,6 +103,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set iconRetinaUrl(val: string) {
         this.options.iconRetinaUrl = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -114,6 +119,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set iconSize(val: Point) {
         this.options.iconSize = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -129,6 +135,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -145,6 +152,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -158,7 +166,8 @@ export class IconDirective extends Icon  {
     //
     // @Input() public set tooltipAnchor(val: Point) {
     //     this.options.tooltipAnchor = val;
-    //     this.updateEvent.emit({
+    //     this.markerProvider.ref.setIcon(this);
+    // this.updateEvent.emit({
     //         target: this,
     //         type: 'update',
     //     });
@@ -173,6 +182,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set shadowUrl(val: string) {
         this.options.shadowUrl = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -188,6 +198,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set shadowRetinaUrl(val: string) {
         this.options.shadowRetinaUrl = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -203,6 +214,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set shadowSize(val: Point) {
         this.options.shadowSize = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -218,6 +230,7 @@ export class IconDirective extends Icon  {
      */
     @Input() public set shadowAnchor(val: Point) {
         this.options.shadowAnchor = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',

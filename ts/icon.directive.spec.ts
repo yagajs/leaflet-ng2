@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { point } from 'leaflet';
+import { marker, point } from 'leaflet';
 import {
     IconDirective,
     LayerGroupProvider,
@@ -22,7 +22,7 @@ describe('Icon Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        icon = new IconDirective();
+        icon = new IconDirective({ ref: marker([0, 0]) });
     });
 
     // Events

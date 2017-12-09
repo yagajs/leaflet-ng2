@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { point } from 'leaflet';
+import { marker, point } from 'leaflet';
 import {
     DivIconDirective, LayerGroupProvider,
     LeafletEvent,
@@ -20,7 +20,7 @@ describe('DivIcon Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        icon = new DivIconDirective({nativeElement: document.createElement('div')});
+        icon = new DivIconDirective({nativeElement: document.createElement('div')}, { ref: marker([0, 0]) });
     });
 
     // Events

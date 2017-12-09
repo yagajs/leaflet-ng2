@@ -36,7 +36,7 @@ describe('Marker Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective({ ref: map }, {} as any);
+        layer = new MarkerDirective({ ref: map }, {} as any, {} as any);
     });
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
@@ -505,7 +505,7 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            layerWithPopup = new MarkerDirective({ ref: map }, {} as any);
+            layerWithPopup = new MarkerDirective({ ref: map }, {} as any, {} as any);
             popup = new PopupDirective({nativeElement: document.createElement('div')}, { ref: layerWithPopup });
 
             layerWithPopup.ngAfterContentInit();
@@ -521,7 +521,7 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            layerWithTooltip = new MarkerDirective({ ref: map }, {} as any);
+            layerWithTooltip = new MarkerDirective({ ref: map }, {} as any, {} as any);
             tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
@@ -536,14 +536,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            icon = new IconDirective();
+            layerWithIcon = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            icon = new IconDirective({ ref: layerWithIcon });
             icon.iconUrl = TRANSPARENT_PIXEL;
-
-            // Hack to get write-access to readonly property
-            layerWithIcon = Object.create(
-                new MarkerDirective({ ref: map }, {} as any),
-                { iconDirective: {value: icon} },
-            );
 
             layerWithIcon.ngAfterContentInit();
         });
