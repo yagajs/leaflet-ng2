@@ -1,8 +1,6 @@
 import {
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
@@ -22,7 +20,8 @@ import {
     WMSParams,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
-import { MapComponent } from './map.component';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 /**
  * Angular2 directive for Leaflet WMS-layers.
@@ -93,6 +92,7 @@ import { MapComponent } from './map.component';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
+    providers: [ LayerProvider],
     selector: 'yaga-wms-layer',
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
@@ -239,7 +239,8 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, {layers: ''});
@@ -251,7 +252,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(mapComponent);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {

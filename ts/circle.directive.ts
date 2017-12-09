@@ -1,13 +1,9 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
 import { Feature as GeoJSONFeature } from 'geojson';
@@ -26,12 +22,10 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
 
 /**
  * Angular2 directive for Leaflet circles.
@@ -90,6 +84,7 @@ import { TooltipDirective } from './tooltip.directive';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-circle',
 })
 export class CircleDirective<T> extends Circle implements OnDestroy, AfterContentInit {
@@ -289,21 +284,15 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    /**
-     * Imports a child popup directive if there is one defined
-     */
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    /**
-     * Imports a child tooltip directive if there is one defined
-     */
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([0, 0]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
@@ -315,7 +304,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {
@@ -361,12 +350,6 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      */
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     /**

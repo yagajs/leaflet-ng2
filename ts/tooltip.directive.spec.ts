@@ -1,10 +1,12 @@
 import { expect } from 'chai';
-import { latLng, point } from 'leaflet';
+import { latLng, marker, point } from 'leaflet';
 import {
     Direction,
     EXAMPLE_CONTENT,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     Point,
     TooltipDirective,
 } from './index';
@@ -14,10 +16,14 @@ describe('Tooltip Directive', () => {
     let map: MapComponent;
     let tooltip: TooltipDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        tooltip = new TooltipDirective(map, {nativeElement: document.createElement('div')});
+        tooltip = new TooltipDirective({ ref: marker([0, 0]) }, {nativeElement: document.createElement('div')});
         (tooltip as any)._contentNode = document.createElement('div');
         (tooltip as any)._container = document.createElement('div');
     });

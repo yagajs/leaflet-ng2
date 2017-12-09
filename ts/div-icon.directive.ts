@@ -11,6 +11,7 @@ import {
     LeafletEvent,
     Point,
 } from 'leaflet';
+import { MarkerProvider } from './marker.provider';
 /**
  * Angular2 directive for Leaflet div-icons.
  *
@@ -59,12 +60,14 @@ export class DivIconDirective extends DivIcon  {
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
+        public markerProvider: MarkerProvider,
     ) {
         super({});
         this.contentHtml = elementRef.nativeElement;
 
         if (typeof MutationObserver === 'function') {
             const mutationObserver = new MutationObserver(() => {
+                this.markerProvider.ref.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
                     type: 'update',
@@ -81,12 +84,14 @@ export class DivIconDirective extends DivIcon  {
             );
         } else {
             this.contentHtml.addEventListener('DOMSubtreeModified', () => {
+                this.markerProvider.ref.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
                     type: 'update',
                 });
             });
         }
+        markerProvider.ref.setIcon(this);
     }
 
     /**
@@ -96,6 +101,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set iconSize(val: Point) {
         this.options.iconSize = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -112,6 +118,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',
@@ -128,6 +135,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
+        this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: 'update',

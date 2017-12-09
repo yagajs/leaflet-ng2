@@ -3,7 +3,9 @@ import { point } from 'leaflet';
 import {
     IconDirective,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     MarkerDirective,
     PopupDirective,
     TooltipDirective,
@@ -27,10 +29,14 @@ describe('Marker Directive', () => {
     let map: MapComponent;
     let layer: MarkerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective(map);
+        layer = new MarkerDirective({ ref: map }, {} as any, {} as any);
     });
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
@@ -499,10 +505,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            layerWithPopup = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            popup = new PopupDirective({nativeElement: document.createElement('div')}, { ref: layerWithPopup });
 
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -516,11 +521,8 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
@@ -534,11 +536,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            icon = new IconDirective();
+            layerWithIcon = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            icon = new IconDirective({ ref: layerWithIcon });
             icon.iconUrl = TRANSPARENT_PIXEL;
-
-            // Hack to get write-access to readonly property
-            layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
 
             layerWithIcon.ngAfterContentInit();
         });

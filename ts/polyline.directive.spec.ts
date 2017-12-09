@@ -4,7 +4,9 @@ import { latLng, point, SVG } from 'leaflet';
 import {
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PolylineDirective,
     PopupDirective,
     TooltipDirective,
@@ -20,12 +22,16 @@ describe('Polyline Directive', () => {
     let layer: PolylineDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolylineDirective<any> (map);
+        layer = new PolylineDirective<any> ({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -385,7 +391,7 @@ describe('Polyline Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> (map);
+            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> ({ ref: map }, {} as any);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithPropertiesInterface.properties = TEST_OBJECT;
@@ -455,11 +461,8 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolylineDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterContentInit();
+            layerWithPopup = new PolylineDirective<any> ({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             /* istanbul ignore if */
@@ -479,11 +482,8 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolylineDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new PolylineDirective<any> ({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             /* istanbul ignore if */

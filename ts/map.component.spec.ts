@@ -1,12 +1,21 @@
 import { expect } from 'chai';
 import { CRS, point } from 'leaflet';
-import { LatLngBounds, MapComponent } from './index';
+import {
+    LatLngBounds,
+    LayerGroupProvider,
+    MapComponent,
+    MapProvider,
+} from './index';
 import { randomLat, randomLatLngBounds, randomLng, randomNumber } from './spec';
 
 describe('Map Component', () => {
     let map: MapComponent;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
     });
 
     describe('[(lat)]', () => {

@@ -5,7 +5,9 @@ import {
     IMAGE_OVERLAY_URL,
     ImageOverlayDirective,
     LatLngBounds,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
 } from './index';
 import { randomLatLngBounds, randomNumber } from './spec';
 
@@ -25,10 +27,14 @@ describe('Image-Overlay Directive', () => {
     let map: MapComponent;
     let layer: ImageOverlayDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new ImageOverlayDirective(map);
+        layer = new ImageOverlayDirective({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -590,7 +596,7 @@ describe('Image-Overlay Directive', () => {
     describe('[attribution]', () => {
         let attributionControl: AttributionControlDirective;
         beforeEach(() => {
-            attributionControl = new AttributionControlDirective(map);
+            attributionControl = new AttributionControlDirective({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Test attribution';

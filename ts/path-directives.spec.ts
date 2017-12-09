@@ -2,9 +2,11 @@ import { expect } from 'chai';
 import { point, SVG } from 'leaflet';
 import {
     FillRule,
+    LayerGroupProvider,
     LineCapShape,
     LineJoinShape,
     MapComponent,
+    MapProvider,
     PathOptions,
 } from './index';
 import { randomNumber } from './spec';
@@ -14,12 +16,16 @@ export function createPathTests(Constr: any): void {
         let map: MapComponent;
         let layer: any;
         beforeEach(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
+            map = new MapComponent(
+                {nativeElement: document.createElement('div')},
+                new LayerGroupProvider(),
+                new MapProvider(),
+            );
             (map as any)._size = point(100, 100);
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
 
-            layer = new Constr(map);
+            layer = new Constr({ ref: map }, {});
         });
         describe('[(display)]', () => {
             it('should remove DOM container when not displaying', () => {

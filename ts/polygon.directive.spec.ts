@@ -4,8 +4,10 @@ import { latLng, point, SVG } from 'leaflet';
 import {
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     lng2lat,
     MapComponent,
+    MapProvider,
     PolygonDirective,
     PopupDirective,
     TooltipDirective,
@@ -20,12 +22,16 @@ describe('Polygon Directive', () => {
     let layer: PolygonDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolygonDirective<any> (map);
+        layer = new PolygonDirective<any> ({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -409,11 +415,8 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolygonDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterContentInit();
+            layerWithPopup = new PolygonDirective<any> ({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -426,11 +429,8 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolygonDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new PolygonDirective<any> ({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);

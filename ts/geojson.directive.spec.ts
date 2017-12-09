@@ -1,12 +1,14 @@
 import { expect } from 'chai';
 import { Feature as GeoJSONFeature, FeatureCollection as GeoJSONFeatureCollection } from 'geojson';
-import {Layer, Marker, PathOptions, point, SVG} from 'leaflet';
+import { Layer, Marker, PathOptions, point, SVG } from 'leaflet';
 import {
     DEFAULT_STYLE,
     GeoJSONDirective,
     IGeoJSONDirectiveMiddlewareDictionary,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
@@ -15,12 +17,16 @@ describe('GeoJSON Directive', () => {
     let map: MapComponent;
     let layer: GeoJSONDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new GeoJSONDirective(map);
+        layer = new GeoJSONDirective({ ref: map }, new LayerGroupProvider(), {} as any);
     });
     const TEST_VALUE: GeoJSONFeatureCollection<GeoJSON.Point, any> = {
         features: [
@@ -379,13 +385,10 @@ describe('GeoJSON Directive', () => {
         let puLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
+            puLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: puLayer });
         });
         it('should bind popup', () => {
-            puLayer.ngAfterContentInit();
             expect((puLayer as any)._popup).to.equal(popup);
         });
     });
@@ -396,15 +399,11 @@ describe('GeoJSON Directive', () => {
         let ttLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
+            ttLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            tooltip = new TooltipDirective({ ref: ttLayer }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
-            ttLayer.ngAfterContentInit();
-            expect(ttLayer.tooltipDirective).to.equal(tooltip);
-            // expect((<any> layer)._tooltip).to.equal(tooltip);
+            expect((ttLayer as any)._tooltip).to.equal(tooltip);
         });
     });
 

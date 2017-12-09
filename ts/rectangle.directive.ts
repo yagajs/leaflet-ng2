@@ -1,13 +1,9 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
 import { Feature as GeoJSONFeature } from 'geojson';
@@ -19,7 +15,6 @@ import {
     LatLngBoundsLiteral,
     LatLngExpression,
     LatLngTuple,
-    LeafletEvent,
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
@@ -29,13 +24,9 @@ import {
     Rectangle,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
-import HTML = Mocha.reporters.HTML;
 
 @Directive({
     selector: 'yaga-rectangle',
@@ -81,13 +72,10 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super(latLngBounds([0, 0], [0, 0]));
 
@@ -101,7 +89,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {
@@ -144,12 +132,6 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     public ngOnDestroy(): void {
