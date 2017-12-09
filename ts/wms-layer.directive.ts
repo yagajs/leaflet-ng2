@@ -245,6 +245,8 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, { layers: '', errorTileUrl: TRANSPARENT_PIXEL });
 
+        layerProvider.ref = this;
+
         this.on('remove', () => {
             this.displayChange.emit(false);
         });
