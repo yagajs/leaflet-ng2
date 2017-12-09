@@ -92,7 +92,7 @@ import { LayerProvider } from './layer.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
-    providers: [ LayerProvider],
+    providers: [ LayerProvider ],
     selector: 'yaga-wms-layer',
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
