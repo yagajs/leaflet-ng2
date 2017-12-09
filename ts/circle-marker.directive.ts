@@ -3,8 +3,6 @@ import {
     ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Optional,
@@ -26,6 +24,7 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
@@ -296,7 +295,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super([0, 0]);
 
@@ -310,7 +309,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {

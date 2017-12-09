@@ -28,8 +28,10 @@ import {
 } from 'leaflet';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
+import { MapProvider } from './map.provider';
 
 // Content-Child imports
+import {LayerGroupProvider} from './layer-group.provider';
 import { PopupDirective } from './popup.directive';
 import { TooltipDirective } from './tooltip.directive';
 
@@ -301,7 +303,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super([0, 0]);
 
@@ -315,7 +317,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {

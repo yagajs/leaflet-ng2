@@ -3,12 +3,13 @@ import { point } from 'leaflet';
 import {
     IconDirective,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     MarkerDirective,
     PopupDirective,
     TooltipDirective,
     TRANSPARENT_PIXEL,
-    YagaLayerGroup,
 } from './index';
 import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
@@ -28,7 +29,11 @@ describe('Marker Directive', () => {
     let map: MapComponent;
     let layer: MarkerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         layer = new MarkerDirective(map);

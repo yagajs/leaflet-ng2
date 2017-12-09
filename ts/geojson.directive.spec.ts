@@ -8,6 +8,7 @@ import {
     LatLng,
     LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
@@ -16,12 +17,16 @@ describe('GeoJSON Directive', () => {
     let map: MapComponent;
     let layer: GeoJSONDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new LayerGroupProvider());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new GeoJSONDirective({handle: map}, new LayerGroupProvider());
+        layer = new GeoJSONDirective({ ref: map }, new LayerGroupProvider());
     });
     const TEST_VALUE: GeoJSONFeatureCollection<GeoJSON.Point, any> = {
         features: [
@@ -384,7 +389,7 @@ describe('GeoJSON Directive', () => {
 
             // Hack to get write-access to readonly property
             puLayer = Object.create(
-                new GeoJSONDirective<any> ({ handle: map }, new LayerGroupProvider()),
+                new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider()),
                 { popupDirective: {value: popup} },
             );
         });
@@ -404,7 +409,7 @@ describe('GeoJSON Directive', () => {
 
             // Hack to get write-access to readonly property
             ttLayer = Object.create(
-                new GeoJSONDirective<any> ({ handle: map }, new LayerGroupProvider()),
+                new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider()),
                 { tooltipDirective: {value: tooltip} },
             );
         });

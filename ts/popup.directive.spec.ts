@@ -3,10 +3,11 @@ import { latLng, point } from 'leaflet';
 import {
     EXAMPLE_CONTENT,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     Point,
     PopupDirective,
-    YagaLayerGroup,
 } from './index';
 import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
@@ -14,7 +15,11 @@ describe('Popup Directive', () => {
     let map: MapComponent;
     let popup: PopupDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         popup = new PopupDirective(map, {nativeElement: document.createElement('div')});

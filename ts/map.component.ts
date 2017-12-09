@@ -26,7 +26,8 @@ import {
     ZoomAnimEvent,
 } from 'leaflet';
 import { ANIMATION_DELAY } from './consts';
-import { YagaLayerGroup } from './layer-group.provider';
+import { LayerGroupProvider } from './layer-group.provider';
+import { MapProvider } from './map.provider';
 
 /**
  * Angular2 root component for a Leaflet map
@@ -131,7 +132,7 @@ import { YagaLayerGroup } from './layer-group.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Component({
-    providers: [ YagaLayerGroup ],
+    providers: [ LayerGroupProvider, MapProvider ],
     selector: 'yaga-map',
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
@@ -375,11 +376,13 @@ export class MapComponent extends Map implements AfterViewInit {
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
-        @Host() layer: YagaLayerGroup,
+        @Host() layerProvider: LayerGroupProvider,
+        mapProvider: MapProvider,
     ) {
         super(document.createElement('div'), { attributionControl: false, zoomControl: false});
 
-        layer.handle = this;
+        mapProvider.ref = this;
+        layerProvider.ref = this;
 
         const moveFn: () => any = () => {
             if (this.isZooming) {

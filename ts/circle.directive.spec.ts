@@ -7,6 +7,7 @@ import {
     LatLngExpression,
     LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
@@ -17,12 +18,16 @@ describe('Circle Directive', () => {
     let map: MapComponent;
     let layer: CircleDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new LayerGroupProvider());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new CircleDirective<any>(map);
+        layer = new CircleDirective<any>({ref: map});
         layer.ngAfterContentInit();
     });
 
@@ -294,7 +299,7 @@ describe('Circle Directive', () => {
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
+            layerWithPopup = Object.create(new CircleDirective<any>({ ref: map }), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -307,7 +312,11 @@ describe('Circle Directive', () => {
         let tooltip: TooltipDirective;
         let testDiv: HTMLElement;
         before(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')}, new LayerGroupProvider());
+            map = new MapComponent(
+                {nativeElement: document.createElement('div')},
+                new LayerGroupProvider(),
+                new MapProvider(),
+            );
             (map as any)._size = point(100, 100);
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
@@ -315,7 +324,10 @@ describe('Circle Directive', () => {
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = Object.create(
+                new CircleDirective<any>({ ref: map }),
+                { tooltipDirective: {value: tooltip} },
+            );
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {

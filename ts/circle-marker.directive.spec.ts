@@ -5,10 +5,11 @@ import {
     CircleMarkerDirective,
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
-    YagaLayerGroup,
 } from './index';
 import { createPathTests } from './path-directives.spec';
 import { randomLat, randomLng, randomNumber } from './spec';
@@ -27,12 +28,16 @@ describe('Circle-Marker Directive', () => {
         type: 'Feature',
     };
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new CircleMarkerDirective<any>(map);
+        layer = new CircleMarkerDirective<any>({ ref: map });
         layer.ngAfterContentInit();
     });
 
@@ -287,7 +292,7 @@ describe('Circle-Marker Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithProps = new CircleMarkerDirective<any>(map);
+            layerWithProps = new CircleMarkerDirective<any>({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithProps.properties = TEST_OBJECT;
@@ -451,7 +456,7 @@ describe('Circle-Marker Directive', () => {
             popup = new PopupDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layer = Object.create(new CircleMarkerDirective<any>(map), { popupDirective: {value: popup} });
+            layer = Object.create(new CircleMarkerDirective<any>({ ref: map }), { popupDirective: {value: popup} });
         });
         it('should bind popup', () => {
             layer.ngAfterContentInit();
@@ -467,7 +472,7 @@ describe('Circle-Marker Directive', () => {
             tooltip = new TooltipDirective(map, { nativeElement: testDiv });
 
             // Hack to get write-access to readonly property
-            layer = Object.create(new CircleMarkerDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layer = Object.create(new CircleMarkerDirective<any>({ ref: map }), { tooltipDirective: {value: tooltip} });
         });
         it('should bind tooltip', () => {
             layer.ngAfterContentInit();
@@ -478,7 +483,7 @@ describe('Circle-Marker Directive', () => {
     describe('Destroying a Circle Directive', () => {
         before(() => {
             // Hack to get write-access to readonly property
-            layer = new CircleMarkerDirective<any>(map);
+            layer = new CircleMarkerDirective<any>({ ref: map });
         });
         it('should remove Circle Directive from map on destroy', () => {
             expect(map.hasLayer(layer)).to.equal(true);

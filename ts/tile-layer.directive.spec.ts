@@ -3,11 +3,12 @@ import { latLngBounds, point } from 'leaflet';
 import {
     AttributionControlDirective,
     LatLngBoundsExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     OSM_TILE_LAYER_URL,
     Point,
     TileLayerDirective,
-    YagaLayerGroup,
 } from './index';
 import { hasAsChild, randomNumber } from './spec';
 
@@ -15,10 +16,14 @@ describe('Tile-Layer Directive', () => {
     let map: MapComponent;
     let layer: TileLayerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new TileLayerDirective({handle: map});
+        layer = new TileLayerDirective({ ref: map });
     });
 
     describe('[(display)]', () => {
@@ -719,7 +724,7 @@ describe('Tile-Layer Directive', () => {
     describe('[attribution]', () => {
         let attributionControl: AttributionControlDirective;
         beforeEach(() => {
-            attributionControl = new AttributionControlDirective(map);
+            attributionControl = new AttributionControlDirective({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Test attribution';

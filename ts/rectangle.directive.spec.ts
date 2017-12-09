@@ -5,12 +5,13 @@ import {
     LatLng,
     LatLngBounds,
     LatLngExpression,
+    LayerGroupProvider,
     lng2lat,
     MapComponent,
+    MapProvider,
     PopupDirective,
     RectangleDirective,
     TooltipDirective,
-    YagaLayerGroup,
 } from './index';
 import { createPathTests } from './path-directives.spec';
 import { randomLatLng, randomLatLngBounds, randomNumber } from './spec';
@@ -21,7 +22,11 @@ describe('Rectangle Directive', () => {
     let map: MapComponent;
     let layer: RectangleDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();

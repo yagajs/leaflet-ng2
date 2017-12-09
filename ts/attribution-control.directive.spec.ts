@@ -4,8 +4,9 @@ import { point } from 'leaflet';
 import {
     AttributionControlDirective,
     ControlPosition,
+    LayerGroupProvider,
     MapComponent,
-    YagaLayerGroup,
+    MapProvider,
 } from './index';
 import { randomNumber } from './spec';
 
@@ -13,10 +14,14 @@ describe('Attribution-Control Directive', () => {
     let map: MapComponent;
     let control: AttributionControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        control = new AttributionControlDirective(map);
+        control = new AttributionControlDirective({ ref: map });
     });
 
     describe('[(display)]', () => {

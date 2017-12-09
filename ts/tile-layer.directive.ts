@@ -20,7 +20,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
-import { YagaLayerGroup } from './layer-group.provider';
+import { LayerGroupProvider } from './layer-group.provider';
 
 /**
  * Angular2 directive for Leaflet tile-layers.
@@ -226,7 +226,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        groupLayer: YagaLayerGroup,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL);
@@ -238,7 +238,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(groupLayer.handle);
+        this.addTo(layerGroupProvider.ref);
 
         // Events
         this.on('add', (event: Event) => {

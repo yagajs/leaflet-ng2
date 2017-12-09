@@ -4,12 +4,13 @@ import { latLng, point, SVG } from 'leaflet';
 import {
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     lng2lat,
     MapComponent,
+    MapProvider,
     PolygonDirective,
     PopupDirective,
     TooltipDirective,
-    YagaLayerGroup,
 } from './index';
 import { createPathTests } from './path-directives.spec';
 import { randomNumber } from './spec';
@@ -21,7 +22,11 @@ describe('Polygon Directive', () => {
     let layer: PolygonDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')}, new YagaLayerGroup());
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();

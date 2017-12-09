@@ -15,6 +15,7 @@ import {
     Map,
 } from 'leaflet';
 import { MapComponent } from './map.component';
+import { MapProvider } from './map.provider';
 import { enhanceMouseEvent } from './mouse-event-helper';
 
 /**
@@ -121,10 +122,10 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        mapProvider: MapProvider,
     ) {
         super();
-        mapComponent.addControl(this);
+        mapProvider.ref.addControl(this);
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {

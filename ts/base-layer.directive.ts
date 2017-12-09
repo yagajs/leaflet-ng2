@@ -36,13 +36,13 @@ export class BaseLayerDirective implements OnDestroy  {
         protected layer: YagaLayer,
         @Attribute('yaga-base-layer') public readonly name: string,
     ) {
-        // this.layersControl.addBaseLayer(this.layer.handle, name);
+        // this.layersControl.addBaseLayer(this.layer.ref, name);
     }
 
     /**
      * Internal method to provide the removal from the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        // this.layersControl.removeLayer(this.layer.handle);
+        // this.layersControl.removeLayer(this.layer.ref);
     }
 }
