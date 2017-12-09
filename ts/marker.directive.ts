@@ -1,6 +1,5 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
     Input,
