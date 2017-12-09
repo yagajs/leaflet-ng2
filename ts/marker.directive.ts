@@ -1,10 +1,7 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
@@ -23,15 +20,12 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
-import { MapComponent } from './map.component';
-
-// Content-Child imports
-import { DivIconDirective } from './div-icon.directive';
-import { IconDirective } from './icon.directive';
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
+import { MarkerProvider } from './marker.provider';
 
 @Directive({
+    providers: [ LayerProvider, MarkerProvider ],
     selector: 'yaga-marker',
 })
 export class MarkerDirective extends Marker implements AfterContentInit, OnDestroy {
@@ -65,18 +59,17 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     @Output('mouseout') public mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
-    @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-    @ContentChild(IconDirective) public iconDirective: IconDirective;
-    @ContentChild(DivIconDirective) public divIconDirective: DivIconDirective;
-
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
+        markerProvider: MarkerProvider,
     ) {
         super([0, 0]);
-        mapComponent.addLayer(this);
+        layerProvider.ref = this;
+        markerProvider.ref = this;
+        layerGroupProvider.ref.addLayer(this);
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -160,23 +153,6 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
 
     public ngAfterContentInit(): void {
         this.initialized = true; // Otherwise lng gets overwritten to 0
-        if (this.iconDirective) {
-            this.setIcon(this.iconDirective);
-            this.iconDirective.updateEvent.subscribe((event: LeafletEvent) => {
-                this.setIcon(event.target);
-            });
-        } else if (this.divIconDirective) {
-            this.setIcon(this.divIconDirective);
-            this.divIconDirective.updateEvent.subscribe((event: LeafletEvent) => {
-                this.setIcon(event.target);
-            });
-        }
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     public ngOnDestroy(): void {

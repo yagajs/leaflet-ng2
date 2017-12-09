@@ -1,16 +1,12 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     FillRule,
     LatLng,
@@ -19,7 +15,6 @@ import {
     LatLngBoundsLiteral,
     LatLngExpression,
     LatLngTuple,
-    LeafletEvent,
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
@@ -29,13 +24,9 @@ import {
     Rectangle,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
-import HTML = Mocha.reporters.HTML;
 
 @Directive({
     selector: 'yaga-rectangle',
@@ -65,7 +56,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     @Output() public southChange: EventEmitter<number> = new EventEmitter();
     @Output() public westChange: EventEmitter<number> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<Event> = new EventEmitter();
@@ -81,13 +72,10 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
     ) {
         super(latLngBounds([0, 0], [0, 0]));
 
@@ -101,7 +89,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {
@@ -144,12 +132,6 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     public ngOnDestroy(): void {
@@ -255,7 +237,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         return (this as any)._latlngs;
     }
 
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -266,8 +248,8 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
         }
         this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
     }
 
     public setStyle(style: PathOptions): this {

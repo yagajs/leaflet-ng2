@@ -25,3 +25,4 @@ require('../lib/circle-marker.directive.spec');
 require('../lib/zoom-control.directive.spec');
 require('../lib/attribution-control.directive.spec');
 require('../lib/scale-control.directive.spec');
+require('../lib/layers-control.directive.spec');

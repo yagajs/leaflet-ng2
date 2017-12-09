@@ -1,11 +1,13 @@
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, point, SVG } from 'leaflet';
 import {
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     lng2lat,
     MapComponent,
+    MapProvider,
     PolygonDirective,
     PopupDirective,
     TooltipDirective,
@@ -20,12 +22,16 @@ describe('Polygon Directive', () => {
     let layer: PolygonDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolygonDirective<any> (map);
+        layer = new PolygonDirective<any> ({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -177,7 +183,7 @@ describe('Polygon Directive', () => {
 
     describe('[(geoJSON)]', () => {
         describe('for Polygon', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Polygon, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.Polygon, any> = {
                 geometry: {
                     coordinates: [[[0, 1], [1, 1], [0, 0], [0, 1]]],
                     type: 'Polygon',
@@ -227,7 +233,7 @@ describe('Polygon Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     expect(lng2lat((eventVal.geometry.coordinates as any))).to.deep.equal(TEST_POLYGON);
                     return done();
                 });
@@ -236,7 +242,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_POLYGON);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Polygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
@@ -249,7 +255,7 @@ describe('Polygon Directive', () => {
             });
         });
         describe('for MultiPolygon', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.MultiPolygon, any> = {
                 geometry: {
                     coordinates: [
                         [[[1, 0], [1, 1], [0, 1], [1, 0]]],
@@ -323,7 +329,7 @@ describe('Polygon Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTIPOLYGON);
                     return done();
                 });
@@ -332,7 +338,7 @@ describe('Polygon Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: Array<Array<Array<[number, number]>>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][0][3][0] !== 3 ||
@@ -375,7 +381,7 @@ describe('Polygon Directive', () => {
             expect(layer.properties).to.equal(TEST_OBJECT);
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(val.properties).to.equal(TEST_OBJECT);
                 return done();
             });
@@ -409,11 +415,8 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolygonDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterContentInit();
+            layerWithPopup = new PolygonDirective<any> ({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -426,11 +429,8 @@ describe('Polygon Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolygonDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new PolygonDirective<any> ({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);

@@ -3,15 +3,15 @@ import { point } from 'leaflet';
 import {
     ControlPosition,
     LayerGroupProvider,
+    LayersControlDirective,
     MapComponent,
     MapProvider,
-    ZoomControlDirective,
 } from './index';
 import { randomNumber } from './spec';
 
-describe('Zoom-Control Directive', () => {
+describe('Layers-Control Directive', () => {
     let map: MapComponent;
-    let control: ZoomControlDirective;
+    let control: LayersControlDirective;
     beforeEach(() => {
         map = new MapComponent(
             {nativeElement: document.createElement('div')},
@@ -20,8 +20,9 @@ describe('Zoom-Control Directive', () => {
         );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        control = new ZoomControlDirective({ ref: map });
+        control = new LayersControlDirective({ ref: map }, {} as any);
     });
+
     describe('[(display)]', () => {
         it('should set DOM container style to display:none when not displaying', () => {
             control.display = false;
@@ -93,18 +94,6 @@ describe('Zoom-Control Directive', () => {
             control.setPosition(val);
         });
     });
-    describe('[opacity]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = randomNumber();
-            control.opacity = val;
-            expect(control.getContainer().style.opacity).to.equal(val.toString());
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: number = randomNumber();
-            control.opacity = val;
-            expect(control.opacity).to.equal(val);
-        });
-    });
     describe('[zIndex]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = randomNumber(255, 1, 0);
@@ -115,56 +104,6 @@ describe('Zoom-Control Directive', () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
             expect(control.zIndex).to.equal(val);
-        });
-    });
-
-    describe('[zoomInText]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            expect(control.options.zoomInText).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomInButton as HTMLElement).textContent).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomInText = TEST_VALUE;
-            expect(control.zoomInText).to.equal(TEST_VALUE);
-        });
-    });
-    describe('[zoomOutText]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomOutText = TEST_VALUE;
-            expect(control.options.zoomOutText).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomOutButton as HTMLElement).textContent).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomOutText = TEST_VALUE;
-            expect(control.zoomOutText).to.equal(TEST_VALUE);
-        });
-    });
-
-    describe('[zoomInTitle]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomInTitle = TEST_VALUE;
-            expect(control.options.zoomInTitle).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomInButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomInTitle = TEST_VALUE;
-            expect(control.zoomInTitle).to.equal(TEST_VALUE);
-        });
-    });
-    describe('[zoomOutTitle]', () => {
-        const TEST_VALUE: string = 'test-caption';
-        it('should be changed in Leaflet when changing in Angular', () => {
-            control.zoomOutTitle = TEST_VALUE;
-            expect(control.options.zoomOutTitle).to.equal(TEST_VALUE);
-            expect(((control as any)._zoomOutButton as HTMLElement).getAttribute('title')).to.equal(TEST_VALUE);
-        });
-        it('should be changed in Angular when changing in Angular', () => {
-            control.zoomOutTitle = TEST_VALUE;
-            expect(control.zoomOutTitle).to.equal(TEST_VALUE);
         });
     });
 
@@ -254,7 +193,20 @@ describe('Zoom-Control Directive', () => {
         });
     });
 
-    describe('Destroying a Zoom Control Directive', () => {
+    describe('[opacity]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber();
+            control.opacity = val;
+            expect(control.getContainer().style.opacity).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber();
+            control.opacity = val;
+            expect(control.opacity).to.equal(val);
+        });
+    });
+
+    describe('Destroying a Scale Control Directive', () => {
         it('should remove Tile-Layer Directive from map on destroy', () => {
             /* istanbul ignore if */
             if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
@@ -271,4 +223,5 @@ describe('Zoom-Control Directive', () => {
             }
         });
     });
+
 });

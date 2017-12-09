@@ -1,12 +1,14 @@
-import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
 import { expect } from 'chai';
-import {Layer, Marker, PathOptions, point, SVG} from 'leaflet';
+import { Feature as GeoJSONFeature, FeatureCollection as GeoJSONFeatureCollection } from 'geojson';
+import { Layer, Marker, PathOptions, point, SVG } from 'leaflet';
 import {
     DEFAULT_STYLE,
     GeoJSONDirective,
     IGeoJSONDirectiveMiddlewareDictionary,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
@@ -15,14 +17,18 @@ describe('GeoJSON Directive', () => {
     let map: MapComponent;
     let layer: GeoJSONDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new GeoJSONDirective(map);
+        layer = new GeoJSONDirective({ ref: map }, new LayerGroupProvider(), {} as any);
     });
-    const TEST_VALUE: GenericGeoJSONFeatureCollection<GeoJSON.GeometryObject, any> = {
+    const TEST_VALUE: GeoJSONFeatureCollection<GeoJSON.Point, any> = {
         features: [
             {
                 geometry: {
@@ -66,7 +72,7 @@ describe('GeoJSON Directive', () => {
             layer.data = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -75,7 +81,7 @@ describe('GeoJSON Directive', () => {
         });
         it('should fire an event when adding in Leaflet', (done: MochaDone) => {
             layer.ngAfterContentInit();
-            layer.dataChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+            layer.dataChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -97,7 +103,7 @@ describe('GeoJSON Directive', () => {
             expect(layer.filter).to.equal(FILTER_FN);
         });
         it('should use the filter function when adding data', (done: MochaDone) => {
-            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+            const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
                     type: 'Point',
@@ -106,7 +112,7 @@ describe('GeoJSON Directive', () => {
                 type: 'Feature',
             };
             /* tslint:disable:max-line-length */
-            layer.filter = (elem: GenericGeoJSONFeature<GeoJSON.Point, any>): boolean => {
+            layer.filter = (elem: GeoJSONFeature<GeoJSON.Point, any>): boolean => {
                 expect(elem).to.equal(TEST_POINT);
                 done();
                 return true;
@@ -121,7 +127,7 @@ describe('GeoJSON Directive', () => {
 
     describe('[pointToLayer]', () => {
         /* istanbul ignore next */
-        const POINT_TO_LAYER_FN: any = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
+        const POINT_TO_LAYER_FN: any = (feature: GeoJSONFeature<GeoJSON.Point, any>): Layer => {
             return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
         };
         it('should be changed in Leaflet when changing in Angular', () => {
@@ -134,7 +140,7 @@ describe('GeoJSON Directive', () => {
             expect(layer.pointToLayer).to.equal(POINT_TO_LAYER_FN);
         });
         it('should use the filter function when adding data', (done: MochaDone) => {
-            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+            const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
                     type: 'Point',
@@ -142,7 +148,7 @@ describe('GeoJSON Directive', () => {
                 properties: {},
                 type: 'Feature',
             };
-            layer.pointToLayer = (feature: GenericGeoJSONFeature<GeoJSON.Point, any>): Layer => {
+            layer.pointToLayer = (feature: GeoJSONFeature<GeoJSON.Point, any>): Layer => {
                 expect(feature).to.equal(TEST_POINT);
                 done();
                 return new Marker({lat: feature.geometry.coordinates[1], lng: feature.geometry.coordinates[0]});
@@ -157,7 +163,7 @@ describe('GeoJSON Directive', () => {
     describe('[styler]', () => {
         /* istanbul ignore next */
         const STYLER_FN: any = (
-            feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+            feature: GeoJSONFeature<GeoJSON.Point, any>,
             defaultStyle: PathOptions,
         ): PathOptions => {
             return {};
@@ -172,7 +178,7 @@ describe('GeoJSON Directive', () => {
             expect(layer.styler).to.equal(STYLER_FN);
         });
         it('should use the filter function when adding data', (done: MochaDone) => {
-            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+            const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
                     type: 'Point',
@@ -182,7 +188,7 @@ describe('GeoJSON Directive', () => {
             };
             /* tslint:disable:max-line-length */
             layer.styler = (
-                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(feature).to.equal(TEST_POINT);
@@ -215,7 +221,7 @@ describe('GeoJSON Directive', () => {
             expect(layer.defaultStyle).to.equal(NEW_DEFAULT_STYLE);
         });
         it('should use the default style from consts as fallback in the styler function', (done: MochaDone) => {
-            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+            const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
                     type: 'Point',
@@ -224,7 +230,7 @@ describe('GeoJSON Directive', () => {
                 type: 'Feature',
             };
             layer.styler = (
-                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(defaultStyle).to.equal(DEFAULT_STYLE);
@@ -237,7 +243,7 @@ describe('GeoJSON Directive', () => {
             };
         });
         it('should use the given default style in the styler function', (done: MochaDone) => {
-            const TEST_POINT: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+            const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
                     type: 'Point',
@@ -246,7 +252,7 @@ describe('GeoJSON Directive', () => {
                 type: 'Feature',
             };
             layer.styler = (
-                feature: GenericGeoJSONFeature<GeoJSON.Point, any>,
+                feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(defaultStyle).to.equal(NEW_DEFAULT_STYLE);
@@ -379,13 +385,10 @@ describe('GeoJSON Directive', () => {
         let puLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            puLayer = Object.create(new GeoJSONDirective<any> (map), { popupDirective: {value: popup} });
+            puLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: puLayer });
         });
         it('should bind popup', () => {
-            puLayer.ngAfterContentInit();
             expect((puLayer as any)._popup).to.equal(popup);
         });
     });
@@ -396,15 +399,11 @@ describe('GeoJSON Directive', () => {
         let ttLayer: GeoJSONDirective<any>;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            ttLayer = Object.create(new GeoJSONDirective<any> (map), { tooltipDirective: {value: tooltip} });
+            ttLayer = new GeoJSONDirective<any> ({ ref: map }, new LayerGroupProvider(), {} as any);
+            tooltip = new TooltipDirective({ ref: ttLayer }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
-            ttLayer.ngAfterContentInit();
-            expect(ttLayer.tooltipDirective).to.equal(tooltip);
-            // expect((<any> layer)._tooltip).to.equal(tooltip);
+            expect((ttLayer as any)._tooltip).to.equal(tooltip);
         });
     });
 
