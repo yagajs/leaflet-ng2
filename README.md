@@ -72,6 +72,7 @@ After that you should be able to use the following directives or components:
 * `yaga-geojson`
 * `yaga-icon`
 * `yaga-image-overlay`
+* `yaga-layers-control` with `[yaga-base-layer]` and `[yaga-overlay-layer]`
 * `yaga-marker`
 * `yaga-polygon`
 * `yaga-polyline`
