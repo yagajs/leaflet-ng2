@@ -6,7 +6,7 @@
 
 YAGA leaflet-ng2 is a granular implementation of the popular [Leaflet](http://leafletjs.com/) framework into the model
 view view controller (MVVC) of [Angular2](https://angular.io/) and it is fully compatible with the newest version of
-Angular 4. It provides a directive for every Leaflet class that belongs to the user interface by inheriting the original
+Angular 5. It provides a directive for every Leaflet class that belongs to the user interface by inheriting the original
 Leaflet class and enhancing it with the decorators of Angular and glue-code. With this approach the directives are still
 extensible and it is possible to write the structure of an app in a descriptive way in a well known markup language,
 HTML5. This is why you mainly need HTML skills for creating a template based geo-app with leaflet-ng2.
@@ -69,9 +69,11 @@ After that you should be able to use the following directives or components:
 * `yaga-circle`
 * `yaga-circle-marker`
 * `yaga-div-icon`
+* `yaga-feature-group`
 * `yaga-geojson`
 * `yaga-icon`
 * `yaga-image-overlay`
+* `yaga-layer-group`
 * `yaga-layers-control` with `[yaga-base-layer]` and `[yaga-overlay-layer]`
 * `yaga-marker`
 * `yaga-polygon`
@@ -183,6 +185,60 @@ export class AppComponent implements AfterViewInit {
 
 *For further information, take a look at the
 [according issue on GitHub](https://github.com/yagajs/leaflet-ng2/issues/251)*
+
+#### Write as a YAGA Module
+
+To write an existing extension as a YAGA directive is made as easy as possible. Your Leaflet-Plugin of choice should
+already have a TypeScript type-definition. At first take a look which Leaflet base-class your Leaflet-Plugin of choice
+implements. Than copy the implementation and software-tests of the according base-class in this repository and enhance
+it accordingly to the given schema.
+
+#### List of providers
+
+* `MapProvider` - Inject this provider for classes that have to interact with the `Map` class and not with a
+`LayerGroup`. `Controls` typically use the `MapProvider`
+* `LayerGroupProvider` - Inject this provider for classes that implements `Layers`. Note that the `Map` also provides
+a `LayerGroupProvider`, but it is `@Root` and you are not able to request a higher one in the dependency-chain.
+* `LayerProvider` - Every class that implements `Layer` should have a `LayerProvider` to give for example `Popup`s the
+possibility to get access to this.
+* `MarkerProvider` - Use this to add `Icon`s.
+
+#### Example
+
+Every class that extends a layer in Leaflet must provide a `LayerProvider`. Layers in Leaflet needs typically a `Map` or
+`LayerGroup` to have the possibility to add it to that (`layer.addTo(MapOrLayerGroup)`). So every instance of a
+`LayerGroup` must provide a `LayerGroupProvider`.
+
+With the information of the above mentioned architecture, you have to implement a `LayerGroupDirective` (which is
+extended from Leaflet's `LayerGroup` class, which is - in turn - extended from Leaflet's `Layer`) like this:
+
+```typescript
+import { Directive, SkipSelf } from '@angular/core';
+import { LayerGroupProvider, LayerProvider } from '@yaga/leaflet-ng2';
+import { FeatureGroup } from 'leaflet';
+
+@Directive({
+    providers: [ LayerGroupProvider, LayerProvider ], // Provide a new Layer and LayerGroup
+    selector: 'yaga-feature-group',
+})
+export class FeatureGroupDirective extends FeatureGroup {
+
+    constructor(
+        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider, // Use SkipSelf to access the parent provider
+        layerGroupProvider: LayerGroupProvider, // Import new Provider to reference this class
+        layerProvider: LayerProvider, // Import new Provider to reference this class
+    ) {
+        super();
+
+        layerProvider.ref = this; // Reference this class to created provider
+        layerGroupProvider.ref = this; // Reference this class to created provider
+
+        this.addTo(parentLayerGroupProvider.ref); // Add it to parent LayerGroup (which can also be a map)
+    }
+}
+```
+
+
 
 ## Scripts Tasks
 
