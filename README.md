@@ -85,7 +85,7 @@ After that you should be able to use the following directives or components:
 * `yaga-tooltip`
 * `yaga-zoom-control`
 
-![Structure of the leaflet-ng2 directives](directive-structure.svg)
+![Structure of the leaflet-ng2 directives](directive-structure.png)
 
 For further information look at the [api documentation](https://leaflet-ng2.yagajs.org/latest/typedoc/) or the
 [examples](https://leaflet-ng2.yagajs.org/latest/examples/).
