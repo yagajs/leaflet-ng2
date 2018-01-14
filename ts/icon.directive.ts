@@ -161,20 +161,22 @@ export class IconDirective extends Icon  {
     public get popupAnchor(): Point {
         return (this.options.popupAnchor as Point);
     }
-    // We have to wait for adding the definition for tooltipAnchor
-    // see: https://github.com/yagajs/leaflet-ng2/issues/220#issuecomment-307634276
-    //
-    // @Input() public set tooltipAnchor(val: Point) {
-    //     this.options.tooltipAnchor = val;
-    //     this.markerProvider.ref.setIcon(this);
-    // this.updateEvent.emit({
-    //         target: this,
-    //         type: 'update',
-    //     });
-    // }
-    // public get tooltipAnchor(): Point {
-    //     return (<Point> this.options.popupAnchor);
-    // }
+    /**
+     * Input for the tooltip-anchor.
+     * Use it with `<yaga-icon [tooltipAnchor]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#icon-tooltipanchor Original Leaflet documentation
+     */
+    @Input() public set tooltipAnchor(val: Point) {
+        this.options.tooltipAnchor = val;
+        this.markerProvider.ref.setIcon(this);
+        this.updateEvent.emit({
+            target: this,
+            type: 'update',
+        });
+    }
+    public get tooltipAnchor(): Point {
+        return this.options.tooltipAnchor as Point;
+    }
     /**
      * Input for the shadow-url.
      * Use it with `<yaga-icon [shadowUrl]="someValue">`
