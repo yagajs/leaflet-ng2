@@ -22,6 +22,8 @@ require('../lib/rectangle.directive.spec');
 require('../lib/geojson.directive.spec');
 require('../lib/circle.directive.spec');
 require('../lib/circle-marker.directive.spec');
+require('../lib/layer-group.directive.spec');
+require('../lib/feature-group.directive.spec');
 require('../lib/zoom-control.directive.spec');
 require('../lib/attribution-control.directive.spec');
 require('../lib/scale-control.directive.spec');

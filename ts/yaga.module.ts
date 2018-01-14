@@ -5,9 +5,11 @@ import { BaseLayerDirective } from './base-layer.directive';
 import { CircleMarkerDirective } from './circle-marker.directive';
 import { CircleDirective } from './circle.directive';
 import { DivIconDirective } from './div-icon.directive';
+import { FeatureGroupDirective } from './feature-group.directive';
 import { GeoJSONDirective } from './geojson.directive';
 import { IconDirective } from './icon.directive';
 import { ImageOverlayDirective } from './image-overlay.directive';
+import { LayerGroupDirective } from './layer-group.directive';
 import { LayersControlDirective } from './layers-control.directive';
 import { MapComponent } from './map.component';
 import { MarkerDirective } from './marker.directive';
@@ -43,9 +45,11 @@ import { ZoomControlDirective } from './zoom-control.directive';
         CircleMarkerDirective,
         CircleDirective,
         DivIconDirective,
+        FeatureGroupDirective,
         GeoJSONDirective,
         IconDirective,
         ImageOverlayDirective,
+        LayerGroupDirective,
         LayersControlDirective,
         MapComponent,
         MarkerDirective,
@@ -66,9 +70,11 @@ import { ZoomControlDirective } from './zoom-control.directive';
         CircleMarkerDirective,
         CircleDirective,
         DivIconDirective,
+        FeatureGroupDirective,
         GeoJSONDirective,
         IconDirective,
         ImageOverlayDirective,
+        LayerGroupDirective,
         LayersControlDirective,
         MapComponent,
         MarkerDirective,
