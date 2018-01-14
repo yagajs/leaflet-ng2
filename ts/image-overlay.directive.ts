@@ -22,6 +22,7 @@ import { LayerGroupProvider } from './layer-group.provider';
 import { LayerProvider } from './layer.provider';
 
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-image-overlay',
 })
 export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
