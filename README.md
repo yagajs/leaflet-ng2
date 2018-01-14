@@ -198,7 +198,7 @@ it accordingly to the given schema.
 * `MapProvider` - Inject this provider for classes that have to interact with the `Map` class and not with a
 `LayerGroup`. `Controls` typically use the `MapProvider`
 * `LayerGroupProvider` - Inject this provider for classes that implements `Layers`. Note that the `Map` also provides
-a `LayerGroupProvider`, but it is `@Root` and you are not able to request a higher one in the dependency-chain.
+a `LayerGroupProvider`, but it is `@Host` and you are not able to request a higher one in the dependency-chain.
 * `LayerProvider` - Every class that implements `Layer` should have a `LayerProvider` to give for example `Popup`s the
 possibility to get access to this.
 * `MarkerProvider` - Use this to add `Icon`s.
