@@ -1,16 +1,19 @@
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, point, SVG } from 'leaflet';
 import {
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PolylineDirective,
     PopupDirective,
     TooltipDirective,
 } from './index';
 import { lng2lat } from './lng2lat';
 import { createPathTests } from './path-directives.spec';
+import { randomNumber } from './spec';
 
 describe('Polyline Directive', () => {
     createPathTests(PolylineDirective);
@@ -19,14 +22,49 @@ describe('Polyline Directive', () => {
     let layer: PolylineDirective<any>;
 
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new PolylineDirective<any> (map);
+        layer = new PolylineDirective<any> ({ ref: map }, {} as any);
     });
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            layer.display = false;
+            expect((layer.getElement() as HTMLElement).style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            layer.display = false;
+            layer.display = true;
+            expect((layer.getElement() as HTMLElement).style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(layer.display).to.equal(false);
+                done();
+            });
+
+            map.removeLayer(layer);
+        });
+        it('should set to true when adding to map again', (done: MochaDone) => {
+            map.removeLayer(layer);
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(true);
+                expect(layer.display).to.equal(true);
+                done();
+            });
+
+            map.addLayer(layer);
+        });
+    });
     describe('[(latlngs)]', () => {
         describe('for LineStrings', () => {
             const TEST_VALUE: LatLng[] = [latLng(0, 1), latLng(1, 1), latLng(1, 0)];
@@ -151,7 +189,7 @@ describe('Polyline Directive', () => {
 
     describe('[(geoJSON)]', () => {
         describe('for LineString', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.LineString, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.LineString, any> = {
                 geometry: {
                     coordinates: [[0, 1], [1, 1], [0, 0]],
                     type: 'LineString',
@@ -206,7 +244,7 @@ describe('Polyline Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_LINESTRING);
                     return done();
                 });
@@ -215,7 +253,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_LINESTRING);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.LineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                     const values: Array<[number, number]> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[3][0] !== 3 ||
@@ -228,7 +266,7 @@ describe('Polyline Directive', () => {
             });
         });
         describe('for MultiLineString', () => {
-            const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.MultiLineString, any> = {
+            const TEST_VALUE: GeoJSONFeature<GeoJSON.MultiLineString, any> = {
                 geometry: {
                     coordinates: [
                         [[1, 0], [1, 1], [0, 1]],
@@ -302,7 +340,7 @@ describe('Polyline Directive', () => {
                 layer.geoJSON = TEST_VALUE;
             });
             it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTILINESTRING);
                     return done();
                 });
@@ -311,7 +349,7 @@ describe('Polyline Directive', () => {
             });
             it('should fire an event when adding in Leaflet', (done: MochaDone) => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
-                layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.MultiLineString, any>) => {
+                layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
                     /* istanbul ignore if */
                     if (values[0][3][0] !== 3 ||
@@ -327,7 +365,7 @@ describe('Polyline Directive', () => {
 
     describe('[smoothFactor]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 0, 0);
             layer.smoothFactor = val;
             /* istanbul ignore if */
             if (layer.options.smoothFactor !== val) {
@@ -335,7 +373,7 @@ describe('Polyline Directive', () => {
             }
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 10);
+            const val: number = randomNumber(10, 0, 0);
             layer.smoothFactor = val;
             /* istanbul ignore if */
             if (layer.smoothFactor !== val) {
@@ -353,7 +391,7 @@ describe('Polyline Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> (map);
+            layerWithPropertiesInterface = new PolylineDirective<ITestProperties> ({ ref: map }, {} as any);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithPropertiesInterface.properties = TEST_OBJECT;
@@ -373,7 +411,7 @@ describe('Polyline Directive', () => {
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             layerWithPropertiesInterface.geoJSONChange.subscribe(
-                (val: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+                (val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     /* istanbul ignore if */
                     if (val.properties !== TEST_OBJECT) {
                         return done(new Error('Wrong value received'));
@@ -423,11 +461,8 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new PolylineDirective<any> (map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterViewInit();
+            layerWithPopup = new PolylineDirective<any> ({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             /* istanbul ignore if */
@@ -447,11 +482,8 @@ describe('Polyline Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new PolylineDirective<any> (map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterViewInit();
+            layerWithTooltip = new PolylineDirective<any> ({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             /* istanbul ignore if */

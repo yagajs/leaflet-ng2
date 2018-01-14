@@ -1,22 +1,62 @@
 import { expect } from 'chai';
 import { point } from 'leaflet';
-
 import {
     AttributionControlDirective,
     ControlPosition,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
 } from './index';
+import { randomNumber } from './spec';
 
 describe('Attribution-Control Directive', () => {
     let map: MapComponent;
     let control: AttributionControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        control = new AttributionControlDirective(map);
+        control = new AttributionControlDirective({ ref: map });
     });
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            control.display = false;
+            expect(control.getContainer().style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            control.display = false;
+            control.display = true;
+            expect(control.getContainer().style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            control.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(control.display).to.equal(false);
+                done();
+            });
+
+            map.removeControl(control);
+        });
+        // it.skip('should set to true when adding to map again', (done: MochaDone) => {
+        //     /* tslint:disable */
+        //     control.displayChange.subscribe((x) => { console.log('aslkdnasnldknaskldnlkd ', x); });
+        //     map.removeControl(control);
+        //     setTimeout(() => {
+        //         control.displayChange.subscribe((val: boolean) => {
+        //             expect(val).to.equal(true);
+        //             expect(control.display).to.equal(true);
+        //             done();
+        //         });
+        //         map.addControl(control);
+        //     }, 0);
+        // });
+    });
     describe('[(position)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
@@ -94,17 +134,76 @@ describe('Attribution-Control Directive', () => {
             control.setPrefix(val);
         });
     });
+    describe('[(attributions)]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: string[] = ['first', 'second'];
+            control.attributions = val;
+            expect(Object.keys((control as any)._attributions)).to.deep.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: string[] = ['first', 'second'];
+            control.attributions = val;
+            expect(control.attributions).to.deep.equal(val);
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            control.addAttribution('first');
+            expect(control.attributions).to.deep.equal(['first']);
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: string[] = ['first', 'second'];
+            control.attributionsChange.subscribe((eventVal: string[]) => {
+                expect(eventVal).to.deep.equal(val);
+                done();
+            });
+            control.attributions = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: string[] = ['first'];
+            control.attributionsChange.subscribe((eventVal: ControlPosition) => {
+                expect(eventVal).to.deep.equal(val);
+                done();
+            });
+
+            control.addAttribution('first');
+        });
+        it('should be changed to a new value', () => {
+            control.attributions = ['first'];
+            control.attributions = ['second'];
+            expect(control.attributions).to.deep.equal(['second']);
+        });
+    });
+    describe('.removeAllAttributions()', () => {
+        it('should emit a event emitter when it is not in silent mode', (done: MochaDone) => {
+            control.attributionsChange.subscribe((eventVal: string[]) => {
+                expect(eventVal).to.deep.equal([]);
+                done();
+            });
+            control.removeAllAttributions();
+        });
+    });
 
     describe('[opacity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber();
             control.opacity = val;
             expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber();
             control.opacity = val;
             expect(control.opacity).to.equal(val);
+        });
+    });
+    describe('[zIndex]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.getContainer().style.zIndex).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.zIndex).to.equal(val);
         });
     });
 

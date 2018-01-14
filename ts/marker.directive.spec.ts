@@ -1,14 +1,17 @@
 import { expect } from 'chai';
-import { latLng, point } from 'leaflet';
+import { point } from 'leaflet';
 import {
     IconDirective,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     MarkerDirective,
     PopupDirective,
     TooltipDirective,
     TRANSPARENT_PIXEL,
 } from './index';
+import { randomLat, randomLatLng, randomLng, randomNumber } from './spec';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -26,10 +29,14 @@ describe('Marker Directive', () => {
     let map: MapComponent;
     let layer: MarkerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective(map);
+        layer = new MarkerDirective({ ref: map }, {} as any, {} as any);
     });
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
@@ -99,22 +106,22 @@ describe('Marker Directive', () => {
     });
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.options.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.setOpacity(val);
             expect(layer.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -124,7 +131,7 @@ describe('Marker Directive', () => {
             layer.opacity = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -140,22 +147,22 @@ describe('Marker Directive', () => {
             layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.lat = val;
             expect(layer.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.lat = val;
             expect(layer.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.setLatLng([val, 0]);
             expect(layer.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -165,7 +172,7 @@ describe('Marker Directive', () => {
             layer.lat = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -180,22 +187,22 @@ describe('Marker Directive', () => {
             layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.lng = val;
             expect(layer.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.lng = val;
             expect(layer.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.setLatLng([0, val]);
             expect(layer.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -205,7 +212,7 @@ describe('Marker Directive', () => {
             layer.lng = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -220,22 +227,22 @@ describe('Marker Directive', () => {
             layer.ngAfterContentInit();
         });
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             layer.position = val;
             expect(layer.getLatLng()).to.deep.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             layer.position = val;
             expect(layer.position).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
             layer.setLatLng(val);
             expect(layer.position).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.deep.equal(val);
@@ -245,7 +252,7 @@ describe('Marker Directive', () => {
             layer.position = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: LatLng = latLng(Math.random() * 100 - 50, Math.random() * 100 - 50);
+            const val: LatLng = randomLatLng();
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.deep.equal(val);
@@ -498,10 +505,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            layerWithPopup = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            popup = new PopupDirective({nativeElement: document.createElement('div')}, { ref: layerWithPopup });
 
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -515,11 +521,8 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
@@ -533,11 +536,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            icon = new IconDirective();
+            layerWithIcon = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            icon = new IconDirective({ ref: layerWithIcon });
             icon.iconUrl = TRANSPARENT_PIXEL;
-
-            // Hack to get write-access to readonly property
-            layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
 
             layerWithIcon.ngAfterContentInit();
         });

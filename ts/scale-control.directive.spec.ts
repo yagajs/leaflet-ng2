@@ -2,20 +2,61 @@ import { expect } from 'chai';
 import { point } from 'leaflet';
 import {
     ControlPosition,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     ScaleControlDirective,
 } from './index';
+import { randomNumber } from './spec';
 
 describe('Scale-Control Directive', () => {
     let map: MapComponent;
     let control: ScaleControlDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        control = new ScaleControlDirective(map);
+        control = new ScaleControlDirective({ ref: map });
     });
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            control.display = false;
+            expect(control.getContainer().style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            control.display = false;
+            control.display = true;
+            expect(control.getContainer().style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            control.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(control.display).to.equal(false);
+                done();
+            });
+
+            map.removeControl(control);
+        });
+        // it.skip('should set to true when adding to map again', (done: MochaDone) => {
+        //     /* tslint:disable */
+        //     control.displayChange.subscribe((x) => { console.log('aslkdnasnldknaskldnlkd ', x); });
+        //     map.removeControl(control);
+        //     setTimeout(() => {
+        //         control.displayChange.subscribe((val: boolean) => {
+        //             expect(val).to.equal(true);
+        //             expect(control.display).to.equal(true);
+        //             done();
+        //         });
+        //         map.addControl(control);
+        //     }, 0);
+        // });
+    });
     describe('[(position)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: ControlPosition = 'topright';
@@ -51,6 +92,30 @@ describe('Scale-Control Directive', () => {
             });
 
             control.setPosition(val);
+        });
+    });
+    describe('[maxWidth]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.maxWidth = val;
+            expect(control.options.maxWidth).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.maxWidth = val;
+            expect(control.maxWidth).to.equal(val);
+        });
+    });
+    describe('[zIndex]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.getContainer().style.zIndex).to.equal(val.toString());
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(255, 1, 0);
+            control.zIndex = val;
+            expect(control.zIndex).to.equal(val);
         });
     });
 
@@ -142,12 +207,12 @@ describe('Scale-Control Directive', () => {
 
     describe('[opacity]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber();
             control.opacity = val;
             expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber();
             control.opacity = val;
             expect(control.opacity).to.equal(val);
         });

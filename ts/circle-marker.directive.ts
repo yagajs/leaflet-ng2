@@ -1,15 +1,12 @@
 import {
-    AfterViewInit,
-    ContentChild,
+    AfterContentInit,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     CircleMarker,
     CircleMarkerOptions,
@@ -25,14 +22,11 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
 /**
  * Angular2 directive for circle-markers of Leaflet.
  *
@@ -86,9 +80,10 @@ import { TooltipDirective } from './tooltip.directive';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/circle-marker-directive/
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-circle-marker',
 })
-export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterViewInit {
+export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterContentInit {
     /**
      * Two-Way bound property for the display status of the geometry.
      * Use it with `<yaga-circle-marker [(display)]="someValue">`
@@ -210,7 +205,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(geoJSON)]="someValue">`
      * or `<yaga-circle-marker (geoJSONChange)="processEvent($event)">`
      */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
@@ -285,21 +280,15 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    /**
-     * Imports a child popup directive if there is one defined
-     */
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    /**
-     * Imports a child tooltip directive if there is one defined
-     */
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     private initialized: boolean = false;
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([0, 0]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
@@ -311,7 +300,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -355,14 +344,8 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     /**
      * Internal method that provides the initialization of the child popup or tooltip
      */
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
     }
 
     /**
@@ -446,7 +429,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(geoJSON)]="someValue">` or `<yaga-circle-marker [geoJSONChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-togeojson Original Leaflet documentation
      */
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Point, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally 'Point'
@@ -457,8 +440,8 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         }
         this.setLatLng(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Point, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Point, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Point, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Point, T>);
     }
 
     /**

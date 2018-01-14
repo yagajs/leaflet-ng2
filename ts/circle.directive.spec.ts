@@ -1,31 +1,69 @@
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, point, SVG } from 'leaflet';
 import {
     CircleDirective,
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
 import { createPathTests } from './path-directives.spec';
+import { randomLat, randomLng, randomNumber } from './spec';
 
 describe('Circle Directive', () => {
     let map: MapComponent;
     let layer: CircleDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new CircleDirective<any>(map);
+        layer = new CircleDirective<any>({ref: map}, {} as any);
         layer.ngAfterContentInit();
     });
 
     createPathTests(CircleDirective);
 
+    describe('[(display)]', () => {
+        it('should set DOM container style to display:none when not displaying', () => {
+            layer.display = false;
+            expect((layer.getElement() as HTMLElement).style.display).to.equal('none');
+        });
+        it('should reset DOM container style when display is true again', () => {
+            layer.display = false;
+            layer.display = true;
+            expect((layer.getElement() as HTMLElement).style.display).to.not.equal('none');
+        });
+        it('should set to false by removing from map', (done: MochaDone) => {
+
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(false);
+                expect(layer.display).to.equal(false);
+                done();
+            });
+
+            map.removeLayer(layer);
+        });
+        it('should set to true when adding to map again', (done: MochaDone) => {
+            map.removeLayer(layer);
+            layer.displayChange.subscribe((val: boolean) => {
+                expect(val).to.equal(true);
+                expect(layer.display).to.equal(true);
+                done();
+            });
+
+            map.addLayer(layer);
+        });
+    });
     describe('[(position)]', () => {
         const TEST_VALUE: LatLng = latLng(0, 1);
 
@@ -73,22 +111,22 @@ describe('Circle Directive', () => {
 
     describe('[(lat)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.lat = val;
             expect(layer.getLatLng().lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.lat = val;
             expect(layer.lat).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
             layer.setLatLng([val, 0]);
             expect(layer.lat).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -98,7 +136,7 @@ describe('Circle Directive', () => {
             layer.lat = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -110,22 +148,22 @@ describe('Circle Directive', () => {
     });
     describe('[(lng)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.lng = val;
             expect(layer.getLatLng().lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.lng = val;
             expect(layer.lng).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
             layer.setLatLng([0, val]);
             expect(layer.lng).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -135,7 +173,7 @@ describe('Circle Directive', () => {
             layer.lng = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -146,24 +184,23 @@ describe('Circle Directive', () => {
         });
     });
     describe('[(radius)]', () => {
-        const TEST_VALUE: LatLng = latLng(0, 1);
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber(100);
             layer.radius = val;
             expect(layer.getRadius()).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber(100);
             layer.radius = val;
             expect(layer.radius).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber(100);
             layer.setRadius(val);
             expect(layer.radius).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -173,7 +210,7 @@ describe('Circle Directive', () => {
             layer.radius = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random() * 100;
+            const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -185,7 +222,7 @@ describe('Circle Directive', () => {
     });
 
     describe('[(geoJSON)]', () => {
-        const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+        const TEST_VALUE: GeoJSONFeature<GeoJSON.Point, any> = {
             geometry: {
                 coordinates: [1, 3],
                 type: 'Point',
@@ -209,7 +246,7 @@ describe('Circle Directive', () => {
             expect(layer.geoJSON.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -217,7 +254,7 @@ describe('Circle Directive', () => {
             layer.geoJSON = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
                 expect(eventVal.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
                 return done();
@@ -244,7 +281,7 @@ describe('Circle Directive', () => {
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             /* tslint:disable:max-line-length */
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(eventVal.properties).to.equal(TEST_OBJECT);
                 return done();
             });
@@ -259,11 +296,8 @@ describe('Circle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterContentInit();
+            layerWithPopup = new CircleDirective<any>({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -275,15 +309,17 @@ describe('Circle Directive', () => {
         let tooltip: TooltipDirective;
         let testDiv: HTMLElement;
         before(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
+            map = new MapComponent(
+                {nativeElement: document.createElement('div')},
+                new LayerGroupProvider(),
+                new MapProvider(),
+            );
             (map as any)._size = point(100, 100);
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = new CircleDirective<any>({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {

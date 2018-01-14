@@ -5,11 +5,14 @@ import {
     EXAMPLE_WMS_LAYER_NAMES,
     EXAMPLE_WMS_LAYER_URL,
     LatLngBoundsExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     Point,
     WmsLayerDirective,
     WMSParams,
 } from './index';
+import { randomNumber } from './spec';
 
 function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     'use strict';
@@ -27,10 +30,14 @@ describe('WMS-Layer Directive', () => {
     let map: MapComponent;
     let layer: WmsLayerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new WmsLayerDirective(map);
+        layer = new WmsLayerDirective({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -143,22 +150,22 @@ describe('WMS-Layer Directive', () => {
     });
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.options.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.opacity = val;
             expect(layer.opacity).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
             layer.setOpacity(val);
             expect(layer.opacity).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -168,7 +175,7 @@ describe('WMS-Layer Directive', () => {
             layer.opacity = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -180,22 +187,22 @@ describe('WMS-Layer Directive', () => {
     });
     describe('[(zIndex)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(255, 0, 0);
             layer.zIndex = val;
             expect(layer.options.zIndex).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(255, 0, 0);
             layer.zIndex = val;
             expect(layer.zIndex).to.equal(val);
         });
         it('should be changed in Angular when changing in Leaflet', () => {
-            const val: number = Math.random();
+            const val: number = randomNumber(255, 0, 0);
             layer.setZIndex(val);
             expect(layer.zIndex).to.equal(val);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(255, 0, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -205,7 +212,7 @@ describe('WMS-Layer Directive', () => {
             layer.zIndex = val;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: number = Math.random();
+            const val: number = randomNumber(255, 0, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -621,13 +628,13 @@ describe('WMS-Layer Directive', () => {
     // Inputs
     describe('[tileSize]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 1, 0);
             const val: Point = point(num, num);
             layer.tileSize = val;
             expect(layer.options.tileSize).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 1, 0);
             const val: Point = point(num, num);
             layer.tileSize = val;
             expect(layer.tileSize).to.equal(val);
@@ -635,13 +642,13 @@ describe('WMS-Layer Directive', () => {
     });
     describe('[bounds]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 1, 0);
             const val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
             layer.bounds = val;
             expect(layer.options.bounds).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const num: number = Math.ceil(Math.random() * 1000);
+            const num: number = randomNumber(1000, 1, 0);
             const val: LatLngBoundsExpression = latLngBounds([num, num], [num, num]);
             layer.bounds = val;
             expect(layer.bounds).to.equal(val);
@@ -690,36 +697,60 @@ describe('WMS-Layer Directive', () => {
     });
     describe('[updateInterval]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.updateInterval = val;
             expect(layer.options.updateInterval).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.updateInterval = val;
             expect(layer.updateInterval).to.equal(val);
         });
     });
     describe('[keepBuffer]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.keepBuffer = val;
             expect(layer.options.keepBuffer).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.keepBuffer = val;
             expect(layer.keepBuffer).to.equal(val);
         });
     });
+    describe('[maxZoom]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(20, 0, 0);
+            layer.maxZoom = val;
+            expect(layer.options.maxZoom).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(20, 0, 0);
+            layer.maxZoom = val;
+            expect(layer.maxZoom).to.equal(val);
+        });
+    });
+    describe('[minZoom]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber(5, 0, 0);
+            layer.minZoom = val;
+            expect(layer.options.minZoom).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber(5, 0, 0);
+            layer.minZoom = val;
+            expect(layer.minZoom).to.equal(val);
+        });
+    });
     describe('[maxNativeZoom]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.maxNativeZoom = val;
             expect(layer.options.maxNativeZoom).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.maxNativeZoom = val;
             expect(layer.maxNativeZoom).to.equal(val);
         });
@@ -738,12 +769,12 @@ describe('WMS-Layer Directive', () => {
     });
     describe('[zoomOffset]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.zoomOffset = val;
             expect(layer.options.zoomOffset).to.equal(val);
         });
         it('should be changed in Angular when changing in Angular', () => {
-            const val: number = Math.ceil(Math.random() * 1000);
+            const val: number = randomNumber(100, 1, 0);
             layer.zoomOffset = val;
             expect(layer.zoomOffset).to.equal(val);
         });
@@ -903,7 +934,7 @@ describe('WMS-Layer Directive', () => {
     describe('[attribution]', () => {
         let attributionControl: AttributionControlDirective;
         beforeEach(() => {
-            attributionControl = new AttributionControlDirective(map);
+            attributionControl = new AttributionControlDirective({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Test attribution';

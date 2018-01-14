@@ -1,8 +1,6 @@
 import {
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
@@ -20,7 +18,8 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { TRANSPARENT_PIXEL } from './consts';
-import { MapComponent } from './map.component';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 @Directive({
     selector: 'yaga-image-overlay',
@@ -51,10 +50,13 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
         super(TRANSPARENT_PIXEL, [[0, 0], [1, 1]], {});
+
+        layerProvider.ref = this;
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -63,7 +65,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(mapComponent);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {

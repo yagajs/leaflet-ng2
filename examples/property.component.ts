@@ -13,7 +13,7 @@ import {
 import {
     FormsModule,
 } from '@angular/forms';
-import { latLng, LatLngBounds, Point } from 'leaflet';
+import { CRS, latLng, LatLngBounds, Point } from 'leaflet';
 import { IExampleProperties } from './app-component-blueprint';
 
 /* tslint:disable:max-line-length */
@@ -99,6 +99,18 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
         <span class="input-group-addon fixed-space">{{ name }}</span>
         <input type="number" class="form-control" [ngModel]="value.x" (ngModelChange)="valueChange.emit(updatePointX($event))" />
         <input type="number" class="form-control" [ngModel]="value.y" (ngModelChange)="valueChange.emit(updatePointY($event))" />
+    </div>
+
+</div>
+<div *ngIf="type === 'crs'">
+    <div class="input-group input-group-sx">
+        <span class="input-group-addon fixed-space">{{ name }}</span>
+        <select [ngModel]="getCRS(value)" (ngModelChange)="valueChange.emit(setCRS($event))">
+            <option value="Simple">Simple</option>
+            <option value="EPSG3395">EPSG:3395</option>
+            <option value="EPSG3857">EPSG:3857</option>
+            <option value="EPSG4326">EPSG:4326</option>
+        </select>
     </div>
 
 </div>
@@ -196,6 +208,21 @@ export class ExamplePropertyComponent {
             latLng((this.value as LatLngBounds).getNorth(), value),
         );
         return this.value;
+    }
+    public getCRS(value: CRS): string {
+        switch (value) {
+            case CRS.EPSG3857:
+                return 'EPSG3857';
+            case CRS.EPSG3395:
+                return 'EPSG3395';
+            case CRS.EPSG4326:
+                return 'EPSG4326';
+            case CRS.Simple:
+                return 'Simple';
+        }
+    }
+    public setCRS(value: string): CRS {
+        return CRS[value];
     }
 }
 

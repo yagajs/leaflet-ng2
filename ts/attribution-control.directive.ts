@@ -1,8 +1,6 @@
 import {
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Output,
@@ -15,6 +13,7 @@ import { Control,
 } from 'leaflet';
 import { ATTRIBUTION_PREFIX } from './consts';
 import { MapComponent } from './map.component';
+import { MapProvider } from './map.provider';
 import { enhanceMouseEvent } from './mouse-event-helper';
 
 /**
@@ -61,12 +60,6 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * or `<yaga-attribution-control (displayChange)="processEvent($event)">`
      */
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
-    /**
-     * Two-Way bound property for the zIndex of the control.
-     * Use it with `<yaga-attribution-control [(zIndex)]="someValue">`
-     * or `<yaga-attribution-control (zIndexChange)="processEvent($event)">`
-     */
-    @Output() public zIndexChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the position of the control.
      * Use it with `<yaga-attribution-control [(position)]="someValue">`
@@ -130,26 +123,10 @@ export class AttributionControlDirective extends Control.Attribution implements 
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        mapProvider: MapProvider,
     ) {
         super({prefix: ATTRIBUTION_PREFIX});
-        mapComponent.addControl(this);
-
-        const self: this = this;
-
-        /* tslint:disable:only-arrow-functions */
-        this.onRemove = function(): any {
-            self.displayChange.emit(false);
-            self.removeEvent.emit({target: self, type: 'remove'});
-            return self;
-        };
-
-        this.onAdd = function(): HTMLElement {
-            self.displayChange.emit(true);
-            self.addEvent.emit({target: self, type: 'add'});
-            return self.getContainer();
-        };
-        /* tslint:enable */
+        mapProvider.ref.addControl(this);
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
@@ -176,6 +153,26 @@ export class AttributionControlDirective extends Control.Attribution implements 
         ((this as any)._map as MapComponent).removeControl(this);
     }
 
+    /**
+     * Derived remove function
+     */
+    public remove(): this {
+        /* tslint:disable */
+        super.remove();
+        this.displayChange.emit(false);
+        this.removeEvent.emit({target: this, type: 'remove'});
+        return this;
+    }
+    /**
+     * Derived addTo function
+     */
+    public addTo(map: Map) {
+        /* tslint:disable */
+        super.addTo(map);
+        this.displayChange.emit(true);
+        this.addEvent.emit({target: this, type: 'add'});
+        return this;
+    }
     /**
      * Derived method of the original setPosition.
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-setposition Original Leaflet documentation
@@ -217,7 +214,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
         return;
     }
     public get display(): boolean {
-        return (this as any)._map && this.getContainer().style.display !== 'none';
+        return !!((this as any)._map && this.getContainer().style.display !== 'none');
     }
 
     /**
@@ -234,9 +231,8 @@ export class AttributionControlDirective extends Control.Attribution implements 
     }
 
     /**
-     * Two-Way bound property for the zIndex of the control.
-     * Use it with `<yaga-attribution-control [(zIndex)]="someValue">`
-     * or `<yaga-attribution-control (zIndexChange)="processEvent($event)">`
+     * Input for the zIndex of the control.
+     * Use it with `<yaga-attribution-control [zIndex]="someValue">`
      */
     @Input() public set zIndex(zIndex: number) {
         if ( !zIndex ) {

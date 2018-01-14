@@ -1,15 +1,11 @@
 import {
-    AfterViewInit,
-    ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
-    Optional,
     Output,
 } from '@angular/core';
+import { Feature as GeoJSONFeature } from 'geojson';
 import {
     FillRule,
     LatLng,
@@ -25,19 +21,16 @@ import {
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
-
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-polygon',
 })
-export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterViewInit {
+export class PolygonDirective<T> extends Polygon implements OnDestroy {
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
@@ -57,7 +50,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
 
     @Output() public latLngsChange: EventEmitter<LatLng[]> = new EventEmitter();
     /* tslint:disable:max-line-length */
-    @Output() public geoJSONChange: EventEmitter<GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
+    @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>> = new EventEmitter();
     /* tslint:enable */
 
     @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
@@ -73,13 +66,13 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
-
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super([]);
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Polygon', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
@@ -91,7 +84,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
             this.displayChange.emit(true);
         });
 
-        mapComponent.addLayer(this);
+        layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -132,15 +125,6 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         });
     }
 
-    public ngAfterViewInit(): void {
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
-    }
-
     public ngOnDestroy(): void {
         this.removeFrom((this as any)._map);
     }
@@ -170,7 +154,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         return (this as any)._latlngs;
     }
 
-    @Input() public set geoJSON(val: GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
+    @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>) {
         this.feature.properties = val.properties;
 
         const geomType: any = val.geometry.type; // Normally '(Multi)Polygon'
@@ -181,8 +165,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy, AfterView
         }
         this.setLatLngs(lng2lat(val.geometry.coordinates) as any);
     }
-    public get geoJSON(): GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
+    public get geoJSON(): GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T> {
+        return (this.toGeoJSON() as GeoJSONFeature<GeoJSON.Polygon | GeoJSON.MultiPolygon, T>);
     }
 
     public setStyle(style: PathOptions): this {
