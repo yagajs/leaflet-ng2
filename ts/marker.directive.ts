@@ -148,7 +148,6 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
             this.draggableChange.emit(false);
             return val;
         };
-        // TODO: this.addIcon(IconDirective / DivIconDirective)
     }
 
     public ngAfterContentInit(): void {
