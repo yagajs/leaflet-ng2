@@ -285,7 +285,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     public setData(val: GeoJSONFeatureCollection<GeometryObject, T>): this {
         super.clearLayers();
-        this.addData(val as any); // It works also as FeatureCollection
+        super.addData(val);
         return this;
     }
 
