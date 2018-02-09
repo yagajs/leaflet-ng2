@@ -274,6 +274,43 @@ describe('Marker Directive', () => {
             layer.setOpacity(val);
         });
     });
+    describe('[(zIndexOffset)]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.options.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: number = randomNumber();
+            layer.setZIndexOffset(val);
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.zIndexOffset = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.setZIndexOffset(val);
+        });
+    });
 
     describe('[(lat)]', () => {
         beforeEach(() => {
