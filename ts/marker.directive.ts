@@ -34,7 +34,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     @Output() public displayChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() public zindexChange: EventEmitter<number> = new EventEmitter();
+    @Output() public zIndexOffsetChange: EventEmitter<number> = new EventEmitter();
     @Output() public draggableChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public iconChange: EventEmitter<Icon | DivIcon> = new EventEmitter();
     @Output() public tooltipOpenedChange: EventEmitter<boolean> = new EventEmitter();
@@ -244,7 +244,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
 
     public setOpacity(val: number): this {
         if (this.opacity === val) {
-            return;
+            return this;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
@@ -277,6 +277,19 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     }
     public get draggable(): boolean {
         return this.dragging.enabled();
+    }
+    public setZIndexOffset(val: number): this {
+        if (this.zIndexOffset === val) {
+            return this;
+        }
+        this.zIndexOffsetChange.emit(val);
+        return super.setZIndexOffset(val);
+    }
+    @Input() public set zIndexOffset(val: number) {
+        this.setZIndexOffset(val);
+    }
+    public get zIndexOffset(): number {
+        return this.options.zIndexOffset;
     }
 
     @Input() public set title(val: string) {
