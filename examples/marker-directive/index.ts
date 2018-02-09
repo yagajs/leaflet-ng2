@@ -30,6 +30,8 @@ const template: string = `
         [(lat)]="getDuplexPropertyByName('lat').value"
         [(lng)]="getDuplexPropertyByName('lng').value"
         [(position)]="getDuplexPropertyByName('position').value"
+        [(popupOpened)]="getDuplexPropertyByName('popupOpened').value"
+        [(tooltipOpened)]="getDuplexPropertyByName('tooltipOpened').value"
         (dragend)="handleEvent('dragend', $event);"
         (dragstart)="handleEvent('dragstart', $event);"
         (movestart)="handleEvent('movestart', $event);"
@@ -113,7 +115,6 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'contextmenu', value: '', type: 'event' },
         ],
     };
-
 
     public iconUrl: string = 'http://leafletjs.com/examples/custom-icons/leaf-green.png';
     public iconSize: Point = new Point(38, 95);
