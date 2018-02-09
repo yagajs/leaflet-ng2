@@ -243,7 +243,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
-        super(TRANSPARENT_PIXEL, { layers: '', errorTileUrl: TRANSPARENT_PIXEL });
+        super('', { layers: '', errorTileUrl: TRANSPARENT_PIXEL });
 
         layerProvider.ref = this;
 
@@ -712,50 +712,56 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
 
     // WMS Params
     public setParams(params: WMSParams, redraw?: boolean): this {
+        const oldParams = {...this.wmsParams};
         super.setParams(params, redraw);
-        this.layersChange.emit(this.wmsParams.layers.split(','));
-        this.stylesChange.emit(this.wmsParams.styles.split(','));
-        this.formatChange.emit(this.wmsParams.format);
-        this.versionChange.emit(this.wmsParams.version);
-        this.transparentChange.emit(this.wmsParams.transparent);
+        const newParams = {...this.wmsParams};
+        if (oldParams.layers !== newParams.layers) {
+            this.layersChange.emit(this.wmsParams.layers.split(','));
+        }
+        if (oldParams.styles !== newParams.styles) {
+            this.stylesChange.emit(this.wmsParams.styles.split(','));
+        }
+        if (oldParams.format !== newParams.format) {
+            this.formatChange.emit(this.wmsParams.format);
+        }
+        if (oldParams.version !== newParams.version) {
+            this.versionChange.emit(this.wmsParams.version);
+        }
+        if (oldParams.transparent !== newParams.transparent) {
+            this.transparentChange.emit(this.wmsParams.transparent);
+        }
+        if (redraw) {
+            super.redraw();
+        }
+
         return this;
     }
     @Input() public set layers(val: string[]) {
-        const newParams: WMSParams = Object.create(this.wmsParams);
-        newParams.layers = val.join(',');
-        this.setParams(newParams);
+        this.setParams({...this.wmsParams, layers: val.join(',')}, true);
     }
     public get layers(): string[] {
         return this.wmsParams.layers.split(',');
     }
     @Input() public set styles(val: string[]) {
-        const newParams: WMSParams = Object.create(this.wmsParams);
-        newParams.styles = val.join(',');
-        this.setParams(newParams);
+        this.setParams({...this.wmsParams, styles: val.join(',')}, true);
     }
     public get styles(): string[] {
         return this.wmsParams.styles.split(',');
     }
     @Input() public set format(val: string) {
-        const newParams: WMSParams = Object.create(this.wmsParams);
-        newParams.format = val;
-        this.setParams(newParams);
+        this.setParams({...this.wmsParams, format: val}, true);
     }
     public get format(): string {
         return this.wmsParams.format;
     }
     @Input() public set version(val: string) {
-        const newParams: WMSParams = Object.create(this.wmsParams);
-        newParams.version = val;
-        this.setParams(newParams);
+        this.setParams({...this.wmsParams, version: val}, true);
     }
     public get version(): string {
         return this.wmsParams.version;
     }
     @Input() public set transparent(val: boolean) {
-        const newParams: WMSParams = Object.create(this.wmsParams);
-        newParams.transparent = val;
-        this.setParams(newParams);
+        this.setParams({...this.wmsParams, transparent: val}, true);
     }
     public get transparent(): boolean {
         return this.wmsParams.transparent;
