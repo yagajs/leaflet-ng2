@@ -48,6 +48,8 @@ const template: string = `
         (mouseover)="handleEvent('mouseover', $event);"
         (mouseout)="handleEvent('mouseout', $event);"
         (contextmenu)="handleEvent('contextmenu', $event);"
+        [alt]="getInputPropertyByName('title').value"
+        [title]="getInputPropertyByName('alt').value"
         >
         <yaga-icon
           [iconUrl]="iconUrl"
@@ -91,7 +93,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'position', value: new LatLng(51, 7), type: 'latlng'},
         ],
         input: [
-            {name: 'title', value: 'Titel', type: 'text' },
+            {name: 'title', value: 'Title', type: 'text' },
             {name: 'alt', value: 'alternative text', type: 'text' },
         ],
         output: [
