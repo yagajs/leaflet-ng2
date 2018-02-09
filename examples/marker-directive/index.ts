@@ -30,6 +30,7 @@ const template: string = `
         [(lat)]="getDuplexPropertyByName('lat').value"
         [(lng)]="getDuplexPropertyByName('lng').value"
         [(position)]="getDuplexPropertyByName('position').value"
+        [(zIndexOffset)]="getDuplexPropertyByName('zIndexOffset').value"
         (dragend)="handleEvent('dragend', $event);"
         (dragstart)="handleEvent('dragstart', $event);"
         (movestart)="handleEvent('movestart', $event);"
@@ -83,7 +84,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'opacity', value: 0.5, type: 'relative'},
             {name: 'draggable', value: true, type: 'checkbox'},
             {name: 'display', value: true, type: 'checkbox'},
-            {name: 'zindex', value: 255, type: 'number'},
+            {name: 'zIndexOffset', value: 255, type: 'number'},
             // {name: 'icon', value:, type: ''},
             {name: 'tooltipOpened', value: false, type: 'checkbox'},
             {name: 'popupOpened', value: false, type: 'checkbox'},
@@ -113,7 +114,6 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'contextmenu', value: '', type: 'event' },
         ],
     };
-
 
     public iconUrl: string = 'http://leafletjs.com/examples/custom-icons/leaf-green.png';
     public iconSize: Point = new Point(38, 95);
