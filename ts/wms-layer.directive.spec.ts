@@ -245,7 +245,6 @@ describe('WMS-Layer Directive', () => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.layersChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
