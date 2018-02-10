@@ -260,15 +260,19 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         });
         this.on('popupopen', (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
+            this.popupOpenedChange.emit(true);
         });
         this.on('popupclose', (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
+            this.popupOpenedChange.emit(false);
         });
         this.on('tooltipopen', (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
+            this.tooltipOpenedChange.emit(true);
         });
         this.on('tooltipclose', (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
+            this.tooltipOpenedChange.emit(false);
         });
         this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
@@ -407,6 +411,29 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     }
     public get opacity(): number {
         return this.options.opacity;
+    }
+
+    @Input() public set popupOpened(val: boolean) {
+        if (val) {
+            // It would not work without timeout!
+            this.openPopup();
+            return;
+        }
+        this.closePopup();
+    }
+    public get popupOpened(): boolean {
+        return this.isPopupOpen();
+    }
+
+    @Input() public set tooltipOpened(val: boolean) {
+        if (val) {
+            this.openTooltip();
+            return;
+        }
+        this.closeTooltip();
+    }
+    public get tooltipOpened(): boolean {
+        return this.isTooltipOpen();
     }
 
     public setIcon(val: Icon | DivIcon): this {
