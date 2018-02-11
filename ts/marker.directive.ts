@@ -83,24 +83,28 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      * Two-Way bound property for the latlng-position of the geometry.
      * Use it with `<yaga-marker [(position)]="someValue">`
      * or `<yaga-marker (positionChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
      */
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
     /**
      * Two-Way bound property for the latitude of the geometry.
      * Use it with `<yaga-marker [(lat)]="someValue">`
      * or `<yaga-marker (latChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
      */
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the longitude of the geometry.
      * Use it with `<yaga-marker [(lng)]="someValue">`
      * or `<yaga-marker (lngChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
      */
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the opacity of the geometry.
      * Use it with `<yaga-marker [(opacity)]="someValue">`
      * or `<yaga-marker (opacityChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setopacity Original Leaflet documentation
      */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     /**
@@ -133,10 +137,35 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     @Output() public tooltipOpenedChange: EventEmitter<boolean> = new EventEmitter();
     @Output() public popupOpenedChange: EventEmitter<boolean> = new EventEmitter();
 
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-marker (dragend)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-dragend Original Leaflet documentation
+     */
     @Output('dragend') public dragendEvent: EventEmitter<DragEndEvent> = new EventEmitter();
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-marker (dragstart)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-dragstart Original Leaflet documentation
+     */
     @Output('dragstart') public dragstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-marker (movestart)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-movestart Original Leaflet documentation
+     */
     @Output('movestart') public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-marker (drag)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-drag Original Leaflet documentation
+     */
     @Output('drag') public dragEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
+     * From leaflet fired add event.
+     * Use it with `<yaga-marker (moveend)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-moveend Original Leaflet documentation
+     */
     @Output('moveend') public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     /**
@@ -212,6 +241,9 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
+    /**
+     * Internal property to stop further processing while it is not initialized
+     */
     private initialized: boolean = false;
 
     constructor(
@@ -306,15 +338,23 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
             return val;
         };
     }
-
+    /**
+     * Internal method that provides the initialization of the directive
+     */
     public ngAfterContentInit(): void {
         this.initialized = true; // Otherwise lng gets overwritten to 0
     }
-
+    /**
+     * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
+     */
     public ngOnDestroy(): void {
         this.removeFrom((this as any)._map);
     }
 
+    /**
+     * Two-Way bound property for the display status of the layer.
+     * Use it with `<yaga-marker [(display)]="someValue">` or `<yaga-marker [display]="someValue">`
+     */
     @Input() public set display(val: boolean) {
         const isDisplayed: boolean = this.display;
         if (isDisplayed === val) {
@@ -370,6 +410,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         return false;
     }
 
+    /**
+     * Derived method of the original setLatLng method.
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
+     */
     public setLatLng(val: LatLng | LatLngLiteral | LatLngTuple): this {
         super.setLatLng((val as any));
         if (this.initialized) {
@@ -379,19 +423,33 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         }
         return this;
     }
+    /**
+     * Two-Way bound property for the position of the marker.
+     * Use it with `<yaga-marker [(position)]="someValue">` or `<yaga-marker [position]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
+     */
     @Input() public set position(val: LatLng) {
         this.setLatLng(val);
     }
     public get position(): LatLng {
         return this.getLatLng();
     }
-
+    /**
+     * Two-Way bound property for the position of the marker.
+     * Use it with `<yaga-marker [(lat)]="someValue">` or `<yaga-marker [lat]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
+     */
     @Input() public set lat(val: number) {
         this.setLatLng([val, this.lng]);
     }
     public get lat(): number {
         return this.getLatLng().lat;
     }
+    /**
+     * Two-Way bound property for the position of the marker.
+     * Use it with `<yaga-marker [(lng)]="someValue">` or `<yaga-marker [lng]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setlatlng Original Leaflet documentation
+     */
     @Input() public set lng(val: number) {
         this.setLatLng([this.lat, val]);
     }
@@ -399,6 +457,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         return this.getLatLng().lng;
     }
 
+    /**
+     * Derived method of the original setOpacity method.
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setopacity Original Leaflet documentation
+     */
     public setOpacity(val: number): this {
         if (this.opacity === val) {
             return this;
@@ -406,13 +468,22 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.opacityChange.emit(val);
         return super.setOpacity(val);
     }
+    /**
+     * Two-Way bound property for the opacity of the marker.
+     * Use it with `<yaga-marker [(opacity)]="someValue">` or `<yaga-marker [opacity]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-setopacity Original Leaflet documentation
+     */
     @Input() public set opacity(val: number) {
         this.setOpacity(val);
     }
     public get opacity(): number {
         return this.options.opacity;
     }
-
+    /**
+     * Two-Way bound property for the state of the popup.
+     * Use it with `<yaga-marker [(popupOpened)]="someValue">` or `<yaga-marker [popupOpened]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-openpopup Original Leaflet documentation
+     */
     @Input() public set popupOpened(val: boolean) {
         if (val) {
             // It would not work without timeout!
@@ -425,6 +496,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         return this.isPopupOpen();
     }
 
+    /**
+     * Two-Way bound property for the state of the popup.
+     * Use it with `<yaga-marker [(tooltipOpened)]="someValue">` or `<yaga-marker [tooltipOpened]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-opentooltip Original Leaflet documentation
+     */
     @Input() public set tooltipOpened(val: boolean) {
         if (val) {
             this.openTooltip();
@@ -436,17 +512,31 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         return this.isTooltipOpen();
     }
 
+    /**
+     * Derived method of the original setIcon method.
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-seticon Original Leaflet documentation
+     */
     public setIcon(val: Icon | DivIcon): this {
         super.setIcon(val);
         this.iconChange.emit(val);
         return this;
     }
+    /**
+     * Two-Way bound property for the state of the popup.
+     * Use it with `<yaga-marker [(icon)]="someValue">` or `<yaga-marker [icon]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-seticon Original Leaflet documentation
+     */
     @Input() public set icon(val: Icon | DivIcon) {
         this.setIcon(val);
     }
     public get icon(): Icon | DivIcon {
         return this.options.icon;
     }
+    /**
+     * Two-Way bound property for the state of the dragging.
+     * Use it with `<yaga-marker [(draggable)]="someValue">` or `<yaga-marker [draggable]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-dragging Original Leaflet documentation
+     */
     @Input() public set draggable(val: boolean) {
         if (val) {
             this.dragging.enable();
@@ -458,6 +548,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     public get draggable(): boolean {
         return this.dragging.enabled();
     }
+
+    /**
+     * Derived method of the original setZIndexOffset method.
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-zindexoffset Original Leaflet documentation
+     */
     public setZIndexOffset(val: number): this {
         if (this.zIndexOffset === val) {
             return this;
@@ -465,6 +560,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.zIndexOffsetChange.emit(val);
         return super.setZIndexOffset(val);
     }
+    /**
+     * Two-Way bound property for the offset of the zIndex.
+     * Use it with `<yaga-marker [(draggable)]="someValue">` or `<yaga-marker [draggable]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-zindexoffset Original Leaflet documentation
+     */
     @Input() public set zIndexOffset(val: number) {
         this.setZIndexOffset(val);
     }
@@ -472,6 +572,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         return this.options.zIndexOffset;
     }
 
+    /**
+     * Input for the title.
+     * Use it with `<yaga-marker [title]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-title Original Leaflet documentation
+     */
     @Input() public set title(val: string) {
         this.options.title = val;
         this.getElement().setAttribute('title', val);
@@ -479,6 +584,11 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     public get title(): string {
         return this.getElement().getAttribute('title');
     }
+    /**
+     * Input for the alternative text.
+     * Use it with `<yaga-marker [alt]="someValue">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-title Original Leaflet documentation
+     */
     @Input() public set alt(val: string) {
         this.options.alt = val;
         this.getElement().setAttribute('alt', val);
