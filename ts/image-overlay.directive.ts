@@ -81,7 +81,8 @@ import { LayerProvider } from './layer.provider';
 export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     /**
      * Two-Way bound property for the URL.
-     * Use it with `<yaga-image-overlay [(url)]="someValue">` or `<yaga-image-overlay (urlChange)="processEvent($event)">`
+     * Use it with `<yaga-image-overlay [(url)]="someValue">` or
+     * `<yaga-image-overlay (urlChange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-seturl Original Leaflet documentation
      */
     @Output() public urlChange: EventEmitter<string> = new EventEmitter();
