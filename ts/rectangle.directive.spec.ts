@@ -31,7 +31,7 @@ describe('Rectangle Directive', () => {
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new RectangleDirective<any> ({ ref: map });
+        layer = new RectangleDirective<any> ({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -619,7 +619,7 @@ describe('Rectangle Directive', () => {
             test: 'OK',
         };
         beforeEach(() => {
-            layerWithProperties = new RectangleDirective<ITestProperties> ({ ref: map });
+            layerWithProperties = new RectangleDirective<ITestProperties> ({ ref: map }, {} as any);
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             layerWithProperties.properties = TEST_OBJECT;
@@ -666,7 +666,7 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            layerWithPopup = new RectangleDirective<any> ({ ref: map });
+            layerWithPopup = new RectangleDirective<any> ({ ref: map }, {} as any);
             popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
 
             layerWithPopup.ngAfterContentInit();
@@ -682,7 +682,7 @@ describe('Rectangle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            layerWithTooltip = new RectangleDirective<any> ({ ref: map });
+            layerWithTooltip = new RectangleDirective<any> ({ ref: map }, {} as any);
             tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
