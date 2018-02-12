@@ -68,7 +68,64 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
     pointToLayer?: IGeoJSONPointToLayerFn<T>;
     defaultStyle?: PathOptions;
 }
-
+/**
+ * Angular2 directive for GeoJSON of Leaflet.
+ *
+ * *You can use this directive in an Angular2 template after importing `YagaModule`.*
+ *
+ * How to use in a template:
+ * ```html
+ * <yaga-map>
+ *     <yaga-geojson
+ *         [(data)]="..."
+ *         [(stroke)]="..."
+ *         [(color)]="..."
+ *         [(weight)]="..."
+ *         [(opacity)]="..."
+ *         [(lineCap)]="..."
+ *         [(lineJoin)]="..."
+ *         [(dashArray)]="..."
+ *         [(dashOffset)]="..."
+ *         [(fill)]="..."
+ *         [(fillColor)]="..."
+ *         [(fillOpacity)]="..."
+ *         [(fillRule)]="..."
+ *         [(className)]="..."
+ *         [(lat)]="..."
+ *         [(lng)]="..."
+ *         [(radius)]="..."
+ *
+ *         (add)="..."
+ *         (remove)="..."
+ *         (popupopen)="..."
+ *         (popupclose)="..."
+ *         (tooltipopen)="..."
+ *         (tooltipclose)="..."
+ *         (click)="..."
+ *         (dbclick)="..."
+ *         (mousedown)="..."
+ *         (mouseover)="..."
+ *         (mouseout)="..."
+ *         (contextmenu)="..."
+ *         (onEachFeature)="..."
+ *
+ *         [data]="..."
+ *         [filter]="..."
+ *         [pointToLayer]="..."
+ *         [styler]="..."
+ *         [defaultStyle]="..."
+ *         >
+ *     </yaga-geojson>
+ * </yaga-map>
+ * ```
+ *
+ * @link http://leafletjs.com/reference-1.2.0.html#geojson Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=GeoJSON%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/geojson.directive.js.html
+ * Test coverage
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/geojson.directive.js.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/geojson-directive/
+ */
 @Directive({
     providers: [ LayerGroupProvider, LayerProvider ],
     selector: 'yaga-geojson',
