@@ -1,5 +1,9 @@
 import { LatLng, LatLngBounds } from 'leaflet';
 
+/**
+ * Helper function to create random numbers within a range
+ * @private
+ */
 export function randomNumber(max: number = 1, min: number = 0, after: number = 3) {
     return (
         Math.floor(
@@ -7,18 +11,34 @@ export function randomNumber(max: number = 1, min: number = 0, after: number = 3
         ) / Math.pow(10, after)) + min;
 }
 
+/**
+ * Helper function to create random latitude values
+ * @private
+ */
 export function randomLat() {
     return randomNumber(90, -90);
 }
 
+/**
+ * Helper function to create random longitude values
+ * @private
+ */
 export function randomLng() {
     return randomNumber(180, -180);
 }
 
+/**
+ * Helper function to create random latitude-longitude values pairs
+ * @private
+ */
 export function randomLatLng(): LatLng {
     return new LatLng(randomLat(), randomLng());
 }
 
+/**
+ * Helper function to create random spatial bounds
+ * @private
+ */
 export function randomLatLngBounds(): LatLngBounds {
     const lat1: number = randomLat();
     const lat2: number = randomLat();
@@ -30,6 +50,10 @@ export function randomLatLngBounds(): LatLngBounds {
     );
 }
 
+/**
+ * Helper function to detect if an element is a child of another
+ * @private
+ */
 export function hasAsChild(root: HTMLElement, child: HTMLElement): boolean {
     const length: number = root.children.length;
     for (let i: number = 0; i < length; i += 1) {
