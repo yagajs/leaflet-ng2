@@ -23,7 +23,7 @@ const template: string = `
 <div class="container">
   <div class="map">
     <yaga-map>
-      <yaga-marker>
+      <yaga-marker [lat]="0" [lng]="0">
         <yaga-tooltip
           [(opened)]="getDuplexPropertyByName('opened').value"
           [(opacity)]="getDuplexPropertyByName('opacity').value"
