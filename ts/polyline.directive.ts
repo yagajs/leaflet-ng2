@@ -52,11 +52,6 @@ import { MapComponent } from './map.component';
  *         [(className)]="..."
  *         [(style)]="..."
  *         [(latLngs)]="..."
- *         [(bounds)]="..."
- *         [(north)]="..."
- *         [(east)]="..."
- *         [(south)]="..."
- *         [(west)]="..."
  *         [(geoJSON)]="..."
  *
  *         (add)="..."
