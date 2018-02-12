@@ -11,6 +11,10 @@ import {
 } from './index';
 import { randomNumber } from './spec';
 
+/**
+ * Basic test for all path layers
+ * @private
+ */
 export function createPathTests(Constr: any): void {
     describe('Path compatibility tests', () => {
         let map: MapComponent;
