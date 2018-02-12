@@ -71,7 +71,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
         ],
         input: [
             {name: 'className', value: 'example-css-class', type: 'text' },
-            // {name: 'pane', value: 'tooltip', type: 'text' },
+            {name: 'pane', value: 'tooltip', type: 'text' },
             {name: 'interactive', value: true, type: 'checkbox' },
             {name: 'sticky', value: true, type: 'checkbox' },
             {
