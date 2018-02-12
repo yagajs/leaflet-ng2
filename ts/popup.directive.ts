@@ -229,7 +229,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set maxWidth(val: number) {
         this.options.maxWidth = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get maxWidth(): number {
         return this.options.maxWidth;
@@ -241,7 +243,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set minWidth(val: number) {
         this.options.minWidth = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get minWidth(): number {
         return this.options.minWidth;
@@ -253,7 +257,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set maxHeight(val: number) {
         this.options.maxHeight = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get maxHeight(): number {
         return this.options.maxHeight;
@@ -265,7 +271,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPan(val: boolean) {
         this.options.autoPan = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get autoPan(): boolean {
         return this.options.autoPan;
@@ -277,7 +285,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPaddingTopLeft(val: Point) {
         this.options.autoPanPaddingTopLeft = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get autoPanPaddingTopLeft(): Point {
         return (this.options.autoPanPaddingTopLeft as Point);
@@ -289,7 +299,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPaddingBottomRight(val: Point) {
         this.options.autoPanPaddingBottomRight = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get autoPanPaddingBottomRight(): Point {
         return (this.options.autoPanPaddingBottomRight as Point);
@@ -301,7 +313,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPadding(val: Point) {
         this.options.autoPanPadding = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get autoPanPadding(): Point {
         return (this.options.autoPanPadding as Point);
@@ -313,7 +327,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set keepInView(val: boolean) {
         this.options.keepInView = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get keepInView(): boolean {
         return this.options.keepInView;
@@ -325,7 +341,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set closeButton(val: boolean) {
         this.options.closeButton = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get closeButton(): boolean {
         return this.options.closeButton;
@@ -337,7 +355,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoClose(val: boolean) {
         this.options.autoClose = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get autoClose(): boolean {
         return this.options.autoClose;
@@ -349,7 +369,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set className(val: string) {
         this.options.className = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get className(): string {
         return this.options.className;
@@ -361,7 +383,9 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set pane(val: string) {
         this.options.pane = val;
-        (this as any)._updateLayout();
+        if ((this as any)._contentNode) {
+            (this as any)._updateLayout();
+        }
     }
     public get pane(): string {
         return this.options.pane;
