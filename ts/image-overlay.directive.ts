@@ -52,12 +52,6 @@ import { LayerProvider } from './layer.provider';
  *         (mouseover)="..."
  *         (mouseout)="..."
  *         (contextmenu)="..."
- *         (loading)="..."
- *         (tileunload)="..."
- *         (tileloadstart)="..."
- *         (tileerror)="..."
- *         (tileload)="..."
- *         (load)="..."
  *
  *         [crossOrigin]="..."
  *         [alt]="..."
