@@ -21,7 +21,7 @@ export const OSM_TILE_LAYER_URL: string = 'http://{s}.tile.openstreetmap.org/{z}
 /**
  * URL for an example image for image-overlays
  */
-export const IMAGE_OVERLAY_URL: string = 'http://live.osgeo.org/_images/osgeolive_menu6.png';
+export const IMAGE_OVERLAY_URL: string = 'http://download.osgeo.org/livedvd/10.0/desktop10_osmF32.png';
 /**
  * Base URL for a sample WMS service
  */
