@@ -54,6 +54,7 @@ import { LayerProvider } from './layer.provider';
  *         </yaga-popup>
  *     </yaga-marker>
  * </yaga-map>
+ * ```
  */
 @Directive({
     selector: 'yaga-popup',

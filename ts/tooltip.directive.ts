@@ -52,6 +52,7 @@ import { LayerProvider } from './layer.provider';
  *         </yaga-tooltip>
  *     </yaga-marker>
  * </yaga-map>
+ * ```
  */
 @Directive({
     selector: 'yaga-tooltip',
