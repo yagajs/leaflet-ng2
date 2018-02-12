@@ -52,6 +52,8 @@ import { LayerProvider } from './layer.provider';
  *         (mouseover)="..."
  *         (mouseout)="..."
  *         (contextmenu)="..."
+ *         (load)="..."
+ *         (error)="..."
  *
  *         [crossOrigin]="..."
  *         [alt]="..."
@@ -203,6 +205,18 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-contextmenu Original Leaflet documentation
      */
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    /**
+     * From leaflet fired load event.
+     * Use it with `<yaga-image-overlay (load)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-load Original Leaflet documentation
+     */
+    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
+     * From leaflet fired error event.
+     * Use it with `<yaga-image-overlay (error)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-error Original Leaflet documentation
+     */
+    @Output('error') public errorEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
@@ -258,6 +272,12 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         });
         this.on('contextmenu', (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
+        });
+        this.on('load', (event: LeafletEvent) => {
+            this.loadEvent.emit(event);
+        });
+        this.on('error', (event: LeafletEvent) => {
+            this.errorEvent.emit(event);
         });
     }
 
