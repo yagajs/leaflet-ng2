@@ -1,11 +1,13 @@
-import { GenericGeoJSONFeature } from '@yaga/generic-geojson';
 import { expect } from 'chai';
+import { Feature as GeoJSONFeature } from 'geojson';
 import { latLng, point, SVG } from 'leaflet';
 import {
     CircleDirective,
     LatLng,
     LatLngExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     PopupDirective,
     TooltipDirective,
 } from './index';
@@ -16,12 +18,16 @@ describe('Circle Directive', () => {
     let map: MapComponent;
     let layer: CircleDirective<any>;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
         (map as any)._renderer = (map as any)._renderer || new SVG();
 
-        layer = new CircleDirective<any>(map);
+        layer = new CircleDirective<any>({ref: map}, {} as any);
         layer.ngAfterContentInit();
     });
 
@@ -216,7 +222,7 @@ describe('Circle Directive', () => {
     });
 
     describe('[(geoJSON)]', () => {
-        const TEST_VALUE: GenericGeoJSONFeature<GeoJSON.Point, any> = {
+        const TEST_VALUE: GeoJSONFeature<GeoJSON.Point, any> = {
             geometry: {
                 coordinates: [1, 3],
                 type: 'Point',
@@ -240,7 +246,7 @@ describe('Circle Directive', () => {
             expect(layer.geoJSON.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
             });
@@ -248,7 +254,7 @@ describe('Circle Directive', () => {
             layer.geoJSON = TEST_VALUE;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.Point, any>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
                 expect(eventVal.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
                 return done();
@@ -275,7 +281,7 @@ describe('Circle Directive', () => {
         });
         it('should emit an event for GeoJSONChange when changing in Angular', (done: MochaDone) => {
             /* tslint:disable:max-line-length */
-            layer.geoJSONChange.subscribe((eventVal: GenericGeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
+            layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(eventVal.properties).to.equal(TEST_OBJECT);
                 return done();
             });
@@ -290,11 +296,8 @@ describe('Circle Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new CircleDirective<any>(map), { popupDirective: {value: popup} });
-            layerWithPopup.ngAfterContentInit();
+            layerWithPopup = new CircleDirective<any>({ ref: map }, {} as any);
+            popup = new PopupDirective({ nativeElement: testDiv }, { ref: layerWithPopup });
         });
         it('should bind popup', () => {
             expect((layerWithPopup as any)._popup).to.equal(popup);
@@ -306,15 +309,17 @@ describe('Circle Directive', () => {
         let tooltip: TooltipDirective;
         let testDiv: HTMLElement;
         before(() => {
-            map = new MapComponent({nativeElement: document.createElement('div')});
+            map = new MapComponent(
+                {nativeElement: document.createElement('div')},
+                new LayerGroupProvider(),
+                new MapProvider(),
+            );
             (map as any)._size = point(100, 100);
             (map as any)._pixelOrigin = point(50, 50);
             (map as any)._renderer = (map as any)._renderer || new SVG();
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new CircleDirective<any>(map), { tooltipDirective: {value: tooltip} });
+            layerWithTooltip = new CircleDirective<any>({ ref: map }, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
             layerWithTooltip.ngAfterContentInit();
         });
         it('should bind tooltip', () => {

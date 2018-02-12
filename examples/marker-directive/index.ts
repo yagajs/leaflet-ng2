@@ -30,6 +30,9 @@ const template: string = `
         [(lat)]="getDuplexPropertyByName('lat').value"
         [(lng)]="getDuplexPropertyByName('lng').value"
         [(position)]="getDuplexPropertyByName('position').value"
+        [(popupOpened)]="getDuplexPropertyByName('popupOpened').value"
+        [(tooltipOpened)]="getDuplexPropertyByName('tooltipOpened').value"
+        [(zIndexOffset)]="getDuplexPropertyByName('zIndexOffset').value"
         (dragend)="handleEvent('dragend', $event);"
         (dragstart)="handleEvent('dragstart', $event);"
         (movestart)="handleEvent('movestart', $event);"
@@ -47,6 +50,8 @@ const template: string = `
         (mouseover)="handleEvent('mouseover', $event);"
         (mouseout)="handleEvent('mouseout', $event);"
         (contextmenu)="handleEvent('contextmenu', $event);"
+        [alt]="getInputPropertyByName('title').value"
+        [title]="getInputPropertyByName('alt').value"
         >
         <yaga-icon
           [iconUrl]="iconUrl"
@@ -83,14 +88,14 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'opacity', value: 0.5, type: 'relative'},
             {name: 'draggable', value: true, type: 'checkbox'},
             {name: 'display', value: true, type: 'checkbox'},
-            {name: 'zindex', value: 255, type: 'number'},
+            {name: 'zIndexOffset', value: 255, type: 'number'},
             // {name: 'icon', value:, type: ''},
             {name: 'tooltipOpened', value: false, type: 'checkbox'},
             {name: 'popupOpened', value: false, type: 'checkbox'},
             {name: 'position', value: new LatLng(51, 7), type: 'latlng'},
         ],
         input: [
-            {name: 'title', value: 'Titel', type: 'text' },
+            {name: 'title', value: 'Title', type: 'text' },
             {name: 'alt', value: 'alternative text', type: 'text' },
         ],
         output: [
@@ -113,7 +118,6 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'contextmenu', value: '', type: 'event' },
         ],
     };
-
 
     public iconUrl: string = 'http://leafletjs.com/examples/custom-icons/leaf-green.png';
     public iconSize: Point = new Point(38, 95);

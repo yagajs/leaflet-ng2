@@ -5,7 +5,9 @@ import {
     EXAMPLE_WMS_LAYER_NAMES,
     EXAMPLE_WMS_LAYER_URL,
     LatLngBoundsExpression,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     Point,
     WmsLayerDirective,
     WMSParams,
@@ -28,10 +30,14 @@ describe('WMS-Layer Directive', () => {
     let map: MapComponent;
     let layer: WmsLayerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new WmsLayerDirective(map);
+        layer = new WmsLayerDirective({ ref: map }, {} as any);
     });
 
     describe('[(display)]', () => {
@@ -239,7 +245,6 @@ describe('WMS-Layer Directive', () => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
         });
         it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.layersChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
@@ -928,7 +933,7 @@ describe('WMS-Layer Directive', () => {
     describe('[attribution]', () => {
         let attributionControl: AttributionControlDirective;
         beforeEach(() => {
-            attributionControl = new AttributionControlDirective(map);
+            attributionControl = new AttributionControlDirective({ ref: map });
         });
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: string = 'Test attribution';

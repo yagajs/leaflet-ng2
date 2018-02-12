@@ -3,6 +3,7 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    Host,
     Inject,
     Input,
     Output,
@@ -25,6 +26,8 @@ import {
     ZoomAnimEvent,
 } from 'leaflet';
 import { ANIMATION_DELAY } from './consts';
+import { LayerGroupProvider } from './layer-group.provider';
+import { MapProvider } from './map.provider';
 
 /**
  * Angular2 root component for a Leaflet map
@@ -129,7 +132,9 @@ import { ANIMATION_DELAY } from './consts';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Component({
+    providers: [ LayerGroupProvider, MapProvider ],
     selector: 'yaga-map',
+    styles: [`:host { display: block; }`],
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
 export class MapComponent extends Map implements AfterViewInit {
@@ -364,16 +369,18 @@ export class MapComponent extends Map implements AfterViewInit {
      */
     @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
-    protected domRoot: HTMLElement;
-    protected mapDomRoot: HTMLElement;
-
     private moveTimeout: any;
     private isZooming: boolean = false;
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
+        @Host() layerProvider: LayerGroupProvider,
+        mapProvider: MapProvider,
     ) {
-        super(document.createElement('div'), { attributionControl: false, zoomControl: false});
+        super(elementRef.nativeElement, { attributionControl: false, zoomControl: false});
+
+        mapProvider.ref = this;
+        layerProvider.ref = this;
 
         const moveFn: () => any = () => {
             if (this.isZooming) {
@@ -388,9 +395,7 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.setView([0, 0], 0);
 
-        this.domRoot = elementRef.nativeElement;
-        this.mapDomRoot = (this as any)._container;
-        this.mapDomRoot.setAttribute('class', this.mapDomRoot.getAttribute('class') + ' yaga-map');
+        elementRef.nativeElement.setAttribute('class', elementRef.nativeElement.getAttribute('class') + ' yaga-map');
 
         this.on('move', () => {
             if (this.moveTimeout) {
@@ -513,8 +518,6 @@ export class MapComponent extends Map implements AfterViewInit {
      * @link https://angular.io/docs/ts/latest/api/core/index/AfterViewInit-class.html
      */
     public ngAfterViewInit(): void {
-        this.domRoot.appendChild(this.mapDomRoot);
-
         this.invalidateSize(false);
     }
     /*setZoom(zoom: number, options?: ZoomPanOptions): this {

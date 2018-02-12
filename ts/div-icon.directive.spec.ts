@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import { point } from 'leaflet';
+import { marker, point } from 'leaflet';
 import {
-    DivIconDirective,
+    DivIconDirective, LayerGroupProvider,
     LeafletEvent,
-    MapComponent,
+    MapComponent, MapProvider,
     Point,
 } from './index';
 import { randomNumber } from './spec';
@@ -13,10 +13,14 @@ describe('DivIcon Directive', () => {
     let map: MapComponent;
     let icon: DivIconDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        icon = new DivIconDirective({nativeElement: document.createElement('div')});
+        icon = new DivIconDirective({nativeElement: document.createElement('div')}, { ref: marker([0, 0]) });
     });
 
     // Events

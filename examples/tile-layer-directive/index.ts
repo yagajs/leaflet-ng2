@@ -57,6 +57,7 @@ const template: string = `
         [minZoom]="getInputPropertyByName('minZoom').value"
         [maxNativeZoom]="getInputPropertyByName('maxNativeZoom').value"
         [minNativeZoom]="getInputPropertyByName('minNativeZoom').value"
+        [subdomains]="getInputPropertyByName('subdomains').value"
         [errorTileUrl]="getInputPropertyByName('errorTileUrl').value"
         [zoomOffset]="getInputPropertyByName('zoomOffset').value"
         [tms]="getInputPropertyByName('tms').value"
@@ -102,7 +103,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'minZoom', value: 0, type: 'number' },
             {name: 'maxNativeZoom', value: 19, type: 'number' },
             {name: 'minNativeZoom', value: 3, type: 'number' },
-            // {name: 'subdomains', value: true, type: 'array-of-string' },
+            {name: 'subdomains', value: ['a', 'b', 'c'], type: 'text[]' },
             {name: 'errorTileUrl', value: '', type: 'url' },
             {name: 'zoomOffset', value: 0, type: 'number' },
             {name: 'tms', value: false, type: 'checkbox' },

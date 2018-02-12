@@ -3,14 +3,15 @@ import {
     ContentChild,
     Directive,
     EventEmitter,
-    forwardRef,
-    Inject,
     Input,
     OnDestroy,
     Optional,
     Output,
+    SkipSelf,
 } from '@angular/core';
 import {
+    Feature as GeoJSONFeature,
+    FeatureCollection as GeoJSONFeatureCollection,
     GeoJsonObject,
     GeometryObject,
     Point,
@@ -27,13 +28,8 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { DEFAULT_STYLE } from './consts';
-import { MapComponent } from './map.component';
-
-import { GenericGeoJSONFeature, GenericGeoJSONFeatureCollection } from '@yaga/generic-geojson';
-
-// Content-Child imports
-import { PopupDirective } from './popup.directive';
-import { TooltipDirective } from './tooltip.directive';
+import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 
 /**
  * Interface for the styler function of the GeoJSON directive.
@@ -45,7 +41,7 @@ import { TooltipDirective } from './tooltip.directive';
  * @link http://leafletjs.com/reference-1.2.0.html#geojson-style Original Leaflet documentation
  */
 export type IGeoJSONStylerFn<T> = (
-    geoJSON: GenericGeoJSONFeature<GeometryObject, T>,
+    geoJSON: GeoJSONFeature<GeometryObject, T>,
     defaultStyle: PathOptions,
 ) => PathOptions;
 /**
@@ -54,14 +50,14 @@ export type IGeoJSONStylerFn<T> = (
  * You can return a boolean value on each feature according if you want to add the feature or not.
  * @link http://leafletjs.com/reference-1.2.0.html#geojson-filter Original Leaflet documentation
  */
-export type IGeoJSONFilterFn<T> = (feature: GenericGeoJSONFeature<GeometryObject, T>) => boolean;
+export type IGeoJSONFilterFn<T> = (feature: GeoJSONFeature<GeometryObject, T>) => boolean;
 /**
  * Interface for the point to layer function of the GeoJSON directive.
  *
  * You can return any type of Layer that should represent the feature of type point.
  * @link http://leafletjs.com/reference-1.2.0.html#geojson-pointtolayer Original Leaflet documentation
  */
-export type IGeoJSONPointToLayerFn<T> = (geoJSON: GenericGeoJSONFeature<Point, T>, latLng: LatLng) => Layer;
+export type IGeoJSONPointToLayerFn<T> = (geoJSON: GeoJSONFeature<Point, T>, latLng: LatLng) => Layer;
 
 /**
  * Interface for the protected middleware property of the GeoJSON directive.
@@ -72,13 +68,71 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
     pointToLayer?: IGeoJSONPointToLayerFn<T>;
     defaultStyle?: PathOptions;
 }
-
+/**
+ * Angular2 directive for GeoJSON of Leaflet.
+ *
+ * *You can use this directive in an Angular2 template after importing `YagaModule`.*
+ *
+ * How to use in a template:
+ * ```html
+ * <yaga-map>
+ *     <yaga-geojson
+ *         [(data)]="..."
+ *         [(stroke)]="..."
+ *         [(color)]="..."
+ *         [(weight)]="..."
+ *         [(opacity)]="..."
+ *         [(lineCap)]="..."
+ *         [(lineJoin)]="..."
+ *         [(dashArray)]="..."
+ *         [(dashOffset)]="..."
+ *         [(fill)]="..."
+ *         [(fillColor)]="..."
+ *         [(fillOpacity)]="..."
+ *         [(fillRule)]="..."
+ *         [(className)]="..."
+ *         [(lat)]="..."
+ *         [(lng)]="..."
+ *         [(radius)]="..."
+ *
+ *         (add)="..."
+ *         (remove)="..."
+ *         (popupopen)="..."
+ *         (popupclose)="..."
+ *         (tooltipopen)="..."
+ *         (tooltipclose)="..."
+ *         (click)="..."
+ *         (dbclick)="..."
+ *         (mousedown)="..."
+ *         (mouseover)="..."
+ *         (mouseout)="..."
+ *         (contextmenu)="..."
+ *         (onEachFeature)="..."
+ *
+ *         [data]="..."
+ *         [filter]="..."
+ *         [pointToLayer]="..."
+ *         [styler]="..."
+ *         [defaultStyle]="..."
+ *         >
+ *     </yaga-geojson>
+ * </yaga-map>
+ * ```
+ *
+ * @link http://leafletjs.com/reference-1.2.0.html#geojson Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=GeoJSON%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/geojson.directive.js.html
+ * Test coverage
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/geojson.directive.js.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/geojson-directive/
+ */
 @Directive({
+    providers: [ LayerGroupProvider, LayerProvider ],
     selector: 'yaga-geojson',
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterContentInit {
     /* tslint:disable:max-line-length */
-    @Output() public dataChange: EventEmitter<GenericGeoJSONFeatureCollection<GeometryObject, T>> = new EventEmitter();
+    @Output() public dataChange: EventEmitter<GeoJSONFeatureCollection<GeometryObject, T>> = new EventEmitter();
     /* tslint:enable */
 
     /**
@@ -155,17 +209,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     /* tslint:disable:max-line-length */
-    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GenericGeoJSONFeature<GeometryObject, T>, layer: Layer}> = new EventEmitter();
+    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GeoJSONFeature<GeometryObject, T>, layer: Layer}> = new EventEmitter();
     /* tslint:enable */
-
-    /**
-     * Imports a child popup directive if there is one defined
-     */
-    @Optional() @ContentChild(PopupDirective) public popupDirective: PopupDirective;
-    /**
-     * Imports a child tooltip directive if there is one defined
-     */
-    @Optional() @ContentChild(TooltipDirective) public tooltipDirective: TooltipDirective;
 
     /**
      * Property to prevent changes before directive is initialized
@@ -179,25 +224,27 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     };
 
     constructor(
-        @Inject(forwardRef(() => MapComponent)) mapComponent: MapComponent,
+        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
+        layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
-            filter: (feature: GenericGeoJSONFeature<GeometryObject, T>) => {
+            filter: (feature: GeoJSONFeature<GeometryObject, T>) => {
                 if (this.middleware.filter) {
                     return this.middleware.filter(feature);
                 }
                 return true;
             },
-            onEachFeature: (feature: GenericGeoJSONFeature<GeometryObject, T>, layer: Layer) => {
+            onEachFeature: (feature: GeoJSONFeature<GeometryObject, T>, layer: Layer) => {
                 this.onEachFeatureEvent.emit({feature, layer});
             },
-            pointToLayer: (geoJSON: GenericGeoJSONFeature<Point, T>, latLng: LatLng): Layer => {
+            pointToLayer: (geoJSON: GeoJSONFeature<Point, T>, latLng: LatLng): Layer => {
                 if (this.middleware.pointToLayer) {
                     return this.middleware.pointToLayer(geoJSON, latLng);
                 }
                 return new Marker(latLng);
             },
-            style: (geoJSON: GenericGeoJSONFeature<GeometryObject, T>): PathOptions => {
+            style: (geoJSON: GeoJSONFeature<GeometryObject, T>): PathOptions => {
                 const defaultStyle = this.middleware.defaultStyle;
                 if (this.middleware.styler) {
                     return this.middleware.styler(geoJSON, defaultStyle);
@@ -206,7 +253,9 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
             },
         });
 
-        mapComponent.addLayer(this);
+        layerProvider.ref = this;
+        layerGroupProvider.ref = this;
+        parentLayerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -252,12 +301,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     public ngAfterContentInit(): void {
         this.initialized = true;
-        if (this.popupDirective) {
-            this.bindPopup(this.popupDirective);
-        }
-        if (this.tooltipDirective) {
-            this.bindTooltip(this.tooltipDirective);
-        }
+        this.redraw();
     }
 
     /**
@@ -271,15 +315,24 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Derived method of the original addData.
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-adddata Original Leaflet documentation
      */
-    public addData(data: GenericGeoJSONFeature<GeometryObject, T>): Layer {
+    public addData(data: GeoJSONFeature<GeometryObject, T>): Layer {
         const returnValue: Layer = super.addData(data);
 
         if (!this.initialized) {
             return returnValue;
         }
 
-        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>));
+        this.dataChange.emit((this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>));
         return returnValue;
+    }
+    /**
+     * Derived method of the original clearLayers.
+     * @link http://leafletjs.com/reference-1.2.0.html#geojson-clearlayers Original Leaflet documentation
+     */
+    public clearLayers(): this {
+        super.clearLayers();
+        this.dataChange.emit((this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>));
+        return this;
     }
 
     /**
@@ -287,10 +340,9 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      *
      * *Note: this is a combination of `clearLayers` and `addData`*
      */
-    public setData(val: GenericGeoJSONFeatureCollection<GeometryObject, T>): this {
+    public setData(val: GeoJSONFeatureCollection<GeometryObject, T>): this {
         super.clearLayers();
         super.addData(val);
-        this.dataChange.emit((this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>));
         return this;
     }
 
@@ -299,11 +351,12 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson [(data)]="someValue">` or `<yaga-geojson [data]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-l-geojson Original Leaflet documentation
      */
-    @Input() public set data(val: GenericGeoJSONFeatureCollection<GeometryObject, T>) {
-        this.setData(val);
+    @Input() public set data(val: GeoJSONFeatureCollection<GeometryObject, T>) {
+        super.clearLayers();
+        super.addData(val);
     }
-    public get data(): GenericGeoJSONFeatureCollection<GeometryObject, T> {
-        return (this.toGeoJSON() as GenericGeoJSONFeatureCollection<GeometryObject, T>);
+    public get data(): GeoJSONFeatureCollection<GeometryObject, T> {
+        return (this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>);
     }
 
     /**
@@ -313,6 +366,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set filter(filterFn: IGeoJSONFilterFn<T>) {
         this.middleware.filter = filterFn;
+        this.redraw();
     }
     public get filter(): IGeoJSONFilterFn<T> {
         return this.middleware.filter;
@@ -325,6 +379,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
         this.middleware.pointToLayer = pointToLayerFn;
+        this.redraw();
     }
     public get pointToLayer(): IGeoJSONPointToLayerFn<T> {
         return this.middleware.pointToLayer;
@@ -340,6 +395,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set styler(stylerFn: IGeoJSONStylerFn<T>) {
         this.middleware.styler = stylerFn;
+        this.redraw();
     }
     public get styler(): IGeoJSONStylerFn<T> {
         return this.middleware.styler;
@@ -353,8 +409,22 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set defaultStyle(style: PathOptions) {
         this.middleware.defaultStyle = style;
+        this.redraw();
     }
     public get defaultStyle(): PathOptions {
         return this.middleware.defaultStyle;
+    }
+
+    /**
+     * Method to apply changes to the geometries
+     */
+    protected redraw() {
+        if (this.initialized) {
+            this.initialized = false;
+            const data = this.data;
+            super.clearLayers();
+            super.addData(data);
+            this.initialized = true;
+        }
     }
 }

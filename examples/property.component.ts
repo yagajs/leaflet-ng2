@@ -58,7 +58,6 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
   <input type="checkbox" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
-
 <div *ngIf="type === 'select'" class="input-group">
   <span class="input-group-addon fixed-space">{{ name }}</span>
   <select  class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
@@ -131,7 +130,6 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
     <input type="text" class="form-control" placeholder="Add an element to array" [(ngModel)]="addToArrayValue">
     <span class="input-group-btn"><button class="btn btn-success" (click)="addToArray(addToArrayValue)"><span class="fa fa-plus"></span></button></span>
   </div>
-   
 </div>`,
 })
 /* tslint:enable */

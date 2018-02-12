@@ -3,7 +3,9 @@ import { point } from 'leaflet';
 import {
     IconDirective,
     LatLng,
+    LayerGroupProvider,
     MapComponent,
+    MapProvider,
     MarkerDirective,
     PopupDirective,
     TooltipDirective,
@@ -27,10 +29,14 @@ describe('Marker Directive', () => {
     let map: MapComponent;
     let layer: MarkerDirective;
     beforeEach(() => {
-        map = new MapComponent({nativeElement: document.createElement('div')});
+        map = new MapComponent(
+            {nativeElement: document.createElement('div')},
+            new LayerGroupProvider(),
+            new MapProvider(),
+        );
         (map as any)._size = point(100, 100);
         (map as any)._pixelOrigin = point(50, 50);
-        layer = new MarkerDirective(map);
+        layer = new MarkerDirective({ ref: map }, {} as any, {} as any);
     });
     describe('[(display)]', () => {
         it('should remove DOM container when not displaying', () => {
@@ -98,6 +104,139 @@ describe('Marker Directive', () => {
             map.addLayer(layer);
         });
     });
+    describe('[(popupOpened)]', () => {
+        beforeEach(() => {
+            layer.bindPopup('test-popup');
+        });
+        it('should be opened in Leaflet when changing in Angular', () => {
+            layer.popupOpened = true;
+            expect(layer.isPopupOpen()).to.equal(true);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.popupOpened = true;
+            expect(layer.popupOpened).to.equal(true);
+        });
+        it('should be changed in Angular when opened in Leaflet', () => {
+            layer.openPopup();
+            expect(layer.popupOpened).to.equal(true);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.popupOpened = true;
+        });
+        it('should fire an event when opening in Leaflet', (done: MochaDone) => {
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.openPopup();
+        });
+        // closing after opening
+        it('should be closed in Leaflet when changing in Angular', () => {
+            layer.popupOpened = true;
+            layer.popupOpened = false;
+            expect(layer.isPopupOpen()).to.equal(false);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.popupOpened = true;
+            layer.popupOpened = false;
+            expect(layer.popupOpened).to.equal(false);
+        });
+        it('should be changed in Angular when closing in Leaflet', () => {
+            layer.openPopup();
+            layer.closePopup();
+            expect(layer.popupOpened).to.equal(false);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.popupOpened = true;
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+
+            layer.popupOpened = false;
+        });
+        it('should fire an event when closing in Leaflet', (done: MochaDone) => {
+            layer.openPopup();
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+            layer.closePopup();
+        });
+    });
+
+    describe('[(tooltipOpened)]', () => {
+        beforeEach(() => {
+            layer.bindTooltip('test-tooltip');
+        });
+        it('should be opened in Leaflet when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            expect(layer.isTooltipOpen()).to.equal(true);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            expect(layer.tooltipOpened).to.equal(true);
+        });
+        it('should be changed in Angular when opened in Leaflet', () => {
+            layer.openTooltip();
+            expect(layer.tooltipOpened).to.equal(true);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.tooltipOpened = true;
+        });
+        it('should fire an event when opening in Leaflet', (done: MochaDone) => {
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.openTooltip();
+        });
+        // closing after opening
+        it('should be closed in Leaflet when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpened = false;
+            expect(layer.isTooltipOpen()).to.equal(false);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpened = false;
+            expect(layer.tooltipOpened).to.equal(false);
+        });
+        it('should be changed in Angular when closing in Leaflet', () => {
+            layer.openTooltip();
+            layer.closeTooltip();
+            expect(layer.tooltipOpened).to.equal(false);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+
+            layer.tooltipOpened = false;
+        });
+        it('should fire an event when closing in Leaflet', (done: MochaDone) => {
+            layer.openTooltip();
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+            layer.closeTooltip();
+        });
+    });
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = randomNumber();
@@ -133,6 +272,43 @@ describe('Marker Directive', () => {
             });
 
             layer.setOpacity(val);
+        });
+    });
+    describe('[(zIndexOffset)]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.options.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: number = randomNumber();
+            layer.setZIndexOffset(val);
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.zIndexOffset = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.setZIndexOffset(val);
         });
     });
 
@@ -499,10 +675,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            popup = new PopupDirective(map, { nativeElement: testDiv });
+            layerWithPopup = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            popup = new PopupDirective({nativeElement: document.createElement('div')}, { ref: layerWithPopup });
 
-            // Hack to get write-access to readonly property
-            layerWithPopup = Object.create(new MarkerDirective(map), { popupDirective: {value: popup} });
             layerWithPopup.ngAfterContentInit();
         });
         it('should bind popup', () => {
@@ -516,11 +691,8 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            tooltip = new TooltipDirective(map, { nativeElement: testDiv });
-
-            // Hack to get write-access to readonly property
-            layerWithTooltip = Object.create(new MarkerDirective(map), { tooltipDirective: {value: tooltip} });
-            layerWithTooltip.ngAfterContentInit();
+            layerWithTooltip = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            tooltip = new TooltipDirective({ ref: layerWithTooltip }, { nativeElement: testDiv });
         });
         it('should bind tooltip', () => {
             expect((layerWithTooltip as any)._tooltip).to.equal(tooltip);
@@ -534,11 +706,9 @@ describe('Marker Directive', () => {
         let testDiv: HTMLElement;
         before(() => {
             testDiv = document.createElement('div');
-            icon = new IconDirective();
+            layerWithIcon = new MarkerDirective({ ref: map }, {} as any, {} as any);
+            icon = new IconDirective({ ref: layerWithIcon });
             icon.iconUrl = TRANSPARENT_PIXEL;
-
-            // Hack to get write-access to readonly property
-            layerWithIcon = Object.create(new MarkerDirective(map), { iconDirective: {value: icon} });
 
             layerWithIcon.ngAfterContentInit();
         });
