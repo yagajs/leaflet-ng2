@@ -41,6 +41,7 @@ import { MarkerProvider } from './marker.provider';
  *         [(lng)]="..."
  *         [(position)]="..."
  *         [(zIndexOffset)]="..."
+ *         [(icon)]="..."
  *
  *         (dragend)="..."
  *         (dragstart)="..."
