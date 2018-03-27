@@ -33,6 +33,10 @@ const template: string = `
         (keypress)="handleEvent('keypress', $event);"
         (preclick)="handleEvent('preclick', $event);"
 
+        [(north)]="getDuplexPropertyByName('north').value"
+        [(east)]="getDuplexPropertyByName('east').value"
+        [(south)]="getDuplexPropertyByName('south').value"
+        [(west)]="getDuplexPropertyByName('west').value"
         [(display)]="getDuplexPropertyByName('display').value"
         [(stroke)]="getDuplexPropertyByName('stroke').value"
         [(color)]="getDuplexPropertyByName('color').value"
@@ -47,17 +51,11 @@ const template: string = `
         [(fillOpacity)]="getDuplexPropertyByName('fillOpacity').value"
         [(fillRule)]="getDuplexPropertyByName('fillRule').value"
         [(className)]="getDuplexPropertyByName('className').value"
-        ><!-- 
-        style
-latLngs
-bounds
-north
-east
-south
-west
-geoJSON
-
-        [interactive]="getInputPropertyByName('interactive').value" -->
+        
+        [interactive]="getInputPropertyByName('interactive').value"
+        [smoothFactor]="getInputPropertyByName('smoothFactor').value"
+        [noClip]="getInputPropertyByName('noClip').value"
+        >
         <yaga-tooltip>{{ getInputPropertyByName('tooltip directive').value }}</yaga-tooltip>
         <yaga-popup>{{ getInputPropertyByName('popup directive').value }}</yaga-popup>
       </yaga-rectangle>
@@ -67,7 +65,6 @@ geoJSON
   ${ PROPERTIES_WRAPPER }
 </div><!-- /.container -->
 <example-footer></example-footer>
-
 `;
 /* tslint:enable */
 
@@ -78,6 +75,10 @@ geoJSON
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
+            {name: 'north', value: 10, type: 'number' },
+            {name: 'east', value: 10, type: 'number' },
+            {name: 'south', value: -10, type: 'number' },
+            {name: 'west', value: -10, type: 'number' },
             {name: 'display', value: true, type: 'checkbox' },
             {name: 'stroke', value: true, type: 'checkbox' },
             {name: 'color', value: '#3cf', type: 'text' },
@@ -109,9 +110,13 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'className', value: '', type: 'text' },
             // {name: 'tooltipOpened', value: true, type: 'checkbox' },
             // {name: 'popupOpened', value: false, type: 'checkbox' }
+            {name: 'tooltip directive', value: 'Tooltip content', type: 'text' },
+            {name: 'popup directive', value: 'Popup content', type: 'text' },
         ],
         input: [
             {name: 'interactive', value: true, type: 'checkbox' },
+            {name: 'smoothFactor', value: 10, type: 'number' },
+            {name: 'noClip', value: true, type: 'checkbox' },
             {name: 'tooltip directive', value: 'This is the tooltip content', type: 'text' },
             {name: 'popup directive', value: 'This is the popup content', type: 'text' },
         ],
