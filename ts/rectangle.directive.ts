@@ -26,6 +26,7 @@ import {
     TooltipEvent,
 } from 'leaflet';
 import { LayerGroupProvider } from './layer-group.provider';
+import { LayerProvider } from './layer.provider';
 import { lng2lat } from './lng2lat';
 import { MapComponent } from './map.component';
 
@@ -91,6 +92,7 @@ import { MapComponent } from './map.component';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/rectangle-directive
  */
 @Directive({
+    providers: [ LayerProvider ],
     selector: 'yaga-rectangle',
 })
 export class RectangleDirective<T> extends Rectangle implements OnDestroy, AfterContentInit {
@@ -329,8 +331,11 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
 
     constructor(
         layerGroupProvider: LayerGroupProvider,
+        layerProvider: LayerProvider,
     ) {
         super(latLngBounds([0, 0], [0, 0]));
+
+        layerProvider.ref = this;
 
         this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Polygon', coordinates: []}};
         this.feature.properties = this.feature.properties || {};
