@@ -135,9 +135,7 @@ export class PopupDirective extends Popup implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if ((this as any)._source) {
-            (this as any)._source.unbindPopup();
-        }
+        this.layerProvider.ref.unbindPopup();
     }
 
     /**

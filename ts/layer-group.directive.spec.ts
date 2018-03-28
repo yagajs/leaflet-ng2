@@ -30,7 +30,7 @@ describe('Layer-Group Directive', () => {
         it('should re-add layer when display is true again', () => {
             layer.display = false;
             layer.display = true;
-            expect((layer as any)._map).to.equal((layer as any).parentLayerGroup);
+            expect((layer as any)._map).to.equal((layer as any).parentLayerGroupProvider.ref);
         });
         it('should set to false by removing from map', (done: MochaDone) => {
 

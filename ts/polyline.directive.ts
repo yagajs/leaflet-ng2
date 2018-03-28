@@ -15,6 +15,7 @@ import {
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
+    Map,
     PathOptions,
     Polyline,
     PolylineOptions,
@@ -284,7 +285,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
     @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         super([]);
@@ -302,7 +303,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
             this.displayChange.emit(true);
         });
 
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -347,7 +348,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**

@@ -11,7 +11,8 @@ import {
     FeatureGroup,
     LayerGroup,
     LeafletEvent,
-    Map, PathOptions,
+    Map,
+    PathOptions,
     PopupEvent,
     TooltipEvent,
 } from 'leaflet';
@@ -115,10 +116,8 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-click Original Leaflet documentation
      */
 
-    protected parentLayerGroup: Map | LayerGroup;
-
     constructor(
-        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
+        @SkipSelf() protected parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
@@ -135,8 +134,7 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(parentLayerGroupProvider.ref);
-        this.parentLayerGroup = parentLayerGroupProvider.ref;
+        this.addTo(this.parentLayerGroupProvider.ref);
 
         // Events
         this.on('layeradd', (event: Event) => {
@@ -170,7 +168,7 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.parentLayerGroupProvider.ref as Map);
     }
 
     /**
@@ -179,11 +177,11 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      */
     @Input() public set display(val: boolean) {
         if (val) {
-            this.addTo(this.parentLayerGroup);
+            this.addTo(this.parentLayerGroupProvider.ref);
             return;
         }
         // TODO: proof and maybe enhance typedefinition
-        (this.parentLayerGroup as any).removeLayer(this);
+        (this.parentLayerGroupProvider.ref as Map).removeLayer(this);
     }
     /**
      * Two-Way bound property for the display status of the layer.

@@ -413,7 +413,7 @@ describe('Popup Directive', () => {
 
     describe('Remove from source element on destroy', () => {
         it('should call unbindPopup on destroy', (done: MochaDone) => {
-            (popup as any)._source = {
+            (popup as any).layerProvider.ref = {
                 unbindPopup: done,
             };
             popup.ngOnDestroy();

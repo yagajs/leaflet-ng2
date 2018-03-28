@@ -248,14 +248,14 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
     private initialized: boolean = false;
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
         markerProvider: MarkerProvider,
     ) {
         super([0, 0]);
         layerProvider.ref = this;
         markerProvider.ref = this;
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         this.on('remove', () => {
             this.displayChange.emit(false);
@@ -349,7 +349,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**

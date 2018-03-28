@@ -113,7 +113,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
     @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        public layerProvider: LayerProvider,
+        protected layerProvider: LayerProvider,
         @Inject(ElementRef) elementRef: ElementRef,
     ) {
         super();
@@ -135,9 +135,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        if ((this as any)._source) {
-            (this as any)._source.unbindTooltip();
-        }
+        this.layerProvider.ref.unbindTooltip();
     }
 
     /**

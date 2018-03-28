@@ -18,6 +18,7 @@ import {
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
+    Map,
     PathOptions,
     PopupEvent,
     TooltipEvent,
@@ -302,7 +303,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     private initialized: boolean = false;
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         super([0, 0]);
@@ -319,7 +320,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             this.displayChange.emit(true);
         });
 
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -371,7 +372,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**

@@ -375,7 +375,7 @@ describe('Tooltip Directive', () => {
 
     describe('Remove from source element on destroy', () => {
         it('should call unbindPopup on destroy', (done: MochaDone) => {
-            (tooltip as any)._source = {
+            (tooltip as any).layerProvider.ref = {
                 unbindTooltip: done,
             };
             tooltip.ngOnDestroy();
