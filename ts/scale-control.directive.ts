@@ -119,10 +119,10 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        mapProvider: MapProvider,
+        protected mapProvider: MapProvider,
     ) {
         super();
-        mapProvider.ref.addControl(this);
+        this.mapProvider.ref.addControl(this);
 
         // Events
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
@@ -146,7 +146,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        ((this as any)._map as MapComponent).removeControl(this);
+        this.mapProvider.ref.removeControl(this);
     }
 
     /**

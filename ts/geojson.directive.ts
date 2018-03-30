@@ -1,11 +1,9 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
     Input,
     OnDestroy,
-    Optional,
     Output,
     SkipSelf,
 } from '@angular/core';
@@ -22,6 +20,7 @@ import {
     Layer,
     LeafletEvent,
     LeafletMouseEvent,
+    Map,
     Marker,
     PathOptions,
     PopupEvent,
@@ -224,7 +223,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     };
 
     constructor(
-        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
+        @SkipSelf() protected parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
@@ -255,7 +254,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
 
         layerProvider.ref = this;
         layerGroupProvider.ref = this;
-        parentLayerGroupProvider.ref.addLayer(this);
+        this.parentLayerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -308,7 +307,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.parentLayerGroupProvider.ref as Map);
     }
 
     /**

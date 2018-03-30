@@ -101,10 +101,8 @@ export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-click Original Leaflet documentation
      */
 
-    protected parentLayerGroup: Map | LayerGroup;
-
     constructor(
-        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
+        @SkipSelf() protected parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
@@ -121,8 +119,7 @@ export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(parentLayerGroupProvider.ref);
-        this.parentLayerGroup = parentLayerGroupProvider.ref;
+        this.addTo(this.parentLayerGroupProvider.ref);
 
         // Events
         this.on('add', (event: Event) => {
@@ -159,11 +156,11 @@ export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
      */
     @Input() public set display(val: boolean) {
         if (val) {
-            this.addTo(this.parentLayerGroup);
+            this.addTo(this.parentLayerGroupProvider.ref);
             return;
         }
         // TODO: proof and maybe enhance typedefinition
-        (this.parentLayerGroup as any).removeLayer(this);
+        (this.parentLayerGroupProvider.ref as Map).removeLayer(this);
     }
     /**
      * Two-Way bound property for the display status of the layer.
