@@ -254,6 +254,8 @@ Scripts registered in package.json:
 * `build-examples`: Build the examples.
 * `doc`: Build the API documentation.
 
+*Every command is also available as dockerized version, by prefixing `docker:` (ex.: `docker:lint`)*
+
 ## License
 
 This library is released under the [ISC License](LICENSE).
