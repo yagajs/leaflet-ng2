@@ -18,6 +18,7 @@ import {
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
+    Map,
     PathOptions,
     PopupEvent,
     TooltipEvent,
@@ -77,10 +78,10 @@ import { MapComponent } from './map.component';
  * </yaga-map>
  * ```
  *
- * @link http://leafletjs.com/reference-1.2.0.html#tilelayer Original Leaflet documentation
+ * @link http://leafletjs.com/reference-1.2.0.html#circle Original Leaflet documentation
  * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=Tile-Layer%20Directive Unit-Test
  * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/tile-layer.directive.js.html Test coverage
- * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/tilelayerdirective.html API documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/circledirective.html API documentation
  * @example https://leaflet-ng2.yagajs.org/latest/examples/tile-layer-directive
  */
 @Directive({
@@ -98,72 +99,84 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Two-Way bound property for the stroke state of the geometry.
      * Use it with `<yaga-circle [(stroke)]="someValue">`
      * or `<yaga-circle (strokeChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-stroke Original Leaflet documentation
      */
     @Output() public strokeChange: EventEmitter<boolean> = new EventEmitter();
     /**
      * Two-Way bound property for the line-color of the geometry.
      * Use it with `<yaga-circle [(color)]="someValue">`
      * or `<yaga-circle (colorChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-color Original Leaflet documentation
      */
     @Output() public colorChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the weight of the geometry.
      * Use it with `<yaga-circle [(weight)]="someValue">`
      * or `<yaga-circle (weightChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-weight Original Leaflet documentation
      */
     @Output() public weightChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the opacity of the geometry.
      * Use it with `<yaga-circle [(opacity)]="someValue">`
      * or `<yaga-circle (opacityChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-opacity Original Leaflet documentation
      */
     @Output() public opacityChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the lineCap of the geometry.
      * Use it with `<yaga-circle [(lineCap)]="someValue">`
      * or `<yaga-circle (lineCapChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-linecap Original Leaflet documentation
      */
     @Output() public lineCapChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the lineJoin of the geometry.
      * Use it with `<yaga-circle [(lineJoin)]="someValue">`
      * or `<yaga-circle (lineJoinChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-linejoin Original Leaflet documentation
      */
     @Output() public lineJoinChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the dashArray of the geometry.
      * Use it with `<yaga-circle [(dashArray)]="someValue">`
      * or `<yaga-circle (dashArrayChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-dasharray Original Leaflet documentation
      */
     @Output() public dashArrayChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the dashOffset of the geometry.
      * Use it with `<yaga-circle [(dashOffset)]="someValue">`
      * or `<yaga-circle (dashOffsetChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-dashoffset Original Leaflet documentation
      */
     @Output() public dashOffsetChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the fill state of the geometry.
      * Use it with `<yaga-circle [(fill)]="someValue">`
      * or `<yaga-circle (fillChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-fill Original Leaflet documentation
      */
     @Output() public fillChange: EventEmitter<boolean> = new EventEmitter();
     /**
      * Two-Way bound property for the fill-color of the geometry.
      * Use it with `<yaga-circle [(fillColor)]="someValue">`
      * or `<yaga-circle (fillColorChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-fillcolor Original Leaflet documentation
      */
     @Output() public fillColorChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the fill-opacity of the geometry.
      * Use it with `<yaga-circle [(fillOpacity)]="someValue">`
      * or `<yaga-circle (fillOpacityChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-fillopacity Original Leaflet documentation
      */
     @Output() public fillOpacityChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the fill-rule of the geometry.
      * Use it with `<yaga-circle [(fillRule)]="someValue">`
      * or `<yaga-circle (fillRuleChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-fillrule Original Leaflet documentation
      */
     @Output() public fillRuleChange: EventEmitter<string> = new EventEmitter();
     // @Output() public rendererChange: EventEmitter<number> = new EventEmitter();
@@ -171,12 +184,14 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Two-Way bound property for the className of the geometry.
      * Use it with `<yaga-circle [(className)]="someValue">`
      * or `<yaga-circle (classNameChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-classname Original Leaflet documentation
      */
     @Output() public classNameChange: EventEmitter<string> = new EventEmitter();
     /**
      * Two-Way bound property for the css-style of the geometry.
      * Use it with `<yaga-circle [(style)]="someValue">`
      * or `<yaga-circle (styleChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-setstyle Original Leaflet documentation
      */
     @Output() public styleChange: EventEmitter<PathOptions> = new EventEmitter();
 
@@ -184,30 +199,35 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Two-Way bound property for the latlng-position of the geometry.
      * Use it with `<yaga-circle [(position)]="someValue">`
      * or `<yaga-circle (positionChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-setlatlng Original Leaflet documentation
      */
     @Output() public positionChange: EventEmitter<LatLng> = new EventEmitter();
     /**
      * Two-Way bound property for the latitude of the geometry.
      * Use it with `<yaga-circle [(lat)]="someValue">`
      * or `<yaga-circle (latChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-setlatlng Original Leaflet documentation
      */
     @Output() public latChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the longitude of the geometry.
      * Use it with `<yaga-circle [(lng)]="someValue">`
      * or `<yaga-circle (lngChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-setlatlng Original Leaflet documentation
      */
     @Output() public lngChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the radius of the geometry.
      * Use it with `<yaga-circle [(radius)]="someValue">`
      * or `<yaga-circle (radiusChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-setradius Original Leaflet documentation
      */
     @Output() public radiusChange: EventEmitter<number> = new EventEmitter();
     /**
      * Two-Way bound property for the geometry represented as GeoJSON.
      * Use it with `<yaga-circle [(geoJSON)]="someValue">`
      * or `<yaga-circle (geoJSONChange)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-togeojson Original Leaflet documentation
      */
     @Output() public geoJSONChange: EventEmitter<GeoJSONFeature<GeoJSON.Point, T>> = new EventEmitter();
 
@@ -287,7 +307,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
     private initialized: boolean = false;
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         super([0, 0]);
@@ -304,7 +324,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
             this.displayChange.emit(true);
         });
 
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {
@@ -356,7 +376,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**
@@ -688,7 +708,7 @@ export class CircleDirective<T> extends Circle implements OnDestroy, AfterConten
     /**
      * Input for the GeoJSON properties.
      * Use it with `<yaga-circle [interactive]="someValue">`
-     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-interactive Original Leaflet documentation
+     * @link http://leafletjs.com/reference-1.2.0.html#circle-interactive Original Leaflet documentation
      */
     @Input() public set interactive(val: boolean) {
         const map: MapComponent = ((this as any)._map as MapComponent);

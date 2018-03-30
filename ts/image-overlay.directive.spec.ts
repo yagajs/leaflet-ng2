@@ -541,6 +541,30 @@ describe('Image-Overlay Directive', () => {
             layer.fire('contextmenu', testEvent);
         });
     });
+    describe('(load)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.loadEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                return done();
+            });
+            layer.fire('load', testEvent);
+        });
+    });
+    describe('(error)', () => {
+        it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            layer.errorEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                return done();
+            });
+            layer.fire('error', testEvent);
+        });
+    });
 
     describe('[crossOrigin]', () => {
         it('should be changed to false in Leaflet when changing in Angular to false', () => {

@@ -64,6 +64,7 @@ describe('GeoJSON Directive', () => {
             expect(layer.data).to.deep.equal(TEST_VALUE);
         });
         it('should fire an event when changing in Angular', (done: MochaDone) => {
+            layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: LatLng[]) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
@@ -71,7 +72,8 @@ describe('GeoJSON Directive', () => {
 
             layer.data = TEST_VALUE;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+        it('should fire an event when changing internal setData function', (done: MochaDone) => {
+            layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();

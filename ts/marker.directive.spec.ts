@@ -104,6 +104,139 @@ describe('Marker Directive', () => {
             map.addLayer(layer);
         });
     });
+    describe('[(popupOpened)]', () => {
+        beforeEach(() => {
+            layer.bindPopup('test-popup');
+        });
+        it('should be opened in Leaflet when changing in Angular', () => {
+            layer.popupOpened = true;
+            expect(layer.isPopupOpen()).to.equal(true);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.popupOpened = true;
+            expect(layer.popupOpened).to.equal(true);
+        });
+        it('should be changed in Angular when opened in Leaflet', () => {
+            layer.openPopup();
+            expect(layer.popupOpened).to.equal(true);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.popupOpened = true;
+        });
+        it('should fire an event when opening in Leaflet', (done: MochaDone) => {
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.openPopup();
+        });
+        // closing after opening
+        it('should be closed in Leaflet when changing in Angular', () => {
+            layer.popupOpened = true;
+            layer.popupOpened = false;
+            expect(layer.isPopupOpen()).to.equal(false);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.popupOpened = true;
+            layer.popupOpened = false;
+            expect(layer.popupOpened).to.equal(false);
+        });
+        it('should be changed in Angular when closing in Leaflet', () => {
+            layer.openPopup();
+            layer.closePopup();
+            expect(layer.popupOpened).to.equal(false);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.popupOpened = true;
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+
+            layer.popupOpened = false;
+        });
+        it('should fire an event when closing in Leaflet', (done: MochaDone) => {
+            layer.openPopup();
+            layer.popupOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+            layer.closePopup();
+        });
+    });
+
+    describe('[(tooltipOpened)]', () => {
+        beforeEach(() => {
+            layer.bindTooltip('test-tooltip');
+        });
+        it('should be opened in Leaflet when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            expect(layer.isTooltipOpen()).to.equal(true);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            expect(layer.tooltipOpened).to.equal(true);
+        });
+        it('should be changed in Angular when opened in Leaflet', () => {
+            layer.openTooltip();
+            expect(layer.tooltipOpened).to.equal(true);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.tooltipOpened = true;
+        });
+        it('should fire an event when opening in Leaflet', (done: MochaDone) => {
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(true);
+                return done();
+            });
+
+            layer.openTooltip();
+        });
+        // closing after opening
+        it('should be closed in Leaflet when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpened = false;
+            expect(layer.isTooltipOpen()).to.equal(false);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpened = false;
+            expect(layer.tooltipOpened).to.equal(false);
+        });
+        it('should be changed in Angular when closing in Leaflet', () => {
+            layer.openTooltip();
+            layer.closeTooltip();
+            expect(layer.tooltipOpened).to.equal(false);
+        });
+        it('should fire an event when opening in Angular', (done: MochaDone) => {
+            layer.tooltipOpened = true;
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+
+            layer.tooltipOpened = false;
+        });
+        it('should fire an event when closing in Leaflet', (done: MochaDone) => {
+            layer.openTooltip();
+            layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
+                expect(eventVal).to.equal(false);
+                return done();
+            });
+            layer.closeTooltip();
+        });
+    });
     describe('[(opacity)]', () => {
         it('should be changed in Leaflet when changing in Angular', () => {
             const val: number = randomNumber();
@@ -139,6 +272,43 @@ describe('Marker Directive', () => {
             });
 
             layer.setOpacity(val);
+        });
+    });
+    describe('[(zIndexOffset)]', () => {
+        it('should be changed in Leaflet when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.options.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Angular', () => {
+            const val: number = randomNumber();
+            layer.zIndexOffset = val;
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should be changed in Angular when changing in Leaflet', () => {
+            const val: number = randomNumber();
+            layer.setZIndexOffset(val);
+            expect(layer.zIndexOffset).to.equal(val);
+        });
+        it('should fire an event when changing in Angular', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.zIndexOffset = val;
+        });
+        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
+            const val: number = randomNumber();
+
+            layer.zIndexOffsetChange.subscribe((eventVal: number) => {
+                expect(eventVal).to.equal(val);
+                return done();
+            });
+
+            layer.setZIndexOffset(val);
         });
     });
 

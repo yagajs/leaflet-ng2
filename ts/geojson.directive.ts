@@ -1,11 +1,9 @@
 import {
     AfterContentInit,
-    ContentChild,
     Directive,
     EventEmitter,
     Input,
     OnDestroy,
-    Optional,
     Output,
     SkipSelf,
 } from '@angular/core';
@@ -22,6 +20,7 @@ import {
     Layer,
     LeafletEvent,
     LeafletMouseEvent,
+    Map,
     Marker,
     PathOptions,
     PopupEvent,
@@ -68,7 +67,64 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
     pointToLayer?: IGeoJSONPointToLayerFn<T>;
     defaultStyle?: PathOptions;
 }
-
+/**
+ * Angular2 directive for GeoJSON of Leaflet.
+ *
+ * *You can use this directive in an Angular2 template after importing `YagaModule`.*
+ *
+ * How to use in a template:
+ * ```html
+ * <yaga-map>
+ *     <yaga-geojson
+ *         [(data)]="..."
+ *         [(stroke)]="..."
+ *         [(color)]="..."
+ *         [(weight)]="..."
+ *         [(opacity)]="..."
+ *         [(lineCap)]="..."
+ *         [(lineJoin)]="..."
+ *         [(dashArray)]="..."
+ *         [(dashOffset)]="..."
+ *         [(fill)]="..."
+ *         [(fillColor)]="..."
+ *         [(fillOpacity)]="..."
+ *         [(fillRule)]="..."
+ *         [(className)]="..."
+ *         [(lat)]="..."
+ *         [(lng)]="..."
+ *         [(radius)]="..."
+ *
+ *         (add)="..."
+ *         (remove)="..."
+ *         (popupopen)="..."
+ *         (popupclose)="..."
+ *         (tooltipopen)="..."
+ *         (tooltipclose)="..."
+ *         (click)="..."
+ *         (dbclick)="..."
+ *         (mousedown)="..."
+ *         (mouseover)="..."
+ *         (mouseout)="..."
+ *         (contextmenu)="..."
+ *         (onEachFeature)="..."
+ *
+ *         [data]="..."
+ *         [filter]="..."
+ *         [pointToLayer]="..."
+ *         [styler]="..."
+ *         [defaultStyle]="..."
+ *         >
+ *     </yaga-geojson>
+ * </yaga-map>
+ * ```
+ *
+ * @link http://leafletjs.com/reference-1.2.0.html#geojson Original Leaflet documentation
+ * @link https://leaflet-ng2.yagajs.org/latest/browser-test?grep=GeoJSON%20Directive Unit-Test
+ * @link https://leaflet-ng2.yagajs.org/latest/coverage/lcov-report/lib/geojson.directive.js.html
+ * Test coverage
+ * @link https://leaflet-ng2.yagajs.org/latest/typedoc/classes/geojson.directive.js.html API documentation
+ * @example https://leaflet-ng2.yagajs.org/latest/examples/geojson-directive/
+ */
 @Directive({
     providers: [ LayerGroupProvider, LayerProvider ],
     selector: 'yaga-geojson',
@@ -167,7 +223,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     };
 
     constructor(
-        @SkipSelf() parentLayerGroupProvider: LayerGroupProvider,
+        @SkipSelf() protected parentLayerGroupProvider: LayerGroupProvider,
         layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
@@ -198,7 +254,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
 
         layerProvider.ref = this;
         layerGroupProvider.ref = this;
-        parentLayerGroupProvider.ref.addLayer(this);
+        this.parentLayerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -244,13 +300,14 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     public ngAfterContentInit(): void {
         this.initialized = true;
+        this.redraw();
     }
 
     /**
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.parentLayerGroupProvider.ref as Map);
     }
 
     /**
@@ -267,6 +324,15 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         this.dataChange.emit((this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>));
         return returnValue;
     }
+    /**
+     * Derived method of the original clearLayers.
+     * @link http://leafletjs.com/reference-1.2.0.html#geojson-clearlayers Original Leaflet documentation
+     */
+    public clearLayers(): this {
+        super.clearLayers();
+        this.dataChange.emit((this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>));
+        return this;
+    }
 
     /**
      * Method to remove all existing data and add the new data in one step.
@@ -276,7 +342,6 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
     public setData(val: GeoJSONFeatureCollection<GeometryObject, T>): this {
         super.clearLayers();
         super.addData(val);
-        this.dataChange.emit((this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>));
         return this;
     }
 
@@ -286,7 +351,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-l-geojson Original Leaflet documentation
      */
     @Input() public set data(val: GeoJSONFeatureCollection<GeometryObject, T>) {
-        this.setData(val);
+        super.clearLayers();
+        super.addData(val);
     }
     public get data(): GeoJSONFeatureCollection<GeometryObject, T> {
         return (this.toGeoJSON() as GeoJSONFeatureCollection<GeometryObject, T>);
@@ -299,6 +365,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set filter(filterFn: IGeoJSONFilterFn<T>) {
         this.middleware.filter = filterFn;
+        this.redraw();
     }
     public get filter(): IGeoJSONFilterFn<T> {
         return this.middleware.filter;
@@ -311,6 +378,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
         this.middleware.pointToLayer = pointToLayerFn;
+        this.redraw();
     }
     public get pointToLayer(): IGeoJSONPointToLayerFn<T> {
         return this.middleware.pointToLayer;
@@ -326,6 +394,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set styler(stylerFn: IGeoJSONStylerFn<T>) {
         this.middleware.styler = stylerFn;
+        this.redraw();
     }
     public get styler(): IGeoJSONStylerFn<T> {
         return this.middleware.styler;
@@ -339,8 +408,22 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Input() public set defaultStyle(style: PathOptions) {
         this.middleware.defaultStyle = style;
+        this.redraw();
     }
     public get defaultStyle(): PathOptions {
         return this.middleware.defaultStyle;
+    }
+
+    /**
+     * Method to apply changes to the geometries
+     */
+    protected redraw() {
+        if (this.initialized) {
+            this.initialized = false;
+            const data = this.data;
+            super.clearLayers();
+            super.addData(data);
+            this.initialized = true;
+        }
     }
 }

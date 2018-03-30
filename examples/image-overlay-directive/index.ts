@@ -39,6 +39,8 @@ const template: string = `
         (contextmenu)="handleEvent('contextmenu', $event);"
         (add)="handleEvent('add', $event);"
         (remove)="handleEvent('remove', $event);"
+        (load)="handleEvent('load', $event);"
+        (error)="handleEvent('error', $event);"
   
         [attribution]="getInputPropertyByName('attribution').value"
         [alt]="getInputPropertyByName('alt').value"
@@ -92,6 +94,8 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'contextmenu', value: '', type: 'event' },
             {name: 'add', value: '', type: 'event' },
             {name: 'remove', value: '', type: 'event' },
+            {name: 'load', value: '', type: 'event' },
+            {name: 'error', value: '', type: 'event' },
             ],
     };
 }

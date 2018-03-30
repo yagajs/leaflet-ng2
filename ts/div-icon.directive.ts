@@ -9,6 +9,7 @@ import {
 import {
     DivIcon,
     LeafletEvent,
+    Map,
     Point,
 } from 'leaflet';
 import { MarkerProvider } from './marker.provider';

@@ -2,13 +2,14 @@
 import 'reflect-metadata';
 import 'zone.js';
 
-import { OSM_TILE_LAYER_URL, YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
+import { EXAMPLE_WMS_LAYER_NAMES, EXAMPLE_WMS_LAYER_URL, YagaModule } from '../../lib/index'; // @yaga/leflet-ng2
 
 import { Component, PlatformRef } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bounds, point } from 'leaflet';
 
 import { ExampleAppComponentBlueprint, IExampleProperties } from '../app-component-blueprint';
 import { ExamplePropertiesModule, PROPERTIES_WRAPPER } from '../property.component';
@@ -17,15 +18,20 @@ const platform: PlatformRef = platformBrowserDynamic();
 
 /* tslint:disable:max-line-length */
 const template: string = `
-<example-header [title]="'Tile-Layer-Directive'"></example-header>
+<example-header [title]="'WMS-Layer-Directive'"></example-header>
 <div class="container">
   <div class="map">
-    <yaga-map>
-      <yaga-tile-layer
+    <yaga-map [lat]="51" [lng]="7" [zoom]="7">
+      <yaga-wms-layer        
         [(url)]="getDuplexPropertyByName('url').value"
         [(display)]="getDuplexPropertyByName('display').value"
         [(opacity)]="getDuplexPropertyByName('opacity').value"
         [(zIndex)]="getDuplexPropertyByName('zIndex').value"
+        [(layers)]="getDuplexPropertyByName('layers').value"
+        [(styles)]="getDuplexPropertyByName('styles').value"
+        [(format)]="getDuplexPropertyByName('format').value"
+        [(version)]="getDuplexPropertyByName('version').value"
+        [(transparent)]="getDuplexPropertyByName('transparent').value"
 
         (add)="handleEvent('add', $event);"
         (remove)="handleEvent('remove', $event);"
@@ -61,11 +67,13 @@ const template: string = `
         [errorTileUrl]="getInputPropertyByName('errorTileUrl').value"
         [zoomOffset]="getInputPropertyByName('zoomOffset').value"
         [tms]="getInputPropertyByName('tms').value"
+        [tileSize]="getInputPropertyByName('tileSize').value"
         [zoomReverse]="getInputPropertyByName('zoomReverse').value"
         [detectRetina]="getInputPropertyByName('detectRetina').value"
         [crossOrigin]="getInputPropertyByName('crossOrigin').value">
-      </yaga-tile-layer>
+      </yaga-wms-layer>
       <yaga-attribution-control></yaga-attribution-control>
+      <yaga-circle-marker [lat]="51" [lng]="7"></yaga-circle-marker>
     </yaga-map>
   </div>
   ${ PROPERTIES_WRAPPER }
@@ -84,18 +92,23 @@ const template: string = `
 export class AppComponent extends ExampleAppComponentBlueprint {
     public properties: IExampleProperties = {
         duplex: [
-            {name: 'url', value: OSM_TILE_LAYER_URL, type: 'text' },
+            {name: 'url', value: EXAMPLE_WMS_LAYER_URL, type: 'text' },
             {name: 'display', value: true, type: 'checkbox' },
             {name: 'opacity', value: 7, type: 'relative' },
             {name: 'zIndex', value: 5, type: 'number' },
+            {name: 'layers', value: EXAMPLE_WMS_LAYER_NAMES, type: 'text[]' },
+            {name: 'styles', value: [], type: 'text[]' },
+            {name: 'format', value: 'image/png', type: 'text' },
+            {name: 'version', value: '1.1.1', type: 'text' },
+            {name: 'transparent', value: false, type: 'checkbox' },
         ],
         input: [
             {name: 'attribution', value: 'OpenStreetMap', type: 'text' },
-            // {name: 'tileSize', value: true, type: 'point' },
+            {name: 'tileSize', value: point([256, 256]), type: 'point' },
             {name: 'updateWhenIdle', value: true, type: 'checkbox' },
             {name: 'updateWhenZooming', value: true, type: 'checkbox' },
             {name: 'updateInterval', value: 200, type: 'number' },
-            // {name: 'bounds', value: true, type: 'bounds' },
+            {name: 'bounds', value: bounds([9.53154, 50.1506], [5.72499, 52.602]), type: 'bounds' },
             {name: 'noWrap', value: false, type: 'checkbox' },
             {name: 'className', value: '', type: 'text' },
             {name: 'keepBuffer', value: true, type: 'checkbox' },
@@ -103,7 +116,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'minZoom', value: 0, type: 'number' },
             {name: 'maxNativeZoom', value: 19, type: 'number' },
             {name: 'minNativeZoom', value: 3, type: 'number' },
-            {name: 'subdomains', value: ['a', 'b', 'c'], type: 'text[]' },
+            {name: 'subdomains', value: [], type: 'text[]' },
             {name: 'errorTileUrl', value: '', type: 'url' },
             {name: 'zoomOffset', value: 0, type: 'number' },
             {name: 'tms', value: false, type: 'checkbox' },
