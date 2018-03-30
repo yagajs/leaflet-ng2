@@ -19,6 +19,7 @@ import {
     LeafletMouseEvent,
     LineCapShape,
     LineJoinShape,
+    Map,
     PathOptions,
     PolylineOptions,
     PopupEvent,
@@ -330,7 +331,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
     private initialized: boolean = false;
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         super(latLngBounds([0, 0], [0, 0]));
@@ -347,7 +348,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
             this.displayChange.emit(true);
         });
 
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: Event) => {
@@ -399,7 +400,7 @@ export class RectangleDirective<T> extends Rectangle implements OnDestroy, After
      * Internal method to provide the removal of the layer in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**

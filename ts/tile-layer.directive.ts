@@ -228,7 +228,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
@@ -243,7 +243,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(layerGroupProvider.ref);
+        this.addTo(this.layerGroupProvider.ref);
 
         // Events
         this.on('add', (event: Event) => {
@@ -307,7 +307,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**

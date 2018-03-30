@@ -123,7 +123,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
     @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
-        mapProvider: MapProvider,
+        protected mapProvider: MapProvider,
     ) {
         super({prefix: ATTRIBUTION_PREFIX});
         mapProvider.ref.addControl(this);
@@ -150,7 +150,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        ((this as any)._map as MapComponent).removeControl(this);
+        this.mapProvider.ref.removeControl(this);
     }
 
     /**

@@ -239,7 +239,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
-        layerGroupProvider: LayerGroupProvider,
+        protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
@@ -254,7 +254,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref.addLayer(this);
 
         // Events
         this.on('add', (event: LeafletEvent) => {
@@ -318,7 +318,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        this.removeFrom((this as any)._map);
+        this.removeFrom(this.layerGroupProvider.ref as Map);
     }
 
     /**
