@@ -272,6 +272,11 @@ describe('Tooltip Directive', () => {
             tooltip.className = val;
             expect(tooltip.options.className).to.equal(val);
         });
+        it('should be changed in DOM when changing in Angular', () => {
+            const val: string = 'test-class';
+            tooltip.className = val;
+            expect(((tooltip as any)._container as HTMLDivElement).getAttribute('class').split(' ')).to.include(val);
+        });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             tooltip.className = val;
