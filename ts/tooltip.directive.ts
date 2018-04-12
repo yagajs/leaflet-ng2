@@ -14,7 +14,6 @@ import {
     latLng,
     LatLngExpression,
     LeafletEvent,
-    Map,
     Point,
     Tooltip,
 } from 'leaflet';
@@ -285,7 +284,9 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-sticky Original Leaflet documentation
      */
     @Input() public set sticky(val: boolean) {
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, true);
         this.options.sticky = val;
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get sticky(): boolean {
         return this.options.sticky;
@@ -298,6 +299,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      */
     @Input() public set direction(val: Direction) {
         this.options.direction = val;
+        this.reopen();
     }
     public get direction(): Direction {
         return this.options.direction;
@@ -309,7 +311,9 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-permanent Original Leaflet documentation
      */
     @Input() public set permanent(val: boolean) {
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, true);
         this.options.permanent = val;
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get permanent(): boolean {
         return this.options.permanent;
@@ -322,8 +326,15 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      */
     @Input() public set offset(val: Point) {
         this.options.offset = val;
+        this.reopen();
     }
     public get offset(): Point {
         return (this.options.offset as Point);
+    }
+    public reopen(force: boolean = false) {
+        if (force || this.opened) {
+            this.layerProvider.ref.closeTooltip();
+            this.layerProvider.ref.openTooltip();
+        }
     }
 }
