@@ -392,6 +392,11 @@ describe('Popup Directive', () => {
             popup.className = val;
             expect(popup.options.className).to.equal(val);
         });
+        it('should be changed in DOM when changing in Angular', () => {
+            const val: string = 'test-class';
+            popup.className = val;
+            expect(((popup as any)._container as HTMLDivElement).getAttribute('class').split(' ')).to.include(val);
+        });
         it('should be changed in Angular when changing in Angular', () => {
             const val: string = 'test-class';
             popup.className = val;
