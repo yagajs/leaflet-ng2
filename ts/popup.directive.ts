@@ -347,8 +347,20 @@ export class PopupDirective extends Popup implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#popup-classname Original Leaflet documentation
      */
     @Input() public set className(val: string) {
+        if (!(this as any)._container) {
+            this.options.className = val;
+            return;
+        }
+        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute('class') || '';
+
+        const newClassNameSplited: string[] = oldClassName.split(` ${this.options.className} `);
+
+        if (newClassNameSplited.length === 1) {
+            newClassNameSplited.push('');
+        }
+
+        ((this as any)._container as HTMLDivElement).setAttribute('class', newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
-        this.reopen();
     }
     public get className(): string {
         return this.options.className;
