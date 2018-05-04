@@ -39,9 +39,9 @@ const template: string = `
         [opacity]="getInputPropertyByName('opacity').value"
 
         >
-        <yaga-tile-layer yaga-base-layer="OSM" [url]="'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
-        <yaga-tile-layer yaga-base-layer="OTM" [url]="'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
-        <yaga-circle-marker yaga-overlay-layer="Marker" [lat]="51" [lng]="7"></yaga-circle-marker>
+        <yaga-tile-layer yaga-base-layer [caption]="getInputPropertyByName('caption of osm-layer').value" [url]="'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
+        <yaga-tile-layer yaga-base-layer [caption]="getInputPropertyByName('caption of otm-layer').value" [url]="'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'"></yaga-tile-layer>
+        <yaga-circle-marker yaga-overlay-layer [caption]="getInputPropertyByName('caption of marker-layer').value" [lat]="51" [lng]="7"></yaga-circle-marker>
       </yaga-layers-control>
     </yaga-map>
   </div>
@@ -61,12 +61,16 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'display', value: true, type: 'checkbox' },
         ],
         input: [
-            {name: 'opacity', value: 0.8, type: 'relative'},{
+            { name: 'opacity', value: 0.8, type: 'relative' },
+            {
                 additional: { states: ['topleft', 'topright', 'bottomleft', 'bottomright']},
                 name: 'position',
                 type: 'select',
                 value: 'topright',
             },
+            { name: 'caption of osm-layer', value: 'OSM', type: 'text'},
+            { name: 'caption of otm-layer', value: 'OTM', type: 'text'},
+            { name: 'caption of marker-layer', value: 'Marker', type: 'text'},
         ],
         output: [
             {name: 'click', value: '', type: 'event' },
