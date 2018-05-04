@@ -62,7 +62,7 @@ import { MapComponent } from './map.component';
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -254,11 +254,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-polygon (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#polygon-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-polygon (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#polygon-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dblclick') public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-polygon (mousedown)="processEvent($event)">`
@@ -326,8 +326,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on('dblclick', (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
         this.on('mousedown', (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);

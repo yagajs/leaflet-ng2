@@ -483,15 +483,15 @@ describe('WMS-Layer Directive', () => {
             layer.fire('click', testEvent);
         });
     });
-    describe('(dbclick)', () => {
+    describe('(dblclick)', () => {
         it('should fire event in Angular when firing event in Leaflet', (done: MochaDone) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
-            layer.dbclickEvent.subscribe((event: any) => {
+            layer.dblclickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testEvent.testHandle);
                 return done();
             });
-            layer.fire('dbclick', testEvent);
+            layer.fire('dblclick', testEvent);
         });
     });
     describe('(mousedown)', () => {
