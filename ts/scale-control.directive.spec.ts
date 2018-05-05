@@ -152,12 +152,12 @@ describe('Scale-Control Directive', () => {
             }));
         });
     });
-    describe('(dbclick)', () => {
+    describe('(dblclick)', () => {
         it('should fire an event when firing event from DOM', (done: MochaDone) => {
-            control.dbclickEvent.subscribe(() => {
+            control.dblclickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('dbclick', {
+            control.getContainer().dispatchEvent(new MouseEvent('dblclick', {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,

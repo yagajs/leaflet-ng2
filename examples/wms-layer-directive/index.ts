@@ -40,7 +40,7 @@ const template: string = `
         (tooltipopen)="handleEvent('tooltipopen', $event);"
         (tooltipclose)="handleEvent('tooltipclose', $event);"
         (click)="handleEvent('click', $event);"
-        (dbclick)="handleEvent('dbclick', $event);"
+        (dblclick)="handleEvent('dblclick', $event);"
         (mousedown)="handleEvent('mousedown', $event);"
         (mouseover)="handleEvent('mouseover', $event);"
         (mouseout)="handleEvent('mouseout', $event);"
@@ -133,7 +133,7 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'tooltipopen', value: '', type: 'event' },
             {name: 'tooltipclose', value: '', type: 'event' },
             {name: 'click', value: '', type: 'event' },
-            {name: 'dbclick', value: '', type: 'event' },
+            {name: 'dblclick', value: '', type: 'event' },
             {name: 'mousedown', value: '', type: 'event' },
             {name: 'mouseover', value: '', type: 'event' },
             {name: 'mouseout', value: '', type: 'event' },

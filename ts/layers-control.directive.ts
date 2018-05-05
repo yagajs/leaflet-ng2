@@ -33,7 +33,7 @@ import { enhanceMouseEvent } from './mouse-event-helper';
  *         (add)="..."
  *         (remove)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -94,11 +94,11 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-layers-control (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#control-layers-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-layers-control (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#control-layers-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dblclick') public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-layers-control (mousedown)="processEvent($event)">`
@@ -130,8 +130,8 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
         this.getContainer().addEventListener('click', (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener('dbclick', (event: MouseEvent) => {
-            this.dbclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        this.getContainer().addEventListener('dblclick', (event: MouseEvent) => {
+            this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
         this.getContainer().addEventListener('mousedown', (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
