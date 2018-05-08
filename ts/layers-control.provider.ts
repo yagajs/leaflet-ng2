@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Control } from 'leaflet';
+import { Injectable } from "@angular/core";
+import { Control } from "leaflet";
 
 /**
  * Injectable Angular provider to reference to Leaflets layer-control

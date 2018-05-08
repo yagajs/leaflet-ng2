@@ -5,14 +5,13 @@ import {
     Inject,
     Input,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     DivIcon,
     LeafletEvent,
-    Map,
     Point,
-} from 'leaflet';
-import { MarkerProvider } from './marker.provider';
+} from "leaflet";
+import { MarkerProvider } from "./marker.provider";
 /**
  * Angular2 directive for Leaflet div-icons.
  *
@@ -45,14 +44,14 @@ import { MarkerProvider } from './marker.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/div-icon-directive/
  */
 @Directive({
-    selector: 'yaga-div-icon',
+    selector: "yaga-div-icon",
 })
 export class DivIconDirective extends DivIcon  {
     /**
      * This is an EventEmitter used to notify on any change in this object. It is mainly created to provide reactions
      * of the marker directive on changes.
      */
-    @Output('update') public updateEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("update") public updateEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     /**
      * The native element from angulars element-ref and blueprint for the icon content.
@@ -66,12 +65,12 @@ export class DivIconDirective extends DivIcon  {
         super({});
         this.contentHtml = elementRef.nativeElement;
 
-        if (typeof MutationObserver === 'function') {
+        if (typeof MutationObserver === "function") {
             const mutationObserver = new MutationObserver(() => {
                 this.markerProvider.ref.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
-                    type: 'update',
+                    type: "update",
                 });
             });
             mutationObserver.observe(
@@ -84,11 +83,11 @@ export class DivIconDirective extends DivIcon  {
                 },
             );
         } else {
-            this.contentHtml.addEventListener('DOMSubtreeModified', () => {
+            this.contentHtml.addEventListener("DOMSubtreeModified", () => {
                 this.markerProvider.ref.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
-                    type: 'update',
+                    type: "update",
                 });
             });
         }
@@ -105,7 +104,7 @@ export class DivIconDirective extends DivIcon  {
         this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
-            type: 'update',
+            type: "update",
         });
     }
     public get iconSize(): Point {
@@ -122,7 +121,7 @@ export class DivIconDirective extends DivIcon  {
         this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
-            type: 'update',
+            type: "update",
         });
     }
     public get iconAnchor(): Point {
@@ -139,7 +138,7 @@ export class DivIconDirective extends DivIcon  {
         this.markerProvider.ref.setIcon(this);
         this.updateEvent.emit({
             target: this,
-            type: 'update',
+            type: "update",
         });
     }
     public get popupAnchor(): Point {
@@ -152,8 +151,8 @@ export class DivIconDirective extends DivIcon  {
      */
     public createIcon(oldDivIcon: HTMLElement): HTMLElement {
         oldDivIcon = super.createIcon(oldDivIcon);
-        if (oldDivIcon.getAttribute('class').split(' ').indexOf('yaga-div-icon') === -1) {
-            oldDivIcon.setAttribute('class', oldDivIcon.getAttribute('class') + ' yaga-div-icon');
+        if (oldDivIcon.getAttribute("class").split(" ").indexOf("yaga-div-icon") === -1) {
+            oldDivIcon.setAttribute("class", oldDivIcon.getAttribute("class") + " yaga-div-icon");
         }
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));
         return oldDivIcon;

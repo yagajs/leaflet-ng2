@@ -6,7 +6,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Content,
     Direction,
@@ -16,8 +16,8 @@ import {
     LeafletEvent,
     Point,
     Tooltip,
-} from 'leaflet';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet tooltips.
@@ -54,7 +54,7 @@ import { LayerProvider } from './layer.provider';
  * ```
  */
 @Directive({
-    selector: 'yaga-tooltip',
+    selector: "yaga-tooltip",
 })
 export class TooltipDirective extends Tooltip implements OnDestroy {
     /**
@@ -103,13 +103,13 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip (open)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-tooltipopen Original Leaflet documentation
      */
-    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("open") public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired close event.
      * Use it with `<yaga-tooltip (close)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-tooltipclose Original Leaflet documentation
      */
-    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("close") public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         protected layerProvider: LayerProvider,
@@ -118,11 +118,11 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         super();
         this.setContent(elementRef.nativeElement);
 
-        this.on('add', (event: LeafletEvent): void => {
+        this.on("add", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
         });
-        this.on('remove', (event: LeafletEvent): void => {
+        this.on("remove", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
@@ -250,15 +250,15 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
             this.options.className = val;
             return;
         }
-        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute('class') || '';
+        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute("class") || "";
 
         const newClassNameSplited: string[] = oldClassName.split(` ${this.options.className} `);
 
         if (newClassNameSplited.length === 1) {
-            newClassNameSplited.push('');
+            newClassNameSplited.push("");
         }
 
-        ((this as any)._container as HTMLDivElement).setAttribute('class', newClassNameSplited.join(` ${val} `).trim());
+        ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
     }
     public get className(): string {

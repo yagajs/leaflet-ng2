@@ -4,17 +4,16 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import { Control,
     ControlPosition,
     LeafletEvent,
     LeafletMouseEvent,
     Map,
-} from 'leaflet';
-import { ATTRIBUTION_PREFIX } from './consts';
-import { MapComponent } from './map.component';
-import { MapProvider } from './map.provider';
-import { enhanceMouseEvent } from './mouse-event-helper';
+} from "leaflet";
+import { ATTRIBUTION_PREFIX } from "./consts";
+import { MapProvider } from "./map.provider";
+import { enhanceMouseEvent } from "./mouse-event-helper";
 
 /**
  * Angular2 directive for the attribution-control of Leaflet.
@@ -51,7 +50,7 @@ import { enhanceMouseEvent } from './mouse-event-helper';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/attribution-control-directive/
  */
 @Directive({
-    selector: 'yaga-attribution-control',
+    selector: "yaga-attribution-control",
 })
 export class AttributionControlDirective extends Control.Attribution implements OnDestroy  {
     /**
@@ -84,43 +83,43 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Use it with `<yaga-attribution-control (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-attribution-control (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-attribution-control (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dblclick event.
      * Use it with `<yaga-attribution-control (dblclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-dblclick Original Leaflet documentation
      */
-    @Output('dblclick') public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-attribution-control (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-attribution-control (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-attribution-control (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     constructor(
         protected mapProvider: MapProvider,
@@ -129,19 +128,19 @@ export class AttributionControlDirective extends Control.Attribution implements 
         mapProvider.ref.addControl(this);
 
         // Events
-        this.getContainer().addEventListener('click', (event: MouseEvent) => {
+        this.getContainer().addEventListener("click", (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener('dblclick', (event: MouseEvent) => {
+        this.getContainer().addEventListener("dblclick", (event: MouseEvent) => {
             this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener('mousedown', (event: MouseEvent) => {
+        this.getContainer().addEventListener("mousedown", (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener('mouseover', (event: MouseEvent) => {
+        this.getContainer().addEventListener("mouseover", (event: MouseEvent) => {
             this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener('mouseout', (event: MouseEvent) => {
+        this.getContainer().addEventListener("mouseout", (event: MouseEvent) => {
             this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
@@ -160,7 +159,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
         /* tslint:disable */
         super.remove();
         this.displayChange.emit(false);
-        this.removeEvent.emit({target: this, type: 'remove'});
+        this.removeEvent.emit({target: this, type: "remove"});
         return this;
     }
     /**
@@ -170,7 +169,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
         /* tslint:disable */
         super.addTo(map);
         this.displayChange.emit(true);
-        this.addEvent.emit({target: this, type: 'add'});
+        this.addEvent.emit({target: this, type: "add"});
         return this;
     }
     /**
@@ -207,14 +206,14 @@ export class AttributionControlDirective extends Control.Attribution implements 
             return;
         }
         if (val) {
-            this.getContainer().style.display = '';
+            this.getContainer().style.display = "";
             return;
         }
-        this.getContainer().style.display = 'none';
+        this.getContainer().style.display = "none";
         return;
     }
     public get display(): boolean {
-        return !!((this as any)._map && this.getContainer().style.display !== 'none');
+        return !!((this as any)._map && this.getContainer().style.display !== "none");
     }
 
     /**

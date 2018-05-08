@@ -1,4 +1,4 @@
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLng, LatLngBounds } from "leaflet";
 
 /**
  * Helper function to create random numbers within a range
