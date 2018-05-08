@@ -7,7 +7,7 @@ import {
     Inject,
     Input,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     CRS,
     LatLng,
@@ -24,10 +24,10 @@ import {
     ResizeEvent,
     TooltipEvent,
     ZoomAnimEvent,
-} from 'leaflet';
-import { ANIMATION_DELAY } from './consts';
-import { LayerGroupProvider } from './layer-group.provider';
-import { MapProvider } from './map.provider';
+} from "leaflet";
+import { ANIMATION_DELAY } from "./consts";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { MapProvider } from "./map.provider";
 
 /**
  * Angular2 root component for a Leaflet map
@@ -133,7 +133,7 @@ import { MapProvider } from './map.provider';
  */
 @Component({
     providers: [ LayerGroupProvider, MapProvider ],
-    selector: 'yaga-map',
+    selector: "yaga-map",
     styles: [`:host { display: block; }`],
     template: `<span style="display: none"><ng-content></ng-content></span>`,
 })
@@ -181,193 +181,193 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-tile-layer (baselayerchange)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-baselayerchange Original Leaflet documentation
      */
-    @Output('baselayerchange') public baselayerchangeEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output("baselayerchange") public baselayerchangeEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired overlayadd event.
      * Use it with `<yaga-tile-layer (overlayadd)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-overlayadd Original Leaflet documentation
      */
-    @Output('overlayadd') public overlayaddEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output("overlayadd") public overlayaddEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired overlayremove event.
      * Use it with `<yaga-tile-layer (overlayremove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-overlayremove Original Leaflet documentation
      */
-    @Output('overlayremove') public overlayremoveEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
+    @Output("overlayremove") public overlayremoveEvent: EventEmitter<LayersControlEvent> = new EventEmitter();
     /**
      * From leaflet fired layeradd event.
      * Use it with `<yaga-tile-layer (layeradd)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-layeradd Original Leaflet documentation
      */
-    @Output('layeradd') public layeraddEvent: EventEmitter<LayerEvent> = new EventEmitter();
+    @Output("layeradd") public layeraddEvent: EventEmitter<LayerEvent> = new EventEmitter();
     /**
      * From leaflet fired layerremove event.
      * Use it with `<yaga-tile-layer (layerremove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-layerremove Original Leaflet documentation
      */
-    @Output('layerremove') public layerremoveEvent: EventEmitter<LayerEvent> = new EventEmitter();
+    @Output("layerremove") public layerremoveEvent: EventEmitter<LayerEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomlevelschan event.
      * Use it with `<yaga-tile-layer (zoomlevelschan)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomlevelschan Original Leaflet documentation
      */
-    @Output('zoomlevelschange') public zoomlevelschangeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("zoomlevelschange") public zoomlevelschangeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired resize event.
      * Use it with `<yaga-tile-layer (resize)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-resize Original Leaflet documentation
      */
-    @Output('resize') public resizeEvent: EventEmitter<ResizeEvent> = new EventEmitter();
+    @Output("resize") public resizeEvent: EventEmitter<ResizeEvent> = new EventEmitter();
     /**
      * From leaflet fired unload event.
      * Use it with `<yaga-tile-layer (unload)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-unload Original Leaflet documentation
      */
-    @Output('unload') public unloadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("unload") public unloadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired viewreset event.
      * Use it with `<yaga-tile-layer (viewreset)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-viewreset Original Leaflet documentation
      */
-    @Output('viewreset') public viewresetEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("viewreset") public viewresetEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired load event.
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-load Original Leaflet documentation
      */
-    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("load") public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomstart event.
      * Use it with `<yaga-tile-layer (zoomstart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomstart Original Leaflet documentation
      */
-    @Output('zoomstart') public zoomstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("zoomstart") public zoomstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired movestart event.
      * Use it with `<yaga-tile-layer (movestart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-movestart Original Leaflet documentation
      */
-    @Output('movestart') public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("movestart") public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired zoom event.
      * Use it with `<yaga-tile-layer (zoom)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoom Original Leaflet documentation
      */
-    @Output('zoom') public zoomEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("zoom") public zoomEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired move event.
      * Use it with `<yaga-tile-layer (move)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-move Original Leaflet documentation
      */
-    @Output('move') public moveEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("move") public moveEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomend event.
      * Use it with `<yaga-tile-layer (zoomend)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomend Original Leaflet documentation
      */
-    @Output('zoomend') public zoomendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("zoomend") public zoomendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired moveend event.
      * Use it with `<yaga-tile-layer (moveend)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-moveend Original Leaflet documentation
      */
-    @Output('moveend') public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("moveend") public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-tile-layer (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired autopanstart event.
      * Use it with `<yaga-tile-layer (autopanstart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-autopanstart Original Leaflet documentation
      */
-    @Output('autopanstart') public autopanstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("autopanstart") public autopanstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-tile-layer (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-tile-layer (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired dblclick event.
      * Use it with `<yaga-tile-layer (dblclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-dblclick Original Leaflet documentation
      */
-    @Output('dblclick') public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseup event.
      * Use it with `<yaga-tile-layer (mouseup)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-mouseup Original Leaflet documentation
      */
-    @Output('mouseup') public mouseupEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseup") public mouseupEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousemove event.
      * Use it with `<yaga-tile-layer (mousemove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-mousemove Original Leaflet documentation
      */
-    @Output('mousemove') public mousemoveEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousemove") public mousemoveEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired keypress event.
      * Use it with `<yaga-tile-layer (keypress)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-keypress Original Leaflet documentation
      */
-    @Output('keypress') public keypressEvent: EventEmitter<LeafletKeyboardEvent> = new EventEmitter();
+    @Output("keypress") public keypressEvent: EventEmitter<LeafletKeyboardEvent> = new EventEmitter();
     /**
      * From leaflet fired preclick event.
      * Use it with `<yaga-tile-layer (preclick)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-preclick Original Leaflet documentation
      */
-    @Output('preclick') public preclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("preclick") public preclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired zoomanim event.
      * Use it with `<yaga-tile-layer (zoomanim)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomanim Original Leaflet documentation
      */
-    @Output('zoomanim') public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
+    @Output("zoomanim") public zoomanimEvent: EventEmitter<ZoomAnimEvent> = new EventEmitter();
 
     private moveTimeout: any;
     private isZooming: boolean = false;
@@ -395,18 +395,18 @@ export class MapComponent extends Map implements AfterViewInit {
 
         this.setView([0, 0], 0);
 
-        elementRef.nativeElement.setAttribute('class', elementRef.nativeElement.getAttribute('class') + ' yaga-map');
+        elementRef.nativeElement.setAttribute("class", elementRef.nativeElement.getAttribute("class") + " yaga-map");
 
-        this.on('move', () => {
+        this.on("move", () => {
             if (this.moveTimeout) {
                 clearTimeout(this.moveTimeout);
             }
             this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
         });
-        this.on('zoomstart', () => {
+        this.on("zoomstart", () => {
             this.isZooming = true;
         });
-        this.on('zoomend', () => {
+        this.on("zoomend", () => {
             this.isZooming = false;
             if (this.moveTimeout) {
                 clearTimeout(this.moveTimeout);
@@ -414,100 +414,100 @@ export class MapComponent extends Map implements AfterViewInit {
             this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
         });
 
-        this.on('baselayerchange', (event: LayersControlEvent) => {
+        this.on("baselayerchange", (event: LayersControlEvent) => {
             this.baselayerchangeEvent.emit(event);
         });
-        this.on('overlayadd', (event: LayersControlEvent) => {
+        this.on("overlayadd", (event: LayersControlEvent) => {
             this.overlayaddEvent.emit(event);
         });
-        this.on('overlayremove', (event: LayersControlEvent) => {
+        this.on("overlayremove", (event: LayersControlEvent) => {
             this.overlayremoveEvent.emit(event);
         });
-        this.on('layeradd', (event: LayerEvent) => {
+        this.on("layeradd", (event: LayerEvent) => {
             this.layeraddEvent.emit(event);
         });
-        this.on('layerremove', (event: LayerEvent) => {
+        this.on("layerremove", (event: LayerEvent) => {
             this.layerremoveEvent.emit(event);
         });
-        this.on('zoomlevelschange', (event: LeafletEvent) => {
+        this.on("zoomlevelschange", (event: LeafletEvent) => {
             this.zoomlevelschangeEvent.emit(event);
         });
-        this.on('resize', (event: ResizeEvent) => {
+        this.on("resize", (event: ResizeEvent) => {
             this.resizeEvent.emit(event);
         });
-        this.on('unload', (event: LeafletEvent) => {
+        this.on("unload", (event: LeafletEvent) => {
             this.unloadEvent.emit(event);
         });
-        this.on('viewreset', (event: LeafletEvent) => {
+        this.on("viewreset", (event: LeafletEvent) => {
             this.viewresetEvent.emit(event);
         });
-        this.on('load', (event: LeafletEvent) => {
+        this.on("load", (event: LeafletEvent) => {
             this.loadEvent.emit(event);
         });
-        this.on('zoomstart', (event: LeafletEvent) => {
+        this.on("zoomstart", (event: LeafletEvent) => {
             this.zoomstartEvent.emit(event);
         });
-        this.on('movestart', (event: LeafletEvent) => {
+        this.on("movestart", (event: LeafletEvent) => {
             this.movestartEvent.emit(event);
         });
-        this.on('zoom', (event: LeafletEvent) => {
+        this.on("zoom", (event: LeafletEvent) => {
             this.zoomEvent.emit(event);
         });
-        this.on('move', (event: LeafletEvent) => {
+        this.on("move", (event: LeafletEvent) => {
             this.moveEvent.emit(event);
         });
-        this.on('zoomend', (event: LeafletEvent) => {
+        this.on("zoomend", (event: LeafletEvent) => {
             this.zoomendEvent.emit(event);
         });
-        this.on('moveend', (event: LeafletEvent) => {
+        this.on("moveend", (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('autopanstart', (event: LeafletEvent) => {
+        this.on("autopanstart", (event: LeafletEvent) => {
             this.autopanstartEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dblclick', (event: LeafletMouseEvent) => {
+        this.on("dblclick", (event: LeafletMouseEvent) => {
             this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseup', (event: LeafletMouseEvent) => {
+        this.on("mouseup", (event: LeafletMouseEvent) => {
             this.mouseupEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('mousemove', (event: LeafletMouseEvent) => {
+        this.on("mousemove", (event: LeafletMouseEvent) => {
             this.mousemoveEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        this.on('keypress', (event: LeafletKeyboardEvent) => {
+        this.on("keypress", (event: LeafletKeyboardEvent) => {
             this.keypressEvent.emit(event);
         });
-        this.on('preclick', (event: LeafletMouseEvent) => {
+        this.on("preclick", (event: LeafletMouseEvent) => {
             this.preclickEvent.emit(event);
         });
-        this.on('zoomanim', (event: ZoomAnimEvent) => {
+        this.on("zoomanim", (event: ZoomAnimEvent) => {
             this.zoomanimEvent.emit(event);
         });
 
@@ -628,7 +628,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.crs = val;
         const keys: any[] = Object.keys((this as any)._layers);
         for (const key of keys) {
-            if (typeof (this as any)._layers[key].redraw === 'function') {
+            if (typeof (this as any)._layers[key].redraw === "function") {
                 (this as any)._layers[key].redraw();
             }
         }

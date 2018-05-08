@@ -1,17 +1,17 @@
-import { expect } from 'chai';
-import { Position } from 'geojson';
-import { lng2lat } from './index';
-import { randomLat, randomLng } from './spec';
+import { expect } from "chai";
+import { Position } from "geojson";
+import { lng2lat } from "./index";
+import { randomLat, randomLng } from "./spec";
 
-describe('lng2lat helper', () => {
-    it('should convert a Point', () => {
+describe("lng2lat helper", () => {
+    it("should convert a Point", () => {
         const lat: number = randomLat();
         const lng: number = randomLng();
         let geom: Position = [lat, lng];
         geom = lng2lat(geom) as Position;
         expect(geom).to.deep.equal([lng, lat]);
     });
-    it('should convert a LineString or Multipoint', () => {
+    it("should convert a LineString or Multipoint", () => {
         const lat1: number = randomLat();
         const lng1: number = randomLng();
         const lat2: number = randomLat();
@@ -20,7 +20,7 @@ describe('lng2lat helper', () => {
         geom = lng2lat(geom) as Position[];
         expect(geom).to.deep.equal([[lng1, lat1], [lng2, lat2]]);
     });
-    it('should convert a MultiLineString or Polygon', () => {
+    it("should convert a MultiLineString or Polygon", () => {
         const lat1: number = randomLat();
         const lng1: number = randomLng();
         const lat2: number = randomLat();
@@ -33,7 +33,7 @@ describe('lng2lat helper', () => {
         geom = lng2lat(geom) as Position[][];
         expect(geom).to.deep.equal([[[lng1, lat1], [lng2, lat2]], [[lng3, lat3], [lng4, lat4]]]);
     });
-    it('should convert a MultiPolygon', () => {
+    it("should convert a MultiPolygon", () => {
         const lat1: number = randomLat();
         const lng1: number = randomLng();
         const lat2: number = randomLat();

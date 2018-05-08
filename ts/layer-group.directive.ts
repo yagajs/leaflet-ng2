@@ -5,7 +5,7 @@ import {
     OnDestroy,
     Output,
     SkipSelf,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Control,
     LayerGroup,
@@ -13,9 +13,9 @@ import {
     Map,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet layer-groups.
@@ -49,7 +49,7 @@ import { LayerProvider } from './layer.provider';
  */
 @Directive({
     providers: [ LayerGroupProvider, LayerProvider ],
-    selector: 'yaga-layer-group',
+    selector: "yaga-layer-group",
 })
 export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
     /**
@@ -64,37 +64,37 @@ export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
      * Use it with `<yaga-layer-group (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-layer-group (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-layer-group (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-layer-group (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-layer-group (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-layer-group (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-layer-group (click)="processEvent($event)">`
@@ -111,33 +111,33 @@ export class LayerGroupDirective extends LayerGroup implements OnDestroy  {
         layerProvider.ref = this;
         layerGroupProvider.ref = this;
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             (this as any)._map = null; // This seems to fix a bug in Leaflet
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
 
         this.addTo(this.parentLayerGroupProvider.ref);
 
         // Events
-        this.on('add', (event: Event) => {
+        this.on("add", (event: Event) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on("remove", (event: Event) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
     }

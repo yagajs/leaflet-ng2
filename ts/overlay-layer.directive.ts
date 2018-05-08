@@ -2,10 +2,10 @@ import {
     Directive,
     Input,
     OnDestroy,
-} from '@angular/core';
-import { Layer } from 'leaflet';
-import { LayerProvider } from './layer.provider';
-import { LayersControlProvider } from './layers-control.provider';
+} from "@angular/core";
+import { Layer } from "leaflet";
+import { LayerProvider } from "./layer.provider";
+import { LayersControlProvider } from "./layers-control.provider";
 
 /**
  * Angular2 directive for adding layers to the layers-control of Leaflet as base-layer.
@@ -30,7 +30,7 @@ import { LayersControlProvider } from './layers-control.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/layers-control-directive/
  */
 @Directive({
-    selector: '[yaga-overlay-layer]',
+    selector: "[yaga-overlay-layer]",
 })
 export class OverlayLayerDirective implements OnDestroy  {
     constructor(
@@ -48,7 +48,7 @@ export class OverlayLayerDirective implements OnDestroy  {
                 return layer.name;
             }
         }
-        return '';
+        return "";
     }
 
     /**

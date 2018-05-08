@@ -6,7 +6,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Content,
     LatLng,
@@ -15,8 +15,8 @@ import {
     LeafletEvent,
     Point,
     Popup,
-} from 'leaflet';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet popups.
@@ -57,7 +57,7 @@ import { LayerProvider } from './layer.provider';
  * ```
  */
 @Directive({
-    selector: 'yaga-popup',
+    selector: "yaga-popup",
 })
 export class PopupDirective extends Popup implements OnDestroy {
     /**
@@ -100,13 +100,13 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup (open)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-popupopen Original Leaflet documentation
      */
-    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("open") public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired close event.
      * Use it with `<yaga-popup (close)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-popupclose Original Leaflet documentation
      */
-    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("close") public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
@@ -116,18 +116,18 @@ export class PopupDirective extends Popup implements OnDestroy {
 
         this.setContent(elementRef.nativeElement);
 
-        this.on('add', (event: LeafletEvent): void => {
+        this.on("add", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
         });
-        this.on('remove', (event: LeafletEvent): void => {
+        this.on("remove", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
-        this.on('popupopen', (event: LeafletEvent): void => {
+        this.on("popupopen", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
         });
-        this.on('popuclose', (event: LeafletEvent): void => {
+        this.on("popuclose", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
         });
 
@@ -351,15 +351,15 @@ export class PopupDirective extends Popup implements OnDestroy {
             this.options.className = val;
             return;
         }
-        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute('class') || '';
+        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute("class") || "";
 
         const newClassNameSplited: string[] = oldClassName.split(` ${this.options.className} `);
 
         if (newClassNameSplited.length === 1) {
-            newClassNameSplited.push('');
+            newClassNameSplited.push("");
         }
 
-        ((this as any)._container as HTMLDivElement).setAttribute('class', newClassNameSplited.join(` ${val} `).trim());
+        ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
     }
     public get className(): string {

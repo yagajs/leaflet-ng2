@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { LayerGroup, Map } from 'leaflet';
+import { Injectable } from "@angular/core";
+import { LayerGroup, Map } from "leaflet";
 
 /**
  * Injectable Angular provider to structure Leaflet layer-groups with Angulars DI

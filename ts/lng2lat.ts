@@ -1,4 +1,4 @@
-import { Position } from 'geojson';
+import { Position } from "geojson";
 
 /**
  * Function to convert from Lng-Lat format from geoJSON to LatLng on Leaflet
@@ -6,7 +6,7 @@ import { Position } from 'geojson';
 /* tslint:disable:max-line-length */
 export function lng2lat(position: Position | Position[] | Position[][] | Position[][][]): Position | Position[] | Position[][] | Position[][][] {
     /* tslint:enable */
-    if ((position as number[]).length > 0 && typeof position[0] === 'number') {
+    if ((position as number[]).length > 0 && typeof position[0] === "number") {
         return [position[1], position[0]] as Position;
     } else if ((position as Position[]).length && Array.prototype.isPrototypeOf(position)) {
         const arr: Position[] = [];
