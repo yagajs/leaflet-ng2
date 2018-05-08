@@ -13,7 +13,6 @@ import {
     Map,
 } from "leaflet";
 import { LayersControlProvider } from "./layers-control.provider";
-import { MapComponent } from "./map.component";
 import { MapProvider } from "./map.provider";
 import { enhanceMouseEvent } from "./mouse-event-helper";
 

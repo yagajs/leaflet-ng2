@@ -9,7 +9,6 @@ import {
 import {
     Control,
     FeatureGroup,
-    LayerGroup,
     LeafletEvent,
     Map,
     PathOptions,

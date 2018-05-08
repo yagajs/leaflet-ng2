@@ -672,9 +672,7 @@ describe("Marker Directive", () => {
     describe("Popup in Marker Directive", () => {
         let layerWithPopup: MarkerDirective;
         let popup: PopupDirective;
-        let testDiv: HTMLElement;
         before(() => {
-            testDiv = document.createElement("div");
             layerWithPopup = new MarkerDirective({ ref: map }, {} as any, {} as any);
             popup = new PopupDirective({nativeElement: document.createElement("div")}, { ref: layerWithPopup });
 
@@ -703,9 +701,7 @@ describe("Marker Directive", () => {
     describe("Icon in Marker Directive", () => {
         let layerWithIcon: MarkerDirective;
         let icon: IconDirective;
-        let testDiv: HTMLElement;
         before(() => {
-            testDiv = document.createElement("div");
             layerWithIcon = new MarkerDirective({ ref: map }, {} as any, {} as any);
             icon = new IconDirective({ ref: layerWithIcon });
             icon.iconUrl = TRANSPARENT_PIXEL;

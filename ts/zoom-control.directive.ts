@@ -209,7 +209,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         return;
     }
     public get display(): boolean {
-        return ((this as any)._map && this.getContainer().style.display !== "none");
+        return !!((this as any)._map && this.getContainer().style.display !== "none");
     }
 
     /**
