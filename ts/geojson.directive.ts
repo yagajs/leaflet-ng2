@@ -101,7 +101,7 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -177,11 +177,11 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      */
     @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-geojson (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#geojson-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-geojson (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#geojson-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output('dblclick') public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-geojson (mousedown)="processEvent($event)">`
@@ -278,8 +278,8 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         this.on('click', (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on('dblclick', (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
         this.on('mousedown', (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
