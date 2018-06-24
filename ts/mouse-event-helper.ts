@@ -1,4 +1,4 @@
-import { LeafletMouseEvent, Map} from 'leaflet';
+import { LeafletMouseEvent, Map} from "leaflet";
 
 /**
  * Helper function to enhance browser mouse events to Leaflet mouse events

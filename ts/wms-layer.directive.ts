@@ -4,7 +4,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Control,
     LatLngBoundsExpression,
@@ -18,10 +18,10 @@ import {
     TileLayer,
     TooltipEvent,
     WMSParams,
-} from 'leaflet';
-import { TRANSPARENT_PIXEL } from './consts';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { TRANSPARENT_PIXEL } from "./consts";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet WMS-layers.
@@ -49,7 +49,7 @@ import { LayerProvider } from './layer.provider';
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -93,7 +93,7 @@ import { LayerProvider } from './layer.provider';
  */
 @Directive({
     providers: [ LayerProvider ],
-    selector: 'yaga-wms-layer',
+    selector: "yaga-wms-layer",
 })
 export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
     /**
@@ -134,181 +134,181 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-tile-layer (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-tile-layer (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-tile-layer (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-tile-layer (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-tile-layer (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-tile-layer (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-tile-layer (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-tile-layer (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-tile-layer (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-tile-layer (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-tile-layer (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired loading event.
      * Use it with `<yaga-tile-layer (loading)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-loading Original Leaflet documentation
      */
-    @Output('loading') public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("loading") public loadingEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired tileunload event.
      * Use it with `<yaga-tile-layer (tileunload)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileunload Original Leaflet documentation
      */
-    @Output('tileunload') public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
+    @Output("tileunload") public tileunloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired tileloadstart event.
      * Use it with `<yaga-tile-layer (tileloadstart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileloadstart Original Leaflet documentation
      */
-    @Output('tileloadstart') public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
+    @Output("tileloadstart") public tileloadstartEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired tileerror event.
      * Use it with `<yaga-tile-layer (tileerror)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileerror Original Leaflet documentation
      */
-    @Output('tileerror') public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
+    @Output("tileerror") public tileerrorEvent: EventEmitter<TileErrorEvent> = new EventEmitter();
     /**
      * From leaflet fired tileload event.
      * Use it with `<yaga-tile-layer (tileload)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-tileload Original Leaflet documentation
      */
-    @Output('tileload') public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
+    @Output("tileload") public tileloadEvent: EventEmitter<TileEvent> = new EventEmitter();
     /**
      * From leaflet fired load event.
      * Use it with `<yaga-tile-layer (load)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-load Original Leaflet documentation
      */
-    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("load") public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
         // Transparent 1px image:
-        super('', { layers: '', errorTileUrl: TRANSPARENT_PIXEL });
+        super("", { layers: "", errorTileUrl: TRANSPARENT_PIXEL });
 
         layerProvider.ref = this;
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
 
         this.layerGroupProvider.ref.addLayer(this);
 
         // Events
-        this.on('add', (event: LeafletEvent) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: LeafletEvent) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        this.on('loading', (event: LeafletEvent) => {
+        this.on("loading", (event: LeafletEvent) => {
             this.loadingEvent.emit(event);
         });
-        this.on('tileunload', (event: TileEvent) => {
+        this.on("tileunload", (event: TileEvent) => {
             this.tileunloadEvent.emit(event);
         });
-        this.on('tileloadstart', (event: TileEvent) => {
+        this.on("tileloadstart", (event: TileEvent) => {
             this.tileloadstartEvent.emit(event);
         });
-        this.on('tileerror', (event: TileErrorEvent) => {
+        this.on("tileerror", (event: TileErrorEvent) => {
             this.tileerrorEvent.emit(event);
         });
-        this.on('tileload', (event: TileEvent) => {
+        this.on("tileload", (event: TileEvent) => {
             this.tileloadEvent.emit(event);
         });
-        this.on('load', (event: LeafletEvent) => {
+        this.on("load", (event: LeafletEvent) => {
             this.loadEvent.emit(event);
         });
     }
@@ -618,8 +618,8 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.subdomains = val;
     }
     public get subdomains(): string[] {
-        if (typeof (this.options.subdomains as string) === 'string') {
-            this.options.subdomains = (this.options.subdomains as string).split('');
+        if (typeof (this.options.subdomains as string) === "string") {
+            this.options.subdomains = (this.options.subdomains as string).split("");
         }
         return (this.options.subdomains as string[]);
     }
@@ -716,10 +716,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         super.setParams(params, redraw);
         const newParams = {...this.wmsParams};
         if (oldParams.layers !== newParams.layers) {
-            this.layersChange.emit(this.wmsParams.layers.split(','));
+            this.layersChange.emit(this.wmsParams.layers.split(","));
         }
         if (oldParams.styles !== newParams.styles) {
-            this.stylesChange.emit(this.wmsParams.styles.split(','));
+            this.stylesChange.emit(this.wmsParams.styles.split(","));
         }
         if (oldParams.format !== newParams.format) {
             this.formatChange.emit(this.wmsParams.format);
@@ -737,16 +737,16 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         return this;
     }
     @Input() public set layers(val: string[]) {
-        this.setParams({...this.wmsParams, layers: val.join(',')}, true);
+        this.setParams({...this.wmsParams, layers: val.join(",")}, true);
     }
     public get layers(): string[] {
-        return this.wmsParams.layers.split(',');
+        return this.wmsParams.layers.split(",");
     }
     @Input() public set styles(val: string[]) {
-        this.setParams({...this.wmsParams, styles: val.join(',')}, true);
+        this.setParams({...this.wmsParams, styles: val.join(",")}, true);
     }
     public get styles(): string[] {
-        return this.wmsParams.styles.split(',');
+        return this.wmsParams.styles.split(",");
     }
     @Input() public set format(val: string) {
         this.setParams({...this.wmsParams, format: val}, true);

@@ -6,14 +6,14 @@ import {
     OnDestroy,
     Output,
     SkipSelf,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Feature as GeoJSONFeature,
     FeatureCollection as GeoJSONFeatureCollection,
     GeoJsonObject,
     GeometryObject,
     Point,
-} from 'geojson';
+} from "geojson";
 import {
     GeoJSON,
     LatLng,
@@ -25,10 +25,10 @@ import {
     PathOptions,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { DEFAULT_STYLE } from './consts';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { DEFAULT_STYLE } from "./consts";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Interface for the styler function of the GeoJSON directive.
@@ -101,7 +101,7 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -127,7 +127,7 @@ export interface IGeoJSONDirectiveMiddlewareDictionary<T> {
  */
 @Directive({
     providers: [ LayerGroupProvider, LayerProvider ],
-    selector: 'yaga-geojson',
+    selector: "yaga-geojson",
 })
 export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterContentInit {
     /* tslint:disable:max-line-length */
@@ -139,76 +139,76 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-geojson (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-geojson (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-geojson (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-geojson (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-geojson (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-geojson (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-geojson (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#geojson-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-geojson (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#geojson-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-geojson (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-geojson (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-geojson (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-geojson (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     /* tslint:disable:max-line-length */
-    @Output('onEachFeature') public onEachFeatureEvent: EventEmitter<{feature: GeoJSONFeature<GeometryObject, T>, layer: Layer}> = new EventEmitter();
+    @Output("onEachFeature") public onEachFeatureEvent: EventEmitter<{feature: GeoJSONFeature<GeometryObject, T>, layer: Layer}> = new EventEmitter();
     /* tslint:enable */
 
     /**
@@ -227,7 +227,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
     ) {
-        super(({features: [], type: 'FeatureCollection'} as GeoJsonObject), {
+        super(({features: [], type: "FeatureCollection"} as GeoJsonObject), {
             filter: (feature: GeoJSONFeature<GeometryObject, T>) => {
                 if (this.middleware.filter) {
                     return this.middleware.filter(feature);
@@ -257,40 +257,40 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         this.parentLayerGroupProvider.ref.addLayer(this);
 
         // Events
-        this.on('add', (event: LeafletEvent) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: LeafletEvent) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
     }

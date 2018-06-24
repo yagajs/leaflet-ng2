@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Marker } from 'leaflet';
+import { Injectable } from "@angular/core";
+import { Marker } from "leaflet";
 
 /**
  * Injectable Angular provider for Leaflet icons to apply to them with Angular DI

@@ -1,10 +1,11 @@
 import {
-    Attribute,
     Directive,
+    Input,
     OnDestroy,
-} from '@angular/core';
-import { LayerProvider } from './layer.provider';
-import { LayersControlProvider } from './layers-control.provider';
+} from "@angular/core";
+import { Layer } from "leaflet";
+import { LayerProvider } from "./layer.provider";
+import { LayersControlProvider } from "./layers-control.provider";
 
 /**
  * Angular2 directive for adding layers to the layers-control of Leaflet as base-layer.
@@ -16,7 +17,7 @@ import { LayersControlProvider } from './layers-control.provider';
  * <yaga-map>
  *     <yaga-layers-control>
  *         <!-- This can be any other layer... -->
- *         <yaga-tile-layer yaga-base-layer="OSM"></yaga-tile-layer>
+ *         <yaga-tile-layer yaga-base-layer [caption]="'OSM'"></yaga-tile-layer>
  *     </yaga-attribution-control>
  * </yaga-map>
  * ```
@@ -29,16 +30,25 @@ import { LayersControlProvider } from './layers-control.provider';
  * @example https://leaflet-ng2.yagajs.org/latest/examples/layers-control-directive/
  */
 @Directive({
-    selector: '[yaga-base-layer]',
+    selector: "[yaga-base-layer]",
 })
 export class BaseLayerDirective implements OnDestroy  {
     constructor(
-        // TODO: Inject LayersControl @Inject(forwardRef(() => LayersControl)) protected layersControl: LayersControl,
         protected layer: LayerProvider,
-        @Attribute('yaga-base-layer') public readonly name: string,
         public layersControlProvider: LayersControlProvider,
-    ) {
-        this.layersControlProvider.ref.addBaseLayer(this.layer.ref, name);
+    ) {}
+
+    @Input() public set caption(value: string) {
+      this.layersControlProvider.ref.removeLayer(this.layer.ref);
+      this.layersControlProvider.ref.addBaseLayer(this.layer.ref, value);
+    }
+    public get caption(): string {
+        for (const layer of ((this as any)._layers as Array<{ layer: Layer, name: string }>)) {
+            if (layer.layer === this.layer.ref) {
+                return layer.name;
+            }
+        }
+        return "";
     }
 
     /**

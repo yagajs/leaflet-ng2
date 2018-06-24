@@ -1,20 +1,20 @@
-import { expect } from 'chai';
-import { point } from 'leaflet';
+import { expect } from "chai";
+import { point } from "leaflet";
 import {
     AttributionControlDirective,
     ControlPosition,
     LayerGroupProvider,
     MapComponent,
     MapProvider,
-} from './index';
-import { randomNumber } from './spec';
+} from "./index";
+import { randomNumber } from "./spec";
 
-describe('Attribution-Control Directive', () => {
+describe("Attribution-Control Directive", () => {
     let map: MapComponent;
     let control: AttributionControlDirective;
     beforeEach(() => {
         map = new MapComponent(
-            {nativeElement: document.createElement('div')},
+            {nativeElement: document.createElement("div")},
             new LayerGroupProvider(),
             new MapProvider(),
         );
@@ -23,17 +23,17 @@ describe('Attribution-Control Directive', () => {
         control = new AttributionControlDirective({ ref: map });
     });
 
-    describe('[(display)]', () => {
-        it('should set DOM container style to display:none when not displaying', () => {
+    describe("[(display)]", () => {
+        it("should set DOM container style to display:none when not displaying", () => {
             control.display = false;
-            expect(control.getContainer().style.display).to.equal('none');
+            expect(control.getContainer().style.display).to.equal("none");
         });
-        it('should reset DOM container style when display is true again', () => {
+        it("should reset DOM container style when display is true again", () => {
             control.display = false;
             control.display = true;
-            expect(control.getContainer().style.display).to.not.equal('none');
+            expect(control.getContainer().style.display).to.not.equal("none");
         });
-        it('should set to false by removing from map', (done: MochaDone) => {
+        it("should set to false by removing from map", (done: MochaDone) => {
 
             control.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -43,9 +43,9 @@ describe('Attribution-Control Directive', () => {
 
             map.removeControl(control);
         });
-        // it.skip('should set to true when adding to map again', (done: MochaDone) => {
+        // it.skip("should set to true when adding to map again", (done: MochaDone) => {
         //     /* tslint:disable */
-        //     control.displayChange.subscribe((x) => { console.log('aslkdnasnldknaskldnlkd ', x); });
+        //     control.displayChange.subscribe((x) => { console.log("aslkdnasnldknaskldnlkd ", x); });
         //     map.removeControl(control);
         //     setTimeout(() => {
         //         control.displayChange.subscribe((val: boolean) => {
@@ -57,24 +57,24 @@ describe('Attribution-Control Directive', () => {
         //     }, 0);
         // });
     });
-    describe('[(position)]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: ControlPosition = 'topright';
+    describe("[(position)]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
+            const val: ControlPosition = "topright";
             control.position = val;
             expect(control.getPosition()).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: ControlPosition = 'topright';
+        it("should be changed in Angular when changing in Angular", () => {
+            const val: ControlPosition = "topright";
             control.position = val;
             expect(control.position).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', () => {
-            const val: ControlPosition = 'topright';
+        it("should be changed in Angular when changing in Leaflet", () => {
+            const val: ControlPosition = "topright";
             control.setPosition(val);
             expect(control.position ).to.equal(val);
         });
-        it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: ControlPosition = 'topleft';
+        it("should fire an event when changing in Angular", (done: MochaDone) => {
+            const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
                 done();
@@ -82,8 +82,8 @@ describe('Attribution-Control Directive', () => {
 
             control.position = val;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: ControlPosition = 'topleft';
+        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
                 done();
@@ -93,30 +93,30 @@ describe('Attribution-Control Directive', () => {
         });
     });
 
-    describe('[(prefix)]', () => {
-        it('should be set to YAGA | leaflet-ng2 by default', () => {
+    describe("[(prefix)]", () => {
+        it("should be set to YAGA | leaflet-ng2 by default", () => {
             const html: string = control.getContainer().innerHTML;
-            expect(html.indexOf('>YAGA<' + '> | <' + '>leaflet-ng2<')).to.not.equal(-3);
+            expect(html.indexOf(">YAGA<" + "> | <" + ">leaflet-ng2<")).to.not.equal(-3);
         });
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: string = 'Attribution-Prefix';
+        it("should be changed in Leaflet when changing in Angular", () => {
+            const val: string = "Attribution-Prefix";
             control.prefix = val;
             expect(control.options.prefix).to.equal(val);
             const html: string = control.getContainer().innerHTML;
             expect(html.indexOf(val)).to.not.equal(-1);
         });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: string = 'Attribution-Prefix';
+        it("should be changed in Angular when changing in Angular", () => {
+            const val: string = "Attribution-Prefix";
             control.prefix = val;
             expect(control.prefix).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', () => {
-            const val: string = 'Attribution-Prefix';
+        it("should be changed in Angular when changing in Leaflet", () => {
+            const val: string = "Attribution-Prefix";
             control.setPrefix(val);
             expect(control.prefix).to.equal(val);
         });
-        it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: string = 'Attribution-Prefix';
+        it("should fire an event when changing in Angular", (done: MochaDone) => {
+            const val: string = "Attribution-Prefix";
             control.prefixChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(val);
                 done();
@@ -124,8 +124,8 @@ describe('Attribution-Control Directive', () => {
 
             control.prefix = val;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: string = 'Attribution-Prefix';
+        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            const val: string = "Attribution-Prefix";
             control.prefixChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(val);
                 done();
@@ -134,46 +134,46 @@ describe('Attribution-Control Directive', () => {
             control.setPrefix(val);
         });
     });
-    describe('[(attributions)]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: string[] = ['first', 'second'];
+    describe("[(attributions)]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
+            const val: string[] = ["first", "second"];
             control.attributions = val;
             expect(Object.keys((control as any)._attributions)).to.deep.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: string[] = ['first', 'second'];
+        it("should be changed in Angular when changing in Angular", () => {
+            const val: string[] = ["first", "second"];
             control.attributions = val;
             expect(control.attributions).to.deep.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', () => {
-            control.addAttribution('first');
-            expect(control.attributions).to.deep.equal(['first']);
+        it("should be changed in Angular when changing in Leaflet", () => {
+            control.addAttribution("first");
+            expect(control.attributions).to.deep.equal(["first"]);
         });
-        it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: string[] = ['first', 'second'];
+        it("should fire an event when changing in Angular", (done: MochaDone) => {
+            const val: string[] = ["first", "second"];
             control.attributionsChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(val);
                 done();
             });
             control.attributions = val;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: string[] = ['first'];
+        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            const val: string[] = ["first"];
             control.attributionsChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.deep.equal(val);
                 done();
             });
 
-            control.addAttribution('first');
+            control.addAttribution("first");
         });
-        it('should be changed to a new value', () => {
-            control.attributions = ['first'];
-            control.attributions = ['second'];
-            expect(control.attributions).to.deep.equal(['second']);
+        it("should be changed to a new value", () => {
+            control.attributions = ["first"];
+            control.attributions = ["second"];
+            expect(control.attributions).to.deep.equal(["second"]);
         });
     });
-    describe('.removeAllAttributions()', () => {
-        it('should emit a event emitter when it is not in silent mode', (done: MochaDone) => {
+    describe(".removeAllAttributions()", () => {
+        it("should emit a event emitter when it is not in silent mode", (done: MochaDone) => {
             control.attributionsChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal([]);
                 done();
@@ -182,25 +182,25 @@ describe('Attribution-Control Directive', () => {
         });
     });
 
-    describe('[opacity]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
+    describe("[opacity]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber();
             control.opacity = val;
             expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
-        it('should be changed in Angular when changing in Angular', () => {
+        it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber();
             control.opacity = val;
             expect(control.opacity).to.equal(val);
         });
     });
-    describe('[zIndex]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
+    describe("[zIndex]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
             expect(control.getContainer().style.zIndex).to.equal(val.toString());
         });
-        it('should be changed in Angular when changing in Angular', () => {
+        it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
             expect(control.zIndex).to.equal(val);
@@ -208,8 +208,8 @@ describe('Attribution-Control Directive', () => {
     });
 
     // Events
-    describe('(add)', () => {
-        it('should fire an event when adding to map', (done: MochaDone) => {
+    describe("(add)", () => {
+        it("should fire an event when adding to map", (done: MochaDone) => {
             map.removeControl(control);
 
             control.addEvent.subscribe(() => {
@@ -218,8 +218,8 @@ describe('Attribution-Control Directive', () => {
             map.addControl(control);
         });
     });
-    describe('(remove)', () => {
-        it('should fire an event when removing from map', (done: MochaDone) => {
+    describe("(remove)", () => {
+        it("should fire an event when removing from map", (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
             });
@@ -227,12 +227,12 @@ describe('Attribution-Control Directive', () => {
         });
     });
 
-    describe('(click)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(click)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('click', {
+            control.getContainer().dispatchEvent(new MouseEvent("click", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -240,12 +240,12 @@ describe('Attribution-Control Directive', () => {
             }));
         });
     });
-    describe('(dbclick)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
-            control.dbclickEvent.subscribe(() => {
+    describe("(dblclick)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+            control.dblclickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('dbclick', {
+            control.getContainer().dispatchEvent(new MouseEvent("dblclick", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -253,12 +253,12 @@ describe('Attribution-Control Directive', () => {
             }));
         });
     });
-    describe('(mousedown)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mousedown)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mousedown', {
+            control.getContainer().dispatchEvent(new MouseEvent("mousedown", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -266,12 +266,12 @@ describe('Attribution-Control Directive', () => {
             }));
         });
     });
-    describe('(mouseover)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mouseover)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mouseover', {
+            control.getContainer().dispatchEvent(new MouseEvent("mouseover", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -279,12 +279,12 @@ describe('Attribution-Control Directive', () => {
             }));
         });
     });
-    describe('(mouseout)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mouseout)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mouseout', {
+            control.getContainer().dispatchEvent(new MouseEvent("mouseout", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -293,8 +293,8 @@ describe('Attribution-Control Directive', () => {
         });
     });
 
-    describe('Destroying a Attribution Control Directive', () => {
-        it('should remove Tile-Layer Directive from map on destroy', () => {
+    describe("Destroying a Attribution Control Directive", () => {
+        it("should remove Tile-Layer Directive from map on destroy", () => {
             expect(
                 control.getContainer().parentElement.parentElement.parentElement,
             ).to.equal(map.getContainer());

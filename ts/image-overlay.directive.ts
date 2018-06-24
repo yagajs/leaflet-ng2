@@ -4,7 +4,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Control,
     ImageOverlay,
@@ -16,10 +16,10 @@ import {
     Map,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { TRANSPARENT_PIXEL } from './consts';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { TRANSPARENT_PIXEL } from "./consts";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet image overlays.
@@ -47,7 +47,7 @@ import { LayerProvider } from './layer.provider';
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -72,7 +72,7 @@ import { LayerProvider } from './layer.provider';
  */
 @Directive({
     providers: [ LayerProvider ],
-    selector: 'yaga-image-overlay',
+    selector: "yaga-image-overlay",
 })
 export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
     /**
@@ -138,85 +138,85 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      * Use it with `<yaga-image-overlay (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-image-overlay (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-image-overlay (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-image-overlay (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-image-overlay (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-image-overlay (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-image-overlay (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-image-overlay (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-image-overlay (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-image-overlay (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-image-overlay (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-image-overlay (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-image-overlay (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired load event.
      * Use it with `<yaga-image-overlay (load)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-load Original Leaflet documentation
      */
-    @Output('load') public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("load") public loadEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired error event.
      * Use it with `<yaga-image-overlay (error)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#imageoverlay-error Original Leaflet documentation
      */
-    @Output('error') public errorEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("error") public errorEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         protected layerGroupProvider: LayerGroupProvider,
@@ -227,56 +227,56 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
 
         layerProvider.ref = this;
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
 
         this.layerGroupProvider.ref.addLayer(this);
 
         // Events
-        this.on('add', (event: Event) => {
+        this.on("add", (event: Event) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on("remove", (event: Event) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
-        this.on('load', (event: LeafletEvent) => {
+        this.on("load", (event: LeafletEvent) => {
             this.loadEvent.emit(event);
         });
-        this.on('error', (event: LeafletEvent) => {
+        this.on("error", (event: LeafletEvent) => {
             this.errorEvent.emit(event);
         });
     }
@@ -501,7 +501,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-        this.getElement().crossOrigin = val ? '' : undefined;
+        this.getElement().crossOrigin = val ? "" : undefined;
     }
     public get crossOrigin(): boolean {
         return this.options.crossOrigin;
@@ -517,7 +517,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         this.getElement().alt = val;
     }
     public get alt(): string {
-        return this.getElement().getAttribute('alt');
+        return this.getElement().getAttribute("alt");
     }
     /**
      * Input for the state of interaction.

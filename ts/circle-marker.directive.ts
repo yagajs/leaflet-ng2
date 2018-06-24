@@ -5,8 +5,8 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
-import { Feature as GeoJSONFeature } from 'geojson';
+} from "@angular/core";
+import { Feature as GeoJSONFeature } from "geojson";
 import {
     CircleMarker,
     CircleMarkerOptions,
@@ -22,11 +22,11 @@ import {
     PathOptions,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
-import { lng2lat } from './lng2lat';
-import { MapComponent } from './map.component';
+} from "leaflet";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
+import { lng2lat } from "./lng2lat";
+import { MapComponent } from "./map.component";
 
 /**
  * Angular2 directive for circle-markers of Leaflet.
@@ -82,7 +82,7 @@ import { MapComponent } from './map.component';
  */
 @Directive({
     providers: [ LayerProvider ],
-    selector: 'yaga-circle-marker',
+    selector: "yaga-circle-marker",
 })
 export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy, AfterContentInit {
     /**
@@ -232,73 +232,73 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-circle-marker (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-circle-marker (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-circle-marker (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-circle-marker (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-circle-marker (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-circle-marker (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-circle-marker (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-circle-marker (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-circle-marker (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-circle-marker (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-circle-marker (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-circle-marker (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     private initialized: boolean = false;
 
@@ -310,53 +310,53 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
 
         layerProvider.ref = this;
 
-        this.feature = this.feature || {type: 'Feature', properties: {}, geometry: {type: 'Point', coordinates: []}};
+        this.feature = this.feature || {type: "Feature", properties: {}, geometry: {type: "Point", coordinates: []}};
         this.feature.properties = this.feature.properties || {};
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
 
         this.layerGroupProvider.ref.addLayer(this);
 
         // Events
-        this.on('add', (event: LeafletEvent) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: LeafletEvent) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
     }
@@ -452,11 +452,11 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
     @Input() public set geoJSON(val: GeoJSONFeature<GeoJSON.Point, T>) {
         this.feature.properties = val.properties;
 
-        const geomType: any = val.geometry.type; // Normally 'Point'
+        const geomType: any = val.geometry.type; // Normally "Point"
 
         /* istanbul ignore if */
-        if (geomType !== 'Point') {
-            throw new Error('Unsupported geometry type: ' + geomType );
+        if (geomType !== "Point") {
+            throw new Error("Unsupported geometry type: " + geomType );
         }
         this.setLatLng(lng2lat(val.geometry.coordinates) as any);
     }
@@ -470,43 +470,43 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      */
     public setStyle(style: PathOptions): this {
         super.setStyle(style);
-        if (style.hasOwnProperty('stroke')) {
+        if (style.hasOwnProperty("stroke")) {
             this.strokeChange.emit(style.stroke);
         }
-        if (style.hasOwnProperty('color')) {
+        if (style.hasOwnProperty("color")) {
             this.colorChange.emit(style.color);
         }
-        if (style.hasOwnProperty('weight')) {
+        if (style.hasOwnProperty("weight")) {
             this.weightChange.emit(style.weight);
         }
-        if (style.hasOwnProperty('opacity')) {
+        if (style.hasOwnProperty("opacity")) {
             this.opacityChange.emit(style.opacity);
         }
-        if (style.hasOwnProperty('lineCap')) {
+        if (style.hasOwnProperty("lineCap")) {
             this.lineCapChange.emit(style.lineCap);
         }
-        if (style.hasOwnProperty('lineJoin')) {
+        if (style.hasOwnProperty("lineJoin")) {
             this.lineJoinChange.emit(style.lineJoin);
         }
-        if (style.hasOwnProperty('dashArray')) {
+        if (style.hasOwnProperty("dashArray")) {
             this.dashArrayChange.emit(style.dashArray);
         }
-        if (style.hasOwnProperty('dashOffset')) {
+        if (style.hasOwnProperty("dashOffset")) {
             this.dashOffsetChange.emit(style.dashOffset);
         }
-        if (style.hasOwnProperty('fill')) {
+        if (style.hasOwnProperty("fill")) {
             this.fillChange.emit(style.fill);
         }
-        if (style.hasOwnProperty('fillColor')) {
+        if (style.hasOwnProperty("fillColor")) {
             this.fillColorChange.emit(style.fillColor);
         }
-        if (style.hasOwnProperty('fillOpacity')) {
+        if (style.hasOwnProperty("fillOpacity")) {
             this.fillOpacityChange.emit(style.fillOpacity);
         }
-        if (style.hasOwnProperty('fillRule')) {
+        if (style.hasOwnProperty("fillRule")) {
             this.fillRuleChange.emit(style.fillRule);
         }
-        if (style.hasOwnProperty('className')) {
+        if (style.hasOwnProperty("className")) {
             this.classNameChange.emit(style.className);
         }
         this.styleChange.emit(style);
@@ -692,7 +692,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             return;
         }
         this.displayChange.emit(val);
-        container.style.display = val ? '' : 'none';
+        container.style.display = val ? "" : "none";
     }
     public get display(): boolean {
         let container: HTMLElement;
@@ -702,7 +702,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             /* istanbul ignore next */
             return false;
         }
-        return container.style.display !== 'none' && !!container.parentElement;
+        return container.style.display !== "none" && !!container.parentElement;
     }
 
     /**

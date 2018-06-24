@@ -8,6 +8,7 @@
         "outDir": "./lib",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "noUnusedLocals": true,
         "lib": ["es6", "dom", "es2015.iterable", "es2015.promise"]
     },
     "exclude": [

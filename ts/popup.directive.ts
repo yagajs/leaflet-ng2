@@ -6,7 +6,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Content,
     LatLng,
@@ -15,8 +15,8 @@ import {
     LeafletEvent,
     Point,
     Popup,
-} from 'leaflet';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet popups.
@@ -57,7 +57,7 @@ import { LayerProvider } from './layer.provider';
  * ```
  */
 @Directive({
-    selector: 'yaga-popup',
+    selector: "yaga-popup",
 })
 export class PopupDirective extends Popup implements OnDestroy {
     /**
@@ -100,13 +100,13 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup (open)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-popupopen Original Leaflet documentation
      */
-    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("open") public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired close event.
      * Use it with `<yaga-popup (close)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-popupclose Original Leaflet documentation
      */
-    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("close") public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         @Inject(ElementRef) elementRef: ElementRef,
@@ -116,18 +116,18 @@ export class PopupDirective extends Popup implements OnDestroy {
 
         this.setContent(elementRef.nativeElement);
 
-        this.on('add', (event: LeafletEvent): void => {
+        this.on("add", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
         });
-        this.on('remove', (event: LeafletEvent): void => {
+        this.on("remove", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
-        this.on('popupopen', (event: LeafletEvent): void => {
+        this.on("popupopen", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
         });
-        this.on('popuclose', (event: LeafletEvent): void => {
+        this.on("popuclose", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
         });
 
@@ -228,9 +228,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set maxWidth(val: number) {
         this.options.maxWidth = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get maxWidth(): number {
         return this.options.maxWidth;
@@ -242,9 +240,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set minWidth(val: number) {
         this.options.minWidth = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get minWidth(): number {
         return this.options.minWidth;
@@ -256,9 +252,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set maxHeight(val: number) {
         this.options.maxHeight = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get maxHeight(): number {
         return this.options.maxHeight;
@@ -270,9 +264,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPan(val: boolean) {
         this.options.autoPan = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get autoPan(): boolean {
         return this.options.autoPan;
@@ -284,9 +276,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPaddingTopLeft(val: Point) {
         this.options.autoPanPaddingTopLeft = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get autoPanPaddingTopLeft(): Point {
         return (this.options.autoPanPaddingTopLeft as Point);
@@ -298,9 +288,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPaddingBottomRight(val: Point) {
         this.options.autoPanPaddingBottomRight = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get autoPanPaddingBottomRight(): Point {
         return (this.options.autoPanPaddingBottomRight as Point);
@@ -312,9 +300,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoPanPadding(val: Point) {
         this.options.autoPanPadding = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get autoPanPadding(): Point {
         return (this.options.autoPanPadding as Point);
@@ -326,9 +312,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set keepInView(val: boolean) {
         this.options.keepInView = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get keepInView(): boolean {
         return this.options.keepInView;
@@ -340,9 +324,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set closeButton(val: boolean) {
         this.options.closeButton = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get closeButton(): boolean {
         return this.options.closeButton;
@@ -354,9 +336,7 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set autoClose(val: boolean) {
         this.options.autoClose = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get autoClose(): boolean {
         return this.options.autoClose;
@@ -367,10 +347,20 @@ export class PopupDirective extends Popup implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#popup-classname Original Leaflet documentation
      */
     @Input() public set className(val: string) {
-        this.options.className = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
+        if (!(this as any)._container) {
+            this.options.className = val;
+            return;
         }
+        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute("class") || "";
+
+        const newClassNameSplited: string[] = oldClassName.split(` ${this.options.className} `);
+
+        if (newClassNameSplited.length === 1) {
+            newClassNameSplited.push("");
+        }
+
+        ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
+        this.options.className = val;
     }
     public get className(): string {
         return this.options.className;
@@ -382,11 +372,16 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set pane(val: string) {
         this.options.pane = val;
-        if ((this as any)._contentNode) {
-            (this as any)._updateLayout();
-        }
+        this.reopen();
     }
     public get pane(): string {
         return this.options.pane;
+    }
+
+    public reopen(force: boolean = false) {
+        if (force || this.opened) {
+            this.layerProvider.ref.closePopup();
+            this.layerProvider.ref.openPopup();
+        }
     }
 }

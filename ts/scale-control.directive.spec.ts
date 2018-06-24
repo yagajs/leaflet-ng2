@@ -1,20 +1,20 @@
-import { expect } from 'chai';
-import { point } from 'leaflet';
+import { expect } from "chai";
+import { point } from "leaflet";
 import {
     ControlPosition,
     LayerGroupProvider,
     MapComponent,
     MapProvider,
     ScaleControlDirective,
-} from './index';
-import { randomNumber } from './spec';
+} from "./index";
+import { randomNumber } from "./spec";
 
-describe('Scale-Control Directive', () => {
+describe("Scale-Control Directive", () => {
     let map: MapComponent;
     let control: ScaleControlDirective;
     beforeEach(() => {
         map = new MapComponent(
-            {nativeElement: document.createElement('div')},
+            {nativeElement: document.createElement("div")},
             new LayerGroupProvider(),
             new MapProvider(),
         );
@@ -23,17 +23,17 @@ describe('Scale-Control Directive', () => {
         control = new ScaleControlDirective({ ref: map });
     });
 
-    describe('[(display)]', () => {
-        it('should set DOM container style to display:none when not displaying', () => {
+    describe("[(display)]", () => {
+        it("should set DOM container style to display:none when not displaying", () => {
             control.display = false;
-            expect(control.getContainer().style.display).to.equal('none');
+            expect(control.getContainer().style.display).to.equal("none");
         });
-        it('should reset DOM container style when display is true again', () => {
+        it("should reset DOM container style when display is true again", () => {
             control.display = false;
             control.display = true;
-            expect(control.getContainer().style.display).to.not.equal('none');
+            expect(control.getContainer().style.display).to.not.equal("none");
         });
-        it('should set to false by removing from map', (done: MochaDone) => {
+        it("should set to false by removing from map", (done: MochaDone) => {
 
             control.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -43,9 +43,9 @@ describe('Scale-Control Directive', () => {
 
             map.removeControl(control);
         });
-        // it.skip('should set to true when adding to map again', (done: MochaDone) => {
+        // it.skip("should set to true when adding to map again", (done: MochaDone) => {
         //     /* tslint:disable */
-        //     control.displayChange.subscribe((x) => { console.log('aslkdnasnldknaskldnlkd ', x); });
+        //     control.displayChange.subscribe((x) => { console.log("aslkdnasnldknaskldnlkd ", x); });
         //     map.removeControl(control);
         //     setTimeout(() => {
         //         control.displayChange.subscribe((val: boolean) => {
@@ -57,24 +57,24 @@ describe('Scale-Control Directive', () => {
         //     }, 0);
         // });
     });
-    describe('[(position)]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
-            const val: ControlPosition = 'topright';
+    describe("[(position)]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
+            const val: ControlPosition = "topright";
             control.position = val;
             expect(control.getPosition()).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', () => {
-            const val: ControlPosition = 'topright';
+        it("should be changed in Angular when changing in Angular", () => {
+            const val: ControlPosition = "topright";
             control.position = val;
             expect(control.position).to.equal(val);
         });
-        it('should be changed in Angular when changing in Leaflet', () => {
-            const val: ControlPosition = 'topright';
+        it("should be changed in Angular when changing in Leaflet", () => {
+            const val: ControlPosition = "topright";
             control.setPosition(val);
             expect(control.position).to.equal(val);
         });
-        it('should fire an event when changing in Angular', (done: MochaDone) => {
-            const val: ControlPosition = 'topleft';
+        it("should fire an event when changing in Angular", (done: MochaDone) => {
+            const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
                 return done();
@@ -83,8 +83,8 @@ describe('Scale-Control Directive', () => {
 
             control.position = val;
         });
-        it('should fire an event when changing in Leaflet', (done: MochaDone) => {
-            const val: ControlPosition = 'topleft';
+        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
                 return done();
@@ -94,25 +94,25 @@ describe('Scale-Control Directive', () => {
             control.setPosition(val);
         });
     });
-    describe('[maxWidth]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
+    describe("[maxWidth]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.maxWidth = val;
             expect(control.options.maxWidth).to.equal(val);
         });
-        it('should be changed in Angular when changing in Angular', () => {
+        it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.maxWidth = val;
             expect(control.maxWidth).to.equal(val);
         });
     });
-    describe('[zIndex]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
+    describe("[zIndex]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
             expect(control.getContainer().style.zIndex).to.equal(val.toString());
         });
-        it('should be changed in Angular when changing in Angular', () => {
+        it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
             expect(control.zIndex).to.equal(val);
@@ -120,8 +120,8 @@ describe('Scale-Control Directive', () => {
     });
 
     // Events
-    describe('(add)', () => {
-        it('should fire an event when adding to map', (done: MochaDone) => {
+    describe("(add)", () => {
+        it("should fire an event when adding to map", (done: MochaDone) => {
             map.removeControl(control);
 
             control.addEvent.subscribe(() => {
@@ -130,8 +130,8 @@ describe('Scale-Control Directive', () => {
             map.addControl(control);
         });
     });
-    describe('(remove)', () => {
-        it('should fire an event when removing from map', (done: MochaDone) => {
+    describe("(remove)", () => {
+        it("should fire an event when removing from map", (done: MochaDone) => {
             control.removeEvent.subscribe(() => {
                 done();
             });
@@ -139,12 +139,12 @@ describe('Scale-Control Directive', () => {
         });
     });
 
-    describe('(click)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(click)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.clickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('click', {
+            control.getContainer().dispatchEvent(new MouseEvent("click", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -152,12 +152,12 @@ describe('Scale-Control Directive', () => {
             }));
         });
     });
-    describe('(dbclick)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
-            control.dbclickEvent.subscribe(() => {
+    describe("(dblclick)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+            control.dblclickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('dbclick', {
+            control.getContainer().dispatchEvent(new MouseEvent("dblclick", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -165,12 +165,12 @@ describe('Scale-Control Directive', () => {
             }));
         });
     });
-    describe('(mousedown)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mousedown)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mousedownEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mousedown', {
+            control.getContainer().dispatchEvent(new MouseEvent("mousedown", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -178,12 +178,12 @@ describe('Scale-Control Directive', () => {
             }));
         });
     });
-    describe('(mouseover)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mouseover)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mouseover', {
+            control.getContainer().dispatchEvent(new MouseEvent("mouseover", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -191,12 +191,12 @@ describe('Scale-Control Directive', () => {
             }));
         });
     });
-    describe('(mouseout)', () => {
-        it('should fire an event when firing event from DOM', (done: MochaDone) => {
+    describe("(mouseout)", () => {
+        it("should fire an event when firing event from DOM", (done: MochaDone) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent('mouseout', {
+            control.getContainer().dispatchEvent(new MouseEvent("mouseout", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -205,63 +205,63 @@ describe('Scale-Control Directive', () => {
         });
     });
 
-    describe('[opacity]', () => {
-        it('should be changed in Leaflet when changing in Angular', () => {
+    describe("[opacity]", () => {
+        it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber();
             control.opacity = val;
             expect(control.getContainer().style.opacity).to.equal(val.toString());
         });
-        it('should be changed in Angular when changing in Angular', () => {
+        it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber();
             control.opacity = val;
             expect(control.opacity).to.equal(val);
         });
     });
 
-    describe('[metric]', () => {
-        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+    describe("[metric]", () => {
+        it("should be changed to false in Leaflet when changing in Angular to false", () => {
             control.metric = false;
             expect(control.options.metric).to.equal(false);
         });
-        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+        it("should be changed to true in Leaflet when changing in Angular to true", () => {
             control.options.metric = false;
             control.metric = true;
             expect(control.options.metric).to.equal(true);
         });
-        it('should be changed in Angular to false when changing in Angular to false', () => {
+        it("should be changed in Angular to false when changing in Angular to false", () => {
             control.metric = false;
             expect(control.metric).to.equal(false);
         });
-        it('should be changed in Angular to true when changing in Angular to true', () => {
+        it("should be changed in Angular to true when changing in Angular to true", () => {
             control.metric = true;
             expect(control.metric).to.equal(true);
         });
     });
-    describe('[imperial]', () => {
-        it('should be changed to false in Leaflet when changing in Angular to false', () => {
+    describe("[imperial]", () => {
+        it("should be changed to false in Leaflet when changing in Angular to false", () => {
             control.imperial = false;
             expect(control.options.imperial).to.equal(false);
         });
-        it('should be changed to true in Leaflet when changing in Angular to true', () => {
+        it("should be changed to true in Leaflet when changing in Angular to true", () => {
             control.options.imperial = false;
             control.imperial = true;
             expect(control.options.imperial).to.equal(true);
         });
-        it('should be changed in Angular to false when changing in Angular to false', () => {
+        it("should be changed in Angular to false when changing in Angular to false", () => {
             control.imperial = false;
             expect(control.imperial).to.equal(false);
         });
-        it('should be changed in Angular to true when changing in Angular to true', () => {
+        it("should be changed in Angular to true when changing in Angular to true", () => {
             control.imperial = true;
             expect(control.imperial).to.equal(true);
         });
     });
 
-    describe('Destroying a Scale Control Directive', () => {
-        it('should remove Tile-Layer Directive from map on destroy', () => {
+    describe("Destroying a Scale Control Directive", () => {
+        it("should remove Tile-Layer Directive from map on destroy", () => {
             /* istanbul ignore if */
             if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
-                throw new Error('The control is not part of the map before destroying');
+                throw new Error("The control is not part of the map before destroying");
             }
             control.ngOnDestroy();
             /* istanbul ignore if */
@@ -270,7 +270,7 @@ describe('Scale-Control Directive', () => {
                 control.getContainer().parentElement.parentElement &&
                 control.getContainer().parentElement.parentElement.parentElement &&
                 control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
-                throw new Error('The layer is still part of the map after destroying');
+                throw new Error("The layer is still part of the map after destroying");
             }
         });
     });

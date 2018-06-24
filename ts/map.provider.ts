@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Map } from 'leaflet';
+import { Injectable } from "@angular/core";
+import { Map } from "leaflet";
 
 /**
  * Injectable Angular provider to reference to Leaflets map

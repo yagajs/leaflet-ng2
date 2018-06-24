@@ -6,7 +6,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Content,
     Direction,
@@ -14,11 +14,10 @@ import {
     latLng,
     LatLngExpression,
     LeafletEvent,
-    Map,
     Point,
     Tooltip,
-} from 'leaflet';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet tooltips.
@@ -55,7 +54,7 @@ import { LayerProvider } from './layer.provider';
  * ```
  */
 @Directive({
-    selector: 'yaga-tooltip',
+    selector: "yaga-tooltip",
 })
 export class TooltipDirective extends Tooltip implements OnDestroy {
     /**
@@ -104,13 +103,13 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip (open)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-tooltipopen Original Leaflet documentation
      */
-    @Output('open') public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("open") public openEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired close event.
      * Use it with `<yaga-tooltip (close)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-tooltipclose Original Leaflet documentation
      */
-    @Output('close') public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("close") public closeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     constructor(
         protected layerProvider: LayerProvider,
@@ -119,11 +118,11 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         super();
         this.setContent(elementRef.nativeElement);
 
-        this.on('add', (event: LeafletEvent): void => {
+        this.on("add", (event: LeafletEvent): void => {
             this.openEvent.emit(event);
             this.openedChange.emit(true);
         });
-        this.on('remove', (event: LeafletEvent): void => {
+        this.on("remove", (event: LeafletEvent): void => {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
@@ -247,8 +246,20 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-classname Original Leaflet documentation
      */
     @Input() public set className(val: string) {
+        if (!(this as any)._container) {
+            this.options.className = val;
+            return;
+        }
+        const oldClassName = ((this as any)._container as HTMLDivElement).getAttribute("class") || "";
+
+        const newClassNameSplited: string[] = oldClassName.split(` ${this.options.className} `);
+
+        if (newClassNameSplited.length === 1) {
+            newClassNameSplited.push("");
+        }
+
+        ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
-        (this as any)._updateLayout();
     }
     public get className(): string {
         return this.options.className;
@@ -285,7 +296,9 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-sticky Original Leaflet documentation
      */
     @Input() public set sticky(val: boolean) {
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, true);
         this.options.sticky = val;
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get sticky(): boolean {
         return this.options.sticky;
@@ -298,6 +311,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      */
     @Input() public set direction(val: Direction) {
         this.options.direction = val;
+        this.reopen();
     }
     public get direction(): Direction {
         return this.options.direction;
@@ -309,7 +323,9 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-permanent Original Leaflet documentation
      */
     @Input() public set permanent(val: boolean) {
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, true);
         this.options.permanent = val;
+        (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get permanent(): boolean {
         return this.options.permanent;
@@ -322,8 +338,15 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      */
     @Input() public set offset(val: Point) {
         this.options.offset = val;
+        this.reopen();
     }
     public get offset(): Point {
         return (this.options.offset as Point);
+    }
+    public reopen(force: boolean = false) {
+        if (force || this.opened) {
+            this.layerProvider.ref.closeTooltip();
+            this.layerProvider.ref.openTooltip();
+        }
     }
 }

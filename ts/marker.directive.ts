@@ -5,7 +5,7 @@ import {
     Input,
     OnDestroy,
     Output,
-} from '@angular/core';
+} from "@angular/core";
 import {
     DivIcon,
     DragEndEvent,
@@ -20,10 +20,10 @@ import {
     Marker,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
-import { MarkerProvider } from './marker.provider';
+} from "leaflet";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
+import { MarkerProvider } from "./marker.provider";
 
 /**
  * Angular2 directive for markers of Leaflet.
@@ -55,7 +55,7 @@ import { MarkerProvider } from './marker.provider';
  *         (tooltipopen)="..."
  *         (tooltipclose)="..."
  *         (click)="..."
- *         (dbclick)="..."
+ *         (dblclick)="..."
  *         (mousedown)="..."
  *         (mouseover)="..."
  *         (mouseout)="..."
@@ -77,7 +77,7 @@ import { MarkerProvider } from './marker.provider';
  */
 @Directive({
     providers: [ LayerProvider, MarkerProvider ],
-    selector: 'yaga-marker',
+    selector: "yaga-marker",
 })
 export class MarkerDirective extends Marker implements AfterContentInit, OnDestroy {
     /**
@@ -143,104 +143,104 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      * Use it with `<yaga-marker (dragend)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-dragend Original Leaflet documentation
      */
-    @Output('dragend') public dragendEvent: EventEmitter<DragEndEvent> = new EventEmitter();
+    @Output("dragend") public dragendEvent: EventEmitter<DragEndEvent> = new EventEmitter();
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-marker (dragstart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-dragstart Original Leaflet documentation
      */
-    @Output('dragstart') public dragstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("dragstart") public dragstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-marker (movestart)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-movestart Original Leaflet documentation
      */
-    @Output('movestart') public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("movestart") public movestartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-marker (drag)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-drag Original Leaflet documentation
      */
-    @Output('drag') public dragEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("drag") public dragEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-marker (moveend)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-moveend Original Leaflet documentation
      */
-    @Output('moveend') public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("moveend") public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-marker (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-marker (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-marker (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-marker (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-marker (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-marker (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-marker (click)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-click Original Leaflet documentation
      */
-    @Output('click') public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("click") public clickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
-     * From leaflet fired dbclick event.
-     * Use it with `<yaga-marker (dbclick)="processEvent($event)">`
-     * @link http://leafletjs.com/reference-1.2.0.html#marker-dbclick Original Leaflet documentation
+     * From leaflet fired dblclick event.
+     * Use it with `<yaga-marker (dblclick)="processEvent($event)">`
+     * @link http://leafletjs.com/reference-1.2.0.html#marker-dblclick Original Leaflet documentation
      */
-    @Output('dbclick') public dbclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("dblclick") public dblclickEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mousedown event.
      * Use it with `<yaga-marker (mousedown)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-mousedown Original Leaflet documentation
      */
-    @Output('mousedown') public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mousedown") public mousedownEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseover event.
      * Use it with `<yaga-marker (mouseover)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-mouseover Original Leaflet documentation
      */
-    @Output('mouseover') public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseover") public mouseoverEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired mouseout event.
      * Use it with `<yaga-marker (mouseout)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-mouseout Original Leaflet documentation
      */
-    @Output('mouseout') public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("mouseout") public mouseoutEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
     /**
      * From leaflet fired contextmenu event.
      * Use it with `<yaga-marker (contextmenu)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-contextmenu Original Leaflet documentation
      */
-    @Output('contextmenu') public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
+    @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
     /**
      * Internal property to stop further processing while it is not initialized
@@ -257,72 +257,72 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         markerProvider.ref = this;
         this.layerGroupProvider.ref.addLayer(this);
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
-        this.on('drag', (event: DragEndEvent) => {
+        this.on("drag", (event: DragEndEvent) => {
             this.latChange.emit(this.getLatLng().lat);
             this.lngChange.emit(this.getLatLng().lng);
             this.positionChange.emit(this.getLatLng());
         });
 
         // Events
-        this.on('dragend', (event: DragEndEvent) => {
+        this.on("dragend", (event: DragEndEvent) => {
             this.dragendEvent.emit(event);
         });
-        this.on('dragstart', (event: LeafletEvent) => {
+        this.on("dragstart", (event: LeafletEvent) => {
             this.dragstartEvent.emit(event);
         });
-        this.on('movestart', (event: LeafletEvent) => {
+        this.on("movestart", (event: LeafletEvent) => {
             this.movestartEvent.emit(event);
         });
-        this.on('drag', (event: LeafletEvent) => {
+        this.on("drag", (event: LeafletEvent) => {
             this.dragEvent.emit(event);
         });
-        this.on('moveend', (event: LeafletEvent) => {
+        this.on("moveend", (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
-        this.on('add', (event: LeafletEvent) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: LeafletEvent) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
             this.popupOpenedChange.emit(true);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
             this.popupOpenedChange.emit(false);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
             this.tooltipOpenedChange.emit(true);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
             this.tooltipOpenedChange.emit(false);
         });
-        this.on('click', (event: LeafletMouseEvent) => {
+        this.on("click", (event: LeafletMouseEvent) => {
             this.clickEvent.emit(event);
         });
-        this.on('dbclick', (event: LeafletMouseEvent) => {
-            this.dbclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletMouseEvent) => {
+            this.dblclickEvent.emit(event);
         });
-        this.on('mousedown', (event: LeafletMouseEvent) => {
+        this.on("mousedown", (event: LeafletMouseEvent) => {
             this.mousedownEvent.emit(event);
         });
-        this.on('mouseover', (event: LeafletMouseEvent) => {
+        this.on("mouseover", (event: LeafletMouseEvent) => {
             this.mouseoverEvent.emit(event);
         });
-        this.on('mouseout', (event: LeafletMouseEvent) => {
+        this.on("mouseout", (event: LeafletMouseEvent) => {
             this.mouseoutEvent.emit(event);
         });
-        this.on('contextmenu', (event: LeafletMouseEvent) => {
+        this.on("contextmenu", (event: LeafletMouseEvent) => {
             this.contextmenuEvent.emit(event);
         });
         const oldDraggingEnable: () => any = this.dragging.enable;
@@ -580,10 +580,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      */
     @Input() public set title(val: string) {
         this.options.title = val;
-        this.getElement().setAttribute('title', val);
+        this.getElement().setAttribute("title", val);
     }
     public get title(): string {
-        return this.getElement().getAttribute('title');
+        return this.getElement().getAttribute("title");
     }
     /**
      * Input for the alternative text.
@@ -592,9 +592,9 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      */
     @Input() public set alt(val: string) {
         this.options.alt = val;
-        this.getElement().setAttribute('alt', val);
+        this.getElement().setAttribute("alt", val);
     }
     public get alt(): string {
-        return this.getElement().getAttribute('alt');
+        return this.getElement().getAttribute("alt");
     }
 }

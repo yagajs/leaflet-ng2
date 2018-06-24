@@ -5,19 +5,18 @@ import {
     OnDestroy,
     Output,
     SkipSelf,
-} from '@angular/core';
+} from "@angular/core";
 import {
     Control,
     FeatureGroup,
-    LayerGroup,
     LeafletEvent,
     Map,
     PathOptions,
     PopupEvent,
     TooltipEvent,
-} from 'leaflet';
-import { LayerGroupProvider } from './layer-group.provider';
-import { LayerProvider } from './layer.provider';
+} from "leaflet";
+import { LayerGroupProvider } from "./layer-group.provider";
+import { LayerProvider } from "./layer.provider";
 
 /**
  * Angular2 directive for Leaflet layer-groups.
@@ -51,7 +50,7 @@ import { LayerProvider } from './layer.provider';
  */
 @Directive({
     providers: [ LayerGroupProvider, LayerProvider ],
-    selector: 'yaga-feature-group',
+    selector: "yaga-feature-group",
 })
 export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
     /**
@@ -66,50 +65,50 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      * Use it with `<yaga-feature-group (layeradd)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-add Original Leaflet documentation
      */
-    @Output('layeradd') public layeraddEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("layeradd") public layeraddEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-feature-group (layerremove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-remove Original Leaflet documentation
      */
-    @Output('layerremove') public layerremoveEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("layerremove") public layerremoveEvent: EventEmitter<LeafletEvent> = new EventEmitter();
 
     /**
      * From leaflet fired add event.
      * Use it with `<yaga-feature-group (add)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-add Original Leaflet documentation
      */
-    @Output('add') public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("add") public addEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired remove event.
      * Use it with `<yaga-feature-group (remove)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-remove Original Leaflet documentation
      */
-    @Output('remove') public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    @Output("remove") public removeEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-feature-group (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-popupopen Original Leaflet documentation
      */
-    @Output('popupopen') public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupopen") public popupopenEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired popupclose event.
      * Use it with `<yaga-feature-group (popupclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-popupclose Original Leaflet documentation
      */
-    @Output('popupclose') public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
+    @Output("popupclose") public popupcloseEvent: EventEmitter<PopupEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipopen event.
      * Use it with `<yaga-feature-group (tooltipopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-tooltipopen Original Leaflet documentation
      */
-    @Output('tooltipopen') public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipopen") public tooltipopenEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired tooltipclose event.
      * Use it with `<yaga-feature-group (tooltipclose)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#featuregroup-tooltipclose Original Leaflet documentation
      */
-    @Output('tooltipclose') public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
+    @Output("tooltipclose") public tooltipcloseEvent: EventEmitter<TooltipEvent> = new EventEmitter();
     /**
      * From leaflet fired click event.
      * Use it with `<yaga-feature-group (click)="processEvent($event)">`
@@ -126,39 +125,39 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
         layerProvider.ref = this;
         layerGroupProvider.ref = this;
 
-        this.on('remove', () => {
+        this.on("remove", () => {
             (this as any)._map = null; // This seems to fix a bug in Leaflet
             this.displayChange.emit(false);
         });
-        this.on('add', () => {
+        this.on("add", () => {
             this.displayChange.emit(true);
         });
 
         this.addTo(this.parentLayerGroupProvider.ref);
 
         // Events
-        this.on('layeradd', (event: Event) => {
+        this.on("layeradd", (event: Event) => {
             this.layeraddEvent.emit(event);
         });
-        this.on('layerremove', (event: Event) => {
+        this.on("layerremove", (event: Event) => {
             this.layerremoveEvent.emit(event);
         });
-        this.on('add', (event: Event) => {
+        this.on("add", (event: Event) => {
             this.addEvent.emit(event);
         });
-        this.on('remove', (event: Event) => {
+        this.on("remove", (event: Event) => {
             this.removeEvent.emit(event);
         });
-        this.on('popupopen', (event: PopupEvent) => {
+        this.on("popupopen", (event: PopupEvent) => {
             this.popupopenEvent.emit(event);
         });
-        this.on('popupclose', (event: PopupEvent) => {
+        this.on("popupclose", (event: PopupEvent) => {
             this.popupcloseEvent.emit(event);
         });
-        this.on('tooltipopen', (event: TooltipEvent) => {
+        this.on("tooltipopen", (event: TooltipEvent) => {
             this.tooltipopenEvent.emit(event);
         });
-        this.on('tooltipclose', (event: TooltipEvent) => {
+        this.on("tooltipclose", (event: TooltipEvent) => {
             this.tooltipcloseEvent.emit(event);
         });
     }
