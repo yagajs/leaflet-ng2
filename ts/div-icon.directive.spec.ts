@@ -25,7 +25,7 @@ describe("DivIcon Directive", () => {
 
     // Events
     describe("(update)", () => {
-        it("should fire event in Angular when changing", (done: MochaDone) => {
+        it("should fire event in Angular when changing", (done: Mocha.Done) => {
             icon.updateEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(icon);
                 return done();
@@ -46,7 +46,7 @@ describe("DivIcon Directive", () => {
             icon.iconSize = val;
             expect(icon.iconSize).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -66,7 +66,7 @@ describe("DivIcon Directive", () => {
             icon.iconAnchor = val;
             expect(icon.iconAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -86,7 +86,7 @@ describe("DivIcon Directive", () => {
             icon.popupAnchor = val;
             expect(icon.popupAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);

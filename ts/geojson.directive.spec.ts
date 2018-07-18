@@ -64,7 +64,7 @@ describe("GeoJSON Directive", () => {
             layer.addData(TEST_VALUE.features[0]);
             expect(layer.data).to.deep.equal(TEST_VALUE);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: LatLng[]) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
@@ -73,7 +73,7 @@ describe("GeoJSON Directive", () => {
 
             layer.data = TEST_VALUE;
         });
-        it("should fire an event when changing internal setData function", (done: MochaDone) => {
+        it("should fire an event when changing internal setData function", (done: Mocha.Done) => {
             layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
@@ -82,7 +82,7 @@ describe("GeoJSON Directive", () => {
 
             layer.setData(TEST_VALUE);
         });
-        it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+        it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
             layer.ngAfterContentInit();
             layer.dataChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
@@ -105,7 +105,7 @@ describe("GeoJSON Directive", () => {
             layer.filter = FILTER_FN;
             expect(layer.filter).to.equal(FILTER_FN);
         });
-        it("should use the filter function when adding data", (done: MochaDone) => {
+        it("should use the filter function when adding data", (done: Mocha.Done) => {
             const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
@@ -140,7 +140,7 @@ describe("GeoJSON Directive", () => {
             layer.pointToLayer = POINT_TO_LAYER_FN;
             expect(layer.pointToLayer).to.equal(POINT_TO_LAYER_FN);
         });
-        it("should use the filter function when adding data", (done: MochaDone) => {
+        it("should use the filter function when adding data", (done: Mocha.Done) => {
             const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
@@ -178,7 +178,7 @@ describe("GeoJSON Directive", () => {
             layer.styler = STYLER_FN;
             expect(layer.styler).to.equal(STYLER_FN);
         });
-        it("should use the filter function when adding data", (done: MochaDone) => {
+        it("should use the filter function when adding data", (done: Mocha.Done) => {
             const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
@@ -221,7 +221,7 @@ describe("GeoJSON Directive", () => {
             layer.defaultStyle = NEW_DEFAULT_STYLE;
             expect(layer.defaultStyle).to.equal(NEW_DEFAULT_STYLE);
         });
-        it("should use the default style from consts as fallback in the styler function", (done: MochaDone) => {
+        it("should use the default style from consts as fallback in the styler function", (done: Mocha.Done) => {
             const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
@@ -243,7 +243,7 @@ describe("GeoJSON Directive", () => {
                 type: "FeatureCollection",
             };
         });
-        it("should use the given default style in the styler function", (done: MochaDone) => {
+        it("should use the given default style in the styler function", (done: Mocha.Done) => {
             const TEST_POINT: GeoJSONFeature<GeoJSON.Point, any> = {
                 geometry: {
                     coordinates: [0, 1],
@@ -271,7 +271,7 @@ describe("GeoJSON Directive", () => {
     const testEvent: any = { testHandle };
 
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.addEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 expect(event.testHandle).to.equal(testHandle);
@@ -281,7 +281,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.removeEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -290,7 +290,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.popupopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -299,7 +299,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.popupcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -308,7 +308,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.tooltipopenEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -317,7 +317,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.tooltipcloseEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -326,7 +326,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.clickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -335,7 +335,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.dblclickEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -344,7 +344,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.mousedownEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -353,7 +353,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.mouseoverEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -362,7 +362,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.mouseoutEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();
@@ -371,7 +371,7 @@ describe("GeoJSON Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             layer.contextmenuEvent.subscribe((event: any) => {
                 expect(event.testHandle).to.equal(testHandle);
                 return done();

@@ -43,7 +43,7 @@ describe("Circle Directive", () => {
             layer.display = true;
             expect((layer.getElement() as HTMLElement).style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -53,7 +53,7 @@ describe("Circle Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -79,7 +79,7 @@ describe("Circle Directive", () => {
             layer.setLatLng(TEST_VALUE);
             expect(layer.position).to.equal(TEST_VALUE);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.equal(TEST_VALUE);
                 return done();
@@ -87,7 +87,7 @@ describe("Circle Directive", () => {
 
             layer.position = TEST_VALUE;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.equal(TEST_VALUE);
                 return done();
@@ -95,13 +95,13 @@ describe("Circle Directive", () => {
 
             layer.setLatLng(TEST_VALUE);
         });
-        it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+        it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe(() => {
                 return done();
             });
             layer.position = TEST_VALUE;
         });
-        it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe(() => {
                 return done();
             });
@@ -125,7 +125,7 @@ describe("Circle Directive", () => {
             layer.setLatLng([val, 0]);
             expect(layer.lat).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -135,7 +135,7 @@ describe("Circle Directive", () => {
 
             layer.lat = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -162,7 +162,7 @@ describe("Circle Directive", () => {
             layer.setLatLng([0, val]);
             expect(layer.lng).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -172,7 +172,7 @@ describe("Circle Directive", () => {
 
             layer.lng = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -199,7 +199,7 @@ describe("Circle Directive", () => {
             layer.setRadius(val);
             expect(layer.radius).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
@@ -209,7 +209,7 @@ describe("Circle Directive", () => {
 
             layer.radius = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
@@ -245,7 +245,7 @@ describe("Circle Directive", () => {
             expect(layer.geoJSON.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
             expect(layer.geoJSON.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal).to.deep.equal(TEST_VALUE);
                 return done();
@@ -253,7 +253,7 @@ describe("Circle Directive", () => {
 
             layer.geoJSON = TEST_VALUE;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(eventVal.geometry.coordinates[0]).to.equal(TEST_POINT[1]);
                 expect(eventVal.geometry.coordinates[1]).to.equal(TEST_POINT[0]);
@@ -279,7 +279,7 @@ describe("Circle Directive", () => {
             layer.properties = TEST_OBJECT;
             expect(layer.properties).to.equal(TEST_OBJECT);
         });
-        it("should emit an event for GeoJSONChange when changing in Angular", (done: MochaDone) => {
+        it("should emit an event for GeoJSONChange when changing in Angular", (done: Mocha.Done) => {
             /* tslint:disable:max-line-length */
             layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(eventVal.properties).to.equal(TEST_OBJECT);
