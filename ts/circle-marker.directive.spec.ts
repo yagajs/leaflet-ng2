@@ -53,7 +53,7 @@ describe("Circle-Marker Directive", () => {
             layer.display = true;
             expect((layer.getElement() as HTMLElement).style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -63,7 +63,7 @@ describe("Circle-Marker Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -87,7 +87,7 @@ describe("Circle-Marker Directive", () => {
             layer.setLatLng(TEST_VALUE);
             expect(layer.position).to.equal(TEST_VALUE);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.equal(TEST_VALUE);
                 done();
@@ -95,7 +95,7 @@ describe("Circle-Marker Directive", () => {
 
             layer.position = TEST_VALUE;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.positionChange.subscribe((eventVal: LatLng) => {
                 expect(eventVal).to.equal(TEST_VALUE);
                 done();
@@ -103,13 +103,13 @@ describe("Circle-Marker Directive", () => {
 
             layer.setLatLng(TEST_VALUE);
         });
-        it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+        it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe(() => {
                 done();
             });
             layer.position = TEST_VALUE;
         });
-        it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe(() => {
                 done();
             });
@@ -133,7 +133,7 @@ describe("Circle-Marker Directive", () => {
             layer.setLatLng([val, 0]);
             expect(layer.lat).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -143,7 +143,7 @@ describe("Circle-Marker Directive", () => {
 
             layer.lat = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -170,7 +170,7 @@ describe("Circle-Marker Directive", () => {
             layer.setLatLng([0, val]);
             expect(layer.lng).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -180,7 +180,7 @@ describe("Circle-Marker Directive", () => {
 
             layer.lng = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -207,7 +207,7 @@ describe("Circle-Marker Directive", () => {
             layer.setRadius(val);
             expect(layer.radius).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
@@ -217,7 +217,7 @@ describe("Circle-Marker Directive", () => {
 
             layer.radius = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(100);
 
             layer.radiusChange.subscribe((eventVal: number) => {
@@ -257,7 +257,7 @@ describe("Circle-Marker Directive", () => {
                 layer.geoJSON.geometry.coordinates[1],
             ).to.equal(TEST_POINT[0]);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 expect(
                     eventVal.geometry.coordinates[0],
@@ -270,7 +270,7 @@ describe("Circle-Marker Directive", () => {
 
             layer.geoJSON = TEST_GEOJSON;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Point, any>) => {
                 const values: [number, number] = (eventVal.geometry.coordinates as any);
 
@@ -302,7 +302,7 @@ describe("Circle-Marker Directive", () => {
             layerWithProps.properties = TEST_OBJECT;
             expect(layerWithProps.properties).to.equal(TEST_OBJECT);
         });
-        it("should emit an event for GeoJSONChange when changing in Angular", (done: MochaDone) => {
+        it("should emit an event for GeoJSONChange when changing in Angular", (done: Mocha.Done) => {
             layerWithProps.geoJSONChange.subscribe(
                 (val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     expect(val.properties).to.equal(TEST_OBJECT);
@@ -315,7 +315,7 @@ describe("Circle-Marker Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -326,7 +326,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -337,7 +337,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -348,7 +348,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -359,7 +359,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -370,7 +370,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -381,7 +381,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
@@ -392,7 +392,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dblclickEvent.subscribe((event: any) => {
@@ -403,7 +403,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
@@ -414,7 +414,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
@@ -425,7 +425,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
@@ -436,7 +436,7 @@ describe("Circle-Marker Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {

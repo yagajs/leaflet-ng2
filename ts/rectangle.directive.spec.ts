@@ -44,7 +44,7 @@ describe("Rectangle Directive", () => {
             layer.display = true;
             expect((layer.getElement() as HTMLElement).style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -54,7 +54,7 @@ describe("Rectangle Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -89,7 +89,7 @@ describe("Rectangle Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -97,7 +97,7 @@ describe("Rectangle Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -105,21 +105,21 @@ describe("Rectangle Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
@@ -153,7 +153,7 @@ describe("Rectangle Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ (layer.latLngs as LatLng[][][])[0][0] }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -161,7 +161,7 @@ describe("Rectangle Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -169,21 +169,21 @@ describe("Rectangle Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     // todo: test for correct data
                     return done();
@@ -236,7 +236,7 @@ describe("Rectangle Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: LatLng[]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -244,7 +244,7 @@ describe("Rectangle Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     expect(lng2lat((eventVal.geometry.coordinates as any))).to.deep.equal(TEST_POLYGON);
                     return done();
@@ -252,7 +252,7 @@ describe("Rectangle Directive", () => {
 
                 layer.setLatLngs(TEST_POLYGON);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_POLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
@@ -332,7 +332,7 @@ describe("Rectangle Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSON.Feature<GeoJSON.MultiPolygon>) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -340,7 +340,7 @@ describe("Rectangle Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTIPOLYGON);
                     return done();
@@ -348,7 +348,7 @@ describe("Rectangle Directive", () => {
 
                 layer.setLatLngs(TEST_MULTIPOLYGON);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: Array<Array<Array<[number, number]>>> = (eventVal.geometry.coordinates as any);
@@ -381,7 +381,7 @@ describe("Rectangle Directive", () => {
             expect(layer.bounds.equals(val)).to.equal(true);
 
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -391,7 +391,7 @@ describe("Rectangle Directive", () => {
             layer.ngAfterContentInit();
             layer.bounds = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -426,7 +426,7 @@ describe("Rectangle Directive", () => {
             ]);
             expect(layer.north).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
@@ -437,7 +437,7 @@ describe("Rectangle Directive", () => {
             layer.ngAfterContentInit();
             layer.north = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
@@ -474,7 +474,7 @@ describe("Rectangle Directive", () => {
             ]);
             expect(layer.east).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
@@ -485,7 +485,7 @@ describe("Rectangle Directive", () => {
             layer.ngAfterContentInit();
             layer.east = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
@@ -522,7 +522,7 @@ describe("Rectangle Directive", () => {
             ]);
             expect(layer.south).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
@@ -533,7 +533,7 @@ describe("Rectangle Directive", () => {
             layer.ngAfterContentInit();
             layer.south = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
@@ -570,7 +570,7 @@ describe("Rectangle Directive", () => {
             ]));
             expect(layer.west).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
@@ -581,7 +581,7 @@ describe("Rectangle Directive", () => {
             layer.ngAfterContentInit();
             layer.west = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
@@ -629,7 +629,7 @@ describe("Rectangle Directive", () => {
             layerWithProperties.properties = TEST_OBJECT;
             expect(layerWithProperties.properties).to.deep.equal(TEST_OBJECT);
         });
-        it("should emit an event for GeoJSONChange when changing in Angular", (done: MochaDone) => {
+        it("should emit an event for GeoJSONChange when changing in Angular", (done: Mocha.Done) => {
             layerWithProperties.geoJSONChange.subscribe(
                 (eventVal: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     expect(eventVal.properties).to.deep.equal(TEST_OBJECT);

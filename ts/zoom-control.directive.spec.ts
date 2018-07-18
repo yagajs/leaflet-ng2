@@ -32,7 +32,7 @@ describe("Zoom-Control Directive", () => {
             control.display = true;
             expect(control.getContainer()!.style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             control.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -42,7 +42,7 @@ describe("Zoom-Control Directive", () => {
 
             map.removeControl(control);
         });
-        // it.skip("should set to true when adding to map again", (done: MochaDone) => {
+        // it.skip("should set to true when adding to map again", (done: Mocha.Done) => {
         //     /* tslint:disable */
         //     control.displayChange.subscribe((x) => { console.log("aslkdnasnldknaskldnlkd ", x); });
         //     map.removeControl(control);
@@ -72,7 +72,7 @@ describe("Zoom-Control Directive", () => {
             control.setPosition(val);
             expect(control.position).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
@@ -82,7 +82,7 @@ describe("Zoom-Control Directive", () => {
 
             control.position = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: ControlPosition = "topleft";
             control.positionChange.subscribe((eventVal: ControlPosition) => {
                 expect(eventVal).to.equal(val);
@@ -170,7 +170,7 @@ describe("Zoom-Control Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire an event when adding to map", (done: MochaDone) => {
+        it("should fire an event when adding to map", (done: Mocha.Done) => {
             map.removeControl(control);
 
             control.addEvent.subscribe(() => {
@@ -180,7 +180,7 @@ describe("Zoom-Control Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire an event when removing from map", (done: MochaDone) => {
+        it("should fire an event when removing from map", (done: Mocha.Done) => {
             control.removeEvent.subscribe(() => {
                 done();
             });
@@ -189,7 +189,7 @@ describe("Zoom-Control Directive", () => {
     });
 
     describe("(click)", () => {
-        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+        it("should fire an event when firing event from DOM", (done: Mocha.Done) => {
             control.clickEvent.subscribe(() => {
                 done();
             });
@@ -202,7 +202,7 @@ describe("Zoom-Control Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+        it("should fire an event when firing event from DOM", (done: Mocha.Done) => {
             control.dblclickEvent.subscribe(() => {
                 done();
             });
@@ -215,7 +215,7 @@ describe("Zoom-Control Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+        it("should fire an event when firing event from DOM", (done: Mocha.Done) => {
             control.mousedownEvent.subscribe(() => {
                 done();
             });
@@ -228,7 +228,7 @@ describe("Zoom-Control Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+        it("should fire an event when firing event from DOM", (done: Mocha.Done) => {
             control.mouseoverEvent.subscribe(() => {
                 done();
             });
@@ -241,7 +241,7 @@ describe("Zoom-Control Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire an event when firing event from DOM", (done: MochaDone) => {
+        it("should fire an event when firing event from DOM", (done: Mocha.Done) => {
             control.mouseoutEvent.subscribe(() => {
                 done();
             });

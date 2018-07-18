@@ -32,7 +32,7 @@ describe("Layer-Group Directive", () => {
             layer.display = true;
             expect((layer as any)._map).to.equal((layer as any).parentLayerGroupProvider.ref);
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             setTimeout(() => {
                 layer.displayChange.subscribe((val: boolean) => {
@@ -44,7 +44,7 @@ describe("Layer-Group Directive", () => {
             }, 0);
 
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -58,7 +58,7 @@ describe("Layer-Group Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -69,7 +69,7 @@ describe("Layer-Group Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -80,7 +80,7 @@ describe("Layer-Group Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -91,7 +91,7 @@ describe("Layer-Group Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -102,7 +102,7 @@ describe("Layer-Group Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -113,7 +113,7 @@ describe("Layer-Group Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {

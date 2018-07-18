@@ -42,7 +42,7 @@ export function createPathTests(Constr: any): void {
 
                 expect(layer.getElement().style.display).not.equal("none");
             });
-            it("should set to false by removing from map", (done: MochaDone) => {
+            it("should set to false by removing from map", (done: Mocha.Done) => {
 
                 layer.displayChange.subscribe((val: boolean) => {
                     expect(val).to.equal(false);
@@ -52,7 +52,7 @@ export function createPathTests(Constr: any): void {
 
                 map.removeLayer(layer);
             });
-            it("should set to true when adding to map again", (done: MochaDone) => {
+            it("should set to true when adding to map again", (done: Mocha.Done) => {
                 map.removeLayer(layer);
                 layer.displayChange.subscribe((val: boolean) => {
                     expect(val).to.equal(true);
@@ -77,7 +77,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({color: TEST_VALUE});
                 expect(layer.color).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.colorChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -85,7 +85,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.color = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.colorChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -108,7 +108,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({lineCap: TEST_VALUE});
                 expect(layer.lineCap).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.lineCapChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -116,7 +116,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.lineCap = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.lineCap = TEST_VALUE;
                 layer.lineCapChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -140,7 +140,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({lineJoin: TEST_VALUE});
                 expect(layer.lineJoin).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.lineJoinChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -148,7 +148,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.lineJoin = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.lineJoin = TEST_VALUE;
                 layer.lineJoinChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -172,7 +172,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({dashArray: TEST_VALUE});
                 expect(layer.dashArray).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.dashArrayChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -180,7 +180,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.dashArray = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.dashArray = TEST_VALUE;
                 layer.dashArrayChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -204,7 +204,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({dashOffset: TEST_VALUE});
                 expect(layer.dashOffset).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.dashOffsetChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -212,7 +212,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.dashOffset = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.dashOffset = TEST_VALUE;
                 layer.dashOffsetChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -236,7 +236,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({fillColor: TEST_VALUE});
                 expect(layer.fillColor).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.fillColorChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -244,7 +244,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.fillColor = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.fillColor = TEST_VALUE;
                 layer.fillColorChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -268,7 +268,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({fillRule: TEST_VALUE});
                 expect(layer.fillRule).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.fillRuleChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -276,7 +276,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.fillRule = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.fillRule = TEST_VALUE;
                 layer.fillRuleChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -300,7 +300,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({className: TEST_VALUE});
                 expect(layer.className).to.equal(TEST_VALUE);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.classNameChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
                     return done();
@@ -308,7 +308,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.className = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.className = TEST_VALUE;
                 layer.classNameChange.subscribe((eventVal: string) => {
                     expect(eventVal).to.equal(TEST_VALUE);
@@ -334,7 +334,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({opacity: val});
                 expect(layer.opacity).to.equal(val);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 const val: number = randomNumber();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
@@ -344,7 +344,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.opacity = val;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 const val: number = randomNumber();
 
                 layer.opacityChange.subscribe((eventVal: number) => {
@@ -371,7 +371,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({weight: val});
                 expect(layer.weight).to.equal(val);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 const val: number = randomNumber(10, 0, 0);
 
                 layer.weightChange.subscribe((eventVal: number) => {
@@ -381,7 +381,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.weight = val;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 const val: number = randomNumber(10, 0, 0);
 
                 layer.weightChange.subscribe((eventVal: number) => {
@@ -408,7 +408,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({fillOpacity: val});
                 expect(layer.fillOpacity).to.equal(val);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 const val: number = randomNumber();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
@@ -418,7 +418,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.fillOpacity = val;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 const val: number = randomNumber();
 
                 layer.fillOpacityChange.subscribe((eventVal: number) => {
@@ -464,7 +464,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({stroke: val});
                 expect(layer.stroke).to.equal(val);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 const val: boolean = false;
 
                 layer.strokeChange.subscribe((eventVal: boolean) => {
@@ -474,7 +474,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.stroke = val;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 const val: boolean = false;
 
                 layer.strokeChange.subscribe((eventVal: boolean) => {
@@ -519,7 +519,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle({fill: val});
                 expect(layer.fill).to.equal(val);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 const val: boolean = false;
 
                 layer.fillChange.subscribe((eventVal: boolean) => {
@@ -529,7 +529,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.fill = val;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 const val: boolean = false;
 
                 layer.fillChange.subscribe((eventVal: boolean) => {
@@ -555,7 +555,7 @@ export function createPathTests(Constr: any): void {
                 layer.setStyle(TEST_VALUE);
                 expect(layer.style.opacity).to.equal(TEST_VALUE.opacity);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 Promise.all([
                     new Promise<void> ((fulfill, reject) => {
                         layer.styleChange.subscribe((eventVal: PathOptions) => {
@@ -597,7 +597,7 @@ export function createPathTests(Constr: any): void {
 
                 layer.style = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 Promise.all([
                     new Promise<void> ((fulfill, reject) => {
                         layer.styleChange.subscribe((eventVal: PathOptions) => {
@@ -643,7 +643,7 @@ export function createPathTests(Constr: any): void {
 
         // Events
         describe("(add)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.addEvent.subscribe((event: any) => {
@@ -654,7 +654,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(remove)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.removeEvent.subscribe((event: any) => {
@@ -665,7 +665,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(popupopen)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.popupopenEvent.subscribe((event: any) => {
@@ -676,7 +676,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(popupclose)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.popupcloseEvent.subscribe((event: any) => {
@@ -687,7 +687,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(tooltipopen)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.tooltipopenEvent.subscribe((event: any) => {
@@ -698,7 +698,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(tooltipclose)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -709,7 +709,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(click)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.clickEvent.subscribe((event: any) => {
@@ -720,7 +720,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(dblclick)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.dblclickEvent.subscribe((event: any) => {
@@ -731,7 +731,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(mousedown)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.mousedownEvent.subscribe((event: any) => {
@@ -742,7 +742,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(mouseover)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.mouseoverEvent.subscribe((event: any) => {
@@ -753,7 +753,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(mouseout)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.mouseoutEvent.subscribe((event: any) => {
@@ -764,7 +764,7 @@ export function createPathTests(Constr: any): void {
             });
         });
         describe("(contextmenu)", () => {
-            it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
                 const testHandle: any = {};
                 const testEvent: any = { testHandle };
                 layer.contextmenuEvent.subscribe((event: any) => {

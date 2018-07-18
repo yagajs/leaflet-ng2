@@ -27,7 +27,7 @@ describe("Icon Directive", () => {
 
     // Events
     describe("(update)", () => {
-        it("should fire event in Angular when changing", (done: MochaDone) => {
+        it("should fire event in Angular when changing", (done: Mocha.Done) => {
             icon.updateEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(icon);
                 /* istanbul ignore if */
@@ -52,7 +52,7 @@ describe("Icon Directive", () => {
             icon.className = val;
             expect(icon.className).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: string = "any-class";
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -72,7 +72,7 @@ describe("Icon Directive", () => {
             icon.iconUrl = val;
             expect(icon.iconUrl).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -92,7 +92,7 @@ describe("Icon Directive", () => {
             icon.iconRetinaUrl = val;
             expect(icon.iconRetinaUrl).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -112,7 +112,7 @@ describe("Icon Directive", () => {
             icon.iconSize = val;
             expect(icon.iconSize).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(10, 1, 0), randomNumber(10, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -132,7 +132,7 @@ describe("Icon Directive", () => {
             icon.iconAnchor = val;
             expect(icon.iconAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 1, 0), randomNumber(100, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -155,7 +155,7 @@ describe("Icon Directive", () => {
             icon.popupAnchor = val;
             expect(icon.popupAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 1, 0), randomNumber(100, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -178,7 +178,7 @@ describe("Icon Directive", () => {
             icon.tooltipAnchor = val;
             expect(icon.tooltipAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(10, 1, 0), randomNumber(100, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -198,7 +198,7 @@ describe("Icon Directive", () => {
             icon.shadowUrl = val;
             expect(icon.shadowUrl).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -218,7 +218,7 @@ describe("Icon Directive", () => {
             icon.shadowRetinaUrl = val;
             expect(icon.shadowRetinaUrl).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: string = TRANSPARENT_PIXEL;
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -238,7 +238,7 @@ describe("Icon Directive", () => {
             icon.shadowSize = val;
             expect(icon.shadowSize).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 1, 0), randomNumber(100, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -258,7 +258,7 @@ describe("Icon Directive", () => {
             icon.shadowAnchor = val;
             expect(icon.shadowAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 1, 0), randomNumber(100, 1, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
