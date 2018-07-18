@@ -25,7 +25,7 @@ describe("DivIcon Directive", () => {
 
     // Events
     describe("(update)", () => {
-        it("should fire event in Angular when changing", (done: MochaDone) => {
+        it("should fire event in Angular when changing", (done: Mocha.Done) => {
             icon.updateEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(icon);
                 return done();
@@ -46,7 +46,7 @@ describe("DivIcon Directive", () => {
             icon.iconSize = val;
             expect(icon.iconSize).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -66,7 +66,7 @@ describe("DivIcon Directive", () => {
             icon.iconAnchor = val;
             expect(icon.iconAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -86,7 +86,7 @@ describe("DivIcon Directive", () => {
             icon.popupAnchor = val;
             expect(icon.popupAnchor).to.equal(val);
         });
-        it("should fire an event in Angular when changing in Angular", (done: MochaDone) => {
+        it("should fire an event in Angular when changing in Angular", (done: Mocha.Done) => {
             const val: Point = point(randomNumber(100, 0, 0), randomNumber(100, 0, 0));
             icon.updateEvent.subscribe((ev: LeafletEvent) => {
                 expect(ev.target).to.equal(icon);
@@ -98,12 +98,12 @@ describe("DivIcon Directive", () => {
     describe(".createIcon(oldDivIcon)", () => {
         it("should add the .yaga-div-icon class", () => {
             const val: HTMLElement = document.createElement("div");
-            expect(icon.createIcon(val).getAttribute("class").split("yaga-div-icon").length).to.equal(2);
+            expect(icon.createIcon(val).getAttribute("class")!.split("yaga-div-icon").length).to.equal(2);
         });
         it("should not add the .yaga-div-icon class again", () => {
             const val: HTMLElement = document.createElement("div");
             val.setAttribute("class", "yaga-div-icon");
-            expect(icon.createIcon(val).getAttribute("class").split("yaga-div-icon").length).to.equal(2);
+            expect(icon.createIcon(val).getAttribute("class")!.split("yaga-div-icon").length).to.equal(2);
         });
     });
 });

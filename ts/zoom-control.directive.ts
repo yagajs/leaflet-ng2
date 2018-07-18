@@ -122,22 +122,22 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         protected mapProvider: MapProvider,
     ) {
         super();
-        this.mapProvider.ref.addControl(this);
+        this.mapProvider.ref!.addControl(this);
 
         // Events
-        this.getContainer().addEventListener("click", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("dblclick", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
             this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mousedown", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseover", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
             this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseout", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
             this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
@@ -145,7 +145,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.mapProvider.ref.removeControl(this);
+        this.mapProvider.ref!.removeControl(this);
     }
 
     /**
@@ -184,11 +184,18 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * or `<yaga-zoom-control [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
-        this.getContainer().style.opacity = val.toString();
+    @Input() public set opacity(val: number | undefined) {
+        if (typeof val === "number") {
+            this.getContainer()!.style.opacity = val.toString();
+            return;
+        }
+        this.getContainer()!.style.opacity = null;
     }
-    public get opacity(): number {
-        return parseFloat(this.getContainer().style.opacity);
+    public get opacity(): number | undefined {
+        const val = this.getContainer()!.style.opacity;
+        if (typeof val === "string") {
+            return parseFloat(val);
+        }
     }
 
     /**
@@ -202,14 +209,14 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
             return;
         }
         if (val) {
-            this.getContainer().style.display = "";
+            this.getContainer()!.style.display = "";
             return;
         }
-        this.getContainer().style.display = "none";
+        this.getContainer()!.style.display = "none";
         return;
     }
     public get display(): boolean {
-        return !!((this as any)._map && this.getContainer().style.display !== "none");
+        return !!(this as any)._map && this.getContainer()!.style.display !== "none";
     }
 
     /**
@@ -230,16 +237,19 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * Use it with `<yaga-zoom-control [(zIndex)]="someValue">`
      * or `<yaga-zoom-control (zIndexChange)="processEvent($event)">`
      */
-    @Input() public set zIndex(zIndex: number) {
-        if ( !zIndex ) {
+    @Input() public set zIndex(zIndex: number | undefined) {
+        if (zIndex === undefined) {
             zIndex = 0;
         }
 
-        this.getContainer().style.zIndex = zIndex.toString();
+        this.getContainer()!.style.zIndex = zIndex.toString();
     }
 
-    public get zIndex(): number {
-        return parseInt(this.getContainer().style.zIndex, 10);
+    public get zIndex(): number | undefined {
+        const val = this.getContainer()!.style.zIndex;
+        if (typeof val === "string") {
+            return parseInt(val, 10);
+        }
     }
 
     /**
@@ -248,11 +258,15 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * or `<yaga-zoom-control [zoomInText]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomintext Original Leaflet documentation
      */
-    @Input() public set zoomInText(val: string) {
+    @Input() public set zoomInText(val: string | undefined) {
         this.options.zoomInText = val;
-        ((this as any)._zoomInButton as HTMLElement).textContent = val;
+        if (typeof val === "string") {
+            ((this as any)._zoomInButton as HTMLElement).textContent = val;
+            return;
+        }
+        ((this as any)._zoomInButton as HTMLElement).textContent = null;
     }
-    public get zoomInText(): string {
+    public get zoomInText(): string | undefined {
         return this.options.zoomInText;
     }
 
@@ -262,11 +276,15 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * or `<yaga-zoom-control [zoomInTitle]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomintitle Original Leaflet documentation
      */
-    @Input() public set zoomInTitle(val: string) {
+    @Input() public set zoomInTitle(val: string | undefined) {
         this.options.zoomInTitle = val;
-        ((this as any)._zoomInButton as HTMLElement).setAttribute("title", val);
+        if (typeof val === "string") {
+            ((this as any)._zoomInButton as HTMLElement).setAttribute("title", val);
+            return;
+        }
+        ((this as any)._zoomInButton as HTMLElement).removeAttribute("title");
     }
-    public get zoomInTitle(): string {
+    public get zoomInTitle(): string | undefined {
         return this.options.zoomInTitle;
     }
 
@@ -276,11 +294,16 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * or `<yaga-zoom-control [zoomOutText]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomouttext Original Leaflet documentation
      */
-    @Input() public set zoomOutText(val: string) {
+    @Input() public set zoomOutText(val: string | undefined) {
         this.options.zoomOutText = val;
-        ((this as any)._zoomOutButton as HTMLElement).textContent = val;
+        if (typeof val === "string") {
+            ((this as any)._zoomOutButton as HTMLElement).textContent = val;
+            return;
+        }
+        ((this as any)._zoomOutButton as HTMLElement).textContent = null;
+
     }
-    public get zoomOutText(): string {
+    public get zoomOutText(): string | undefined {
         return this.options.zoomOutText;
     }
 
@@ -290,11 +313,15 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
      * or `<yaga-zoom-control [zoomOutTitle]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-zoom-zoomouttitle Original Leaflet documentation
      */
-    @Input() public set zoomOutTitle(val: string) {
+    @Input() public set zoomOutTitle(val: string | undefined) {
         this.options.zoomOutTitle = val;
-        ((this as any)._zoomOutButton as HTMLElement).setAttribute("title", val);
+        if (typeof val === "string") {
+            ((this as any)._zoomOutButton as HTMLElement).setAttribute("title", val);
+            return;
+        }
+        ((this as any)._zoomOutButton as HTMLElement).removeAttribute("title");
     }
-    public get zoomOutTitle(): string {
+    public get zoomOutTitle(): string | undefined {
         return this.options.zoomOutTitle;
     }
 }

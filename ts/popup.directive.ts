@@ -131,11 +131,11 @@ export class PopupDirective extends Popup implements OnDestroy {
             this.closeEvent.emit(event);
         });
 
-        this.layerProvider.ref.bindPopup(this);
+        this.layerProvider.ref!.bindPopup(this);
     }
 
     public ngOnDestroy(): void {
-        this.layerProvider.ref.unbindPopup();
+        this.layerProvider.ref!.unbindPopup();
     }
 
     /**
@@ -165,10 +165,10 @@ export class PopupDirective extends Popup implements OnDestroy {
      */
     @Input() public set opened(val: boolean) {
         if (val) {
-            this.layerProvider.ref.openPopup();
+            this.layerProvider.ref!.openPopup();
             return;
         }
-        this.layerProvider.ref.closePopup();
+        this.layerProvider.ref!.closePopup();
     }
     public get opened(): boolean {
         return !!(this as any)._map;
@@ -194,7 +194,10 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.setLatLng([val, this.lng]);
     }
     public get lat(): number {
-        return this.getLatLng().lat;
+        if (!this.getLatLng()) {
+            return NaN;
+        }
+        return this.getLatLng()!.lat;
     }
 
     /**
@@ -206,7 +209,10 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.setLatLng([this.lat, val]);
     }
     public get lng(): number {
-        return this.getLatLng().lng;
+        if (!this.getLatLng()) {
+            return NaN;
+        }
+        return this.getLatLng()!.lng;
     }
 
     /**
@@ -218,7 +224,10 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.setLatLng(val);
     }
     public get position(): LatLng {
-        return this.getLatLng();
+        if (!this.getLatLng()) {
+            return new LatLng(NaN, NaN);
+        }
+        return this.getLatLng()!;
     }
 
     /**
@@ -226,11 +235,11 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup [maxWidth]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-maxwidth Original Leaflet documentation
      */
-    @Input() public set maxWidth(val: number) {
+    @Input() public set maxWidth(val: number| undefined) {
         this.options.maxWidth = val;
         this.reopen();
     }
-    public get maxWidth(): number {
+    public get maxWidth(): number| undefined {
         return this.options.maxWidth;
     }
     /**
@@ -238,11 +247,11 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup [minWidth]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-minwidth Original Leaflet documentation
      */
-    @Input() public set minWidth(val: number) {
+    @Input() public set minWidth(val: number| undefined) {
         this.options.minWidth = val;
         this.reopen();
     }
-    public get minWidth(): number {
+    public get minWidth(): number| undefined {
         return this.options.minWidth;
     }
     /**
@@ -250,11 +259,11 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup [maxHeight]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-maxheight Original Leaflet documentation
      */
-    @Input() public set maxHeight(val: number) {
+    @Input() public set maxHeight(val: number| undefined) {
         this.options.maxHeight = val;
         this.reopen();
     }
-    public get maxHeight(): number {
+    public get maxHeight(): number| undefined {
         return this.options.maxHeight;
     }
     /**
@@ -267,7 +276,7 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.reopen();
     }
     public get autoPan(): boolean {
-        return this.options.autoPan;
+        return !!this.options.autoPan;
     }
     /**
      * Input for the autoPanPaddingTopLeft.
@@ -315,7 +324,7 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.reopen();
     }
     public get keepInView(): boolean {
-        return this.options.keepInView;
+        return !!this.options.keepInView;
     }
     /**
      * Input for the closeButton.
@@ -327,7 +336,7 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.reopen();
     }
     public get closeButton(): boolean {
-        return this.options.closeButton;
+        return !!this.options.closeButton;
     }
     /**
      * Input for the autoClose.
@@ -339,14 +348,14 @@ export class PopupDirective extends Popup implements OnDestroy {
         this.reopen();
     }
     public get autoClose(): boolean {
-        return this.options.autoClose;
+        return !!this.options.autoClose;
     }
     /**
      * Input for the CSS class name.
      * Use it with `<yaga-popup [autoClose]="className">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         if (!(this as any)._container) {
             this.options.className = val;
             return;
@@ -362,7 +371,7 @@ export class PopupDirective extends Popup implements OnDestroy {
         ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
     /**
@@ -370,18 +379,18 @@ export class PopupDirective extends Popup implements OnDestroy {
      * Use it with `<yaga-popup [pane]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#popup-pane Original Leaflet documentation
      */
-    @Input() public set pane(val: string) {
+    @Input() public set pane(val: string | undefined) {
         this.options.pane = val;
         this.reopen();
     }
-    public get pane(): string {
+    public get pane(): string | undefined {
         return this.options.pane;
     }
 
     public reopen(force: boolean = false) {
         if (force || this.opened) {
-            this.layerProvider.ref.closePopup();
-            this.layerProvider.ref.openPopup();
+            this.layerProvider.ref!.closePopup();
+            this.layerProvider.ref!.openPopup();
         }
     }
 }

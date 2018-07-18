@@ -40,19 +40,19 @@ describe("Image-Overlay Directive", () => {
     describe("[(display)]", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(true);
         });
-        it("should remove EventListeners when not displaying", (done: MochaDone) => {
+        it("should remove EventListeners when not displaying", (done: Mocha.Done) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -65,11 +65,11 @@ describe("Image-Overlay Directive", () => {
                 return done();
             }
         });
-        it("should re-add EventListeners when display is true again", (done: MochaDone) => {
+        it("should re-add EventListeners when display is true again", (done: Mocha.Done) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -83,7 +83,7 @@ describe("Image-Overlay Directive", () => {
             /* istanbul ignore next */
             return done(new Error("There is no event on listener"));
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -93,7 +93,7 @@ describe("Image-Overlay Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -117,7 +117,7 @@ describe("Image-Overlay Directive", () => {
             layer.setUrl(IMAGE_OVERLAY_URL);
             expect(layer.url).to.equal(IMAGE_OVERLAY_URL);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(IMAGE_OVERLAY_URL);
                 return done();
@@ -125,7 +125,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.url = IMAGE_OVERLAY_URL;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.url = IMAGE_OVERLAY_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(IMAGE_OVERLAY_URL + "?test");
@@ -134,7 +134,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.setUrl(IMAGE_OVERLAY_URL + "?test");
         });
-        it("should not emit anything when changing into same url", (done: MochaDone) => {
+        it("should not emit anything when changing into same url", (done: Mocha.Done) => {
             layer.setUrl(IMAGE_OVERLAY_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
@@ -162,7 +162,7 @@ describe("Image-Overlay Directive", () => {
             layer.setOpacity(val);
             expect(layer.options.opacity).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -172,7 +172,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.opacity = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -199,7 +199,7 @@ describe("Image-Overlay Directive", () => {
             layer.setBounds(val);
             expect(layer.bounds).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -209,7 +209,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.bounds = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: LatLngBounds = randomLatLngBounds();
 
             layer.boundsChange.subscribe((eventVal: LatLngBounds) => {
@@ -241,7 +241,7 @@ describe("Image-Overlay Directive", () => {
             ]);
             expect(layer.north).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
@@ -251,7 +251,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.north = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(90);
 
             layer.northChange.subscribe((eventVal: number) => {
@@ -284,7 +284,7 @@ describe("Image-Overlay Directive", () => {
             ]);
             expect(layer.east).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
@@ -294,7 +294,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.east = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(180);
 
             layer.eastChange.subscribe((eventVal: number) => {
@@ -333,7 +333,7 @@ describe("Image-Overlay Directive", () => {
             ]);
             expect(layer.south).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
@@ -343,7 +343,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.south = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -90);
 
             layer.southChange.subscribe((eventVal: number) => {
@@ -382,7 +382,7 @@ describe("Image-Overlay Directive", () => {
             ]));
             expect(layer.west).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
@@ -392,7 +392,7 @@ describe("Image-Overlay Directive", () => {
 
             layer.west = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(0, -180);
 
             layer.westChange.subscribe((eventVal: number) => {
@@ -409,7 +409,7 @@ describe("Image-Overlay Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -421,7 +421,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -432,7 +432,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -443,7 +443,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -454,7 +454,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -465,7 +465,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -476,7 +476,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
@@ -487,7 +487,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dblclickEvent.subscribe((event: any) => {
@@ -498,7 +498,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
@@ -509,7 +509,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
@@ -520,7 +520,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
@@ -531,7 +531,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {
@@ -542,7 +542,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(load)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.loadEvent.subscribe((event: any) => {
@@ -554,7 +554,7 @@ describe("Image-Overlay Directive", () => {
         });
     });
     describe("(error)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.errorEvent.subscribe((event: any) => {
@@ -608,7 +608,7 @@ describe("Image-Overlay Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: string = "Test alt";
             layer.alt = val;
-            expect(layer.options.alt !== val || layer.getElement().getAttribute("alt") !== val).to.equal(false);
+            expect(layer.options.alt !== val || layer.getElement()!.getAttribute("alt") !== val).to.equal(false);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "Test alt";

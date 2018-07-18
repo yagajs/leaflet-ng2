@@ -63,7 +63,7 @@ describe("Tooltip Directive", () => {
             tooltip.setContent(EXAMPLE_CONTENT);
             expect(tooltip.content).to.equal(EXAMPLE_CONTENT);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             tooltip.contentChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_CONTENT);
                 return done();
@@ -71,7 +71,7 @@ describe("Tooltip Directive", () => {
 
             tooltip.content = EXAMPLE_CONTENT;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             tooltip.content = EXAMPLE_CONTENT;
             tooltip.contentChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_CONTENT + "?test");
@@ -98,7 +98,7 @@ describe("Tooltip Directive", () => {
             tooltip.setOpacity(val);
             expect(tooltip.opacity).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
             tooltip.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -107,7 +107,7 @@ describe("Tooltip Directive", () => {
 
             tooltip.opacity = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
             tooltip.opacityChange.subscribe((eventVal: number) => {
                 expect(eventVal).to.equal(val);
@@ -124,7 +124,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLat();
             tooltip.lat = val;
-            expect(tooltip.getLatLng().lat).to.equal(val);
+            expect(tooltip.getLatLng()!.lat).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLat();
@@ -136,7 +136,7 @@ describe("Tooltip Directive", () => {
             tooltip.setLatLng([val, 0]);
             expect(tooltip.lat).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             tooltip.latChange.subscribe((eventVal: number) => {
@@ -146,7 +146,7 @@ describe("Tooltip Directive", () => {
 
             tooltip.lat = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             tooltip.latChange.subscribe((eventVal: number) => {
@@ -164,7 +164,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLng();
             tooltip.lng = val;
-            expect(tooltip.getLatLng().lng).to.equal(val);
+            expect(tooltip.getLatLng()!.lng).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLng();
@@ -176,7 +176,7 @@ describe("Tooltip Directive", () => {
             tooltip.setLatLng([0, val]);
             expect(tooltip.lng).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             tooltip.lngChange.subscribe((eventVal: number) => {
@@ -186,7 +186,7 @@ describe("Tooltip Directive", () => {
 
             tooltip.lng = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             tooltip.lngChange.subscribe((eventVal: number) => {
@@ -204,7 +204,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: LatLng = randomLatLng();
             tooltip.position = val;
-            expect(tooltip.getLatLng().equals(val)).to.equal(true);
+            expect(tooltip.getLatLng()!.equals(val)).to.equal(true);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: LatLng = randomLatLng();
@@ -216,7 +216,7 @@ describe("Tooltip Directive", () => {
             tooltip.setLatLng(val);
             expect(tooltip.position.equals(val)).to.equal(true);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             tooltip.positionChange.subscribe((eventVal: LatLng) => {
@@ -226,7 +226,7 @@ describe("Tooltip Directive", () => {
 
             tooltip.position = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             tooltip.positionChange.subscribe((eventVal: LatLng) => {
@@ -243,7 +243,7 @@ describe("Tooltip Directive", () => {
         beforeEach(() => {
             tooltip.setLatLng(latLng(0, 0));
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             tooltip.openEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(tooltip);
                 return done();
@@ -256,7 +256,7 @@ describe("Tooltip Directive", () => {
             tooltip.setLatLng(latLng(0, 0));
             map.openTooltip(tooltip);
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             tooltip.closeEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(tooltip);
                 return done();
@@ -275,7 +275,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in DOM when changing in Angular", () => {
             const val: string = "test-class";
             tooltip.className = val;
-            expect(((tooltip as any)._container as HTMLDivElement).getAttribute("class").split(" ")).to.include(val);
+            expect(((tooltip as any)._container as HTMLDivElement).getAttribute("class")!.split(" ")).to.include(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "test-class";
@@ -379,7 +379,7 @@ describe("Tooltip Directive", () => {
     });
 
     describe("Remove from source element on destroy", () => {
-        it("should call unbindPopup on destroy", (done: MochaDone) => {
+        it("should call unbindPopup on destroy", (done: Mocha.Done) => {
             (tooltip as any).layerProvider.ref = {
                 unbindTooltip: done,
             };

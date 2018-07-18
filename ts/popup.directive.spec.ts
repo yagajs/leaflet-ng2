@@ -63,7 +63,7 @@ describe("Popup Directive", () => {
             popup.setContent(EXAMPLE_CONTENT);
             expect(popup.content).to.equal(EXAMPLE_CONTENT);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             popup.contentChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_CONTENT);
                 done();
@@ -71,7 +71,7 @@ describe("Popup Directive", () => {
 
             popup.content = EXAMPLE_CONTENT;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             popup.content = EXAMPLE_CONTENT;
             popup.contentChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_CONTENT + "?test");
@@ -88,7 +88,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLat();
             popup.lat = val;
-            expect(popup.getLatLng().lat).to.equal(val);
+            expect(popup.getLatLng()!.lat).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLat();
@@ -98,9 +98,9 @@ describe("Popup Directive", () => {
         it("should be changed in Angular when changing in Leaflet", () => {
             const val: number = randomLat();
             popup.setLatLng([val, 0]);
-            expect(popup.getLatLng().lat).to.equal(val);
+            expect(popup.getLatLng()!.lat).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             popup.latChange.subscribe((eventVal: number) => {
@@ -110,7 +110,7 @@ describe("Popup Directive", () => {
 
             popup.lat = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             popup.latChange.subscribe((eventVal: number) => {
@@ -128,7 +128,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLng();
             popup.lng = val;
-            expect(popup.getLatLng().lng).to.equal(val);
+            expect(popup.getLatLng()!.lng).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLng();
@@ -140,7 +140,7 @@ describe("Popup Directive", () => {
             popup.setLatLng([0, val]);
             expect(popup.lng).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             popup.lngChange.subscribe((eventVal: number) => {
@@ -150,7 +150,7 @@ describe("Popup Directive", () => {
 
             popup.lng = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             popup.lngChange.subscribe((eventVal: number) => {
@@ -168,7 +168,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: LatLng = randomLatLng();
             popup.position = val;
-            expect(popup.getLatLng()).to.deep.equal(val);
+            expect(popup.getLatLng()!).to.deep.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: LatLng = randomLatLng();
@@ -180,7 +180,7 @@ describe("Popup Directive", () => {
             popup.setLatLng(val);
             expect(popup.position).to.deep.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
@@ -190,7 +190,7 @@ describe("Popup Directive", () => {
 
             popup.position = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             popup.positionChange.subscribe((eventVal: LatLng) => {
@@ -207,7 +207,7 @@ describe("Popup Directive", () => {
         beforeEach(() => {
             popup.setLatLng(latLng(0, 0));
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             popup.openEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(popup);
                 done();
@@ -220,7 +220,7 @@ describe("Popup Directive", () => {
             popup.setLatLng(latLng(0, 0));
             popup.openOn(map);
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             popup.closeEvent.subscribe((event: any) => {
                 expect(event.target).to.equal(popup);
                 done();
@@ -395,7 +395,7 @@ describe("Popup Directive", () => {
         it("should be changed in DOM when changing in Angular", () => {
             const val: string = "test-class";
             popup.className = val;
-            expect(((popup as any)._container as HTMLDivElement).getAttribute("class").split(" ")).to.include(val);
+            expect(((popup as any)._container as HTMLDivElement).getAttribute("class")!.split(" ")).to.include(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "test-class";
@@ -417,7 +417,7 @@ describe("Popup Directive", () => {
     });
 
     describe("Remove from source element on destroy", () => {
-        it("should call unbindPopup on destroy", (done: MochaDone) => {
+        it("should call unbindPopup on destroy", (done: Mocha.Done) => {
             (popup as any).layerProvider.ref = {
                 unbindPopup: done,
             };

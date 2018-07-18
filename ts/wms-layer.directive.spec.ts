@@ -43,18 +43,18 @@ describe("WMS-Layer Directive", () => {
     describe("[(display)]", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(true);
         });
-        it("should remove EventListeners when not displaying", (done: MochaDone) => {
+        it("should remove EventListeners when not displaying", (done: Mocha.Done) => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
@@ -67,11 +67,11 @@ describe("WMS-Layer Directive", () => {
             }
             done();
         });
-        it("should re-add EventListeners when display is true again", (done: MochaDone) => {
+        it("should re-add EventListeners when display is true again", (done: Mocha.Done) => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
@@ -85,7 +85,7 @@ describe("WMS-Layer Directive", () => {
             /* istanbul ignore next */
             return done(new Error("There is no event on listener"));
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(false);
@@ -95,7 +95,7 @@ describe("WMS-Layer Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
@@ -119,7 +119,7 @@ describe("WMS-Layer Directive", () => {
             layer.setUrl(EXAMPLE_WMS_LAYER_URL);
             expect(layer.url).to.equal(EXAMPLE_WMS_LAYER_URL);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_WMS_LAYER_URL);
                 return done();
@@ -127,7 +127,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.url = EXAMPLE_WMS_LAYER_URL;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.url = EXAMPLE_WMS_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(EXAMPLE_WMS_LAYER_URL + "?test");
@@ -136,7 +136,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.setUrl(EXAMPLE_WMS_LAYER_URL + "?test");
         });
-        it("should not emit anything when changing into same url", (done: MochaDone) => {
+        it("should not emit anything when changing into same url", (done: Mocha.Done) => {
             layer.setUrl(EXAMPLE_WMS_LAYER_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
@@ -164,7 +164,7 @@ describe("WMS-Layer Directive", () => {
             layer.setOpacity(val);
             expect(layer.opacity).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -174,7 +174,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.opacity = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -201,7 +201,7 @@ describe("WMS-Layer Directive", () => {
             layer.setZIndex(val);
             expect(layer.zIndex).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(255, 0, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
@@ -211,7 +211,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.zIndex = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(255, 0, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
@@ -236,7 +236,7 @@ describe("WMS-Layer Directive", () => {
             layer.setParams({layers: EXAMPLE_WMS_LAYER_NAMES.join(",")});
             expect(layer.layers).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.layersChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
@@ -244,7 +244,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.layersChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
@@ -268,7 +268,7 @@ describe("WMS-Layer Directive", () => {
             layer.setParams(params);
             expect(layer.styles).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
@@ -276,7 +276,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.styles = EXAMPLE_WMS_LAYER_NAMES;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.stylesChange.subscribe((eventVal: string[]) => {
                 expect(eventVal).to.deep.equal(EXAMPLE_WMS_LAYER_NAMES);
                 return done();
@@ -316,7 +316,7 @@ describe("WMS-Layer Directive", () => {
             layer.setParams(params);
             expect(layer.transparent).to.equal(true);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.transparentChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
                 return done();
@@ -324,7 +324,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.transparent = true;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.layers = EXAMPLE_WMS_LAYER_NAMES;
             layer.transparentChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
@@ -352,7 +352,7 @@ describe("WMS-Layer Directive", () => {
             layer.setParams(params);
             expect(layer.format).to.equal(FORMAT);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.formatChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(FORMAT);
                 return done();
@@ -360,7 +360,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.format = FORMAT;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.formatChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(FORMAT);
                 return done();
@@ -386,7 +386,7 @@ describe("WMS-Layer Directive", () => {
             layer.setParams(params);
             expect(layer.version).to.equal(VERSION);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.versionChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(VERSION);
                 return done();
@@ -394,7 +394,7 @@ describe("WMS-Layer Directive", () => {
 
             layer.version = VERSION;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.versionChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(VERSION);
                 return done();
@@ -407,7 +407,7 @@ describe("WMS-Layer Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -418,7 +418,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -429,7 +429,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -440,7 +440,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -451,7 +451,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -462,7 +462,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -473,7 +473,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
@@ -484,7 +484,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dblclickEvent.subscribe((event: any) => {
@@ -495,7 +495,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
@@ -506,7 +506,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
@@ -517,7 +517,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
@@ -528,7 +528,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {
@@ -539,7 +539,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(loading)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.loadingEvent.subscribe((event: any) => {
@@ -553,7 +553,7 @@ describe("WMS-Layer Directive", () => {
         beforeEach(() => {
             layer.off("tileunload", (layer as any)._onTileRemove); // Hack to disable another listener
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileunloadEvent.subscribe((event: any) => {
@@ -564,7 +564,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(tileloadstart)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileloadstartEvent.subscribe((event: any) => {
@@ -575,7 +575,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(tileerror)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileerrorEvent.subscribe((event: any) => {
@@ -586,7 +586,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(tileload)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             let called: boolean; // this event is called multiple times in the life-circle of leaflet
@@ -605,7 +605,7 @@ describe("WMS-Layer Directive", () => {
         });
     });
     describe("(load)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { target: layer, testHandle, type: "load" };
             let called: boolean; // this event is called multiple times in the life-circle of leaflet

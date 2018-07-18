@@ -67,7 +67,7 @@ export class DivIconDirective extends DivIcon  {
 
         if (typeof MutationObserver === "function") {
             const mutationObserver = new MutationObserver(() => {
-                this.markerProvider.ref.setIcon(this);
+                this.markerProvider.ref!.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
                     type: "update",
@@ -84,14 +84,14 @@ export class DivIconDirective extends DivIcon  {
             );
         } else {
             this.contentHtml.addEventListener("DOMSubtreeModified", () => {
-                this.markerProvider.ref.setIcon(this);
+                this.markerProvider.ref!.setIcon(this);
                 this.updateEvent.emit({
                     target: this,
                     type: "update",
                 });
             });
         }
-        markerProvider.ref.setIcon(this);
+        markerProvider.ref!.setIcon(this);
     }
 
     /**
@@ -101,7 +101,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set iconSize(val: Point) {
         this.options.iconSize = val;
-        this.markerProvider.ref.setIcon(this);
+        this.markerProvider.ref!.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: "update",
@@ -118,7 +118,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set iconAnchor(val: Point) {
         this.options.iconAnchor = val;
-        this.markerProvider.ref.setIcon(this);
+        this.markerProvider.ref!.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: "update",
@@ -135,7 +135,7 @@ export class DivIconDirective extends DivIcon  {
      */
     @Input() public set popupAnchor(val: Point) {
         this.options.popupAnchor = val;
-        this.markerProvider.ref.setIcon(this);
+        this.markerProvider.ref!.setIcon(this);
         this.updateEvent.emit({
             target: this,
             type: "update",
@@ -151,7 +151,10 @@ export class DivIconDirective extends DivIcon  {
      */
     public createIcon(oldDivIcon: HTMLElement): HTMLElement {
         oldDivIcon = super.createIcon(oldDivIcon);
-        if (oldDivIcon.getAttribute("class").split(" ").indexOf("yaga-div-icon") === -1) {
+        if (
+            oldDivIcon.getAttribute("class") &&
+            oldDivIcon.getAttribute("class")!.split(" ").indexOf("yaga-div-icon") === -1
+        ) {
             oldDivIcon.setAttribute("class", oldDivIcon.getAttribute("class") + " yaga-div-icon");
         }
         oldDivIcon.appendChild(this.contentHtml.cloneNode(true));

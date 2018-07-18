@@ -29,18 +29,18 @@ describe("Tile-Layer Directive", () => {
     describe("[(display)]", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(true);
         });
-        it("should remove EventListeners when not displaying", (done: MochaDone) => {
+        it("should remove EventListeners when not displaying", (done: Mocha.Done) => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
@@ -53,11 +53,11 @@ describe("Tile-Layer Directive", () => {
             }
             done();
         });
-        it("should re-add EventListeners when display is true again", (done: MochaDone) => {
+        it("should re-add EventListeners when display is true again", (done: Mocha.Done) => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
@@ -71,7 +71,7 @@ describe("Tile-Layer Directive", () => {
             /* istanbul ignore next */
             return done(new Error("There is no event on listener"));
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -81,7 +81,7 @@ describe("Tile-Layer Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -105,7 +105,7 @@ describe("Tile-Layer Directive", () => {
             layer.setUrl(OSM_TILE_LAYER_URL);
             expect(layer.url).to.equal(OSM_TILE_LAYER_URL);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(OSM_TILE_LAYER_URL);
                 return done();
@@ -113,7 +113,7 @@ describe("Tile-Layer Directive", () => {
 
             layer.url = OSM_TILE_LAYER_URL;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             layer.url = OSM_TILE_LAYER_URL;
             layer.urlChange.subscribe((eventVal: string) => {
                 expect(eventVal).to.equal(OSM_TILE_LAYER_URL + "?test");
@@ -122,7 +122,7 @@ describe("Tile-Layer Directive", () => {
 
             layer.setUrl(OSM_TILE_LAYER_URL + "?test");
         });
-        it("should not emit anything when changing into same url", (done: MochaDone) => {
+        it("should not emit anything when changing into same url", (done: Mocha.Done) => {
             layer.setUrl(OSM_TILE_LAYER_URL);
             setTimeout(() => {
                 /* istanbul ignore next */
@@ -150,7 +150,7 @@ describe("Tile-Layer Directive", () => {
             layer.setOpacity(val);
             expect(layer.opacity).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -160,7 +160,7 @@ describe("Tile-Layer Directive", () => {
 
             layer.opacity = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -187,7 +187,7 @@ describe("Tile-Layer Directive", () => {
             layer.setZIndex(val);
             expect(layer.zIndex).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber(255, 1, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
@@ -197,7 +197,7 @@ describe("Tile-Layer Directive", () => {
 
             layer.zIndex = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber(255, 1, 0);
 
             layer.zIndexChange.subscribe((eventVal: number) => {
@@ -211,7 +211,7 @@ describe("Tile-Layer Directive", () => {
 
     // Events
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -222,7 +222,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -233,7 +233,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -244,7 +244,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -255,7 +255,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -266,7 +266,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -277,7 +277,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
@@ -288,7 +288,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dblclickEvent.subscribe((event: any) => {
@@ -299,7 +299,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
@@ -310,7 +310,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
@@ -321,7 +321,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
@@ -332,7 +332,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {
@@ -343,7 +343,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(loading)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.loadingEvent.subscribe((event: any) => {
@@ -357,7 +357,7 @@ describe("Tile-Layer Directive", () => {
         beforeEach(() => {
             layer.off("tileunload", (layer as any)._onTileRemove); // Hack to disable another listener
         });
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileunloadEvent.subscribe((event: any) => {
@@ -368,7 +368,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(tileloadstart)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileloadstartEvent.subscribe((event: any) => {
@@ -379,7 +379,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(tileerror)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tileerrorEvent.subscribe((event: any) => {
@@ -390,7 +390,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(tileload)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             let called: boolean; // this event is called multiple times in the life-circle of leaflet
@@ -412,7 +412,7 @@ describe("Tile-Layer Directive", () => {
         });
     });
     describe("(load)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { target: layer, testHandle, type: "load" };
             let called: boolean; // this event is called multiple times in the life-circle of leaflet

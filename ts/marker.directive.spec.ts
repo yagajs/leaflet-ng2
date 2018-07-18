@@ -42,19 +42,19 @@ describe("Marker Directive", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(true);
         });
-        it("should remove EventListeners when not displaying", (done: MochaDone) => {
+        it("should remove EventListeners when not displaying", (done: Mocha.Done) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -67,11 +67,11 @@ describe("Marker Directive", () => {
             }
             done();
         });
-        it("should re-add EventListeners when display is true again", (done: MochaDone) => {
+        it("should re-add EventListeners when display is true again", (done: Mocha.Done) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -83,7 +83,7 @@ describe("Marker Directive", () => {
                 }
             }
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -93,7 +93,7 @@ describe("Marker Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -120,7 +120,7 @@ describe("Marker Directive", () => {
             layer.openPopup();
             expect(layer.popupOpened).to.equal(true);
         });
-        it("should fire an event when opening in Angular", (done: MochaDone) => {
+        it("should fire an event when opening in Angular", (done: Mocha.Done) => {
             layer.popupOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
                 return done();
@@ -128,7 +128,7 @@ describe("Marker Directive", () => {
 
             layer.popupOpened = true;
         });
-        it("should fire an event when opening in Leaflet", (done: MochaDone) => {
+        it("should fire an event when opening in Leaflet", (done: Mocha.Done) => {
             layer.popupOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
                 return done();
@@ -152,7 +152,7 @@ describe("Marker Directive", () => {
             layer.closePopup();
             expect(layer.popupOpened).to.equal(false);
         });
-        it("should fire an event when opening in Angular", (done: MochaDone) => {
+        it("should fire an event when opening in Angular", (done: Mocha.Done) => {
             layer.popupOpened = true;
             layer.popupOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(false);
@@ -161,7 +161,7 @@ describe("Marker Directive", () => {
 
             layer.popupOpened = false;
         });
-        it("should fire an event when closing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when closing in Leaflet", (done: Mocha.Done) => {
             layer.openPopup();
             layer.popupOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(false);
@@ -187,7 +187,7 @@ describe("Marker Directive", () => {
             layer.openTooltip();
             expect(layer.tooltipOpened).to.equal(true);
         });
-        it("should fire an event when opening in Angular", (done: MochaDone) => {
+        it("should fire an event when opening in Angular", (done: Mocha.Done) => {
             layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
                 return done();
@@ -195,7 +195,7 @@ describe("Marker Directive", () => {
 
             layer.tooltipOpened = true;
         });
-        it("should fire an event when opening in Leaflet", (done: MochaDone) => {
+        it("should fire an event when opening in Leaflet", (done: Mocha.Done) => {
             layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(true);
                 return done();
@@ -219,7 +219,7 @@ describe("Marker Directive", () => {
             layer.closeTooltip();
             expect(layer.tooltipOpened).to.equal(false);
         });
-        it("should fire an event when opening in Angular", (done: MochaDone) => {
+        it("should fire an event when opening in Angular", (done: Mocha.Done) => {
             layer.tooltipOpened = true;
             layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(false);
@@ -228,7 +228,7 @@ describe("Marker Directive", () => {
 
             layer.tooltipOpened = false;
         });
-        it("should fire an event when closing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when closing in Leaflet", (done: Mocha.Done) => {
             layer.openTooltip();
             layer.tooltipOpenedChange.subscribe((eventVal: boolean) => {
                 expect(eventVal).to.equal(false);
@@ -253,7 +253,7 @@ describe("Marker Directive", () => {
             layer.setOpacity(val);
             expect(layer.opacity).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -263,7 +263,7 @@ describe("Marker Directive", () => {
 
             layer.opacity = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.opacityChange.subscribe((eventVal: number) => {
@@ -290,7 +290,7 @@ describe("Marker Directive", () => {
             layer.setZIndexOffset(val);
             expect(layer.zIndexOffset).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.zIndexOffsetChange.subscribe((eventVal: number) => {
@@ -300,7 +300,7 @@ describe("Marker Directive", () => {
 
             layer.zIndexOffset = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomNumber();
 
             layer.zIndexOffsetChange.subscribe((eventVal: number) => {
@@ -331,7 +331,7 @@ describe("Marker Directive", () => {
             layer.setLatLng([val, 0]);
             expect(layer.lat).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -341,7 +341,7 @@ describe("Marker Directive", () => {
 
             layer.lat = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLat();
 
             layer.latChange.subscribe((eventVal: number) => {
@@ -371,7 +371,7 @@ describe("Marker Directive", () => {
             layer.setLatLng([0, val]);
             expect(layer.lng).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -381,7 +381,7 @@ describe("Marker Directive", () => {
 
             layer.lng = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: number = randomLng();
 
             layer.lngChange.subscribe((eventVal: number) => {
@@ -411,7 +411,7 @@ describe("Marker Directive", () => {
             layer.setLatLng(val);
             expect(layer.position).to.equal(val);
         });
-        it("should fire an event when changing in Angular", (done: MochaDone) => {
+        it("should fire an event when changing in Angular", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
@@ -421,7 +421,7 @@ describe("Marker Directive", () => {
 
             layer.position = val;
         });
-        it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+        it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
             const val: LatLng = randomLatLng();
 
             layer.positionChange.subscribe((eventVal: LatLng) => {
@@ -462,12 +462,12 @@ describe("Marker Directive", () => {
     describe("[draggable]", () => {
         it("should be changed to false in Leaflet when changing in Angular to false", () => {
             layer.draggable = false;
-            expect(layer.dragging.enabled()).to.equal(false);
+            expect(layer.dragging!.enabled()).to.equal(false);
         });
         it("should be changed to true in Leaflet when changing in Angular to true", () => {
-            layer.dragging.disable();
+            layer.dragging!.disable();
             layer.draggable = true;
-            expect(layer.dragging.enabled()).to.equal(true);
+            expect(layer.dragging!.enabled()).to.equal(true);
         });
         it("should be changed in Angular to false when changing in Angular to false", () => {
             layer.draggable = false;
@@ -481,7 +481,7 @@ describe("Marker Directive", () => {
 
     // Events
     describe("(dragend)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dragendEvent.subscribe((event: any) => {
@@ -492,7 +492,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(dragstart)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dragstartEvent.subscribe((event: any) => {
@@ -503,7 +503,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(movestart)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.movestartEvent.subscribe((event: any) => {
@@ -514,7 +514,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(drag)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dragEvent.subscribe((event: any) => {
@@ -525,7 +525,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(moveend)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.moveendEvent.subscribe((event: any) => {
@@ -537,7 +537,7 @@ describe("Marker Directive", () => {
     });
 
     describe("(add)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.addEvent.subscribe((event: any) => {
@@ -548,7 +548,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(remove)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.removeEvent.subscribe((event: any) => {
@@ -559,7 +559,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(popupopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupopenEvent.subscribe((event: any) => {
@@ -570,7 +570,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(popupclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.popupcloseEvent.subscribe((event: any) => {
@@ -581,7 +581,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(tooltipopen)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipopenEvent.subscribe((event: any) => {
@@ -592,7 +592,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(tooltipclose)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.tooltipcloseEvent.subscribe((event: any) => {
@@ -603,7 +603,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(click)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.clickEvent.subscribe((event: any) => {
@@ -614,7 +614,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(dblclick)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.dblclickEvent.subscribe((event: any) => {
@@ -625,7 +625,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(mousedown)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mousedownEvent.subscribe((event: any) => {
@@ -636,7 +636,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(mouseover)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoverEvent.subscribe((event: any) => {
@@ -647,7 +647,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(mouseout)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.mouseoutEvent.subscribe((event: any) => {
@@ -658,7 +658,7 @@ describe("Marker Directive", () => {
         });
     });
     describe("(contextmenu)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             layer.contextmenuEvent.subscribe((event: any) => {

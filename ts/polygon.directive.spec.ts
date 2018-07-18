@@ -44,7 +44,7 @@ describe("Polygon Directive", () => {
             layer.display = true;
             expect((layer.getElement() as HTMLElement).style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -54,7 +54,7 @@ describe("Polygon Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -86,7 +86,7 @@ describe("Polygon Directive", () => {
                 expect((layer.latLngs as LatLng[][])[0][3].lat).to.equal(3);
                 expect((layer.latLngs as LatLng[][])[0][3].lng).to.equal(3);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -94,7 +94,7 @@ describe("Polygon Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -102,19 +102,19 @@ describe("Polygon Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
@@ -141,10 +141,10 @@ describe("Polygon Directive", () => {
             it("should be changed in Angular when adding in Leaflet", () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
-                expect(layer.latLngs[0][0][3].lat).to.equal(3);
-                expect(layer.latLngs[0][0][3].lng).to.equal(3);
+                expect((layer.latLngs as LatLng[][][])[0][0][3].lat).to.equal(3);
+                expect((layer.latLngs as LatLng[][][])[0][0][3].lng).to.equal(3);
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -152,7 +152,7 @@ describe("Polygon Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -160,19 +160,19 @@ describe("Polygon Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
@@ -224,7 +224,7 @@ describe("Polygon Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: LatLng[]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -232,7 +232,7 @@ describe("Polygon Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     expect(lng2lat((eventVal.geometry.coordinates as any))).to.deep.equal(TEST_POLYGON);
                     return done();
@@ -240,7 +240,7 @@ describe("Polygon Directive", () => {
 
                 layer.setLatLngs(TEST_POLYGON);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_POLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.Polygon, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
@@ -274,19 +274,19 @@ describe("Polygon Directive", () => {
                 layer.geoJSON = TEST_VALUE;
 
                 /* istanbul ignore if */
-                if ((layer.latLngs as LatLng[][])[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                    (layer.latLngs as LatLng[][])[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                    (layer.latLngs as LatLng[][])[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
+                if ((layer.latLngs as LatLng[][][])[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
+                    (layer.latLngs as LatLng[][][])[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
+                    (layer.latLngs as LatLng[][][])[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
 
-                    (layer.latLngs as LatLng[][])[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                    (layer.latLngs as LatLng[][])[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                    (layer.latLngs as LatLng[][])[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
+                    (layer.latLngs as LatLng[][][])[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
+                    (layer.latLngs as LatLng[][][])[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
+                    (layer.latLngs as LatLng[][][])[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
                     throw new Error(
                         `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (layer as any)._latlngs }`,
                     );
@@ -320,7 +320,7 @@ describe("Polygon Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSON.Feature<GeoJSON.MultiPolygon>) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -328,7 +328,7 @@ describe("Polygon Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTIPOLYGON);
                     return done();
@@ -336,7 +336,7 @@ describe("Polygon Directive", () => {
 
                 layer.setLatLngs(TEST_MULTIPOLYGON);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_MULTIPOLYGON);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiPolygon, any>) => {
                     const values: Array<Array<Array<[number, number]>>> = (eventVal.geometry.coordinates as any);
@@ -380,7 +380,7 @@ describe("Polygon Directive", () => {
             layer.properties = TEST_OBJECT;
             expect(layer.properties).to.equal(TEST_OBJECT);
         });
-        it("should emit an event for GeoJSONChange when changing in Angular", (done: MochaDone) => {
+        it("should emit an event for GeoJSONChange when changing in Angular", (done: Mocha.Done) => {
             layer.geoJSONChange.subscribe((val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                 expect(val.properties).to.equal(TEST_OBJECT);
                 return done();

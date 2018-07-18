@@ -255,7 +255,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         super([0, 0]);
         layerProvider.ref = this;
         markerProvider.ref = this;
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         this.on("remove", () => {
             this.displayChange.emit(false);
@@ -263,15 +263,15 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.on("add", () => {
             this.displayChange.emit(true);
         });
-        this.on("drag", (event: DragEndEvent) => {
+        this.on("drag", () => {
             this.latChange.emit(this.getLatLng().lat);
             this.lngChange.emit(this.getLatLng().lng);
             this.positionChange.emit(this.getLatLng());
         });
 
         // Events
-        this.on("dragend", (event: DragEndEvent) => {
-            this.dragendEvent.emit(event);
+        this.on("dragend", (event: LeafletEvent) => {
+            this.dragendEvent.emit(event as DragEndEvent);
         });
         this.on("dragstart", (event: LeafletEvent) => {
             this.dragstartEvent.emit(event);
@@ -291,49 +291,49 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
             this.popupOpenedChange.emit(true);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
             this.popupOpenedChange.emit(false);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
             this.tooltipOpenedChange.emit(true);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
             this.tooltipOpenedChange.emit(false);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
-        const oldDraggingEnable: () => any = this.dragging.enable;
-        const oldDraggingDisable: () => any = this.dragging.disable;
+        const oldDraggingEnable: () => any = this.dragging!.enable;
+        const oldDraggingDisable: () => any = this.dragging!.disable;
 
-        this.dragging.enable = (): Handler => {
+        this.dragging!.enable = (): Handler => {
             const val: Handler = oldDraggingEnable.call(this.dragging);
             this.draggableChange.emit(true);
             return val;
         };
-        this.dragging.disable = (): Handler => {
+        this.dragging!.disable = (): Handler => {
             const val: Handler = oldDraggingDisable.call(this.dragging);
             this.draggableChange.emit(false);
             return val;
@@ -367,10 +367,10 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         let events: any; // Dictionary of functions
         let eventKeys: string[];
         try {
-            pane = this.getPane();
-            container = this.getElement();
+            pane = this.getPane() as HTMLElement;
+            container = this.getElement() as HTMLImageElement;
             map = (this as any)._map;
-            events = this.getEvents();
+            events = this.getEvents!();
             eventKeys = Object.keys(events);
         } catch (err) {
             /* istanbul ignore next */
@@ -394,8 +394,8 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         let pane: HTMLElement;
         let container: HTMLElement;
         try {
-            pane = this.getPane();
-            container = this.getElement();
+            pane = this.getPane() as HTMLElement;
+            container = this.getElement() as HTMLImageElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -474,10 +474,13 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      * Use it with `<yaga-marker [(opacity)]="someValue">` or `<yaga-marker [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-setopacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
+        if (val === undefined) {
+            val = 1;
+        }
         this.setOpacity(val);
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
     /**
@@ -531,7 +534,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.setIcon(val);
     }
     public get icon(): Icon | DivIcon {
-        return this.options.icon;
+        return this.options.icon!;
     }
     /**
      * Two-Way bound property for the state of the dragging.
@@ -540,14 +543,14 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      */
     @Input() public set draggable(val: boolean) {
         if (val) {
-            this.dragging.enable();
+            this.dragging!.enable();
             return;
         }
-        this.dragging.disable();
+        this.dragging!.disable();
         return;
     }
     public get draggable(): boolean {
-        return this.dragging.enabled();
+        return this.dragging!.enabled();
     }
 
     /**
@@ -570,7 +573,7 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
         this.setZIndexOffset(val);
     }
     public get zIndexOffset(): number {
-        return this.options.zIndexOffset;
+        return this.options.zIndexOffset || 0;
     }
 
     /**
@@ -580,21 +583,25 @@ export class MarkerDirective extends Marker implements AfterContentInit, OnDestr
      */
     @Input() public set title(val: string) {
         this.options.title = val;
-        this.getElement().setAttribute("title", val);
+        this.getElement()!.setAttribute("title", val);
     }
     public get title(): string {
-        return this.getElement().getAttribute("title");
+        return this.getElement()!.getAttribute("title") || "";
     }
     /**
      * Input for the alternative text.
      * Use it with `<yaga-marker [alt]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#marker-title Original Leaflet documentation
      */
-    @Input() public set alt(val: string) {
+    @Input() public set alt(val: string | undefined) {
         this.options.alt = val;
-        this.getElement().setAttribute("alt", val);
+        if (typeof val === "string") {
+            this.getElement()!.setAttribute("alt", val);
+            return;
+        }
+        this.getElement()!.removeAttribute("alt");
     }
-    public get alt(): string {
-        return this.getElement().getAttribute("alt");
+    public get alt(): string | undefined {
+        return this.getElement()!.getAttribute("alt") || undefined;
     }
 }

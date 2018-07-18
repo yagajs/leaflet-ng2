@@ -44,7 +44,7 @@ describe("Polyline Directive", () => {
             layer.display = true;
             expect((layer.getElement() as HTMLElement).style.display).to.not.equal("none");
         });
-        it("should set to false by removing from map", (done: MochaDone) => {
+        it("should set to false by removing from map", (done: Mocha.Done) => {
 
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(false);
@@ -54,7 +54,7 @@ describe("Polyline Directive", () => {
 
             map.removeLayer(layer);
         });
-        it("should set to true when adding to map again", (done: MochaDone) => {
+        it("should set to true when adding to map again", (done: Mocha.Done) => {
             map.removeLayer(layer);
             layer.displayChange.subscribe((val: boolean) => {
                 expect(val).to.equal(true);
@@ -89,7 +89,7 @@ describe("Polyline Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -97,7 +97,7 @@ describe("Polyline Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -105,19 +105,19 @@ describe("Polyline Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
@@ -145,12 +145,12 @@ describe("Polyline Directive", () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
                 /* istanbul ignore if */
-                if (layer.latLngs[0][3].lat !== 3 ||
-                    layer.latLngs[0][3].lng !== 3) {
+                if ((layer.latLngs as LatLng[][])[0][3].lat !== 3 ||
+                    (layer.latLngs as LatLng[][])[0][3].lng !== 3) {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs[2] }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -158,7 +158,7 @@ describe("Polyline Directive", () => {
 
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -166,19 +166,19 @@ describe("Polyline Directive", () => {
 
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire geoJSON-change event when changing in Angular", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.latLngs = TEST_VALUE;
             });
-            it("should fire geoJSON-change event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire geoJSON-change event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
                 layer.setLatLngs(TEST_VALUE);
             });
-            it("should fire an change event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an change event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe(() => {
                     return done();
                 });
@@ -215,12 +215,7 @@ describe("Polyline Directive", () => {
             });
             it("should be changed in Angular when changing in Angular", () => {
                 layer.geoJSON = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.geoJSON[0] !== TEST_VALUE[0] ||
-                    layer.geoJSON[1] !== TEST_VALUE[1] ||
-                    layer.geoJSON[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-                }
+                expect(layer.geoJSON.geometry.coordinates).deep.equal(TEST_VALUE.geometry.coordinates);
             });
             it("should be changed geoJSON in Angular when changing in latlngs Leaflet", () => {
                 layer.setLatLngs(TEST_LINESTRING);
@@ -235,7 +230,7 @@ describe("Polyline Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: LatLng[]) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -243,7 +238,7 @@ describe("Polyline Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_LINESTRING);
                     return done();
@@ -251,7 +246,7 @@ describe("Polyline Directive", () => {
 
                 layer.setLatLngs(TEST_LINESTRING);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_LINESTRING);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.LineString, any>) => {
                     const values: Array<[number, number]> = (eventVal.geometry.coordinates as any);
@@ -331,7 +326,7 @@ describe("Polyline Directive", () => {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.geoJSON.geometry.coordinates }`);
                 }
             });
-            it("should fire an event when changing in Angular", (done: MochaDone) => {
+            it("should fire an event when changing in Angular", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSON.Feature<GeoJSON.MultiLineString>) => {
                     expect(eventVal).to.deep.equal(TEST_VALUE);
                     return done();
@@ -339,7 +334,7 @@ describe("Polyline Directive", () => {
 
                 layer.geoJSON = TEST_VALUE;
             });
-            it("should fire an event when changing in Leaflet", (done: MochaDone) => {
+            it("should fire an event when changing in Leaflet", (done: Mocha.Done) => {
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     expect(lng2lat(eventVal.geometry.coordinates)).to.deep.equal(TEST_MULTILINESTRING);
                     return done();
@@ -347,7 +342,7 @@ describe("Polyline Directive", () => {
 
                 layer.setLatLngs(TEST_MULTILINESTRING);
             });
-            it("should fire an event when adding in Leaflet", (done: MochaDone) => {
+            it("should fire an event when adding in Leaflet", (done: Mocha.Done) => {
                 layer.setLatLngs(TEST_MULTILINESTRING);
                 layer.geoJSONChange.subscribe((eventVal: GeoJSONFeature<GeoJSON.MultiLineString, any>) => {
                     const values: Array<Array<[number, number]>> = (eventVal.geometry.coordinates as any);
@@ -409,7 +404,7 @@ describe("Polyline Directive", () => {
                 throw new Error(`Wrong value setted: ${ TEST_OBJECT } != ${ layerWithPropertiesInterface.properties }`);
             }
         });
-        it("should emit an event for GeoJSONChange when changing in Angular", (done: MochaDone) => {
+        it("should emit an event for GeoJSONChange when changing in Angular", (done: Mocha.Done) => {
             layerWithPropertiesInterface.geoJSONChange.subscribe(
                 (val: GeoJSONFeature<GeoJSON.GeometryObject, ITestProperties>) => {
                     /* istanbul ignore if */
