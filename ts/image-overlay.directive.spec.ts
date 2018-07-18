@@ -40,19 +40,19 @@ describe("Image-Overlay Directive", () => {
     describe("[(display)]", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(true);
         });
         it("should remove EventListeners when not displaying", (done: MochaDone) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -69,7 +69,7 @@ describe("Image-Overlay Directive", () => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -608,7 +608,7 @@ describe("Image-Overlay Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: string = "Test alt";
             layer.alt = val;
-            expect(layer.options.alt !== val || layer.getElement().getAttribute("alt") !== val).to.equal(false);
+            expect(layer.options.alt !== val || layer.getElement()!.getAttribute("alt") !== val).to.equal(false);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "Test alt";

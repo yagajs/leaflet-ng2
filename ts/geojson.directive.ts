@@ -16,6 +16,7 @@ import {
 } from "geojson";
 import {
     GeoJSON,
+    GeoJSONOptions,
     LatLng,
     Layer,
     LeafletEvent,
@@ -246,15 +247,15 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
             style: (geoJSON: GeoJSONFeature<GeometryObject, T>): PathOptions => {
                 const defaultStyle = this.middleware.defaultStyle;
                 if (this.middleware.styler) {
-                    return this.middleware.styler(geoJSON, defaultStyle);
+                    return this.middleware.styler(geoJSON, defaultStyle as PathOptions);
                 }
-                return defaultStyle;
+                return defaultStyle as PathOptions;
             },
-        });
+        } as GeoJSONOptions);
 
         layerProvider.ref = this;
         layerGroupProvider.ref = this;
-        this.parentLayerGroupProvider.ref.addLayer(this);
+        this.parentLayerGroupProvider.ref!.addLayer(this);
 
         // Events
         this.on("add", (event: LeafletEvent) => {
@@ -263,35 +264,35 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
     }
 
@@ -363,11 +364,11 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson [filter]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-filter Original Leaflet documentation
      */
-    @Input() public set filter(filterFn: IGeoJSONFilterFn<T>) {
+    @Input() public set filter(filterFn: IGeoJSONFilterFn<T> | undefined) {
         this.middleware.filter = filterFn;
         this.redraw();
     }
-    public get filter(): IGeoJSONFilterFn<T> {
+    public get filter(): IGeoJSONFilterFn<T> | undefined {
         return this.middleware.filter;
     }
 
@@ -376,11 +377,11 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * Use it with `<yaga-geojson [pointToLayer]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-pointtolayer Original Leaflet documentation
      */
-    @Input() public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T>) {
+    @Input() public set pointToLayer(pointToLayerFn: IGeoJSONPointToLayerFn<T> | undefined) {
         this.middleware.pointToLayer = pointToLayerFn;
         this.redraw();
     }
-    public get pointToLayer(): IGeoJSONPointToLayerFn<T> {
+    public get pointToLayer(): IGeoJSONPointToLayerFn<T> | undefined {
         return this.middleware.pointToLayer;
     }
 
@@ -392,11 +393,11 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
      * style as second parameter*
      * @link http://leafletjs.com/reference-1.2.0.html#geojson-style Original Leaflet documentation
      */
-    @Input() public set styler(stylerFn: IGeoJSONStylerFn<T>) {
+    @Input() public set styler(stylerFn: IGeoJSONStylerFn<T> | undefined) {
         this.middleware.styler = stylerFn;
         this.redraw();
     }
-    public get styler(): IGeoJSONStylerFn<T> {
+    public get styler(): IGeoJSONStylerFn<T> | undefined {
         return this.middleware.styler;
     }
 
@@ -411,7 +412,7 @@ export class GeoJSONDirective<T> extends GeoJSON implements OnDestroy, AfterCont
         this.redraw();
     }
     public get defaultStyle(): PathOptions {
-        return this.middleware.defaultStyle;
+        return this.middleware.defaultStyle!; // There is a fallback default style
     }
 
     /**

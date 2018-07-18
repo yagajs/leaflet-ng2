@@ -414,26 +414,26 @@ export class MapComponent extends Map implements AfterViewInit {
             this.moveTimeout = setTimeout(moveFn, ANIMATION_DELAY);
         });
 
-        this.on("baselayerchange", (event: LayersControlEvent) => {
-            this.baselayerchangeEvent.emit(event);
+        this.on("baselayerchange", (event: LeafletEvent) => {
+            this.baselayerchangeEvent.emit(event as LayersControlEvent);
         });
-        this.on("overlayadd", (event: LayersControlEvent) => {
-            this.overlayaddEvent.emit(event);
+        this.on("overlayadd", (event: LeafletEvent) => {
+            this.overlayaddEvent.emit(event as LayersControlEvent);
         });
-        this.on("overlayremove", (event: LayersControlEvent) => {
-            this.overlayremoveEvent.emit(event);
+        this.on("overlayremove", (event: LeafletEvent) => {
+            this.overlayremoveEvent.emit(event as LayersControlEvent);
         });
-        this.on("layeradd", (event: LayerEvent) => {
-            this.layeraddEvent.emit(event);
+        this.on("layeradd", (event: LeafletEvent) => {
+            this.layeraddEvent.emit(event as LayerEvent);
         });
-        this.on("layerremove", (event: LayerEvent) => {
-            this.layerremoveEvent.emit(event);
+        this.on("layerremove", (event: LeafletEvent) => {
+            this.layerremoveEvent.emit(event as LayerEvent);
         });
         this.on("zoomlevelschange", (event: LeafletEvent) => {
             this.zoomlevelschangeEvent.emit(event);
         });
-        this.on("resize", (event: ResizeEvent) => {
-            this.resizeEvent.emit(event);
+        this.on("resize", (event: LeafletEvent) => {
+            this.resizeEvent.emit(event as ResizeEvent);
         });
         this.on("unload", (event: LeafletEvent) => {
             this.unloadEvent.emit(event);
@@ -462,53 +462,53 @@ export class MapComponent extends Map implements AfterViewInit {
         this.on("moveend", (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
         this.on("autopanstart", (event: LeafletEvent) => {
             this.autopanstartEvent.emit(event);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseup", (event: LeafletMouseEvent) => {
-            this.mouseupEvent.emit(event);
+        this.on("mouseup", (event: LeafletEvent) => {
+            this.mouseupEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousemove", (event: LeafletMouseEvent) => {
-            this.mousemoveEvent.emit(event);
+        this.on("mousemove", (event: LeafletEvent) => {
+            this.mousemoveEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("keypress", (event: LeafletKeyboardEvent) => {
-            this.keypressEvent.emit(event);
+        this.on("keypress", (event: LeafletEvent) => {
+            this.keypressEvent.emit(event as LeafletKeyboardEvent);
         });
-        this.on("preclick", (event: LeafletMouseEvent) => {
-            this.preclickEvent.emit(event);
+        this.on("preclick", (event: LeafletEvent) => {
+            this.preclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("zoomanim", (event: ZoomAnimEvent) => {
-            this.zoomanimEvent.emit(event);
+        this.on("zoomanim", (event: LeafletEvent) => {
+            this.zoomanimEvent.emit(event as ZoomAnimEvent);
         });
 
     }
@@ -655,10 +655,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [closePopupOnClick]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-closepopuponclick Original Leaflet documentation
      */
-    @Input() public set closePopupOnClick(val: boolean) {
+    @Input() public set closePopupOnClick(val: boolean | undefined) {
         this.options.closePopupOnClick = val;
     }
-    public get closePopupOnClick(): boolean {
+    public get closePopupOnClick(): boolean | undefined {
         return this.options.closePopupOnClick;
     }
 
@@ -667,10 +667,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [zoomSnap]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomsnap Original Leaflet documentation
      */
-    @Input() public set zoomSnap(val: number) {
+    @Input() public set zoomSnap(val: number | undefined) {
         this.options.zoomSnap = val;
     }
-    public get zoomSnap(): number {
+    public get zoomSnap(): number | undefined {
         return this.options.zoomSnap;
     }
 
@@ -679,10 +679,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [zoomDelta]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomdelta Original Leaflet documentation
      */
-    @Input() public set zoomDelta(val: number) {
+    @Input() public set zoomDelta(val: number | undefined) {
         this.options.zoomDelta = val;
     }
-    public get zoomDelta(): number {
+    public get zoomDelta(): number | undefined {
         return this.options.zoomDelta;
     }
 
@@ -691,10 +691,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [trackResize]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-trackresize Original Leaflet documentation
      */
-    @Input() public set trackResize(val: boolean) {
+    @Input() public set trackResize(val: boolean | undefined) {
         this.options.trackResize = val;
     }
-    public get trackResize(): boolean {
+    public get trackResize(): boolean | undefined {
         return this.options.trackResize;
     }
     // maybe 2way!?!
@@ -755,7 +755,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.fadeAnimation = val;
     }
     public get fadeAnimation(): boolean {
-        return this.options.fadeAnimation;
+        return !!this.options.fadeAnimation;
     }
 
     /**
@@ -767,7 +767,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.markerZoomAnimation = val;
     }
     public get markerZoomAnimation(): boolean {
-        return this.options.markerZoomAnimation;
+        return !!this.options.markerZoomAnimation;
     }
 
     /**
@@ -775,10 +775,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [transform3DLimit]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-transform3dlimit Original Leaflet documentation
      */
-    @Input() public set transform3DLimit(val: number) {
+    @Input() public set transform3DLimit(val: number | undefined) {
         this.options.transform3DLimit = val;
     }
-    public get transform3DLimit(): number {
+    public get transform3DLimit(): number | undefined {
         return this.options.transform3DLimit;
     }
 
@@ -791,7 +791,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.zoomAnimation = val;
     }
     public get zoomAnimation(): boolean {
-        return this.options.zoomAnimation;
+        return !!this.options.zoomAnimation;
     }
 
     /**
@@ -799,10 +799,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [zoomAnimationThreshold]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-zoomanimationthreshold Original Leaflet documentation
      */
-    @Input() public set zoomAnimationThreshold(val: number) {
+    @Input() public set zoomAnimationThreshold(val: number | undefined) {
         this.options.zoomAnimationThreshold = val;
     }
-    public get zoomAnimationThreshold(): number {
+    public get zoomAnimationThreshold(): number | undefined {
         return this.options.zoomAnimationThreshold;
     }
 
@@ -815,7 +815,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.inertia = val;
     }
     public get inertia(): boolean {
-        return this.options.inertia;
+        return !!this.options.inertia;
     }
 
     /**
@@ -823,10 +823,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [inertiaDeceleration]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-inertiadeceleration Original Leaflet documentation
      */
-    @Input() public set inertiaDeceleration(val: number) {
+    @Input() public set inertiaDeceleration(val: number | undefined) {
         this.options.inertiaDeceleration = val;
     }
-    public get inertiaDeceleration(): number {
+    public get inertiaDeceleration(): number | undefined {
         return this.options.inertiaDeceleration;
     }
 
@@ -835,10 +835,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [inertiaMaxSpeed]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-inertiamaxspeed Original Leaflet documentation
      */
-    @Input() public set inertiaMaxSpeed(val: number) {
+    @Input() public set inertiaMaxSpeed(val: number | undefined) {
         this.options.inertiaMaxSpeed = val;
     }
-    public get inertiaMaxSpeed(): number {
+    public get inertiaMaxSpeed(): number | undefined {
         return this.options.inertiaMaxSpeed;
     }
 
@@ -847,10 +847,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [easeLinearity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-easelinearity Original Leaflet documentation
      */
-    @Input() public set easeLinearity(val: number) {
+    @Input() public set easeLinearity(val: number | undefined) {
         this.options.easeLinearity = val;
     }
-    public get easeLinearity(): number {
+    public get easeLinearity(): number | undefined {
         return this.options.easeLinearity;
     }
 
@@ -863,7 +863,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.worldCopyJump = val;
     }
     public get worldCopyJump(): boolean {
-        return this.options.worldCopyJump;
+        return !!this.options.worldCopyJump;
     }
 
     /**
@@ -871,10 +871,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [maxBoundsViscosity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-maxboundsviscosity Original Leaflet documentation
      */
-    @Input() public set maxBoundsViscosity(val: number) {
+    @Input() public set maxBoundsViscosity(val: number | undefined) {
         this.options.maxBoundsViscosity = val;
     }
-    public get maxBoundsViscosity(): number {
+    public get maxBoundsViscosity(): number | undefined {
         return this.options.maxBoundsViscosity;
     }
     // maybe 2way!?!
@@ -899,10 +899,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [keyboardPanDelta]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-keyboardpandelta Original Leaflet documentation
      */
-    @Input() public set keyboardPanDelta(val: number) {
+    @Input() public set keyboardPanDelta(val: number | undefined) {
         this.options.keyboardPanDelta = val;
     }
-    public get keyboardPanDelta(): number {
+    public get keyboardPanDelta(): number | undefined {
         return this.options.keyboardPanDelta;
     }
     // maybe 2way!?!
@@ -927,10 +927,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [wheelDebounceTime]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-wheeldebouncetime Original Leaflet documentation
      */
-    @Input() public set wheelDebounceTime(val: number) {
+    @Input() public set wheelDebounceTime(val: number | undefined) {
         this.options.wheelDebounceTime = val;
     }
-    public get wheelDebounceTime(): number {
+    public get wheelDebounceTime(): number | undefined {
         return this.options.wheelDebounceTime;
     }
 
@@ -939,10 +939,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [wheelPxPerZoomLevel]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-wheelpxperzoomlevel Original Leaflet documentation
      */
-    @Input() public set wheelPxPerZoomLevel(val: number) {
+    @Input() public set wheelPxPerZoomLevel(val: number | undefined) {
         this.options.wheelPxPerZoomLevel = val;
     }
-    public get wheelPxPerZoomLevel(): number {
+    public get wheelPxPerZoomLevel(): number | undefined {
         return this.options.wheelPxPerZoomLevel;
     }
 
@@ -955,7 +955,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.tap = val;
     }
     public get tapEnabled(): boolean {
-        return this.options.tap;
+        return !!this.options.tap;
     }
 
     /**
@@ -963,10 +963,10 @@ export class MapComponent extends Map implements AfterViewInit {
      * Use it with `<yaga-map [tapTolerance]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-taptolerance Original Leaflet documentation
      */
-    @Input() public set tapTolerance(val: number) {
+    @Input() public set tapTolerance(val: number | undefined) {
         this.options.tapTolerance = val;
     }
-    public get tapTolerance(): number {
+    public get tapTolerance(): number | undefined {
         return this.options.tapTolerance;
     }
 
@@ -979,7 +979,7 @@ export class MapComponent extends Map implements AfterViewInit {
         this.options.bounceAtZoomLimits = val;
     }
     public get bounceAtZoomLimits(): boolean {
-        return this.options.bounceAtZoomLimits;
+        return !!this.options.bounceAtZoomLimits;
     }
     // maybe 2way!?!
     /**

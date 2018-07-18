@@ -126,7 +126,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
             this.closeEvent.emit(event);
             this.openedChange.emit(false);
         });
-        this.layerProvider.ref.bindTooltip(this);
+        this.layerProvider.ref!.bindTooltip(this);
     }
 
     /**
@@ -134,7 +134,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * @link https://angular.io/docs/ts/latest/api/core/index/OnDestroy-class.html
      */
     public ngOnDestroy(): void {
-        this.layerProvider.ref.unbindTooltip();
+        this.layerProvider.ref!.unbindTooltip();
     }
 
     /**
@@ -154,7 +154,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         this.setContent(val);
     }
     public get content(): Content {
-        return this.getContent();
+        return this.getContent() || "";
     }
 
     /**
@@ -164,10 +164,10 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      */
     @Input() public set opened(val: boolean) {
         if (val) {
-            this.layerProvider.ref.openTooltip();
+            this.layerProvider.ref!.openTooltip();
             return;
         }
-        this.layerProvider.ref.closeTooltip();
+        this.layerProvider.ref!.closeTooltip();
     }
     public get opened(): boolean {
         return !!(this as any)._map;
@@ -193,7 +193,10 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         this.setLatLng([val, this.lng]);
     }
     public get lat(): number {
-        return this.getLatLng().lat;
+        if (!this.getLatLng()) {
+            return NaN;
+        }
+        return this.getLatLng()!.lat;
     }
 
     /**
@@ -205,7 +208,10 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         this.setLatLng([this.lat, val]);
     }
     public get lng(): number {
-        return this.getLatLng().lng;
+        if (!this.getLatLng()) {
+            return NaN;
+        }
+        return this.getLatLng()!.lng;
     }
 
     /**
@@ -217,7 +223,10 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         this.setLatLng(val);
     }
     public get position(): LatLng {
-        return this.getLatLng();
+        if (!this.getLatLng()) {
+            return new LatLng(NaN, NaN);
+        }
+        return this.getLatLng()!;
     }
 
     /**
@@ -233,10 +242,13 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip [(opacity)]="someValue">` or `<yaga-tooltip [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
+        if (val === undefined) {
+            val = 1;
+        }
         this.setOpacity(val);
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
 
@@ -245,7 +257,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip [autoClose]="className">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         if (!(this as any)._container) {
             this.options.className = val;
             return;
@@ -261,7 +273,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         ((this as any)._container as HTMLDivElement).setAttribute("class", newClassNameSplited.join(` ${val} `).trim());
         this.options.className = val;
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
     /**
@@ -269,11 +281,11 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip [pane]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-pane Original Leaflet documentation
      */
-    @Input() public set pane(val: string) {
+    @Input() public set pane(val: string | undefined) {
         this.options.pane = val;
         (this as any)._updateLayout();
     }
-    public get pane(): string {
+    public get pane(): string | undefined {
         return this.options.pane;
     }
 
@@ -287,7 +299,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         (this as any)._updateLayout();
     }
     public get interactive(): boolean {
-        return this.options.interactive;
+        return !!this.options.interactive;
     }
 
     /**
@@ -301,7 +313,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get sticky(): boolean {
-        return this.options.sticky;
+        return !!this.options.sticky;
     }
 
     /**
@@ -309,11 +321,11 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip [direction]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-direction Original Leaflet documentation
      */
-    @Input() public set direction(val: Direction) {
+    @Input() public set direction(val: Direction | undefined) {
         this.options.direction = val;
         this.reopen();
     }
-    public get direction(): Direction {
+    public get direction(): Direction | undefined {
         return this.options.direction;
     }
 
@@ -328,7 +340,7 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
         (this as any)._initTooltipInteractions.call(this.layerProvider.ref, false);
     }
     public get permanent(): boolean {
-        return this.options.permanent;
+        return !!this.options.permanent;
     }
 
     /**
@@ -336,17 +348,17 @@ export class TooltipDirective extends Tooltip implements OnDestroy {
      * Use it with `<yaga-tooltip [offset]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tooltip-offset Original Leaflet documentation
      */
-    @Input() public set offset(val: Point) {
+    @Input() public set offset(val: Point | undefined) {
         this.options.offset = val;
         this.reopen();
     }
-    public get offset(): Point {
+    public get offset(): Point | undefined {
         return (this.options.offset as Point);
     }
     public reopen(force: boolean = false) {
         if (force || this.opened) {
-            this.layerProvider.ref.closeTooltip();
-            this.layerProvider.ref.openTooltip();
+            this.layerProvider.ref!.closeTooltip();
+            this.layerProvider.ref!.openTooltip();
         }
     }
 }

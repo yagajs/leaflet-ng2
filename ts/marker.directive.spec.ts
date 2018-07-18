@@ -42,19 +42,19 @@ describe("Marker Directive", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
 
-            expect(hasAsChild(layer.getPane(), layer.getElement())).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, layer.getElement()!)).to.equal(true);
         });
         it("should remove EventListeners when not displaying", (done: MochaDone) => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -71,7 +71,7 @@ describe("Marker Directive", () => {
             const zoomEvents: Array<{fn: () => any}> = (map as any)._events.zoom;
             const length: number = zoomEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["zoom"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["zoom"];
             /* tslint:enable */
 
             layer.display = false;
@@ -462,12 +462,12 @@ describe("Marker Directive", () => {
     describe("[draggable]", () => {
         it("should be changed to false in Leaflet when changing in Angular to false", () => {
             layer.draggable = false;
-            expect(layer.dragging.enabled()).to.equal(false);
+            expect(layer.dragging!.enabled()).to.equal(false);
         });
         it("should be changed to true in Leaflet when changing in Angular to true", () => {
-            layer.dragging.disable();
+            layer.dragging!.disable();
             layer.draggable = true;
-            expect(layer.dragging.enabled()).to.equal(true);
+            expect(layer.dragging!.enabled()).to.equal(true);
         });
         it("should be changed in Angular to false when changing in Angular to false", () => {
             layer.draggable = false;

@@ -254,7 +254,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         // Events
         this.on("add", (event: LeafletEvent) => {
@@ -263,50 +263,50 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
         this.on("loading", (event: LeafletEvent) => {
             this.loadingEvent.emit(event);
         });
-        this.on("tileunload", (event: TileEvent) => {
-            this.tileunloadEvent.emit(event);
+        this.on("tileunload", (event: LeafletEvent) => {
+            this.tileunloadEvent.emit(event as TileEvent);
         });
-        this.on("tileloadstart", (event: TileEvent) => {
-            this.tileloadstartEvent.emit(event);
+        this.on("tileloadstart", (event: LeafletEvent) => {
+            this.tileloadstartEvent.emit(event as TileEvent);
         });
-        this.on("tileerror", (event: TileErrorEvent) => {
-            this.tileerrorEvent.emit(event);
+        this.on("tileerror", (event: LeafletEvent) => {
+            this.tileerrorEvent.emit(event as TileErrorEvent);
         });
-        this.on("tileload", (event: TileEvent) => {
-            this.tileloadEvent.emit(event);
+        this.on("tileload", (event: LeafletEvent) => {
+            this.tileloadEvent.emit(event as TileEvent);
         });
         this.on("load", (event: LeafletEvent) => {
             this.loadEvent.emit(event);
@@ -327,7 +327,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      */
     public setUrl(url: string, noRedraw?: boolean): this {
         if (this.url === url) {
-            return;
+            return this;
         }
         this.urlChange.emit(url);
         return super.setUrl(url, noRedraw);
@@ -350,7 +350,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      */
     public setOpacity(val: number): this {
         if (this.opacity === val) {
-            return;
+            return this;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
@@ -360,10 +360,13 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(opacity)]="someValue">` or `<yaga-tile-layer [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setopacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
+        if (val === undefined) {
+            val = 1;
+        }
         this.setOpacity(val);
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
 
@@ -382,10 +385,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         let events: any; // Dictionary of functions
         let eventKeys: string[];
         try {
-            pane = this.getPane();
-            container = this.getContainer();
+            pane = this.getPane() as HTMLElement;
+            container = this.getContainer() as HTMLImageElement;
             map = (this as any)._map;
-            events = this.getEvents();
+            events = this.getEvents!();
             eventKeys = Object.keys(events);
         } catch (err) {
             /* istanbul ignore next */
@@ -414,8 +417,8 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         let pane: HTMLElement;
         let container: HTMLElement;
         try {
-            pane = this.getPane();
-            container = this.getContainer();
+            pane = this.getPane() as HTMLElement;
+            container = this.getContainer() as HTMLImageElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -445,10 +448,13 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [(zIndex)]="someValue">` or `<yaga-tile-layer [zIndex]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-setzindex Original Leaflet documentation
      */
-    @Input() public set zIndex(val: number) {
+    @Input() public set zIndex(val: number | undefined) {
+        if (val === undefined) {
+            val = 0;
+        }
         this.setZIndex(val);
     }
-    public get zIndex(): number {
+    public get zIndex(): number | undefined {
         return this.options.zIndex;
     }
 
@@ -474,7 +480,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.updateWhenIdle = val;
     }
     public get updateWhenIdle(): boolean {
-        return this.options.updateWhenIdle;
+        return !!this.options.updateWhenIdle;
     }
 
     /**
@@ -486,7 +492,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.updateWhenZooming = val;
     }
     public get updateWhenZooming(): boolean {
-        return this.options.updateWhenZooming;
+        return !!this.options.updateWhenZooming;
     }
 
     /**
@@ -494,10 +500,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [updateInterval]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-updateinterval Original Leaflet documentation
      */
-    @Input() public set updateInterval(val: number) {
+    @Input() public set updateInterval(val: number | undefined) {
         this.options.updateInterval = val;
     }
-    public get updateInterval(): number {
+    public get updateInterval(): number | undefined {
         return this.options.updateInterval;
     }
 
@@ -506,11 +512,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [bounds]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-bounds Original Leaflet documentation
      */
-    @Input() public set bounds(val: LatLngBoundsExpression) {
+    @Input() public set bounds(val: LatLngBoundsExpression | undefined) {
         this.options.bounds = val;
         this.redraw();
     }
-    public get bounds(): LatLngBoundsExpression {
+    public get bounds(): LatLngBoundsExpression | undefined {
         return this.options.bounds;
     }
 
@@ -523,7 +529,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.options.noWrap = val;
     }
     public get noWrap(): boolean {
-        return this.options.noWrap;
+        return !!this.options.noWrap;
     }
 
     /**
@@ -531,11 +537,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [className]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         this.options.className = val;
         this.redraw();
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
 
@@ -544,10 +550,10 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [keepBuffer]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-keepbuffer Original Leaflet documentation
      */
-    @Input() public set keepBuffer(val: number) {
+    @Input() public set keepBuffer(val: number | undefined) {
         this.options.keepBuffer = val;
     }
-    public get keepBuffer(): number {
+    public get keepBuffer(): number | undefined {
         return this.options.keepBuffer;
     }
 
@@ -556,14 +562,14 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [maxZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-maxzoom Original Leaflet documentation
      */
-    @Input() public set maxZoom(val: number) {
+    @Input() public set maxZoom(val: number | undefined) {
         this.options.maxZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    public get maxZoom(): number {
+    public get maxZoom(): number | undefined {
         return this.options.maxZoom;
     }
 
@@ -572,14 +578,14 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [minZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-minzoom Original Leaflet documentation
      */
-    @Input() public set minZoom(val: number) {
+    @Input() public set minZoom(val: number | undefined) {
         this.options.minZoom = val;
         if ((this as any)._map) {
             ((this as any)._map as any)._updateZoomLevels();
         }
         this.redraw();
     }
-    public get minZoom(): number {
+    public get minZoom(): number | undefined {
         return this.options.minZoom;
     }
 
@@ -588,11 +594,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [maxNativeZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-maxnativezoom Original Leaflet documentation
      */
-    @Input() public set maxNativeZoom(val: number) {
+    @Input() public set maxNativeZoom(val: number | undefined) {
         this.options.maxNativeZoom = val;
         this.redraw();
     }
-    public get maxNativeZoom(): number {
+    public get maxNativeZoom(): number | undefined {
         return this.options.maxNativeZoom;
     }
 
@@ -601,11 +607,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [minNativeZoom]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-minnativezoom Original Leaflet documentation
      */
-    @Input() public set minNativeZoom(val: number) {
+    @Input() public set minNativeZoom(val: number | undefined) {
         this.options.minNativeZoom = val;
         this.redraw();
     }
-    public get minNativeZoom(): number {
+    public get minNativeZoom(): number | undefined {
         return this.options.minNativeZoom;
     }
 
@@ -629,11 +635,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [errorTileUrl]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-errortileurl Original Leaflet documentation
      */
-    @Input() public set errorTileUrl(val: string) {
+    @Input() public set errorTileUrl(val: string | undefined) {
         this.options.errorTileUrl = val;
         this.redraw();
     }
-    public get errorTileUrl(): string {
+    public get errorTileUrl(): string | undefined {
         return this.options.errorTileUrl;
     }
 
@@ -642,11 +648,11 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      * Use it with `<yaga-tile-layer [zoomOffset]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#tilelayer-zoomoffset Original Leaflet documentation
      */
-    @Input() public set zoomOffset(val: number) {
+    @Input() public set zoomOffset(val: number | undefined) {
         this.options.zoomOffset = val;
         this.redraw();
     }
-    public get zoomOffset(): number {
+    public get zoomOffset(): number | undefined {
         return this.options.zoomOffset;
     }
 
@@ -660,7 +666,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.redraw();
     }
     public get tms(): boolean {
-        return this.options.tms;
+        return !!this.options.tms;
     }
 
     /**
@@ -673,7 +679,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.redraw();
     }
     public get zoomReverse(): boolean {
-        return this.options.zoomReverse;
+        return !!this.options.zoomReverse;
     }
 
     /**
@@ -686,7 +692,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.redraw();
     }
     public get detectRetina(): boolean {
-        return this.options.detectRetina;
+        return !!this.options.detectRetina;
     }
 
     /**
@@ -699,7 +705,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.redraw();
     }
     public get crossOrigin(): boolean {
-        return this.options.crossOrigin;
+        return !!this.options.crossOrigin;
     }
 
     @Input() public set uppercase(val: boolean) {
@@ -707,7 +713,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.redraw();
     }
     public get uppercase(): boolean {
-        return this.options.uppercase;
+        return !!this.options.uppercase;
     }
 
     // WMS Params
@@ -719,7 +725,7 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
             this.layersChange.emit(this.wmsParams.layers.split(","));
         }
         if (oldParams.styles !== newParams.styles) {
-            this.stylesChange.emit(this.wmsParams.styles.split(","));
+            this.stylesChange.emit(this.wmsParams.styles!.split(","));
         }
         if (oldParams.format !== newParams.format) {
             this.formatChange.emit(this.wmsParams.format);
@@ -746,25 +752,25 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
         this.setParams({...this.wmsParams, styles: val.join(",")}, true);
     }
     public get styles(): string[] {
-        return this.wmsParams.styles.split(",");
+        return (this.wmsParams.styles || "").split(",");
     }
-    @Input() public set format(val: string) {
+    @Input() public set format(val: string | undefined) {
         this.setParams({...this.wmsParams, format: val}, true);
     }
-    public get format(): string {
+    public get format(): string | undefined {
         return this.wmsParams.format;
     }
-    @Input() public set version(val: string) {
+    @Input() public set version(val: string | undefined) {
         this.setParams({...this.wmsParams, version: val}, true);
     }
-    public get version(): string {
+    public get version(): string | undefined {
         return this.wmsParams.version;
     }
     @Input() public set transparent(val: boolean) {
         this.setParams({...this.wmsParams, transparent: val}, true);
     }
     public get transparent(): boolean {
-        return this.wmsParams.transparent;
+        return !!this.wmsParams.transparent;
     }
     /**
      * Input for the attribution.
@@ -773,12 +779,15 @@ export class WmsLayerDirective extends TileLayer.WMS implements OnDestroy  {
      */
     @Input() public set attribution(val: string) {
         if ((this as any)._map && (this as any)._map.attributionControl) {
-            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            const oldAttribution = this.getAttribution!();
+            if (oldAttribution) {
+                ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(oldAttribution);
+            }
             ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }
     public get attribution(): string {
-        return this.getAttribution();
+        return this.getAttribution!() || "";
     }
 }

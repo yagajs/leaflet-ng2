@@ -121,22 +121,22 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         protected mapProvider: MapProvider,
     ) {
         super();
-        this.mapProvider.ref.addControl(this);
+        this.mapProvider.ref!.addControl(this);
 
         // Events
-        this.getContainer().addEventListener("click", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("dblclick", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
             this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mousedown", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseover", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
             this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseout", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
             this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
@@ -145,7 +145,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.mapProvider.ref.removeControl(this);
+        this.mapProvider.ref!.removeControl(this);
     }
 
     /**
@@ -184,11 +184,18 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * or `<yaga-scale-control [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-scale-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
-        this.getContainer().style.opacity = val.toString();
+    @Input() public set opacity(val: number | undefined) {
+        if (typeof val === "number") {
+            this.getContainer()!.style.opacity = val.toString();
+            return;
+        }
+        this.getContainer()!.style.opacity = null;
     }
-    public get opacity(): number {
-        return parseFloat(this.getContainer().style.opacity);
+    public get opacity(): number | undefined {
+        const val = this.getContainer()!.style.opacity;
+        if (typeof val === "string") {
+            return parseFloat(val);
+        }
     }
 
     /**
@@ -202,14 +209,14 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
             return;
         }
         if (val) {
-            this.getContainer().style.display = "";
+            this.getContainer()!.style.display = "";
             return;
         }
-        this.getContainer().style.display = "none";
+        this.getContainer()!.style.display = "none";
         return;
     }
     public get display(): boolean {
-        return !!((this as any)._map && this.getContainer().style.display !== "none");
+        return !!(this as any)._map && this.getContainer()!.style.display !== "none";
     }
 
     /**
@@ -230,15 +237,18 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * Use it with `<yaga-scale-control [(zIndex)]="someValue">`
      * or `<yaga-scale-control (zIndexChange)="processEvent($event)">`
      */
-    @Input() public set zIndex(zIndex: number) {
-        if ( !zIndex ) {
-            zIndex = 0;
+    @Input() public set zIndex(zIndex: number | undefined) {
+        if (typeof zIndex === "number") {
+            this.getContainer()!.style.zIndex = zIndex.toString();
+            return;
         }
-
-        this.getContainer().style.zIndex = zIndex.toString();
+        this.getContainer()!.style.zIndex = null;
     }
-    public get zIndex(): number {
-        return parseInt(this.getContainer().style.zIndex, 10);
+    public get zIndex(): number | undefined {
+        const val = this.getContainer()!.style.zIndex;
+        if (typeof val === "string") {
+            return parseInt(val, 10);
+        }
     }
 
     /**
@@ -247,11 +257,11 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * or `<yaga-scale-control [maxWidth]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-scale-maxwidth Original Leaflet documentation
      */
-    @Input() public set maxWidth(val: number) {
+    @Input() public set maxWidth(val: number | undefined) {
         this.options.maxWidth = val;
         (this as any)._update();
     }
-    public get maxWidth(): number {
+    public get maxWidth(): number | undefined {
         return this.options.maxWidth;
     }
 
@@ -262,21 +272,21 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.2.0.html#control-scale-metric Original Leaflet documentation
      */
     @Input() public set metric(val: boolean) {
-        while (this.getContainer().hasChildNodes()) {
-            this.getContainer().removeChild(
-                this.getContainer().lastChild,
+        while (this.getContainer()!.hasChildNodes()) {
+            this.getContainer()!.removeChild(
+                this.getContainer()!.lastChild!,
             );
         }
         this.options.metric = val;
         (this as any)._addScales(
             this.options,
             "leaflet-control-scale-line",
-            this.getContainer(),
+            this.getContainer()!,
         );
         (this as any)._update();
     }
     public get metric(): boolean {
-        return this.options.metric;
+        return !!this.options.metric;
     }
 
     /**
@@ -286,20 +296,20 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
      * @link http://leafletjs.com/reference-1.2.0.html#control-scale-imperial Original Leaflet documentation
      */
     @Input() public set imperial(val: boolean) {
-        while (this.getContainer().hasChildNodes()) {
-            this.getContainer().removeChild(
-                this.getContainer().lastChild,
+        while (this.getContainer()!.hasChildNodes()) {
+            this.getContainer()!.removeChild(
+                this.getContainer()!.lastChild!,
             );
         }
         this.options.imperial = val;
         (this as any)._addScales(
             this.options,
             "leaflet-control-scale-line",
-            this.getContainer(),
+            this.getContainer()!,
         );
         (this as any)._update();
     }
     public get imperial(): boolean {
-        return this.options.imperial;
+        return !!this.options.imperial;
     }
 }

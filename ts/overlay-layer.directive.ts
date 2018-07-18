@@ -39,8 +39,8 @@ export class OverlayLayerDirective implements OnDestroy  {
     ) {}
 
     @Input() public set caption(value: string) {
-        this.layersControlProvider.ref.removeLayer(this.layer.ref);
-        this.layersControlProvider.ref.addOverlay(this.layer.ref, value);
+        this.layersControlProvider.ref!.removeLayer(this.layer.ref!);
+        this.layersControlProvider.ref!.addOverlay(this.layer.ref!, value);
     }
     public get caption(): string {
         for (const layer of ((this as any)._layers as Array<{ layer: Layer, name: string }>)) {
@@ -55,6 +55,6 @@ export class OverlayLayerDirective implements OnDestroy  {
      * Internal method to provide the removal from the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.layersControlProvider.ref.removeLayer(this.layer.ref);
+        this.layersControlProvider.ref!.removeLayer(this.layer.ref!);
     }
 }

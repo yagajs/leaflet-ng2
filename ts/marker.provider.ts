@@ -7,5 +7,5 @@ import { Marker } from "leaflet";
  */
 @Injectable()
 export class MarkerProvider {
-    public ref: Marker;
+    public ref?: Marker;
 }

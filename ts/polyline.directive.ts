@@ -5,7 +5,7 @@ import {
     OnDestroy,
     Output,
 } from "@angular/core";
-import { Feature as GeoJSONFeature } from "geojson";
+import {Feature as GeoJSONFeature, LineString as GeoJSONPolyline} from "geojson";
 import {
     FillRule,
     LatLng,
@@ -284,6 +284,8 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      */
     @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
+    public feature: GeoJSONFeature<GeoJSONPolyline>; // This is not optional in this class
+
     constructor(
         protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
@@ -292,8 +294,11 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
 
         layerProvider.ref = this;
 
-        this.feature = this.feature ||
-            {type: "Feature", properties: {}, geometry: {type: "LineString", coordinates: []}};
+        this.feature = (this as any).feature || {
+            geometry: {type: "LineString", coordinates: []},
+            properties: {},
+            type: "Feature",
+        };
         this.feature.properties = this.feature.properties || {};
 
         this.on("remove", () => {
@@ -303,7 +308,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
             this.displayChange.emit(true);
         });
 
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         // Events
         this.on("add", (event: LeafletEvent) => {
@@ -312,35 +317,35 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
     }
 
@@ -465,10 +470,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(opacity)]="someValue">` or `<yaga-polyline [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
         this.setStyle({opacity: val});
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
     /**
@@ -480,17 +485,17 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
         this.setStyle({stroke: val});
     }
     public get stroke(): boolean {
-        return this.options.stroke;
+        return !!this.options.stroke;
     }
     /**
      * Two-Way bound property for the color.
      * Use it with `<yaga-polyline [(color)]="someValue">` or `<yaga-polyline [color]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-color Original Leaflet documentation
      */
-    @Input() public set color(val: string) {
+    @Input() public set color(val: string | undefined) {
         this.setStyle({color: val});
     }
-    public get color(): string {
+    public get color(): string | undefined {
         return this.options.color;
     }
     /**
@@ -498,10 +503,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(weight)]="someValue">` or `<yaga-polyline [weight]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-weight Original Leaflet documentation
      */
-    @Input() public set weight(val: number) {
+    @Input() public set weight(val: number | undefined) {
         this.setStyle({weight: val});
     }
-    public get weight(): number {
+    public get weight(): number | undefined {
         return this.options.weight;
     }
     /**
@@ -509,10 +514,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(lineCap)]="someValue">` or `<yaga-polyline [lineCap]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-linecap Original Leaflet documentation
      */
-    @Input() public set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape | undefined) {
         this.setStyle({lineCap: val});
     }
-    public get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape | undefined {
         return this.options.lineCap;
     }
     /**
@@ -520,10 +525,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(lineJoin)]="someValue">` or `<yaga-polyline [lineJoin]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-linejoin Original Leaflet documentation
      */
-    @Input() public set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape | undefined) {
         this.setStyle({lineJoin: val});
     }
-    public get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape | undefined {
         return this.options.lineJoin;
     }
     /**
@@ -531,10 +536,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(dashArray)]="someValue">` or `<yaga-polyline [dashArray]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-dasharray Original Leaflet documentation
      */
-    @Input() public set dashArray(val: string) {
+    @Input() public set dashArray(val: string | undefined) {
         this.setStyle({dashArray: val});
     }
-    public get dashArray(): string {
+    public get dashArray(): string | undefined {
         return this.options.dashArray;
     }
     /**
@@ -542,10 +547,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(dashOffset)]="someValue">` or `<yaga-polyline [dashOffset]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-dashoffset Original Leaflet documentation
      */
-    @Input() public set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string | undefined) {
         this.setStyle({dashOffset: val});
     }
-    public get dashOffset(): string {
+    public get dashOffset(): string | undefined {
         return this.options.dashOffset;
     }
     /**
@@ -557,17 +562,17 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
         this.setStyle({fill: val});
     }
     public get fill(): boolean {
-        return this.options.fill;
+        return !!this.options.fill;
     }
     /**
      * Two-Way bound property for the fillColor.
      * Use it with `<yaga-polyline [(fillColor)]="someValue">` or `<yaga-polyline [fillColor]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-fillcolor Original Leaflet documentation
      */
-    @Input() public set fillColor(val: string) {
+    @Input() public set fillColor(val: string | undefined) {
         this.setStyle({fillColor: val});
     }
-    public get fillColor(): string {
+    public get fillColor(): string | undefined {
         return this.options.fillColor;
     }
     /**
@@ -575,10 +580,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(fillOpacity)]="someValue">` or `<yaga-polyline [fillOpacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-fillopacity Original Leaflet documentation
      */
-    @Input() public set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number | undefined) {
         this.setStyle({fillOpacity: val});
     }
-    public get fillOpacity(): number {
+    public get fillOpacity(): number | undefined {
         return this.options.fillOpacity;
     }
     /**
@@ -586,10 +591,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(fillRule)]="someValue">` or `<yaga-polyline [fillRule]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-fillrule Original Leaflet documentation
      */
-    @Input() public set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule | undefined) {
         this.setStyle({fillRule: val});
     }
-    public get fillRule(): FillRule {
+    public get fillRule(): FillRule | undefined {
         return this.options.fillRule;
     }
     /**
@@ -597,10 +602,10 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [(className)]="someValue">` or `<yaga-polyline [className]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         this.setStyle({className: val});
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
     /**
@@ -657,7 +662,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
         this.onAdd(map);
     }
     public get interactive(): boolean {
-        return this.options.interactive;
+        return !!this.options.interactive;
     }
 
     /**
@@ -665,11 +670,11 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
      * Use it with `<yaga-polyline [smoothFactor]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polyline-smoothfactor Original Leaflet documentation
      */
-    @Input() public set smoothFactor(val: number) {
+    @Input() public set smoothFactor(val: number | undefined) {
         this.options.smoothFactor = val;
         this.redraw();
     }
-    public get smoothFactor(): number {
+    public get smoothFactor(): number | undefined {
         return this.options.smoothFactor;
     }
     /**
@@ -682,7 +687,7 @@ export class PolylineDirective<T> extends Polyline implements OnDestroy {
         this.redraw();
     }
     public get noClip(): boolean {
-        return this.options.noClip;
+        return !!this.options.noClip;
     }
 
     /**

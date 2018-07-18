@@ -133,32 +133,32 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.addTo(this.parentLayerGroupProvider.ref);
+        this.addTo(this.parentLayerGroupProvider.ref!);
 
         // Events
-        this.on("layeradd", (event: Event) => {
+        this.on("layeradd", (event: LeafletEvent) => {
             this.layeraddEvent.emit(event);
         });
-        this.on("layerremove", (event: Event) => {
+        this.on("layerremove", (event: LeafletEvent) => {
             this.layerremoveEvent.emit(event);
         });
-        this.on("add", (event: Event) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on("remove", (event: Event) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
     }
 
@@ -176,7 +176,7 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      */
     @Input() public set display(val: boolean) {
         if (val) {
-            this.addTo(this.parentLayerGroupProvider.ref);
+            this.addTo(this.parentLayerGroupProvider.ref!);
             return;
         }
         // TODO: proof and maybe enhance typedefinition
@@ -197,14 +197,17 @@ export class FeatureGroupDirective extends FeatureGroup implements OnDestroy  {
      */
     @Input() public set attribution(val: string) {
         if ((this as any)._map && (this as any)._map.attributionControl) {
-            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            if ((this as any).getAttribution()) {
+                ((this as any)._map.attributionControl as Control.Attribution)
+                    .removeAttribution((this as any).getAttribution());
+            }
             ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         // TODO: add options to the official type definition
         (this as any).options.attribution = val;
     }
     public get attribution(): string {
-        return this.getAttribution();
+        return (this as any).getAttribution() || "";
     }
 
     public removeFrom(map: Map) {

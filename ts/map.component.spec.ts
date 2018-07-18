@@ -259,7 +259,7 @@ describe("Map Component", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: LatLngBounds = randomLatLngBounds();
             map.setMaxBounds(val);
-            expect(val.equals(map.options.maxBounds)).to.equal(true);
+            expect(val.equals(map.options.maxBounds as LatLngBounds)).to.equal(true);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: LatLngBounds = randomLatLngBounds();

@@ -141,8 +141,8 @@ describe("Polygon Directive", () => {
             it("should be changed in Angular when adding in Leaflet", () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
-                expect(layer.latLngs[0][0][3].lat).to.equal(3);
-                expect(layer.latLngs[0][0][3].lng).to.equal(3);
+                expect((layer.latLngs as LatLng[][][])[0][0][3].lat).to.equal(3);
+                expect((layer.latLngs as LatLng[][][])[0][0][3].lng).to.equal(3);
             });
             it("should fire an event when changing in Angular", (done: MochaDone) => {
                 layer.latLngsChange.subscribe((eventVal: LatLng[][][]) => {
@@ -274,19 +274,19 @@ describe("Polygon Directive", () => {
                 layer.geoJSON = TEST_VALUE;
 
                 /* istanbul ignore if */
-                if ((layer.latLngs as LatLng[][])[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
-                    (layer.latLngs as LatLng[][])[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
-                    (layer.latLngs as LatLng[][])[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
-                    (layer.latLngs as LatLng[][])[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
+                if ((layer.latLngs as LatLng[][][])[0][0][0].lng !== TEST_VALUE.geometry.coordinates[0][0][0][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][0].lat !== TEST_VALUE.geometry.coordinates[0][0][0][1] ||
+                    (layer.latLngs as LatLng[][][])[0][0][1].lng !== TEST_VALUE.geometry.coordinates[0][0][1][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][1].lat !== TEST_VALUE.geometry.coordinates[0][0][1][1] ||
+                    (layer.latLngs as LatLng[][][])[0][0][2].lng !== TEST_VALUE.geometry.coordinates[0][0][2][0] ||
+                    (layer.latLngs as LatLng[][][])[0][0][2].lat !== TEST_VALUE.geometry.coordinates[0][0][2][1] ||
 
-                    (layer.latLngs as LatLng[][])[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
-                    (layer.latLngs as LatLng[][])[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
-                    (layer.latLngs as LatLng[][])[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
-                    (layer.latLngs as LatLng[][])[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
+                    (layer.latLngs as LatLng[][][])[1][0][0].lng !== TEST_VALUE.geometry.coordinates[1][0][0][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][0].lat !== TEST_VALUE.geometry.coordinates[1][0][0][1] ||
+                    (layer.latLngs as LatLng[][][])[1][0][1].lng !== TEST_VALUE.geometry.coordinates[1][0][1][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][1].lat !== TEST_VALUE.geometry.coordinates[1][0][1][1] ||
+                    (layer.latLngs as LatLng[][][])[1][0][2].lng !== TEST_VALUE.geometry.coordinates[1][0][2][0] ||
+                    (layer.latLngs as LatLng[][][])[1][0][2].lat !== TEST_VALUE.geometry.coordinates[1][0][2][1] ) {
                     throw new Error(
                         `Wrong value setted: ${ TEST_VALUE.geometry.coordinates } != ${ (layer as any)._latlngs }`,
                     );
