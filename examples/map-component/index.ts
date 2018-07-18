@@ -45,6 +45,8 @@ const template: string = `
       (zoom)="handleEvent('zoom', $event);"
       (move)="handleEvent('move', $event);"
       (zoomend)="handleEvent('zoomend', $event);"
+      (boxzoomstart)="handleEvent('boxzoomstart', $event);"
+      (boxzoomend)="handleEvent('boxzoomend', $event);"
       (moveend)="handleEvent('moveend', $event);"
       (popupopen)="handleEvent('popupopen', $event);"
       (popupclose)="handleEvent('popupclose', $event);"
@@ -185,6 +187,8 @@ export class AppComponent extends ExampleAppComponentBlueprint {
             {name: 'keypress', value: '', type: 'event' },
             {name: 'preclick', value: '', type: 'event' },
             {name: 'zoomanim', value: '', type: 'event' },
+            {name: 'boxzoomstart', value: '', type: 'event' },
+            {name: 'boxzoomend', value: '', type: 'event' },
             ],
     };
 }
