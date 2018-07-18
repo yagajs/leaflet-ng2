@@ -6,7 +6,7 @@ import {
     OnDestroy,
     Output,
 } from "@angular/core";
-import { Feature as GeoJSONFeature } from "geojson";
+import { Feature as GeoJSONFeature, Point as GeoJSONPoint } from "geojson";
 import {
     CircleMarker,
     CircleMarkerOptions,
@@ -300,6 +300,8 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      */
     @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
+    public feature: GeoJSONFeature<GeoJSONPoint>; // This is not optional in this class
+
     private initialized: boolean = false;
 
     constructor(
@@ -310,7 +312,11 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
 
         layerProvider.ref = this;
 
-        this.feature = this.feature || {type: "Feature", properties: {}, geometry: {type: "Point", coordinates: []}};
+        this.feature = (this as any).feature || {
+            geometry: {type: "Point", coordinates: []},
+            properties: {},
+            type: "Feature",
+        };
         this.feature.properties = this.feature.properties || {};
 
         this.on("remove", () => {
@@ -320,7 +326,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
             this.displayChange.emit(true);
         });
 
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         // Events
         this.on("add", (event: LeafletEvent) => {
@@ -329,35 +335,35 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
     }
 
@@ -518,10 +524,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(opacity)]="someValue">` or `<yaga-circle-marker [opacityChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
         this.setStyle({opacity: val});
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
     /**
@@ -533,17 +539,20 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         this.setStyle({stroke: val});
     }
     public get stroke(): boolean {
-        return this.options.stroke;
+        if (this.options.hasOwnProperty("stroke") && this.options.stroke !== undefined) {
+            return this.options.stroke;
+        }
+        return true;
     }
     /**
      * Two-Way bound property for the color.
      * Use it with `<yaga-circle-marker [(color)]="someValue">` or `<yaga-circle-marker [colorChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-color Original Leaflet documentation
      */
-    @Input() public set color(val: string) {
+    @Input() public set color(val: string | undefined) {
         this.setStyle({color: val});
     }
-    public get color(): string {
+    public get color(): string | undefined {
         return this.options.color;
     }
     /**
@@ -551,10 +560,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(weight)]="someValue">` or `<yaga-circle-marker [weightChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-weight Original Leaflet documentation
      */
-    @Input() public set weight(val: number) {
+    @Input() public set weight(val: number | undefined) {
         this.setStyle({weight: val});
     }
-    public get weight(): number {
+    public get weight(): number | undefined {
         return this.options.weight;
     }
     /**
@@ -562,10 +571,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * Use it with `<yaga-circle-marker [(lineCap)]="someValue">` or `<yaga-circle-marker [lineCapChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-linecap Original Leaflet documentation
      */
-    @Input() public set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape | undefined) {
         this.setStyle({lineCap: val});
     }
-    public get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape | undefined {
         return this.options.lineCap;
     }
     /**
@@ -574,10 +583,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [lineJoinChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-linejoin Original Leaflet documentation
      */
-    @Input() public set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape | undefined) {
         this.setStyle({lineJoin: val});
     }
-    public get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape | undefined {
         return this.options.lineJoin;
     }
     /**
@@ -586,10 +595,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [dashArrayChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dasharray Original Leaflet documentation
      */
-    @Input() public set dashArray(val: string) {
+    @Input() public set dashArray(val: string | undefined) {
         this.setStyle({dashArray: val});
     }
-    public get dashArray(): string {
+    public get dashArray(): string | undefined {
         return this.options.dashArray;
     }
     /**
@@ -598,10 +607,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [dashOffsetChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-dashoffset Original Leaflet documentation
      */
-    @Input() public set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string | undefined) {
         this.setStyle({dashOffset: val});
     }
-    public get dashOffset(): string {
+    public get dashOffset(): string | undefined {
         return this.options.dashOffset;
     }
     /**
@@ -613,7 +622,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         this.setStyle({fill: val});
     }
     public get fill(): boolean {
-        return this.options.fill;
+        return this.options.fill || false;
     }
     /**
      * Two-Way bound property for the fillColor.
@@ -621,10 +630,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [fillColorChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillcolor Original Leaflet documentation
      */
-    @Input() public set fillColor(val: string) {
+    @Input() public set fillColor(val: string | undefined) {
         this.setStyle({fillColor: val});
     }
-    public get fillColor(): string {
+    public get fillColor(): string | undefined {
         return this.options.fillColor;
     }
     /**
@@ -633,10 +642,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [fillOpacityChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillopacity Original Leaflet documentation
      */
-    @Input() public set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number | undefined) {
         this.setStyle({fillOpacity: val});
     }
-    public get fillOpacity(): number {
+    public get fillOpacity(): number | undefined {
         return this.options.fillOpacity;
     }
     /**
@@ -645,10 +654,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [fillRuleChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-fillrule Original Leaflet documentation
      */
-    @Input() public set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule | undefined) {
         this.setStyle({fillRule: val});
     }
-    public get fillRule(): FillRule {
+    public get fillRule(): FillRule | undefined {
         return this.options.fillRule;
     }
     /**
@@ -657,10 +666,10 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
      * or `<yaga-circle-marker [classNameChange]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#circlemarker-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         this.setStyle({className: val});
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
     /**
@@ -717,7 +726,7 @@ export class CircleMarkerDirective<T> extends CircleMarker implements OnDestroy,
         this.onAdd(map);
     }
     public get interactive(): boolean {
-        return this.options.interactive;
+        return !!this.options.interactive;
     }
 
     @Input() public set properties(val: T) {

@@ -88,7 +88,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLat();
             popup.lat = val;
-            expect(popup.getLatLng().lat).to.equal(val);
+            expect(popup.getLatLng()!.lat).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLat();
@@ -98,7 +98,7 @@ describe("Popup Directive", () => {
         it("should be changed in Angular when changing in Leaflet", () => {
             const val: number = randomLat();
             popup.setLatLng([val, 0]);
-            expect(popup.getLatLng().lat).to.equal(val);
+            expect(popup.getLatLng()!.lat).to.equal(val);
         });
         it("should fire an event when changing in Angular", (done: MochaDone) => {
             const val: number = randomLat();
@@ -128,7 +128,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLng();
             popup.lng = val;
-            expect(popup.getLatLng().lng).to.equal(val);
+            expect(popup.getLatLng()!.lng).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLng();
@@ -168,7 +168,7 @@ describe("Popup Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: LatLng = randomLatLng();
             popup.position = val;
-            expect(popup.getLatLng()).to.deep.equal(val);
+            expect(popup.getLatLng()!).to.deep.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: LatLng = randomLatLng();
@@ -395,7 +395,7 @@ describe("Popup Directive", () => {
         it("should be changed in DOM when changing in Angular", () => {
             const val: string = "test-class";
             popup.className = val;
-            expect(((popup as any)._container as HTMLDivElement).getAttribute("class").split(" ")).to.include(val);
+            expect(((popup as any)._container as HTMLDivElement).getAttribute("class")!.split(" ")).to.include(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "test-class";

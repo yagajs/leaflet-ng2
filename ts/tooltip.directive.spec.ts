@@ -124,7 +124,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLat();
             tooltip.lat = val;
-            expect(tooltip.getLatLng().lat).to.equal(val);
+            expect(tooltip.getLatLng()!.lat).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLat();
@@ -164,7 +164,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomLng();
             tooltip.lng = val;
-            expect(tooltip.getLatLng().lng).to.equal(val);
+            expect(tooltip.getLatLng()!.lng).to.equal(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomLng();
@@ -204,7 +204,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: LatLng = randomLatLng();
             tooltip.position = val;
-            expect(tooltip.getLatLng().equals(val)).to.equal(true);
+            expect(tooltip.getLatLng()!.equals(val)).to.equal(true);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: LatLng = randomLatLng();
@@ -275,7 +275,7 @@ describe("Tooltip Directive", () => {
         it("should be changed in DOM when changing in Angular", () => {
             const val: string = "test-class";
             tooltip.className = val;
-            expect(((tooltip as any)._container as HTMLDivElement).getAttribute("class").split(" ")).to.include(val);
+            expect(((tooltip as any)._container as HTMLDivElement).getAttribute("class")!.split(" ")).to.include(val);
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: string = "test-class";

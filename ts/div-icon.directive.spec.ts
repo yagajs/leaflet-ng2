@@ -98,12 +98,12 @@ describe("DivIcon Directive", () => {
     describe(".createIcon(oldDivIcon)", () => {
         it("should add the .yaga-div-icon class", () => {
             const val: HTMLElement = document.createElement("div");
-            expect(icon.createIcon(val).getAttribute("class").split("yaga-div-icon").length).to.equal(2);
+            expect(icon.createIcon(val).getAttribute("class")!.split("yaga-div-icon").length).to.equal(2);
         });
         it("should not add the .yaga-div-icon class again", () => {
             const val: HTMLElement = document.createElement("div");
             val.setAttribute("class", "yaga-div-icon");
-            expect(icon.createIcon(val).getAttribute("class").split("yaga-div-icon").length).to.equal(2);
+            expect(icon.createIcon(val).getAttribute("class")!.split("yaga-div-icon").length).to.equal(2);
         });
     });
 });

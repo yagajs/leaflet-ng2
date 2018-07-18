@@ -123,22 +123,22 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
     ) {
         super();
         layersControlProvider.ref = this;
-        this.mapProvider.ref.addControl(this);
+        this.mapProvider.ref!.addControl(this);
 
         // Events
-        this.getContainer().addEventListener("click", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("dblclick", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
             this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mousedown", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseover", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
             this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseout", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
             this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
@@ -147,7 +147,7 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.mapProvider.ref.removeControl(this);
+        this.mapProvider.ref!.removeControl(this);
     }
 
     /**
@@ -186,11 +186,17 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
      * or `<yaga-layers-control [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-layers-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
-        this.getContainer().style.opacity = val.toString();
+    @Input() public set opacity(val: number | undefined) {
+        if (typeof val === "number") {
+            this.getContainer()!.style.opacity = val.toString();
+            return;
+        }
+        this.getContainer()!.style.opacity = null;
     }
-    public get opacity(): number {
-        return parseFloat(this.getContainer().style.opacity);
+    public get opacity(): number | undefined {
+        if (typeof this.getContainer()!.style.opacity === "string") {
+            return parseFloat(this.getContainer()!.style.opacity!);
+        }
     }
 
     /**
@@ -204,14 +210,14 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
             return;
         }
         if (val) {
-            this.getContainer().style.display = "";
+            this.getContainer()!.style.display = "";
             return;
         }
-        this.getContainer().style.display = "none";
+        this.getContainer()!.style.display = "none";
         return;
     }
     public get display(): boolean {
-        return !!((this as any)._map && this.getContainer().style.display !== "none");
+        return !!(this as any)._map && this.getContainer()!.style.display !== "none";
     }
 
     /**
@@ -232,14 +238,16 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
      * Use it with `<yaga-layers-control [(zIndex)]="someValue">`
      * or `<yaga-layers-control (zIndexChange)="processEvent($event)">`
      */
-    @Input() public set zIndex(zIndex: number) {
-        if ( !zIndex ) {
-            zIndex = 0;
+    @Input() public set zIndex(zIndex: number | undefined) {
+        if (typeof zIndex === "number") {
+            this.getContainer()!.style.zIndex = zIndex.toString();
+            return;
         }
-
-        this.getContainer().style.zIndex = zIndex.toString();
+        this.getContainer()!.style.zIndex = null;
     }
-    public get zIndex(): number {
-        return parseInt(this.getContainer().style.zIndex, 10);
+    public get zIndex(): number | undefined {
+        if (typeof this.getContainer()!.style.zIndex === "string") {
+            return parseInt(this.getContainer()!.style.zIndex!, 10);
+        }
     }
 }

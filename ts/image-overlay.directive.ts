@@ -234,44 +234,44 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
             this.displayChange.emit(true);
         });
 
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         // Events
-        this.on("add", (event: Event) => {
+        this.on("add", (event: LeafletEvent) => {
             this.addEvent.emit(event);
         });
-        this.on("remove", (event: Event) => {
+        this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
         this.on("load", (event: LeafletEvent) => {
             this.loadEvent.emit(event);
@@ -295,7 +295,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     public setUrl(url: string): this {
         if (this.url === url) {
-            return;
+            return this;
         }
         this.urlChange.emit(url);
         return super.setUrl(url);
@@ -318,7 +318,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     public setOpacity(val: number): this {
         if (this.opacity === val) {
-            return;
+            return this;
         }
         this.opacityChange.emit(val);
         return super.setOpacity(val);
@@ -332,7 +332,10 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         this.setOpacity(val);
     }
     public get opacity(): number {
-        return this.options.opacity;
+        if (this.options.hasOwnProperty("opacity") && this.options.opacity !== undefined) {
+            return this.options.opacity;
+        }
+        return 1;
     }
 
     /**
@@ -350,10 +353,10 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         let events: any; // Dictionary of functions
         let eventKeys: string[];
         try {
-            pane = this.getPane();
-            container = this.getElement();
+            pane = this.getPane() as HTMLElement;
+            container = this.getElement() as HTMLImageElement;
             map = (this as any)._map;
-            events = this.getEvents();
+            events = (this as any).getEvents();
             eventKeys = Object.keys(events);
         } catch (err) {
             /* istanbul ignore next */
@@ -381,8 +384,8 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         let pane: HTMLElement;
         let container: HTMLElement;
         try {
-            pane = this.getPane();
-            container = this.getElement();
+            pane = this.getPane() as HTMLElement;
+            container = this.getElement() as HTMLImageElement;
         } catch (err) {
             /* istanbul ignore next */
             return false;
@@ -501,10 +504,10 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     @Input() public set crossOrigin(val: boolean) {
         this.options.crossOrigin = val;
-        this.getElement().crossOrigin = val ? "" : undefined;
+        this.getElement()!.crossOrigin = val ? "" : null;
     }
     public get crossOrigin(): boolean {
-        return this.options.crossOrigin;
+        return !!this.options.crossOrigin;
     }
 
     /**
@@ -514,10 +517,10 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     @Input() public set alt(val: string) {
         this.options.alt = val;
-        this.getElement().alt = val;
+        this.getElement()!.alt = val;
     }
     public get alt(): string {
-        return this.getElement().getAttribute("alt");
+        return this.getElement()!.alt;
     }
     /**
      * Input for the state of interaction.
@@ -530,7 +533,7 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
         this.onAdd(((this as any)._map as any));
     }
     public get interactive(): boolean {
-        return this.options.interactive;
+        return !!this.options.interactive;
     }
 
     /**
@@ -540,12 +543,15 @@ export class ImageOverlayDirective extends ImageOverlay implements OnDestroy  {
      */
     @Input() public set attribution(val: string) {
         if ((this as any)._map && (this as any)._map.attributionControl) {
-            ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(this.getAttribution());
+            const oldAttribution = this.getAttribution!();
+            if (oldAttribution) {
+                ((this as any)._map.attributionControl as Control.Attribution).removeAttribution(oldAttribution);
+            }
             ((this as any)._map.attributionControl as Control.Attribution).addAttribution(val);
         }
         this.options.attribution = val;
     }
     public get attribution(): string {
-        return this.getAttribution();
+        return this.getAttribution!() || "";
     }
 }

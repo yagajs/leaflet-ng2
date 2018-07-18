@@ -26,12 +26,12 @@ describe("Layers-Control Directive", () => {
     describe("[(display)]", () => {
         it("should set DOM container style to display:none when not displaying", () => {
             control.display = false;
-            expect(control.getContainer().style.display).to.equal("none");
+            expect(control.getContainer()!.style.display).to.equal("none");
         });
         it("should reset DOM container style when display is true again", () => {
             control.display = false;
             control.display = true;
-            expect(control.getContainer().style.display).to.not.equal("none");
+            expect(control.getContainer()!.style.display).to.not.equal("none");
         });
         it("should set to false by removing from map", (done: MochaDone) => {
 
@@ -98,7 +98,7 @@ describe("Layers-Control Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
             control.zIndex = val;
-            expect(control.getContainer().style.zIndex).to.equal(val.toString());
+            expect(control.getContainer()!.style.zIndex).to.equal(val.toString());
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber(255, 1, 0);
@@ -132,7 +132,7 @@ describe("Layers-Control Directive", () => {
             control.clickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent("click", {
+            control.getContainer()!.dispatchEvent(new MouseEvent("click", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -145,7 +145,7 @@ describe("Layers-Control Directive", () => {
             control.dblclickEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent("dblclick", {
+            control.getContainer()!.dispatchEvent(new MouseEvent("dblclick", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -158,7 +158,7 @@ describe("Layers-Control Directive", () => {
             control.mousedownEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent("mousedown", {
+            control.getContainer()!.dispatchEvent(new MouseEvent("mousedown", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -171,7 +171,7 @@ describe("Layers-Control Directive", () => {
             control.mouseoverEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent("mouseover", {
+            control.getContainer()!.dispatchEvent(new MouseEvent("mouseover", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -184,7 +184,7 @@ describe("Layers-Control Directive", () => {
             control.mouseoutEvent.subscribe(() => {
                 done();
             });
-            control.getContainer().dispatchEvent(new MouseEvent("mouseout", {
+            control.getContainer()!.dispatchEvent(new MouseEvent("mouseout", {
                 clientX: 3,
                 clientY: 4,
                 screenX: 1,
@@ -197,7 +197,7 @@ describe("Layers-Control Directive", () => {
         it("should be changed in Leaflet when changing in Angular", () => {
             const val: number = randomNumber();
             control.opacity = val;
-            expect(control.getContainer().style.opacity).to.equal(val.toString());
+            expect(control.getContainer()!.style.opacity).to.equal(val.toString());
         });
         it("should be changed in Angular when changing in Angular", () => {
             const val: number = randomNumber();
@@ -209,16 +209,16 @@ describe("Layers-Control Directive", () => {
     describe("Destroying a Scale Control Directive", () => {
         it("should remove Tile-Layer Directive from map on destroy", () => {
             /* istanbul ignore if */
-            if (control.getContainer().parentElement.parentElement.parentElement !== map.getContainer()) {
+            if (control.getContainer()!.parentElement!.parentElement!.parentElement !== map.getContainer()) {
                 throw new Error("The control is not part of the map before destroying");
             }
             control.ngOnDestroy();
             /* istanbul ignore if */
-            if (control.getContainer() &&
-                control.getContainer().parentElement &&
-                control.getContainer().parentElement.parentElement &&
-                control.getContainer().parentElement.parentElement.parentElement &&
-                control.getContainer().parentElement.parentElement.parentElement === map.getContainer()) {
+            if (control.getContainer()! &&
+                control.getContainer()!.parentElement &&
+                control.getContainer()!.parentElement!.parentElement &&
+                control.getContainer()!.parentElement!.parentElement!.parentElement &&
+                control.getContainer()!.parentElement!.parentElement!.parentElement === map.getContainer()) {
                 throw new Error("The layer is still part of the map after destroying");
             }
         });

@@ -7,5 +7,5 @@ import { Layer } from "leaflet";
  */
 @Injectable()
 export class LayerProvider {
-    public ref: Layer;
+    public ref?: Layer;
 }

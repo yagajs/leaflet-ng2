@@ -5,7 +5,7 @@ import {
     OnDestroy,
     Output,
 } from "@angular/core";
-import { Feature as GeoJSONFeature } from "geojson";
+import {Feature as GeoJSONFeature, Polygon as GeoJSONPolygon} from "geojson";
 import {
     FillRule,
     LatLng,
@@ -284,6 +284,8 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      */
     @Output("contextmenu") public contextmenuEvent: EventEmitter<LeafletMouseEvent> = new EventEmitter();
 
+    public feature: GeoJSONFeature<GeoJSONPolygon>; // This is not optional in this class
+
     constructor(
         protected layerGroupProvider: LayerGroupProvider,
         layerProvider: LayerProvider,
@@ -292,7 +294,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
 
         layerProvider.ref = this;
 
-        this.feature = this.feature || {type: "Feature", properties: {}, geometry: {type: "Polygon", coordinates: []}};
+        this.feature = (this as any).feature || {
+            geometry: {type: "Polygon", coordinates: []},
+            properties: {},
+            type: "Feature",
+        };
         this.feature.properties = this.feature.properties || {};
 
         this.on("remove", () => {
@@ -302,7 +308,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
             this.displayChange.emit(true);
         });
 
-        this.layerGroupProvider.ref.addLayer(this);
+        this.layerGroupProvider.ref!.addLayer(this);
 
         // Events
         this.on("add", (event: LeafletEvent) => {
@@ -311,35 +317,35 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.on("remove", (event: LeafletEvent) => {
             this.removeEvent.emit(event);
         });
-        this.on("popupopen", (event: PopupEvent) => {
-            this.popupopenEvent.emit(event);
+        this.on("popupopen", (event: LeafletEvent) => {
+            this.popupopenEvent.emit(event as PopupEvent);
         });
-        this.on("popupclose", (event: PopupEvent) => {
-            this.popupcloseEvent.emit(event);
+        this.on("popupclose", (event: LeafletEvent) => {
+            this.popupcloseEvent.emit(event as PopupEvent);
         });
-        this.on("tooltipopen", (event: TooltipEvent) => {
-            this.tooltipopenEvent.emit(event);
+        this.on("tooltipopen", (event: LeafletEvent) => {
+            this.tooltipopenEvent.emit(event as TooltipEvent);
         });
-        this.on("tooltipclose", (event: TooltipEvent) => {
-            this.tooltipcloseEvent.emit(event);
+        this.on("tooltipclose", (event: LeafletEvent) => {
+            this.tooltipcloseEvent.emit(event as TooltipEvent);
         });
-        this.on("click", (event: LeafletMouseEvent) => {
-            this.clickEvent.emit(event);
+        this.on("click", (event: LeafletEvent) => {
+            this.clickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("dblclick", (event: LeafletMouseEvent) => {
-            this.dblclickEvent.emit(event);
+        this.on("dblclick", (event: LeafletEvent) => {
+            this.dblclickEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mousedown", (event: LeafletMouseEvent) => {
-            this.mousedownEvent.emit(event);
+        this.on("mousedown", (event: LeafletEvent) => {
+            this.mousedownEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseover", (event: LeafletMouseEvent) => {
-            this.mouseoverEvent.emit(event);
+        this.on("mouseover", (event: LeafletEvent) => {
+            this.mouseoverEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("mouseout", (event: LeafletMouseEvent) => {
-            this.mouseoutEvent.emit(event);
+        this.on("mouseout", (event: LeafletEvent) => {
+            this.mouseoutEvent.emit(event as LeafletMouseEvent);
         });
-        this.on("contextmenu", (event: LeafletMouseEvent) => {
-            this.contextmenuEvent.emit(event);
+        this.on("contextmenu", (event: LeafletEvent) => {
+            this.contextmenuEvent.emit(event as LeafletMouseEvent);
         });
     }
 
@@ -463,10 +469,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(opacity)]="someValue">` or `<yaga-polygon [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
+    @Input() public set opacity(val: number | undefined) {
         this.setStyle({opacity: val});
     }
-    public get opacity(): number {
+    public get opacity(): number | undefined {
         return this.options.opacity;
     }
     /**
@@ -478,17 +484,17 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.setStyle({stroke: val});
     }
     public get stroke(): boolean {
-        return this.options.stroke;
+        return !!this.options.stroke;
     }
     /**
      * Two-Way bound property for the color.
      * Use it with `<yaga-polygon [(color)]="someValue">` or `<yaga-polygon [color]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-color Original Leaflet documentation
      */
-    @Input() public set color(val: string) {
+    @Input() public set color(val: string | undefined) {
         this.setStyle({color: val});
     }
-    public get color(): string {
+    public get color(): string | undefined {
         return this.options.color;
     }
     /**
@@ -496,10 +502,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(weight)]="someValue">` or `<yaga-polygon [weight]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-weight Original Leaflet documentation
      */
-    @Input() public set weight(val: number) {
+    @Input() public set weight(val: number | undefined) {
         this.setStyle({weight: val});
     }
-    public get weight(): number {
+    public get weight(): number | undefined {
         return this.options.weight;
     }
     /**
@@ -507,10 +513,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(lineCap)]="someValue">` or `<yaga-polygon [lineCap]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-linecap Original Leaflet documentation
      */
-    @Input() public set lineCap(val: LineCapShape) {
+    @Input() public set lineCap(val: LineCapShape | undefined) {
         this.setStyle({lineCap: val});
     }
-    public get lineCap(): LineCapShape {
+    public get lineCap(): LineCapShape | undefined {
         return this.options.lineCap;
     }
     /**
@@ -518,10 +524,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(lineJoin)]="someValue">` or `<yaga-polygon [lineJoin]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-linejoin Original Leaflet documentation
      */
-    @Input() public set lineJoin(val: LineJoinShape) {
+    @Input() public set lineJoin(val: LineJoinShape | undefined) {
         this.setStyle({lineJoin: val});
     }
-    public get lineJoin(): LineJoinShape {
+    public get lineJoin(): LineJoinShape | undefined {
         return this.options.lineJoin;
     }
     /**
@@ -529,10 +535,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(dashArray)]="someValue">` or `<yaga-polygon [dashArray]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-dasharray Original Leaflet documentation
      */
-    @Input() public set dashArray(val: string) {
+    @Input() public set dashArray(val: string | undefined) {
         this.setStyle({dashArray: val});
     }
-    public get dashArray(): string {
+    public get dashArray(): string | undefined {
         return this.options.dashArray;
     }
     /**
@@ -540,10 +546,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(dashOffset)]="someValue">` or `<yaga-polygon [dashOffset]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-dashoffset Original Leaflet documentation
      */
-    @Input() public set dashOffset(val: string) {
+    @Input() public set dashOffset(val: string | undefined) {
         this.setStyle({dashOffset: val});
     }
-    public get dashOffset(): string {
+    public get dashOffset(): string | undefined {
         return this.options.dashOffset;
     }
     /**
@@ -555,17 +561,17 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.setStyle({fill: val});
     }
     public get fill(): boolean {
-        return this.options.fill;
+        return !!this.options.fill;
     }
     /**
      * Two-Way bound property for the fillColor.
      * Use it with `<yaga-polygon [(fillColor)]="someValue">` or `<yaga-polygon [fillColor]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-fillcolor Original Leaflet documentation
      */
-    @Input() public set fillColor(val: string) {
+    @Input() public set fillColor(val: string | undefined) {
         this.setStyle({fillColor: val});
     }
-    public get fillColor(): string {
+    public get fillColor(): string | undefined {
         return this.options.fillColor;
     }
     /**
@@ -573,10 +579,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(fillOpacity)]="someValue">` or `<yaga-polygon [fillOpacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-fillopacity Original Leaflet documentation
      */
-    @Input() public set fillOpacity(val: number) {
+    @Input() public set fillOpacity(val: number | undefined) {
         this.setStyle({fillOpacity: val});
     }
-    public get fillOpacity(): number {
+    public get fillOpacity(): number | undefined {
         return this.options.fillOpacity;
     }
     /**
@@ -584,10 +590,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(fillRule)]="someValue">` or `<yaga-polygon [fillRule]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-fillrule Original Leaflet documentation
      */
-    @Input() public set fillRule(val: FillRule) {
+    @Input() public set fillRule(val: FillRule | undefined) {
         this.setStyle({fillRule: val});
     }
-    public get fillRule(): FillRule {
+    public get fillRule(): FillRule | undefined {
         return this.options.fillRule;
     }
     /**
@@ -595,10 +601,10 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [(className)]="someValue">` or `<yaga-polygon [className]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-classname Original Leaflet documentation
      */
-    @Input() public set className(val: string) {
+    @Input() public set className(val: string | undefined) {
         this.setStyle({className: val});
     }
-    public get className(): string {
+    public get className(): string | undefined {
         return this.options.className;
     }
     /**
@@ -655,7 +661,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.onAdd(map);
     }
     public get interactive(): boolean {
-        return this.options.interactive;
+        return !!this.options.interactive;
     }
 
     /**
@@ -663,11 +669,11 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
      * Use it with `<yaga-polygon [smoothFactor]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#polygon-smoothfactor Original Leaflet documentation
      */
-    @Input() public set smoothFactor(val: number) {
+    @Input() public set smoothFactor(val: number | undefined) {
         this.options.smoothFactor = val;
         this.redraw();
     }
-    public get smoothFactor(): number {
+    public get smoothFactor(): number | undefined {
         return this.options.smoothFactor;
     }
     /**
@@ -680,7 +686,7 @@ export class PolygonDirective<T> extends Polygon implements OnDestroy {
         this.redraw();
     }
     public get noClip(): boolean {
-        return this.options.noClip;
+        return !!this.options.noClip;
     }
 
     /**

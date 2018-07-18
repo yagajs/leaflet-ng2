@@ -5,6 +5,7 @@ import {
     DEFAULT_STYLE,
     GeoJSONDirective,
     IGeoJSONDirectiveMiddlewareDictionary,
+    IGeoJSONFilterFn,
     LatLng,
     LayerGroupProvider,
     MapComponent,
@@ -113,13 +114,11 @@ describe("GeoJSON Directive", () => {
                 properties: {},
                 type: "Feature",
             };
-            /* tslint:disable:max-line-length */
-            layer.filter = (elem: GeoJSONFeature<GeoJSON.Point, any>): boolean => {
+            layer.filter = ((elem: GeoJSONFeature<GeoJSON.Point, any>): boolean => {
                 expect(elem).to.equal(TEST_POINT);
                 done();
                 return true;
-            };
-            /* tslint:enable */
+            }) as IGeoJSONFilterFn<any>;
             layer.data = {
                 features: [TEST_POINT],
                 type: "FeatureCollection",
@@ -189,14 +188,14 @@ describe("GeoJSON Directive", () => {
                 type: "Feature",
             };
             /* tslint:disable:max-line-length */
-            layer.styler = (
+            layer.styler = ((
                 feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(feature).to.equal(TEST_POINT);
                 done();
                 return {};
-            };
+            }) as any;
             /* tslint:enable */
             layer.data = {
                 features: [TEST_POINT],
@@ -231,14 +230,14 @@ describe("GeoJSON Directive", () => {
                 properties: {},
                 type: "Feature",
             };
-            layer.styler = (
+            layer.styler = ((
                 feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(defaultStyle).to.equal(DEFAULT_STYLE);
                 done();
                 return {};
-            };
+            }) as any;
             layer.data = {
                 features: [TEST_POINT],
                 type: "FeatureCollection",
@@ -253,14 +252,14 @@ describe("GeoJSON Directive", () => {
                 properties: {},
                 type: "Feature",
             };
-            layer.styler = (
+            layer.styler = ((
                 feature: GeoJSONFeature<GeoJSON.Point, any>,
                 defaultStyle: PathOptions,
             ): PathOptions => {
                 expect(defaultStyle).to.equal(NEW_DEFAULT_STYLE);
                 done();
                 return {};
-            };
+            }) as any;
             layer.defaultStyle = NEW_DEFAULT_STYLE;
             layer.data = {
                 features: [TEST_POINT],

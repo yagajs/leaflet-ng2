@@ -7,5 +7,5 @@ import { LayerGroup, Map } from "leaflet";
  */
 @Injectable()
 export class LayerGroupProvider {
-    public ref: Map | LayerGroup;
+    public ref?: Map | LayerGroup;
 }

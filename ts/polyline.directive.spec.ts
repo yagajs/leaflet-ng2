@@ -145,8 +145,8 @@ describe("Polyline Directive", () => {
                 layer.setLatLngs(TEST_VALUE);
                 layer.addLatLng([3, 3]);
                 /* istanbul ignore if */
-                if (layer.latLngs[0][3].lat !== 3 ||
-                    layer.latLngs[0][3].lng !== 3) {
+                if ((layer.latLngs as LatLng[][])[0][3].lat !== 3 ||
+                    (layer.latLngs as LatLng[][])[0][3].lng !== 3) {
                     throw new Error(`Wrong value added: ${ [3, 3] } != ${ layer.latLngs[2] }`);
                 }
             });
@@ -215,12 +215,7 @@ describe("Polyline Directive", () => {
             });
             it("should be changed in Angular when changing in Angular", () => {
                 layer.geoJSON = TEST_VALUE;
-                /* istanbul ignore if */
-                if (layer.geoJSON[0] !== TEST_VALUE[0] ||
-                    layer.geoJSON[1] !== TEST_VALUE[1] ||
-                    layer.geoJSON[2] !== TEST_VALUE[2]) {
-                    throw new Error(`Wrong value setted: ${ TEST_VALUE } != ${ layer.geoJSON }`);
-                }
+                expect(layer.geoJSON.geometry.coordinates).deep.equal(TEST_VALUE.geometry.coordinates);
             });
             it("should be changed geoJSON in Angular when changing in latlngs Leaflet", () => {
                 layer.setLatLngs(TEST_LINESTRING);

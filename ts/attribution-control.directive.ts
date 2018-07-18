@@ -125,22 +125,22 @@ export class AttributionControlDirective extends Control.Attribution implements 
         protected mapProvider: MapProvider,
     ) {
         super({prefix: ATTRIBUTION_PREFIX});
-        mapProvider.ref.addControl(this);
+        mapProvider.ref!.addControl(this);
 
         // Events
-        this.getContainer().addEventListener("click", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
             this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("dblclick", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
             this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mousedown", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
             this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseover", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
             this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
-        this.getContainer().addEventListener("mouseout", (event: MouseEvent) => {
+        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
             this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
         });
     }
@@ -149,7 +149,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Internal method to provide the removal of the control in Leaflet, when removing it from the Angular template
      */
     public ngOnDestroy(): void {
-        this.mapProvider.ref.removeControl(this);
+        this.mapProvider.ref!.removeControl(this);
     }
 
     /**
@@ -188,11 +188,18 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * or `<yaga-attribution-control [opacity]="someValue">`
      * @link http://leafletjs.com/reference-1.2.0.html#control-attribution-opacity Original Leaflet documentation
      */
-    @Input() public set opacity(val: number) {
-        this.getContainer().style.opacity = val.toString();
+    @Input() public set opacity(val: number | undefined) {
+        if (typeof val === "number") {
+            this.getContainer()!.style.opacity = val.toString();
+            return;
+        }
+        this.getContainer()!.style.opacity = null;
     }
-    public get opacity(): number {
-        return parseFloat(this.getContainer().style.opacity);
+    public get opacity(): number | undefined {
+        if (this.getContainer()!.style.opacity !== undefined && this.getContainer()!.style.opacity !== null) {
+            return parseFloat(this.getContainer()!.style.opacity!);
+        }
+        return;
     }
 
     /**
@@ -206,14 +213,14 @@ export class AttributionControlDirective extends Control.Attribution implements 
             return;
         }
         if (val) {
-            this.getContainer().style.display = "";
+            this.getContainer()!.style.display = "";
             return;
         }
-        this.getContainer().style.display = "none";
+        this.getContainer()!.style.display = "none";
         return;
     }
     public get display(): boolean {
-        return !!((this as any)._map && this.getContainer().style.display !== "none");
+        return !!(this as any)._map && this.getContainer()!.style.display !== "none";
     }
 
     /**
@@ -233,15 +240,17 @@ export class AttributionControlDirective extends Control.Attribution implements 
      * Input for the zIndex of the control.
      * Use it with `<yaga-attribution-control [zIndex]="someValue">`
      */
-    @Input() public set zIndex(zIndex: number) {
-        if ( !zIndex ) {
-            zIndex = 0;
+    @Input() public set zIndex(zIndex: number | undefined) {
+        if (typeof zIndex === "number") {
+            this.getContainer()!.style.zIndex = zIndex.toString();
+            return;
         }
-
-        this.getContainer().style.zIndex = zIndex.toString();
+        this.getContainer()!.style.zIndex = null;
     }
-    public get zIndex(): number {
-        return parseInt(this.getContainer().style.zIndex, 10);
+    public get zIndex(): number | undefined {
+        if (this.getContainer()!.style.zIndex !== undefined && this.getContainer()!.style.zIndex !== null) {
+            return parseInt(this.getContainer()!.style.zIndex!, 10);
+        }
     }
 
     /**

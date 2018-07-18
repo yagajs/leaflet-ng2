@@ -29,18 +29,18 @@ describe("Tile-Layer Directive", () => {
     describe("[(display)]", () => {
         it("should remove DOM container when not displaying", () => {
             layer.display = false;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(false);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(false);
         });
         it("should re-add DOM container when display is true again", () => {
             layer.display = false;
             layer.display = true;
-            expect(hasAsChild(layer.getPane(), (layer as any)._container)).to.equal(true);
+            expect(hasAsChild(layer.getPane()!, (layer as any)._container)).to.equal(true);
         });
         it("should remove EventListeners when not displaying", (done: MochaDone) => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
@@ -57,7 +57,7 @@ describe("Tile-Layer Directive", () => {
             const moveEvents: Array<{fn: () => any}> = (map as any)._events.move;
             const length: number = moveEvents.length;
             /* tslint:disable:no-string-literal */
-            const originalEventListener: (event: Event) => void = layer.getEvents()["move"];
+            const originalEventListener: (event: Event) => void = layer.getEvents!()["move"];
             /* tslint:enable */
 
             layer.display = false;
