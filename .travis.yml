@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - "6"
+  - "10"
 
 cache:
   directories:
@@ -14,6 +14,7 @@ before_script:
 
 script:
   - npm test
+  - npm audit
 
 after_success:
   - "cat coverage/lcov.info | ./node_modules/.bin/coveralls"
