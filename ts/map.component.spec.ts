@@ -448,6 +448,29 @@ describe("Map Component", () => {
             map.fire("move", testEvent);
         });
     });
+
+    describe("(boxzoomstart)", () => {
+        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            map.boxzoomstartEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                return done();
+            });
+            map.fire("boxzoomstart", testEvent);
+        });
+    });
+    describe("(boxzoomend)", () => {
+        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+            const testHandle: any = {};
+            const testEvent: any = { testHandle };
+            map.boxzoomendEvent.subscribe((event: any) => {
+                expect(event.testHandle).to.equal(testEvent.testHandle);
+                return done();
+            });
+            map.fire("boxzoomend", testEvent);
+        });
+    });
     describe("(zoomend)", () => {
         it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
             const testHandle: any = {};

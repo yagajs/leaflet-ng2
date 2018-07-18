@@ -273,6 +273,18 @@ export class MapComponent extends Map implements AfterViewInit {
      */
     @Output("moveend") public moveendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
     /**
+     * From leaflet fired (undocumented) boxzoomstart event.
+     * Use it with `<yaga-tile-layer (boxzoomstart)="processEvent($event)">`
+     * @link https://github.com/Leaflet/Leaflet/blob/master/src/map/handler/Map.BoxZoom.js SourceCode
+     */
+    @Output("boxzoomstart") public boxzoomstartEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
+     * From leaflet fired (undocumented) boxzoomend event.
+     * Use it with `<yaga-tile-layer (boxzoomend)="processEvent($event)">`
+     * @link https://github.com/Leaflet/Leaflet/blob/master/src/map/handler/Map.BoxZoom.js SourceCode
+     */
+    @Output("boxzoomend") public boxzoomendEvent: EventEmitter<LeafletEvent> = new EventEmitter();
+    /**
      * From leaflet fired popupopen event.
      * Use it with `<yaga-tile-layer (popupopen)="processEvent($event)">`
      * @link http://leafletjs.com/reference-1.2.0.html#map-popupopen Original Leaflet documentation
@@ -462,6 +474,12 @@ export class MapComponent extends Map implements AfterViewInit {
         this.on("moveend", (event: LeafletEvent) => {
             this.moveendEvent.emit(event);
         });
+        this.on("boxzoomstart", (event: LeafletEvent) => {
+            this.boxzoomstartEvent.emit(event);
+        });
+        this.on("boxzoomend", (event: LeafletEvent) => {
+            this.boxzoomendEvent.emit(event);
+        });
         this.on("popupopen", (event: LeafletEvent) => {
             this.popupopenEvent.emit(event as PopupEvent);
         });
@@ -510,7 +528,6 @@ export class MapComponent extends Map implements AfterViewInit {
         this.on("zoomanim", (event: LeafletEvent) => {
             this.zoomanimEvent.emit(event as ZoomAnimEvent);
         });
-
     }
 
     /**
