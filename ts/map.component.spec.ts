@@ -448,9 +448,8 @@ describe("Map Component", () => {
             map.fire("move", testEvent);
         });
     });
-
     describe("(boxzoomstart)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             map.boxzoomstartEvent.subscribe((event: any) => {
@@ -461,7 +460,7 @@ describe("Map Component", () => {
         });
     });
     describe("(boxzoomend)", () => {
-        it("should fire event in Angular when firing event in Leaflet", (done: MochaDone) => {
+        it("should fire event in Angular when firing event in Leaflet", (done: Mocha.Done) => {
             const testHandle: any = {};
             const testEvent: any = { testHandle };
             map.boxzoomendEvent.subscribe((event: any) => {
