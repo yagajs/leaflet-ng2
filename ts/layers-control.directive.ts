@@ -124,23 +124,6 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
         super();
         layersControlProvider.ref = this;
         this.mapProvider.ref!.addControl(this);
-
-        // Events
-        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
-            this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
-        });
-        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
-            this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
-        });
-        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
-            this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
-        });
-        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
-            this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
-        });
-        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
-            this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
-        });
     }
 
     /**
@@ -249,5 +232,29 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
         if (typeof this.getContainer()!.style.zIndex === "string") {
             return parseInt(this.getContainer()!.style.zIndex!, 10);
         }
+    }
+
+    /**
+     * Reimplemention of initLayout private function to register event listeners after DOM creation.
+     */
+    protected _initLayout() {
+        // @ts-ignore
+        super._initLayout();
+        // Events
+        this.getContainer()!.addEventListener("click", (event: MouseEvent) => {
+            this.clickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        });
+        this.getContainer()!.addEventListener("dblclick", (event: MouseEvent) => {
+            this.dblclickEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        });
+        this.getContainer()!.addEventListener("mousedown", (event: MouseEvent) => {
+            this.mousedownEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        });
+        this.getContainer()!.addEventListener("mouseover", (event: MouseEvent) => {
+            this.mouseoverEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        });
+        this.getContainer()!.addEventListener("mouseout", (event: MouseEvent) => {
+            this.mouseoutEvent.emit(enhanceMouseEvent(event, (this as any)._map as Map));
+        });
     }
 }
