@@ -43,7 +43,7 @@ export class OverlayLayerDirective implements OnDestroy  {
         this.layersControlProvider.ref!.addOverlay(this.layer.ref!, value);
     }
     public get caption(): string {
-        for (const layer of ((this as any)._layers as Array<{ layer: Layer, name: string }>)) {
+        for (const layer of ((this.layersControlProvider.ref! as any)._layers as Array<{layer: Layer, name: string}>)) {
             if (layer.layer === this.layer.ref) {
                 return layer.name;
             }
