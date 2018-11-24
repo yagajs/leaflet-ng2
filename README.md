@@ -1,7 +1,7 @@
 # YAGA - leaflet-ng2
 
-[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
-[![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
+[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=master)](https://travis-ci.org/yagajs/leaflet-ng2)
+[![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=master)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=master)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2?ref=badge_shield)
 
 YAGA leaflet-ng2 is a granular implementation of the popular [Leaflet](http://leafletjs.com/) framework into the model
