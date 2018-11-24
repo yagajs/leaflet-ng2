@@ -2,10 +2,17 @@
 .yaga-map {
     min-height: 260px;
 }
-.input-group-addon.fixed-space {
+.input-group-text.fixed-space {
     min-width: 110px;
 }
 
 .footer {
     margin-top: 5em;
+}
+.footer span a{
+    padding-right: 1em;
+}
+
+.map {
+    margin-bottom: 2em;
 }

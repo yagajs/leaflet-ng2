@@ -39,13 +39,17 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
 @Component({
     selector: 'example-property',
     template: `
-<div *ngIf="type === 'text'"  class="input-group">
-  <span class="input-group-addon fixed-space">{{ name }}</span>
+<div *ngIf="type === 'text'"  class="input-group btn-group-sm">
+  <div class="input-group-prepend">
+    <span class="input-group-text fixed-space">{{ name }}</span>
+  </div>
   <input type="text" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
-<div *ngIf="type === 'number'"  class="input-group">
-  <span class="input-group-addon fixed-space">{{ name }}</span>
+<div *ngIf="type === 'number'"  class="input-group btn-group-sm">
+  <div class="input-group-prepend">
+    <span class="input-group-text fixed-space">{{ name }}</span>
+  </div>
   <input type="number" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
@@ -53,80 +57,94 @@ export const PROPERTIES_WRAPPER: string = `<div class="row">
   <button disabled class="btn" [ngClass]="value ? 'btn-primary': ''">{{ name }}</button>
 </div>
 
-<div *ngIf="type === 'checkbox'"  class="input-group input-group-sx">
-  <span class="input-group-addon fixed-space">{{ name }}</span>
+<div *ngIf="type === 'checkbox'"  class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text fixed-space">{{ name }}</span>
+  </div>
   <input type="checkbox" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
 <div *ngIf="type === 'select'" class="input-group">
-  <span class="input-group-addon fixed-space">{{ name }}</span>
+  <div class="input-group-prepend">
+    <span class="input-group-text fixed-space">{{ name }}</span>
+  </div>
   <select  class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
     <option *ngFor="let state of additional.states" [ngValue]="state">
     {{ state }}
     </option>
   </select>
 </div>
-<div *ngIf="type === 'relative'"  class="input-group input-group-sx">
-  <span class="input-group-addon fixed-space">{{ name }}</span>
+<div *ngIf="type === 'relative'"  class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text fixed-space">{{ name }}</span>
+  </div>
   <input type="range" min="0" max="1" step="0.05" class="form-control" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
 </div>
 
 <div *ngIf="type === 'latlng'">
-
-    <div class="input-group input-group-sx">
-        <span class="input-group-addon fixed-space">{{ name }}</span>
-        <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="valueChange.emit(updateLat($event))" />
-        <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="valueChange.emit(updateLng($event))" />
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }}</span>
     </div>
-
+    <input type="number" class="form-control" [ngModel]="value.lat" (ngModelChange)="valueChange.emit(updateLat($event))" />
+    <input type="number" class="form-control" [ngModel]="value.lng" (ngModelChange)="valueChange.emit(updateLng($event))" />
+  </div>
 </div>
 
 <div *ngIf="type === 'latlngBounds'">
-
-    <div class="input-group input-group-sx">
-        <span class="input-group-addon fixed-space">{{ name }} (SWNE)</span>
-        <input type="number" class="form-control" [ngModel]="value.getSouth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsSouth($event))" />
-        <input type="number" class="form-control" [ngModel]="value.getWest()" (ngModelChange)="valueChange.emit(updateLatLngBoundsWest($event))" />
-        <input type="number" class="form-control" [ngModel]="value.getNorth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsNorth($event))" />
-        <input type="number" class="form-control" [ngModel]="value.getEast()" (ngModelChange)="valueChange.emit(updateLatLngBoundsEast($event))" />
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }} (SWNE)</span>
     </div>
-
+    <input type="number" class="form-control" [ngModel]="value.getSouth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsSouth($event))" />
+    <input type="number" class="form-control" [ngModel]="value.getWest()" (ngModelChange)="valueChange.emit(updateLatLngBoundsWest($event))" />
+    <input type="number" class="form-control" [ngModel]="value.getNorth()" (ngModelChange)="valueChange.emit(updateLatLngBoundsNorth($event))" />
+    <input type="number" class="form-control" [ngModel]="value.getEast()" (ngModelChange)="valueChange.emit(updateLatLngBoundsEast($event))" />
+  </div>
 </div>
 
 <div *ngIf="type === 'point'">
-    <div class="input-group input-group-sx">
-        <span class="input-group-addon fixed-space">{{ name }}</span>
-        <input type="number" class="form-control" [ngModel]="value.x" (ngModelChange)="valueChange.emit(updatePointX($event))" />
-        <input type="number" class="form-control" [ngModel]="value.y" (ngModelChange)="valueChange.emit(updatePointY($event))" />
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }}</span>
     </div>
-
+    <input type="number" class="form-control" [ngModel]="value.x" (ngModelChange)="valueChange.emit(updatePointX($event))" />
+    <input type="number" class="form-control" [ngModel]="value.y" (ngModelChange)="valueChange.emit(updatePointY($event))" />
+  </div>
 </div>
-<div *ngIf="type === 'crs'">
-    <div class="input-group input-group-sx">
-        <span class="input-group-addon fixed-space">{{ name }}</span>
-        <select [ngModel]="getCRS(value)" (ngModelChange)="valueChange.emit(setCRS($event))">
-            <option value="Simple">Simple</option>
-            <option value="EPSG3395">EPSG:3395</option>
-            <option value="EPSG3857">EPSG:3857</option>
-            <option value="EPSG4326">EPSG:4326</option>
-        </select>
-    </div>
 
+<div *ngIf="type === 'crs'">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }}</span>
+    </div>
+    <select [ngModel]="getCRS(value)" (ngModelChange)="valueChange.emit(setCRS($event))">
+      <option value="Simple">Simple</option>
+      <option value="EPSG3395">EPSG:3395</option>
+      <option value="EPSG3857">EPSG:3857</option>
+      <option value="EPSG4326">EPSG:4326</option>
+    </select>
+  </div>
 </div>
 
 <div *ngIf="type === 'text[]'">
-
-  <div class="input-group input-group-sx">
-    <span class="input-group-addon">{{ name }}</span>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }}</span>
+    </div>
   </div>
-  <div *ngFor="let entry of value" class="input-group input-group-sx">
-    <span class="input-group-addon">{{ value.indexOf(entry) + 1 }}</span>
+  <div *ngFor="let entry of value" class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ value.indexOf(entry) + 1 }}</span>
+    </div>
     <input type="text" class="form-control" [ngModel]="entry" (ngModelChange)="updateInArray($event, entry)" />
     <span class="input-group-btn"><button class="btn btn-danger" (click)="spliceArray(entry)"><span class="fa fa-minus"></span></button></span>
   </div>
   
-  <div class="input-group input-group-sx">
-    <span class="input-group-addon">*</span>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text fixed-space">{{ name }}</span>
+    </div>
     <input type="text" class="form-control" placeholder="Add an element to array" [(ngModel)]="addToArrayValue">
     <span class="input-group-btn"><button class="btn btn-success" (click)="addToArray(addToArrayValue)"><span class="fa fa-plus"></span></button></span>
   </div>
@@ -239,15 +257,22 @@ export class ExamplePropertiesComponent {
 @Component({
     selector: 'example-header',
     template: `
-<header id="top" class="navbar navbar-default navbar-static-top navbar-inverse">
+
+<header role="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <ul class="nav navbar-nav">
-            <a class="navbar-brand" href="https://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
-            <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
-            <li class="nav-item nav-link"><a href="../../" title="Last release"><span class="fa fa-flag" aria-hidden="true"></span>  Release</a></li>
-            <li class="nav-item nav-link"><a href="../" title="YAGA Examples"><span class="fa fa-tv" aria-hidden="true"></span>  Examples</a></li>
-            <li class="nav-item nav-link active"><a href="#"><span class="fa fa-stethoscope" aria-hidden="true"></span> {{ title }}</a></li>
-        </ul>
+        <a class="navbar-brand" href="https://yagajs.org">YAGA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav navbar-nav">
+                <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2" class="nav-link"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
+                <li class="nav-item nav-link"><a href="../../" title="Last release" class="nav-link"><span class="fa fa-flag" aria-hidden="true"></span>  Release</a></li>
+                <li class="nav-item nav-link active"><a href="../" title="YAGA Examples" class="nav-link"><span class="fa fa-tv" aria-hidden="true"></span> Examples</a></li>
+                <li class="nav-item nav-link active"><a href="#" class="nav-link"><span class="fa fa-stethoscope" aria-hidden="true"></span> {{ title }}</a></li>
+            </ul>
+        </div>
     </div>
 </header>`,
 })
@@ -263,7 +288,7 @@ export class ExampleHeaderComponent {
     template: `
 <footer class="footer">
   <div class="container">
-    <p class="text-muted">&copy; <a href="https://yagajs.org">YAGA</a> 2017
+    <p class="text-muted">&copy; <a href="https://yagajs.org">YAGA</a> 2018. Links:
       <span>
         <a href="https://github.com/yagajs/">GitHub</a>
       </span>
