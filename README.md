@@ -15,8 +15,6 @@ were made in Leaflet and bind them to Angular’s data model.
 The YAGA Development-Team gives a great importance to tests, test-coverage, documentation, examples and getting started
 templates.
 
-*Note: This is just a release candidate!*
-
 ## How to use
 
 First you have to install this library from npm:
