@@ -77,7 +77,7 @@
     "coveralls": "^3.0.2",
     "font-awesome": "^4.7.0",
     "istanbul": "^0.4.5",
-    "jsdom": "^11.11.0",
+    "jsdom": "^13.0.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
     "reflect-metadata": "^0.1.8",
