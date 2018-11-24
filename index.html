@@ -6,18 +6,26 @@
     <title>YAGA | leaflet-ng2</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-<header id="top" class="navbar navbar-default navbar-static-top navbar-inverse">
+
+<header role="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <ul class="nav navbar-nav">
-            <a class="navbar-brand" href="https://yagajs.org" data-placement="bottom" title="YAGA">YAGA</a>
-            <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
-            <li class="nav-item nav-link active"><a href="#" title="Last release"><span class="fa fa-flag" aria-hidden="true"></span>  Release</a></li>
-        </ul>
+        <a class="navbar-brand" href="https://yagajs.org">YAGA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="nav navbar-nav">
+                 <li class="nav-item nav-link"><a href="https://leaflet-ng2.yagajs.org" title="leaflet-ng2" class="nav-link"><span class="fa fa-cube" aria-hidden="true"></span>  leaflet-ng2</a></li>
+                 <li class="nav-item nav-link active"><a href="#" title="Last release" class="nav-link"><span class="fa fa-flag" aria-hidden="true"></span>  Release</a></li>
+             </ul>
+        </div>
     </div>
 </header>
 <div class="container">
