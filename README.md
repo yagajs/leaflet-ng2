@@ -1,14 +1,11 @@
 # YAGA - leaflet-ng2
 
-[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=develop)](https://travis-ci.org/yagajs/leaflet-ng2)
-[![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=develop)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=develop)
+[![Build Status](https://travis-ci.org/yagajs/leaflet-ng2.svg?branch=master)](https://travis-ci.org/yagajs/leaflet-ng2)
+[![Coverage Status](https://coveralls.io/repos/github/yagajs/leaflet-ng2/badge.svg?branch=master)](https://coveralls.io/github/yagajs/leaflet-ng2?branch=master)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyagajs%2Fleaflet-ng2?ref=badge_shield)
 
 YAGA leaflet-ng2 is a granular implementation of the popular [Leaflet](http://leafletjs.com/) framework into the model
-view view controller (MVVC) of [Angular2](https://angular.io/) and it is fully compatible with the newest version of
-Angular 5. It provides a directive for every Leaflet class that belongs to the user interface by inheriting the original
-Leaflet class and enhancing it with the decorators of Angular and glue-code. With this approach the directives are still
-extensible and it is possible to write the structure of an app in a descriptive way in a well known markup language,
+view view controller (MVVC) of [Angular.io](https://angular.io/). It provides a directive for every Leaflet class that belongs to the user interface by inheriting the original Leaflet class and enhancing it with the decorators of Angular and glue-code. With this approach the directives are still extensible and it is possible to write the structure of an app in a descriptive way in a well known markup language,
 HTML5. This is why you mainly need HTML skills for creating a template based geo-app with leaflet-ng2.
 
 It is easy to enhance this library with one’s own Angular modules, because of its modular structure. It is
@@ -17,8 +14,6 @@ were made in Leaflet and bind them to Angular’s data model.
 
 The YAGA Development-Team gives a great importance to tests, test-coverage, documentation, examples and getting started
 templates.
-
-*Note: This is just a release candidate!*
 
 ## How to use
 

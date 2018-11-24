@@ -28,3 +28,5 @@ require('../lib/zoom-control.directive.spec');
 require('../lib/attribution-control.directive.spec');
 require('../lib/scale-control.directive.spec');
 require('../lib/layers-control.directive.spec');
+require('../lib/base-layer.directive.spec');
+require('../lib/overlay-layer.directive.spec');

@@ -610,6 +610,7 @@ export class TileLayerDirective extends TileLayer implements OnDestroy  {
      */
     @Input() public set subdomains(val: string[]) {
         this.options.subdomains = val;
+        this.redraw();
     }
     public get subdomains(): string[] {
         if (typeof (this.options.subdomains as string) === "string") {

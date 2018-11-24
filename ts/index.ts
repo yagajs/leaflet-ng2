@@ -26,6 +26,8 @@ export * from "./layers-control.directive";
 export * from "./layers-control.provider";
 export * from "./map.provider";
 export * from "./marker.provider";
+export * from "./base-layer.directive";
+export * from "./overlay-layer.directive";
 export * from "./lng2lat"; // helper
 
 export * from "./consts";
