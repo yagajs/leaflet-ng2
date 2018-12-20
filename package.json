@@ -1,6 +1,6 @@
 {
   "name": "@yaga/leaflet-ng2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular2 module for Leaflet",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
