@@ -21,3 +21,7 @@ YAGA leaflet-ng2 is just an integration of Leaflet in Angular.io. No additional 
 If something else
 
 <<Please describe your change>>
+
+If applicable
+
+<<Add tickets that can be closed with this pull request: Closes #{TICKETNUMBER} >>
