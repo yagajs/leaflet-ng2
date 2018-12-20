@@ -15,9 +15,9 @@ export const ANIMATION_DELAY: number = 50;
  */
 export const EXAMPLE_CONTENT: string = "Vel ipsum odit quia velit omnis illo voluptatem ut. Aperiam porro voluptates maiores.";
 /**
- * URL-schema of the official osm tile-server
+ * URL-schema of the official OSM tile-server
  */
-export const OSM_TILE_LAYER_URL: string = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+export const OSM_TILE_LAYER_URL: string = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 /**
  * URL for an example image for image-overlays
  */
