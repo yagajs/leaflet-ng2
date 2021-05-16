@@ -189,7 +189,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
             this.getContainer()!.style.opacity = val.toString();
             return;
         }
-        this.getContainer()!.style.opacity = null;
+        this.getContainer()!.style.opacity = "";
     }
     public get opacity(): number | undefined {
         const val = this.getContainer()!.style.opacity;
@@ -242,7 +242,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
             this.getContainer()!.style.zIndex = zIndex.toString();
             return;
         }
-        this.getContainer()!.style.zIndex = null;
+        this.getContainer()!.style.zIndex = "";
     }
     public get zIndex(): number | undefined {
         const val = this.getContainer()!.style.zIndex;
