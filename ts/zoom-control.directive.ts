@@ -196,6 +196,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         if (typeof val === "string") {
             return parseFloat(val);
         }
+        return undefined;
     }
 
     /**
@@ -250,6 +251,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
         if (typeof val === "string") {
             return parseInt(val, 10);
         }
+        return undefined;
     }
 
     /**
