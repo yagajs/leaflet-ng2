@@ -251,6 +251,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
         if (this.getContainer()!.style.zIndex !== undefined && this.getContainer()!.style.zIndex !== null) {
             return parseInt(this.getContainer()!.style.zIndex!, 10);
         }
+        return undefined;
     }
 
     /**
