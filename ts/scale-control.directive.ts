@@ -196,6 +196,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         if (typeof val === "string") {
             return parseFloat(val);
         }
+        return undefined;
     }
 
     /**
@@ -249,6 +250,7 @@ export class ScaleControlDirective extends Control.Scale implements OnDestroy  {
         if (typeof val === "string") {
             return parseInt(val, 10);
         }
+        return undefined;
     }
 
     /**

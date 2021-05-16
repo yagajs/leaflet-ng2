@@ -180,6 +180,7 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
         if (typeof this.getContainer()!.style.opacity === "string") {
             return parseFloat(this.getContainer()!.style.opacity!);
         }
+        return undefined;
     }
 
     /**
@@ -232,6 +233,7 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
         if (typeof this.getContainer()!.style.zIndex === "string") {
             return parseInt(this.getContainer()!.style.zIndex!, 10);
         }
+        return undefined;
     }
 
     /**
