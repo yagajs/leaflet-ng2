@@ -189,7 +189,7 @@ export class ZoomControlDirective extends Control.Zoom implements OnDestroy  {
             this.getContainer()!.style.opacity = val.toString();
             return;
         }
-        this.getContainer()!.style.opacity = null;
+        this.getContainer()!.style.opacity = "";
     }
     public get opacity(): number | undefined {
         const val = this.getContainer()!.style.opacity;

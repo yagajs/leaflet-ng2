@@ -193,7 +193,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
             this.getContainer()!.style.opacity = val.toString();
             return;
         }
-        this.getContainer()!.style.opacity = null;
+        this.getContainer()!.style.opacity = "";
     }
     public get opacity(): number | undefined {
         if (this.getContainer()!.style.opacity !== undefined && this.getContainer()!.style.opacity !== null) {
@@ -245,7 +245,7 @@ export class AttributionControlDirective extends Control.Attribution implements 
             this.getContainer()!.style.zIndex = zIndex.toString();
             return;
         }
-        this.getContainer()!.style.zIndex = null;
+        this.getContainer()!.style.zIndex = "";
     }
     public get zIndex(): number | undefined {
         if (this.getContainer()!.style.zIndex !== undefined && this.getContainer()!.style.zIndex !== null) {

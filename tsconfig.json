@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es6",
         "strict": true,
         "sourceMap": true,
         "declaration": true,
@@ -9,7 +9,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noUnusedLocals": true,
-        "lib": ["es6", "dom", "es2015.iterable", "es2015.promise"]
+        "lib": ["es6", "dom"]
     },
     "exclude": [
         "node_modules",

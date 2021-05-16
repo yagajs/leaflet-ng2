@@ -174,7 +174,7 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
             this.getContainer()!.style.opacity = val.toString();
             return;
         }
-        this.getContainer()!.style.opacity = null;
+        this.getContainer()!.style.opacity = "";
     }
     public get opacity(): number | undefined {
         if (typeof this.getContainer()!.style.opacity === "string") {
@@ -226,7 +226,7 @@ export class LayersControlDirective extends Control.Layers implements OnDestroy 
             this.getContainer()!.style.zIndex = zIndex.toString();
             return;
         }
-        this.getContainer()!.style.zIndex = null;
+        this.getContainer()!.style.zIndex = "";
     }
     public get zIndex(): number | undefined {
         if (typeof this.getContainer()!.style.zIndex === "string") {
