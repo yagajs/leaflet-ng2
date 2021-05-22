@@ -14,7 +14,7 @@ before_script:
 
 script:
   - npm test
-  - npm audit
+  - npm audit --production
 
 after_success:
   - "cat coverage/lcov.info | ./node_modules/.bin/coveralls"
